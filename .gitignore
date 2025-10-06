@@ -1,0 +1,141 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+.idea/sonarlint/
+.idea/httpRequests/
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/gradle.xml
+.idea/libraries/
+.idea/mongoSettings.xml
+*.iws
+*.iml
+*.ipr
+.idea/replstate.xml
+.idea/tasks.xml
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/assetWizardSettings.xml
+.idea/caches/
+.idea/dictionaries/
+.idea/shelf/
+.idea/contentModel.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/workspace.xml
+
+# IntelliJ IDEA - Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# IntelliJ IDEA - Maven
+.idea/**/maven.xml
+.idea/artifacts/
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/modules.xml
+.idea/*.iml
+
+# Visual Studio Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+.vscode-test/
+
+# Local History for Visual Studio Code
+.history/
+.ionide/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Genel
+*.log
+*.tmp
+*.temp
+*.cache
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+target/
+
+
+
+### for Java Spring Boot projects
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
