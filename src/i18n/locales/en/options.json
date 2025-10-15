@@ -14,6 +14,23 @@
       "label": "Language",
       "description": "Select your preferred language",
       "select": "Select language"
+    },
+    "cache": {
+      "title": "Cache Settings",
+      "description": "Configure cache behavior for IOC analysis results",
+      "enabled": "Enable cache",
+      "enabledDescription": "Store analysis results to avoid repeated API calls",
+      "retentionDays": "Retention period (days)",
+      "retentionDescription": "How long to keep cached results",
+      "statistics": "Cache statistics",
+      "totalEntries": "Total entries",
+      "totalSize": "Total size",
+      "oldestDate": "Oldest entry",
+      "newestDate": "Newest entry",
+      "clearCache": "Clear all cache",
+      "clearConfirm": "Are you sure you want to clear all cached data?",
+      "clearSuccess": "Cache cleared successfully",
+      "clearError": "Failed to clear cache"
     }
   },
   "privacyNote": {
@@ -25,7 +42,12 @@
     "sectionDescription": "Enter your API key for each security tool. You can add keys only for the tools you want to use.",
     "placeholder": "Your {{provider}} API key",
     "showKey": "Show key",
-    "hideKey": "Hide key"
+    "hideKey": "Hide key",
+    "validate": "Validate",
+    "validating": "Validating...",
+    "valid": "Valid",
+    "invalid": "Invalid",
+    "validationError": "Validation failed"
   },
   "providers": {
     "virustotal": {
@@ -123,9 +145,12 @@
   },
   "actions": {
     "save": "Save Changes",
+    "saveIndividual": "Save",
     "successMessage": "API keys saved successfully",
     "errorMessage": "Failed to save API keys",
-    "errorLoading": "Failed to load API keys"
+    "errorLoading": "Failed to load API keys",
+    "saveSuccess": "Saved successfully",
+    "saveError": "Failed to save"
   },
   "footer": {
     "text": "Ahtapot v1.0.0 • Cybersecurity Indicator Analysis Tool"
