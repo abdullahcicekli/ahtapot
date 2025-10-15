@@ -14,6 +14,23 @@
       "label": "Dil",
       "description": "Tercih ettiğiniz dili seçin",
       "select": "Dil seçin"
+    },
+    "cache": {
+      "title": "Önbellek Ayarları",
+      "description": "IOC analiz sonuçları için önbellek davranışını yapılandırın",
+      "enabled": "Önbelleği etkinleştir",
+      "enabledDescription": "Tekrarlayan API çağrılarını önlemek için analiz sonuçlarını saklayın",
+      "retentionDays": "Saklama süresi (gün)",
+      "retentionDescription": "Önbelleğe alınan sonuçların ne kadar süre saklanacağı",
+      "statistics": "Önbellek istatistikleri",
+      "totalEntries": "Toplam kayıt",
+      "totalSize": "Toplam boyut",
+      "oldestDate": "En eski kayıt",
+      "newestDate": "En yeni kayıt",
+      "clearCache": "Tüm önbelleği temizle",
+      "clearConfirm": "Tüm önbelleğe alınmış verileri silmek istediğinizden emin misiniz?",
+      "clearSuccess": "Önbellek başarıyla temizlendi",
+      "clearError": "Önbellek temizlenemedi"
     }
   },
   "privacyNote": {
@@ -25,7 +42,12 @@
     "sectionDescription": "Her bir güvenlik aracı için API anahtarınızı girin. İsterseniz sadece kullanmak istediğiniz araçların anahtarlarını ekleyebilirsiniz.",
     "placeholder": "{{provider}} API anahtarınız",
     "showKey": "Anahtarı göster",
-    "hideKey": "Anahtarı gizle"
+    "hideKey": "Anahtarı gizle",
+    "validate": "Doğrula",
+    "validating": "Doğrulanıyor...",
+    "valid": "Geçerli",
+    "invalid": "Geçersiz",
+    "validationError": "Doğrulama başarısız"
   },
   "providers": {
     "virustotal": {
@@ -123,9 +145,12 @@
   },
   "actions": {
     "save": "Kaydet",
+    "saveIndividual": "Kaydet",
     "successMessage": "API anahtarları başarıyla kaydedildi",
     "errorMessage": "API anahtarları kaydedilemedi",
-    "errorLoading": "API anahtarları yüklenemedi"
+    "errorLoading": "API anahtarları yüklenemedi",
+    "saveSuccess": "Başarıyla kaydedildi",
+    "saveError": "Kaydetme başarısız"
   },
   "footer": {
     "text": "Ahtapot v1.0.0 • Siber Güvenlik Gösterge Analiz Aracı"
