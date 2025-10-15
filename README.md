@@ -60,7 +60,6 @@ Automatically detects and analyzes various types of security indicators:
 | **Shodan** | Device intelligence | 1 scan/month |
 | **URLScan.io** | Website threat detection | 100 scans/day |
 | **Have I Been Pwned** | Email breach check | 1 req/1.5s |
-| **Blockchain** | Crypto address analysis | Unlimited |
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
