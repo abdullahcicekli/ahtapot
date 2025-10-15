@@ -12,7 +12,10 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "lucide-react": "^0.462.0"
+    "lucide-react": "^0.462.0",
+    "i18next": "^23.15.0",
+    "react-i18next": "^15.0.0",
+    "i18next-browser-languagedetector": "^8.0.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.275",

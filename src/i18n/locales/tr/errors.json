@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "API anahtarı gerekli",
+    "keyInvalid": "Geçersiz API anahtarı",
+    "requestFailed": "İstek başarısız oldu",
+    "rateLimitExceeded": "İstek limiti aşıldı",
+    "networkError": "Ağ hatası",
+    "timeout": "İstek zaman aşımına uğradı"
+  },
+  "analysis": {
+    "noIocs": "Gösterge tespit edilemedi",
+    "analysisError": "Analiz hatası oluştu",
+    "noResults": "Sonuç bulunamadı"
+  },
+  "storage": {
+    "saveFailed": "Ayarlar kaydedilemedi",
+    "loadFailed": "Ayarlar yüklenemedi"
+  },
+  "provider": {
+    "notConfigured": "API yapılandırılmamış",
+    "unavailable": "Servis kullanılamıyor"
+  }
+}

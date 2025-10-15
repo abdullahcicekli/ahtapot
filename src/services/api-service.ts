@@ -1,4 +1,4 @@
-import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
+import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { ServiceRegistry } from './ServiceRegistry';
 
 /**

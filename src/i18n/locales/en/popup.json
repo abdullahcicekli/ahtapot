@@ -1,0 +1,22 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot Logo"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "Indicator Analysis",
+      "description": "Open side panel and analyze indicators"
+    },
+    "apiSettings": {
+      "title": "API Settings",
+      "description": "Manage API keys"
+    },
+    "about": {
+      "title": "About",
+      "description": "Ahtapot Extension v1.0.0"
+    }
+  },
+  "footer": {
+    "text": "Select text or right-click to analyze indicators"
+  }
+}

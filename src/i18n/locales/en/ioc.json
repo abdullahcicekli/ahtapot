@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4 Address",
+    "ipv6": "IPv6 Address",
+    "domain": "Domain",
+    "url": "URL",
+    "md5": "MD5 Hash",
+    "sha1": "SHA1 Hash",
+    "sha256": "SHA256 Hash",
+    "email": "Email Address",
+    "cve": "CVE Number",
+    "bitcoin": "Bitcoin Address",
+    "ethereum": "Ethereum Address"
+  },
+  "categories": {
+    "network": "Network Indicators",
+    "file": "File Indicators",
+    "email": "Email Indicators",
+    "vulnerability": "Vulnerability Indicators",
+    "cryptocurrency": "Cryptocurrency Indicators"
+  },
+  "labels": {
+    "detected": "Detected {{count}} indicator",
+    "detected_plural": "Detected {{count}} indicators",
+    "analyzing": "Analyzing indicator...",
+    "analyzing_plural": "Analyzing indicators..."
+  }
+}

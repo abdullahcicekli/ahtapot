@@ -15,9 +15,14 @@ import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
+import '@/i18n/config';
 import './sidepanel.css';
 
 const SidePanel: React.FC = () => {
+  const { t } = useTranslation('sidepanel');
+  const tCommon = useTranslation('common').t;
+
   const [inputText, setInputText] = useState('');
   const [detectedIOCs, setDetectedIOCs] = useState<DetectedIOC[]>([]);
   const [results, setResults] = useState<IOCAnalysisResult[]>([]);
@@ -26,11 +31,9 @@ const SidePanel: React.FC = () => {
   const [completedProviders, setCompletedProviders] = useState<{ provider: APIProvider; status: 'success' | 'error' }[]>([]);
   const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
 
-  // API anahtarlarını kontrol et
   useEffect(() => {
     checkAPIKeys();
 
-    // Storage değişikliklerini dinle
     const handleStorageChange = (changes: any) => {
       if (changes.apiKeys) {
         checkAPIKeys();
@@ -44,17 +47,14 @@ const SidePanel: React.FC = () => {
     };
   }, []);
 
-  // Mesajları dinle (content script veya context menu'den)
   useEffect(() => {
     chrome.runtime.onMessage.addListener((message) => {
       if (message.type === MessageType.OPEN_SIDEPANEL) {
-        // IOC'ler direkt gelirse onları kullan
         if (message.payload.iocs) {
           const iocs = message.payload.iocs as DetectedIOC[];
           setDetectedIOCs(iocs);
           handleAnalyze(undefined, iocs);
         } else {
-          // Metin gelirse tespit et ve analiz et
           const text = message.payload.selectedText || '';
           setInputText(text);
           handleAnalyze(text);
@@ -77,22 +77,17 @@ const SidePanel: React.FC = () => {
     }
   }
 
-  // IOC'leri tespit et
   const handleDetect = () => {
     const iocs = detectIOCs(inputText);
     setDetectedIOCs(iocs);
     setResults([]);
   };
 
-  // Analiz yap
   const handleAnalyze = async (text?: string, providedIOCs?: DetectedIOC[]) => {
     const textToAnalyze = text || inputText;
     const iocs = providedIOCs || detectIOCs(textToAnalyze);
 
-    console.log('[Sidepanel] Starting analysis with IOCs:', iocs);
-
     if (iocs.length === 0) {
-      console.log('[Sidepanel] No IOCs detected');
       return;
     }
 
@@ -101,14 +96,10 @@ const SidePanel: React.FC = () => {
     setResults([]);
     setCompletedProviders([]);
 
-    // API key kontrolü
     if (hasApiKeys === false) {
-      console.log('[Sidepanel] No API keys configured');
       setLoading(false);
       return;
     }
-
-    console.log('[Sidepanel] Sending ANALYZE_IOC message to background');
 
     try {
       const response = await chrome.runtime.sendMessage({
@@ -116,21 +107,15 @@ const SidePanel: React.FC = () => {
         payload: { iocs },
       });
 
-      console.log('[Sidepanel] Received response:', response);
-
       if (response && response.success) {
-        console.log('[Sidepanel] Analysis successful, results:', response.results);
         setResults(response.results || []);
 
-        // Provider durumlarını güncelle
         if (response.analyzingProviders) {
           setAnalyzingProviders(response.analyzingProviders);
         }
         if (response.completedProviders) {
           setCompletedProviders(response.completedProviders);
         }
-      } else {
-        console.error('[Sidepanel] Analysis failed:', response?.error);
       }
     } catch (error) {
       console.error('[Sidepanel] Error analyzing IOCs:', error);
@@ -140,7 +125,6 @@ const SidePanel: React.FC = () => {
     }
   };
 
-  // Durum ikonu
   const getStatusIcon = (status: IOCAnalysisResult['status']) => {
     switch (status) {
       case 'safe':
@@ -156,16 +140,8 @@ const SidePanel: React.FC = () => {
     }
   };
 
-  // Durum etiketi
   const getStatusLabel = (status: IOCAnalysisResult['status']) => {
-    const labels = {
-      safe: 'Güvenli',
-      suspicious: 'Şüpheli',
-      malicious: 'Zararlı',
-      unknown: 'Bilinmiyor',
-      error: 'Hata',
-    };
-    return labels[status];
+    return tCommon(`status.${status}`);
   };
 
   return (
@@ -174,33 +150,34 @@ const SidePanel: React.FC = () => {
         <div className="header-title">
           <img
             src="/icons/logo-white.png"
-            alt="Ahtapot Logo"
+            alt={t('header.logoAlt')}
             className="header-logo"
           />
         </div>
-        <button
-          onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
-          className="settings-btn"
-          title="Ayarlar"
-          aria-label="Ayarları aç"
-        >
-          <Settings size={20} />
-        </button>
+        <div className="header-actions">
+          <button
+            onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
+            className="settings-btn"
+            title={t('header.settingsTitle')}
+            aria-label={t('header.settingsLabel')}
+          >
+            <Settings size={20} />
+          </button>
+        </div>
       </header>
 
       <main className="sidepanel-main">
-        {/* API Key Uyarısı */}
         {hasApiKeys === false && (
           <div className="warning-card">
             <AlertTriangle size={20} />
             <div className="warning-content">
-              <strong>API Anahtarı Gerekli</strong>
-              <p>IOC analizi yapabilmek için en az bir API anahtarı yapılandırmanız gerekiyor.</p>
+              <strong>{t('apiWarning.title')}</strong>
+              <p>{t('apiWarning.description')}</p>
               <button
                 onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
                 className="setup-btn"
               >
-                API Anahtarlarını Yapılandır
+                {t('apiWarning.configureButton')}
                 <ExternalLink size={14} />
               </button>
             </div>
@@ -209,11 +186,11 @@ const SidePanel: React.FC = () => {
 
         <div className="input-section">
           <label htmlFor="ioc-input" className="input-label">
-            IOC'leri Girin veya Yapıştırın
+            {t('input.label')}
           </label>
           <textarea
             id="ioc-input"
-            placeholder="IP adresleri, domain'ler, hash'ler, URL'ler veya diğer IOC'leri buraya yapıştırın..."
+            placeholder={t('input.placeholder')}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             className="ioc-input"
@@ -222,7 +199,7 @@ const SidePanel: React.FC = () => {
           <div className="input-actions">
             <button onClick={handleDetect} className="detect-btn">
               <Search size={18} />
-              IOC'leri Tespit Et
+              {t('input.detectButton')}
             </button>
             <button
               onClick={() => handleAnalyze()}
@@ -232,19 +209,18 @@ const SidePanel: React.FC = () => {
               {loading ? (
                 <>
                   <Loader size={18} className="spinner" />
-                  Analiz Ediliyor...
+                  {t('input.analyzingButton')}
                 </>
               ) : (
                 <>
                   <Shield size={18} />
-                  Analiz Et
+                  {t('input.analyzeButton')}
                 </>
               )}
             </button>
           </div>
         </div>
 
-        {/* Provider Status Badges */}
         {(loading || results.length > 0) && hasApiKeys !== false && (
           <ProviderStatusBadges
             analyzingProviders={analyzingProviders}
@@ -255,7 +231,7 @@ const SidePanel: React.FC = () => {
         {detectedIOCs.length > 0 && (
           <div className="detected-section">
             <h2 className="section-title">
-              Tespit Edilen IOC'ler ({detectedIOCs.length})
+              {t('detected.title')} ({detectedIOCs.length})
             </h2>
             <div className="ioc-list">
               {detectedIOCs.map((ioc, index) => (
@@ -270,15 +246,13 @@ const SidePanel: React.FC = () => {
 
         {results.length > 0 && (
           <div className="results-section">
-            <h2 className="section-title">Analiz Sonuçları</h2>
+            <h2 className="section-title">{t('results.title')}</h2>
             <div className="results-list">
               {results.map((result, index) => {
-                // Render provider-specific card
                 if (result.source === 'VirusTotal') {
                   return <VirusTotalResultCard key={index} result={result} />;
                 }
 
-                // Default generic card for other providers
                 return (
                   <div key={index} className="result-card">
                     <div className="result-header">
@@ -314,31 +288,25 @@ const SidePanel: React.FC = () => {
         {!loading && detectedIOCs.length === 0 && inputText && (
           <div className="empty-state">
             <Search size={48} />
-            <h3>IOC Tespit Edilemedi</h3>
-            <p>
-              Girdiğiniz metinde herhangi bir güvenlik göstergesi (IOC) bulunamadı.
-            </p>
+            <h3>{t('emptyState.noDetection.title')}</h3>
+            <p>{t('emptyState.noDetection.description')}</p>
           </div>
         )}
 
         {!inputText && !loading && detectedIOCs.length === 0 && results.length === 0 && (
           <div className="welcome-state">
             <Shield size={64} />
-            <h2>Ahtapot'a Hoş Geldiniz</h2>
-            <p>
-              Siber güvenlik göstergelerini (IOC) hızlıca analiz edin.
-              Yukarıdaki alana IP adresleri, domain'ler, hash'ler veya diğer
-              IOC'leri yapıştırın.
-            </p>
+            <h2>{t('emptyState.welcome.title')}</h2>
+            <p>{t('emptyState.welcome.description')}</p>
             <div className="supported-iocs">
-              <h3>Desteklenen IOC Türleri:</h3>
+              <h3>{t('emptyState.welcome.supportedTitle')}</h3>
               <ul>
-                <li>IP Adresleri (IPv4/IPv6)</li>
-                <li>Domain ve URL'ler</li>
-                <li>Dosya Hash'leri (MD5, SHA1, SHA256)</li>
-                <li>E-posta Adresleri</li>
-                <li>CVE Numaraları</li>
-                <li>Kripto Para Adresleri</li>
+                <li>{t('emptyState.welcome.types.ipAddresses')}</li>
+                <li>{t('emptyState.welcome.types.domains')}</li>
+                <li>{t('emptyState.welcome.types.hashes')}</li>
+                <li>{t('emptyState.welcome.types.emails')}</li>
+                <li>{t('emptyState.welcome.types.cve')}</li>
+                <li>{t('emptyState.welcome.types.crypto')}</li>
               </ul>
             </div>
           </div>
@@ -348,7 +316,6 @@ const SidePanel: React.FC = () => {
   );
 };
 
-// React uygulamasını başlat
 const root = document.getElementById('root');
 if (root) {
   ReactDOM.createRoot(root).render(

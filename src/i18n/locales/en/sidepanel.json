@@ -1,0 +1,46 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot Logo",
+    "settingsTitle": "Settings",
+    "settingsLabel": "Open settings"
+  },
+  "apiWarning": {
+    "title": "API Configuration Required",
+    "description": "To analyze security indicators, you need to configure at least one API key.",
+    "configureButton": "Configure API Keys"
+  },
+  "input": {
+    "label": "Enter Security Indicators",
+    "placeholder": "Paste IP addresses, domains, hashes, URLs, or other security indicators here...",
+    "detectButton": "Scan for Indicators",
+    "analyzeButton": "Analyze Threats",
+    "analyzingButton": "Analyzing..."
+  },
+  "detected": {
+    "title": "Detected Indicators",
+    "count_one": "{{count}} indicator found",
+    "count_other": "{{count}} indicators found"
+  },
+  "results": {
+    "title": "Analysis Results"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "No Indicators Detected",
+      "description": "No security indicators (IOCs) were found in the provided text."
+    },
+    "welcome": {
+      "title": "Welcome to Ahtapot Security",
+      "description": "Quickly analyze cybersecurity indicators (IOCs). Paste IP addresses, domains, hashes, or other indicators in the field above.",
+      "supportedTitle": "Supported Indicator Types:",
+      "types": {
+        "ipAddresses": "IP Addresses (IPv4/IPv6)",
+        "domains": "Domains and URLs",
+        "hashes": "File Hashes (MD5, SHA1, SHA256)",
+        "emails": "Email Addresses",
+        "cve": "CVE Numbers",
+        "crypto": "Cryptocurrency Addresses"
+      }
+    }
+  }
+}

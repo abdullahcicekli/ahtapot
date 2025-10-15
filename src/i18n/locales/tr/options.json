@@ -1,0 +1,133 @@
+{
+  "header": {
+    "title": "Ayarlar",
+    "subtitle": "Eklenti ayarlarınızı yapılandırın",
+    "logoAlt": "Ahtapot Logo"
+  },
+  "tabs": {
+    "general": "Genel Ayarlar",
+    "apiKeys": "API Anahtarları"
+  },
+  "general": {
+    "title": "Genel Ayarlar",
+    "language": {
+      "label": "Dil",
+      "description": "Tercih ettiğiniz dili seçin",
+      "select": "Dil seçin"
+    }
+  },
+  "privacyNote": {
+    "title": "Gizlilik Notu:",
+    "description": "API anahtarlarınız yalnızca cihazınızda güvenli şekilde saklanır ve hiçbir sunucuya gönderilmez."
+  },
+  "apiKeys": {
+    "sectionTitle": "API Anahtarları",
+    "sectionDescription": "Her bir güvenlik aracı için API anahtarınızı girin. İsterseniz sadece kullanmak istediğiniz araçların anahtarlarını ekleyebilirsiniz.",
+    "placeholder": "{{provider}} API anahtarınız",
+    "showKey": "Anahtarı göster",
+    "hideKey": "Anahtarı gizle"
+  },
+  "providers": {
+    "virustotal": {
+      "label": "VirusTotal",
+      "description": "Dosya, URL ve IP adresi analizi",
+      "placeholder": "VirusTotal API anahtarınız"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "IP adresi ve ağ cihazları analizi",
+      "placeholder": "Shodan API anahtarınız"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "IP adresi kötüye kullanım kontrolü",
+      "placeholder": "AbuseIPDB API anahtarınız"
+    },
+    "urlscan": {
+      "label": "URLScan.io",
+      "description": "URL ve web sitesi analizi",
+      "placeholder": "URLScan.io API anahtarınız"
+    },
+    "haveibeenpwned": {
+      "label": "Have I Been Pwned",
+      "description": "E-posta veri ihlali kontrolü",
+      "placeholder": "Have I Been Pwned API anahtarınız"
+    }
+  },
+  "info": {
+    "limitsTitle": "Ücretsiz Plan Limitleri",
+    "dailyLimit": "Günlük/Aylık:",
+    "rateLimit": "İstek Limiti:",
+    "featuresTitle": "Özellikler",
+    "howToTitle": "API Anahtarı Nasıl Alınır?",
+    "steps": {
+      "signup": "Buradan ücretsiz hesap oluşturun",
+      "verify": "E-posta adresinizi doğrulayın",
+      "getKey": "API anahtarınızı alın",
+      "paste": "Anahtarı aşağıdaki alana yapıştırın"
+    }
+  },
+  "features": {
+    "virustotal": {
+      "feature1": "IP/Domain analizi",
+      "feature2": "Dosya hash kontrolü",
+      "feature3": "URL tarama",
+      "feature4": "90+ güvenlik motoru"
+    },
+    "shodan": {
+      "feature1": "Açık port tespiti",
+      "feature2": "Servis bilgileri",
+      "feature3": "Banner bilgisi",
+      "feature4": "Coğrafi konum"
+    },
+    "abuseipdb": {
+      "feature1": "Kötüye kullanım puanı",
+      "feature2": "Raporlama geçmişi",
+      "feature3": "ISP bilgisi",
+      "feature4": "Kategori analizi"
+    },
+    "urlscan": {
+      "feature1": "Ekran görüntüsü",
+      "feature2": "DOM analizi",
+      "feature3": "Ağ trafiği",
+      "feature4": "Tehdit tespiti"
+    },
+    "haveibeenpwned": {
+      "feature1": "Veri ihlali kontrolü",
+      "feature2": "İhlal detayları",
+      "feature3": "Parola kontrolü",
+      "feature4": "Domain izleme"
+    }
+  },
+  "limits": {
+    "virustotal": {
+      "free": "500 istek/gün",
+      "rate": "4 istek/dakika"
+    },
+    "shodan": {
+      "free": "100 istek/ay",
+      "rate": "1 istek/saniye"
+    },
+    "abuseipdb": {
+      "free": "1000 istek/gün",
+      "rate": "60 istek/dakika"
+    },
+    "urlscan": {
+      "free": "100 tarama/gün",
+      "rate": "1 tarama/dakika"
+    },
+    "haveibeenpwned": {
+      "free": "Sınırsız",
+      "rate": "1 istek/1.5 saniye"
+    }
+  },
+  "actions": {
+    "save": "Kaydet",
+    "successMessage": "API anahtarları başarıyla kaydedildi",
+    "errorMessage": "API anahtarları kaydedilemedi",
+    "errorLoading": "API anahtarları yüklenemedi"
+  },
+  "footer": {
+    "text": "Ahtapot v1.0.0 • Siber Güvenlik Gösterge Analiz Aracı"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4 Adresi",
+    "ipv6": "IPv6 Adresi",
+    "domain": "Domain",
+    "url": "URL",
+    "md5": "MD5 Hash",
+    "sha1": "SHA1 Hash",
+    "sha256": "SHA256 Hash",
+    "email": "E-posta",
+    "cve": "CVE",
+    "bitcoin": "Bitcoin Adresi",
+    "ethereum": "Ethereum Adresi"
+  },
+  "categories": {
+    "network": "Ağ Göstergeleri",
+    "file": "Dosya Göstergeleri",
+    "email": "E-posta Göstergeleri",
+    "vulnerability": "Güvenlik Açığı Göstergeleri",
+    "cryptocurrency": "Kripto Para Göstergeleri"
+  },
+  "labels": {
+    "detected": "{{count}} gösterge tespit edildi",
+    "detected_plural": "{{count}} gösterge tespit edildi",
+    "analyzing": "Gösterge analiz ediliyor...",
+    "analyzing_plural": "Göstergeler analiz ediliyor..."
+  }
+}

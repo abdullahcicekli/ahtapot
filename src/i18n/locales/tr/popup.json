@@ -1,0 +1,22 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot Logo"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "Gösterge Analizi",
+      "description": "Yan paneli aç ve göstergeleri analiz et"
+    },
+    "apiSettings": {
+      "title": "API Ayarları",
+      "description": "API anahtarlarını yönet"
+    },
+    "about": {
+      "title": "Hakkında",
+      "description": "Ahtapot Eklentisi v1.0.0"
+    }
+  },
+  "footer": {
+    "text": "Metin seçerek veya sağ tıklayarak göstergeleri analiz edebilirsiniz"
+  }
+}
