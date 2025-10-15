@@ -1,0 +1,57 @@
+{
+  "virustotal": {
+    "communityScore": "Topluluk Puanı",
+    "votes": {
+      "harmless": "zararsız",
+      "malicious": "zararlı"
+    },
+    "status": {
+      "malicious": "Zararlı",
+      "suspicious": "Şüpheli",
+      "clean": "Temiz"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} güvenlik sağlayıcısı bunu zararlı olarak işaretledi",
+      "suspicious": "{{count}} / {{total}} güvenlik sağlayıcısı bunu şüpheli olarak işaretledi",
+      "clean": "Hiçbir güvenlik sağlayıcısı bunu zararlı olarak işaretlemedi"
+    },
+    "tabs": {
+      "detection": "Tespit",
+      "details": "Detaylar"
+    },
+    "detection": {
+      "noDetections": "Hiçbir güvenlik sağlayıcısı bunu zararlı olarak işaretlemedi",
+      "vendorCategory": {
+        "malicious": "Zararlı",
+        "suspicious": "Şüpheli"
+      }
+    },
+    "pagination": {
+      "previous": "Önceki",
+      "next": "Sonraki",
+      "page": "Sayfa {{current}} / {{total}}"
+    },
+    "details": {
+      "location": "Konum",
+      "network": "Ağ",
+      "reputation": "İtibar",
+      "tags": "Etiketler",
+      "country": "Ülke:",
+      "continent": "Kıta:",
+      "networkRange": "Ağ:",
+      "asn": "ASN:",
+      "owner": "Sahip:",
+      "rir": "RIR:",
+      "score": "Puan:"
+    },
+    "analysisDate": "Son analiz"
+  },
+  "generic": {
+    "source": "Kaynak",
+    "type": "Tür",
+    "value": "Değer",
+    "status": "Durum",
+    "details": "Detaylar",
+    "error": "Hata"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot Logo",
+    "settingsTitle": "Ayarlar",
+    "settingsLabel": "Ayarları aç"
+  },
+  "apiWarning": {
+    "title": "API Yapılandırması Gerekli",
+    "description": "Güvenlik göstergelerini analiz etmek için en az bir API anahtarı yapılandırmanız gerekiyor.",
+    "configureButton": "API Anahtarlarını Yapılandır"
+  },
+  "input": {
+    "label": "Güvenlik Göstergelerini Girin",
+    "placeholder": "IP adresleri, domain'ler, hash'ler, URL'ler veya diğer güvenlik göstergelerini buraya yapıştırın...",
+    "detectButton": "Göstergeleri Tara",
+    "analyzeButton": "Tehditleri Analiz Et",
+    "analyzingButton": "Analiz Ediliyor..."
+  },
+  "detected": {
+    "title": "Tespit Edilen Göstergeler",
+    "count_one": "{{count}} gösterge bulundu",
+    "count_other": "{{count}} gösterge bulundu"
+  },
+  "results": {
+    "title": "Analiz Sonuçları"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "Gösterge Tespit Edilemedi",
+      "description": "Girdiğiniz metinde herhangi bir güvenlik göstergesi bulunamadı."
+    },
+    "welcome": {
+      "title": "Ahtapot Güvenlik'e Hoş Geldiniz",
+      "description": "Siber güvenlik göstergelerini hızlıca analiz edin. Yukarıdaki alana IP adresleri, domain'ler, hash'ler veya diğer göstergeleri yapıştırın.",
+      "supportedTitle": "Desteklenen Gösterge Türleri:",
+      "types": {
+        "ipAddresses": "IP Adresleri (IPv4/IPv6)",
+        "domains": "Domain ve URL'ler",
+        "hashes": "Dosya Hash'leri (MD5, SHA1, SHA256)",
+        "emails": "E-posta Adresleri",
+        "cve": "CVE Numaraları",
+        "crypto": "Kripto Para Adresleri"
+      }
+    }
+  }
+}

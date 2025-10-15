@@ -1,0 +1,57 @@
+{
+  "virustotal": {
+    "communityScore": "Community Score",
+    "votes": {
+      "harmless": "harmless",
+      "malicious": "malicious"
+    },
+    "status": {
+      "malicious": "Malicious",
+      "suspicious": "Suspicious",
+      "clean": "Clean"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} security vendors flagged this as malicious",
+      "suspicious": "{{count}} / {{total}} security vendors flagged this as suspicious",
+      "clean": "No security vendors flagged this as malicious"
+    },
+    "tabs": {
+      "detection": "Detection",
+      "details": "Details"
+    },
+    "detection": {
+      "noDetections": "No security vendors flagged this as malicious",
+      "vendorCategory": {
+        "malicious": "Malicious",
+        "suspicious": "Suspicious"
+      }
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{current}} of {{total}}"
+    },
+    "details": {
+      "location": "Location",
+      "network": "Network",
+      "reputation": "Reputation",
+      "tags": "Tags",
+      "country": "Country:",
+      "continent": "Continent:",
+      "networkRange": "Network:",
+      "asn": "ASN:",
+      "owner": "Owner:",
+      "rir": "RIR:",
+      "score": "Score:"
+    },
+    "analysisDate": "Last analyzed"
+  },
+  "generic": {
+    "source": "Source",
+    "type": "Type",
+    "value": "Value",
+    "status": "Status",
+    "details": "Details",
+    "error": "Error"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "buttons": {
+    "save": "Save",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "analyze": "Analyze Threats",
+    "detect": "Scan for Indicators",
+    "configure": "Configure",
+    "configureApiKeys": "Configure API Keys",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "status": {
+    "safe": "Safe",
+    "clean": "Clean",
+    "suspicious": "Suspicious",
+    "malicious": "Malicious",
+    "unknown": "Unknown",
+    "error": "Error",
+    "loading": "Loading...",
+    "analyzing": "Analyzing...",
+    "idle": "Idle",
+    "success": "Success"
+  },
+  "aria": {
+    "openSettings": "Open settings",
+    "closeDialog": "Close dialog",
+    "showKey": "Show key",
+    "hideKey": "Hide key",
+    "selectLanguage": "Select language"
+  },
+  "common": {
+    "logoAlt": "Ahtapot Logo",
+    "externalLink": "Opens in new tab"
+  }
+}

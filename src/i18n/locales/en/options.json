@@ -1,0 +1,133 @@
+{
+  "header": {
+    "title": "Settings",
+    "subtitle": "Configure your extension settings",
+    "logoAlt": "Ahtapot Logo"
+  },
+  "tabs": {
+    "general": "General Settings",
+    "apiKeys": "API Keys"
+  },
+  "general": {
+    "title": "General Settings",
+    "language": {
+      "label": "Language",
+      "description": "Select your preferred language",
+      "select": "Select language"
+    }
+  },
+  "privacyNote": {
+    "title": "Privacy Notice:",
+    "description": "Your API keys are stored securely on your device only and are never sent to any external server."
+  },
+  "apiKeys": {
+    "sectionTitle": "API Keys",
+    "sectionDescription": "Enter your API key for each security tool. You can add keys only for the tools you want to use.",
+    "placeholder": "Your {{provider}} API key",
+    "showKey": "Show key",
+    "hideKey": "Hide key"
+  },
+  "providers": {
+    "virustotal": {
+      "label": "VirusTotal",
+      "description": "File, URL, and IP address analysis",
+      "placeholder": "Your VirusTotal API key"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "IP address and network device analysis",
+      "placeholder": "Your Shodan API key"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "IP address abuse detection",
+      "placeholder": "Your AbuseIPDB API key"
+    },
+    "urlscan": {
+      "label": "URLScan.io",
+      "description": "URL and website analysis",
+      "placeholder": "Your URLScan.io API key"
+    },
+    "haveibeenpwned": {
+      "label": "Have I Been Pwned",
+      "description": "Email data breach check",
+      "placeholder": "Your Have I Been Pwned API key"
+    }
+  },
+  "info": {
+    "limitsTitle": "Free Plan Limits",
+    "dailyLimit": "Daily/Monthly:",
+    "rateLimit": "Rate Limit:",
+    "featuresTitle": "Features",
+    "howToTitle": "How to Get an API Key?",
+    "steps": {
+      "signup": "Create a free account here",
+      "verify": "Verify your email address",
+      "getKey": "Get your API key",
+      "paste": "Paste the key in the field below"
+    }
+  },
+  "features": {
+    "virustotal": {
+      "feature1": "IP/Domain analysis",
+      "feature2": "File hash checking",
+      "feature3": "URL scanning",
+      "feature4": "90+ security engines"
+    },
+    "shodan": {
+      "feature1": "Open port detection",
+      "feature2": "Service information",
+      "feature3": "Banner information",
+      "feature4": "Geolocation data"
+    },
+    "abuseipdb": {
+      "feature1": "Abuse score",
+      "feature2": "Reporting history",
+      "feature3": "ISP information",
+      "feature4": "Category analysis"
+    },
+    "urlscan": {
+      "feature1": "Screenshot capture",
+      "feature2": "DOM analysis",
+      "feature3": "Network traffic",
+      "feature4": "Threat detection"
+    },
+    "haveibeenpwned": {
+      "feature1": "Data breach check",
+      "feature2": "Breach details",
+      "feature3": "Password checking",
+      "feature4": "Domain monitoring"
+    }
+  },
+  "limits": {
+    "virustotal": {
+      "free": "500 requests/day",
+      "rate": "4 requests/minute"
+    },
+    "shodan": {
+      "free": "100 requests/month",
+      "rate": "1 request/second"
+    },
+    "abuseipdb": {
+      "free": "1000 requests/day",
+      "rate": "60 requests/minute"
+    },
+    "urlscan": {
+      "free": "100 scans/day",
+      "rate": "1 scan/minute"
+    },
+    "haveibeenpwned": {
+      "free": "Unlimited",
+      "rate": "1 request/1.5 seconds"
+    }
+  },
+  "actions": {
+    "save": "Save Changes",
+    "successMessage": "API keys saved successfully",
+    "errorMessage": "Failed to save API keys",
+    "errorLoading": "Failed to load API keys"
+  },
+  "footer": {
+    "text": "Ahtapot v1.0.0 • Cybersecurity Indicator Analysis Tool"
+  }
+}

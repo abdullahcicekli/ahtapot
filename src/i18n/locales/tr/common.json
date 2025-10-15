@@ -1,0 +1,37 @@
+{
+  "buttons": {
+    "save": "Kaydet",
+    "saveChanges": "Değişiklikleri Kaydet",
+    "cancel": "İptal",
+    "analyze": "Tehditleri Analiz Et",
+    "detect": "Göstergeleri Tara",
+    "configure": "Yapılandır",
+    "configureApiKeys": "API Anahtarlarını Yapılandır",
+    "close": "Kapat",
+    "previous": "Önceki",
+    "next": "Sonraki"
+  },
+  "status": {
+    "safe": "Güvenli",
+    "clean": "Temiz",
+    "suspicious": "Şüpheli",
+    "malicious": "Zararlı",
+    "unknown": "Bilinmiyor",
+    "error": "Hata",
+    "loading": "Yükleniyor...",
+    "analyzing": "Analiz Ediliyor...",
+    "idle": "Boşta",
+    "success": "Başarılı"
+  },
+  "aria": {
+    "openSettings": "Ayarları aç",
+    "closeDialog": "İletişim kutusunu kapat",
+    "showKey": "Anahtarı göster",
+    "hideKey": "Anahtarı gizle",
+    "selectLanguage": "Dil seçin"
+  },
+  "common": {
+    "logoAlt": "Ahtapot Logo",
+    "externalLink": "Yeni sekmede açılır"
+  }
+}

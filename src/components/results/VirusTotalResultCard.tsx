@@ -5,8 +5,6 @@ import {
   AlertTriangle,
   CheckCircle,
   XCircle,
-  ChevronDown,
-  ChevronUp,
   Info,
   Globe,
   Server,
@@ -25,7 +23,6 @@ interface VendorResult {
 }
 
 export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ result }) => {
-  const [showDetails, setShowDetails] = useState(false);
   const [activeTab, setActiveTab] = useState<'detection' | 'details'>('detection');
 
   const { details } = result;

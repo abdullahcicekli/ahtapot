@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "API key required",
+    "keyInvalid": "Invalid API key",
+    "requestFailed": "Request failed",
+    "rateLimitExceeded": "Rate limit exceeded",
+    "networkError": "Network error",
+    "timeout": "Request timeout"
+  },
+  "analysis": {
+    "noIocs": "No indicators detected",
+    "analysisError": "Analysis error",
+    "noResults": "No results available"
+  },
+  "storage": {
+    "saveFailed": "Failed to save settings",
+    "loadFailed": "Failed to load settings"
+  },
+  "provider": {
+    "notConfigured": "API not configured",
+    "unavailable": "Service unavailable"
+  }
+}
