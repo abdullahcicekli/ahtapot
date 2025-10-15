@@ -15,7 +15,7 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Development](#-development) • [API Keys](#-api-keys)
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys)
 
 </div>
 
@@ -69,11 +69,13 @@ Automatically detects and analyzes various types of security indicators:
 - Non-intrusive UX
 
 ### 🔒 **Privacy First**
-- ✅ All API keys stored locally
+- ✅ All API keys stored locally on your device
 - ✅ No data collection or tracking
 - ✅ Secure HTTPS connections only
+- ✅ Optional caching with configurable retention
 - ✅ Open source and transparent
 - ✅ Content Security Policy compliant
+- ✅ Read our [Privacy Policy](PRIVACY.md) | [Gizlilik Politikası (TR)](PRIVACY_TR.md)
 
 ---
 
@@ -102,14 +104,47 @@ npm run build
 
 ---
 
+## 🔒 Privacy
+
+We take your privacy seriously. Here's what you need to know:
+
+### What We Store (Locally Only)
+- ✅ **API Keys**: Stored securely on your device using Chrome's encrypted storage
+- ✅ **Cached Results**: Previously analyzed IOCs (optional, user-configurable retention period)
+- ✅ **User Preferences**: Language selection and settings
+
+### What We DON'T Do
+- ❌ **No Tracking**: Zero analytics or telemetry
+- ❌ **No Servers**: We don't operate any servers
+- ❌ **No Data Transmission**: Nothing leaves your device except API calls to security services
+- ❌ **No Sale of Data**: Your data is yours, period
+- ❌ **No Third-Party Sharing**: Only you and the security APIs you configure
+
+### Cache Management
+- Configure how long analyzed IOCs are kept (1-30 days, default: 7 days)
+- Automatic cleanup of old cached data
+- Manual cache clearing anytime
+- All cached data stored locally only
+
+### Full Privacy Policy
+📄 **Read the complete privacy policy:**
+- [English Version](PRIVACY.md)
+- [Türkçe Versiyon](PRIVACY_TR.md)
+
+---
+
 ## 🚀 Usage
 
 ### Quick Start Guide
 
-#### 1️⃣ Configure API Keys (Recommended)
-- Click the Ahtapot extension icon
-- Select "API Settings"
-- Add your API keys for enhanced analysis
+#### 1️⃣ Configure Settings
+- Click the Ahtapot extension icon → Settings
+- **General Settings Tab:**
+  - Choose your language (English/Türkçe)
+  - Configure cache retention period (optional)
+- **API Keys Tab:**
+  - Add your API keys for enhanced analysis
+  - See [API Keys section](#-api-keys) for how to obtain them
 
 #### 2️⃣ Analyze IOCs
 Choose your preferred method:
@@ -397,7 +432,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues:** [GitHub Issues](https://github.com/yourusername/ahtapot-extension/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/yourusername/ahtapot-extension/discussions)
-- **Security:** Please report security issues privately
+- **Privacy Questions:** See [Privacy Policy](PRIVACY.md)
+- **Security Vulnerabilities:** Please report security issues privately via GitHub Security tab
 
 ---
 
