@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import './options.css';
 
@@ -10,6 +10,10 @@ interface APIKeyConfig {
   description: string;
   placeholder: string;
   link: string;
+  signupLink: string;
+  freeLimit: string;
+  rateLimit: string;
+  features: string[];
 }
 
 const API_CONFIGS: APIKeyConfig[] = [
@@ -19,6 +23,10 @@ const API_CONFIGS: APIKeyConfig[] = [
     description: 'Dosya, URL ve IP adresi analizi',
     placeholder: 'VirusTotal API anahtarınız',
     link: 'https://www.virustotal.com/gui/my-apikey',
+    signupLink: 'https://www.virustotal.com/gui/join-us',
+    freeLimit: '500 istek/gün',
+    rateLimit: '4 istek/dakika',
+    features: ['IP/Domain analizi', 'Dosya hash kontrolü', 'URL tarama', '90+ güvenlik motoru'],
   },
   {
     provider: APIProvider.SHODAN,
@@ -26,6 +34,10 @@ const API_CONFIGS: APIKeyConfig[] = [
     description: 'IP adresi ve ağ cihazları analizi',
     placeholder: 'Shodan API anahtarınız',
     link: 'https://account.shodan.io/',
+    signupLink: 'https://account.shodan.io/register',
+    freeLimit: '100 istek/ay',
+    rateLimit: '1 istek/saniye',
+    features: ['Açık port tespiti', 'Servis bilgileri', 'Banner bilgisi', 'Coğrafi konum'],
   },
   {
     provider: APIProvider.ABUSEIPDB,
@@ -33,6 +45,10 @@ const API_CONFIGS: APIKeyConfig[] = [
     description: 'IP adresi kötüye kullanım kontrolü',
     placeholder: 'AbuseIPDB API anahtarınız',
     link: 'https://www.abuseipdb.com/account/api',
+    signupLink: 'https://www.abuseipdb.com/register',
+    freeLimit: '1000 istek/gün',
+    rateLimit: '60 istek/dakika',
+    features: ['Kötüye kullanım puanı', 'Raporlama geçmişi', 'ISP bilgisi', 'Kategori analizi'],
   },
   {
     provider: APIProvider.URLSCAN,
@@ -40,6 +56,10 @@ const API_CONFIGS: APIKeyConfig[] = [
     description: 'URL ve web sitesi analizi',
     placeholder: 'URLScan.io API anahtarınız',
     link: 'https://urlscan.io/user/profile/',
+    signupLink: 'https://urlscan.io/user/signup',
+    freeLimit: '100 tarama/gün',
+    rateLimit: '1 tarama/dakika',
+    features: ['Ekran görüntüsü', 'DOM analizi', 'Ağ trafiği', 'Tehdit tespiti'],
   },
   {
     provider: APIProvider.HIBP,
@@ -47,12 +67,17 @@ const API_CONFIGS: APIKeyConfig[] = [
     description: 'E-posta veri ihlali kontrolü',
     placeholder: 'HIBP API anahtarınız',
     link: 'https://haveibeenpwned.com/API/Key',
+    signupLink: 'https://haveibeenpwned.com/API/Key',
+    freeLimit: 'Sınırsız',
+    rateLimit: '1 istek/1.5 saniye',
+    features: ['Veri ihlali kontrolü', 'Breach detayları', 'Parola kontrolü', 'Domain izleme'],
   },
 ];
 
 const OptionsPage: React.FC = () => {
   const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
+  const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -83,6 +108,19 @@ const OptionsPage: React.FC = () => {
   // Görünürlüğü değiştir
   const toggleVisibility = (provider: string) => {
     setVisibleKeys((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(provider)) {
+        newSet.delete(provider);
+      } else {
+        newSet.add(provider);
+      }
+      return newSet;
+    });
+  };
+
+  // Info genişletme/daraltma
+  const toggleInfo = (provider: string) => {
+    setExpandedInfo((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
         newSet.delete(provider);
@@ -145,19 +183,69 @@ const OptionsPage: React.FC = () => {
             {API_CONFIGS.map((config) => (
               <div key={config.provider} className="api-key-card">
                 <div className="api-key-header">
-                  <div>
-                    <h3>{config.label}</h3>
-                    <p className="api-key-description">{config.description}</p>
+                  <div className="api-key-title-row">
+                    <div>
+                      <h3>{config.label}</h3>
+                      <p className="api-key-description">{config.description}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => toggleInfo(config.provider)}
+                      className="info-btn"
+                      aria-label="API bilgileri"
+                      title="API limitleri ve özellikler"
+                    >
+                      <Info size={18} />
+                    </button>
                   </div>
-                  <a
-                    href={config.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="api-key-link"
-                  >
-                    Anahtarı Al
-                  </a>
                 </div>
+
+                {expandedInfo.has(config.provider) && (
+                  <div className="api-info-box">
+                    <div className="api-info-section">
+                      <h4>Ücretsiz Plan Limitleri</h4>
+                      <div className="api-limits">
+                        <div className="limit-item">
+                          <span className="limit-label">Günlük/Aylık:</span>
+                          <span className="limit-value">{config.freeLimit}</span>
+                        </div>
+                        <div className="limit-item">
+                          <span className="limit-label">Rate Limit:</span>
+                          <span className="limit-value">{config.rateLimit}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="api-info-section">
+                      <h4>Özellikler</h4>
+                      <ul className="api-features-list">
+                        {config.features.map((feature, idx) => (
+                          <li key={idx}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="api-info-section">
+                      <h4>API Anahtarı Nasıl Alınır?</h4>
+                      <ol className="api-steps-list">
+                        <li>
+                          <a href={config.signupLink} target="_blank" rel="noopener noreferrer">
+                            Buradan ücretsiz hesap oluşturun
+                            <ExternalLink size={14} className="external-icon" />
+                          </a>
+                        </li>
+                        <li>E-posta adresinizi doğrulayın</li>
+                        <li>
+                          <a href={config.link} target="_blank" rel="noopener noreferrer">
+                            API anahtarınızı alın
+                            <ExternalLink size={14} className="external-icon" />
+                          </a>
+                        </li>
+                        <li>Anahtarı aşağıdaki alana yapıştırın</li>
+                      </ol>
+                    </div>
+                  </div>
+                )}
 
                 <div className="api-key-input-wrapper">
                   <input

@@ -1,10 +1,14 @@
 import { MessageType, ExtensionMessage } from '@/types/messages';
-import { DetectedIOC, IOCAnalysisResult } from '@/types/ioc';
+import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
+import { APIService } from '@/services/api-service';
 
 /**
  * Background Service Worker
  * API çağrılarını yönetir, API anahtarlarını güvenli tutar
  */
+
+// API service instance
+let apiService: APIService | null = null;
 
 // Context menu oluştur
 chrome.runtime.onInstalled.addListener(() => {
@@ -65,11 +69,15 @@ chrome.runtime.onMessage.addListener(
     }
 
     if (message.type === MessageType.ANALYZE_IOC) {
+      console.log('[Background] Received ANALYZE_IOC message:', message.payload.iocs);
+
       handleAnalyzeIOC(message.payload.iocs)
-        .then((results) => {
-          sendResponse({ success: true, results });
+        .then((response) => {
+          console.log('[Background] Analysis complete:', response);
+          sendResponse({ success: true, ...response });
         })
         .catch((error) => {
+          console.error('[Background] Analysis error:', error);
           sendResponse({ success: false, error: error.message });
         });
       return true; // Async response için gerekli
@@ -82,21 +90,75 @@ chrome.runtime.onMessage.addListener(
  */
 async function handleAnalyzeIOC(
   iocs: DetectedIOC[]
-): Promise<IOCAnalysisResult[]> {
-  const results: IOCAnalysisResult[] = [];
-
-  // API anahtarlarını al
+): Promise<{
+  results: IOCAnalysisResult[];
+  analyzingProviders: APIProvider[];
+  completedProviders: { provider: APIProvider; status: 'success' | 'error' }[];
+}> {
+  // API anahtarlarını al ve service'i başlat
   const apiKeys = await getStoredAPIKeys();
+  console.log('[Background] Loaded API keys:', Object.keys(apiKeys));
+
+  // API key kontrolü
+  const hasKeys = Object.values(apiKeys).some(
+    (key) => key && String(key).trim() !== ''
+  );
+
+  if (!hasKeys) {
+    console.log('[Background] No API keys found');
+    return {
+      results: iocs.map((ioc) => ({
+        ioc,
+        source: 'system',
+        status: 'error' as const,
+        error: 'API anahtarı yapılandırılmamış. Lütfen ayarlardan en az bir API anahtarı ekleyin.',
+        timestamp: Date.now(),
+      })),
+      analyzingProviders: [],
+      completedProviders: [],
+    };
+  }
+
+  console.log('[Background] API keys found, initializing service');
+
+  // API service'i başlat
+  if (!apiService) {
+    apiService = new APIService(apiKeys);
+    console.log('[Background] Created new APIService instance');
+  } else {
+    apiService.updateAPIKeys(apiKeys);
+    console.log('[Background] Updated existing APIService');
+  }
+
+  const allResults: IOCAnalysisResult[] = [];
+  const analyzingProviders: APIProvider[] = [];
+  const completedProviders: { provider: APIProvider; status: 'success' | 'error' }[] = [];
 
   // Her IOC için analiz yap
   for (const ioc of iocs) {
+    console.log('[Background] Analyzing IOC:', ioc);
     try {
-      const result = await analyzeIOC(ioc, apiKeys);
-      results.push(result);
+      const results = await apiService.analyzeIOC(ioc);
+      console.log('[Background] IOC analysis results:', results);
+
+      // Başarılı ve hatalı servisleri ayır
+      results.forEach((result) => {
+        allResults.push(result);
+
+        // Provider'ı bul
+        const provider = findProviderByServiceName(result.source);
+        if (provider) {
+          completedProviders.push({
+            provider,
+            status: result.status === 'error' ? 'error' : 'success',
+          });
+        }
+      });
     } catch (error) {
-      results.push({
+      console.error('[Background] Error analyzing IOC:', error);
+      allResults.push({
         ioc,
-        source: 'error',
+        source: 'system',
         status: 'error',
         error: error instanceof Error ? error.message : 'Bilinmeyen hata',
         timestamp: Date.now(),
@@ -104,32 +166,29 @@ async function handleAnalyzeIOC(
     }
   }
 
-  return results;
+  console.log('[Background] All results:', allResults);
+
+  return {
+    results: allResults,
+    analyzingProviders,
+    completedProviders,
+  };
 }
 
 /**
- * Tek bir IOC'yi analiz eder
+ * Service adından provider bul
  */
-async function analyzeIOC(
-  ioc: DetectedIOC,
-  _apiKeys: Record<string, string>
-): Promise<IOCAnalysisResult> {
-  // Şimdilik mock data döndür (gerçek API entegrasyonu sonra eklenecek)
-  // Bu, extension'ın çalışabilir halde olmasını sağlar
+function findProviderByServiceName(serviceName: string): APIProvider | null {
+  const mapping: Record<string, APIProvider> = {
+    'VirusTotal': APIProvider.VIRUSTOTAL,
+    'Shodan': APIProvider.SHODAN,
+    'AbuseIPDB': APIProvider.ABUSEIPDB,
+    'URLScan.io': APIProvider.URLSCAN,
+    'Have I Been Pwned': APIProvider.HIBP,
+    'Blockchain.info': APIProvider.BLOCKCHAIN,
+  };
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        ioc,
-        source: 'mock',
-        status: 'unknown',
-        details: {
-          message: 'API entegrasyonu henüz eklenmedi. Bu bir test sonucudur.',
-        },
-        timestamp: Date.now(),
-      });
-    }, 1000);
-  });
+  return mapping[serviceName] || null;
 }
 
 /**

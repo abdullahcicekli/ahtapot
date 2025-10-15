@@ -8,10 +8,13 @@ import {
   XCircle,
   Loader,
   Settings,
+  ExternalLink,
 } from 'lucide-react';
-import { DetectedIOC, IOCAnalysisResult } from '@/types/ioc';
+import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
+import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
+import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
 import './sidepanel.css';
 
 const SidePanel: React.FC = () => {
@@ -19,6 +22,27 @@ const SidePanel: React.FC = () => {
   const [detectedIOCs, setDetectedIOCs] = useState<DetectedIOC[]>([]);
   const [results, setResults] = useState<IOCAnalysisResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [analyzingProviders, setAnalyzingProviders] = useState<APIProvider[]>([]);
+  const [completedProviders, setCompletedProviders] = useState<{ provider: APIProvider; status: 'success' | 'error' }[]>([]);
+  const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
+
+  // API anahtarlarını kontrol et
+  useEffect(() => {
+    checkAPIKeys();
+
+    // Storage değişikliklerini dinle
+    const handleStorageChange = (changes: any) => {
+      if (changes.apiKeys) {
+        checkAPIKeys();
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
+  }, []);
 
   // Mesajları dinle (content script veya context menu'den)
   useEffect(() => {
@@ -28,18 +52,7 @@ const SidePanel: React.FC = () => {
         if (message.payload.iocs) {
           const iocs = message.payload.iocs as DetectedIOC[];
           setDetectedIOCs(iocs);
-          setLoading(true);
-
-          // Analiz yap
-          chrome.runtime.sendMessage({
-            type: MessageType.ANALYZE_IOC,
-            payload: { iocs },
-          }).then((response) => {
-            if (response.success) {
-              setResults(response.results);
-            }
-            setLoading(false);
-          });
+          handleAnalyze(undefined, iocs);
         } else {
           // Metin gelirse tespit et ve analiz et
           const text = message.payload.selectedText || '';
@@ -50,6 +63,20 @@ const SidePanel: React.FC = () => {
     });
   }, []);
 
+  async function checkAPIKeys() {
+    try {
+      const result = await chrome.storage.local.get('apiKeys');
+      const apiKeys = result.apiKeys || {};
+      const hasKeys = Object.values(apiKeys).some(
+        (key) => key && String(key).trim() !== ''
+      );
+      setHasApiKeys(hasKeys);
+    } catch (error) {
+      console.error('Error checking API keys:', error);
+      setHasApiKeys(false);
+    }
+  }
+
   // IOC'leri tespit et
   const handleDetect = () => {
     const iocs = detectIOCs(inputText);
@@ -58,16 +85,30 @@ const SidePanel: React.FC = () => {
   };
 
   // Analiz yap
-  const handleAnalyze = async (text?: string) => {
+  const handleAnalyze = async (text?: string, providedIOCs?: DetectedIOC[]) => {
     const textToAnalyze = text || inputText;
-    const iocs = detectIOCs(textToAnalyze);
+    const iocs = providedIOCs || detectIOCs(textToAnalyze);
+
+    console.log('[Sidepanel] Starting analysis with IOCs:', iocs);
 
     if (iocs.length === 0) {
+      console.log('[Sidepanel] No IOCs detected');
       return;
     }
 
     setDetectedIOCs(iocs);
     setLoading(true);
+    setResults([]);
+    setCompletedProviders([]);
+
+    // API key kontrolü
+    if (hasApiKeys === false) {
+      console.log('[Sidepanel] No API keys configured');
+      setLoading(false);
+      return;
+    }
+
+    console.log('[Sidepanel] Sending ANALYZE_IOC message to background');
 
     try {
       const response = await chrome.runtime.sendMessage({
@@ -75,15 +116,27 @@ const SidePanel: React.FC = () => {
         payload: { iocs },
       });
 
-      if (response.success) {
-        setResults(response.results);
+      console.log('[Sidepanel] Received response:', response);
+
+      if (response && response.success) {
+        console.log('[Sidepanel] Analysis successful, results:', response.results);
+        setResults(response.results || []);
+
+        // Provider durumlarını güncelle
+        if (response.analyzingProviders) {
+          setAnalyzingProviders(response.analyzingProviders);
+        }
+        if (response.completedProviders) {
+          setCompletedProviders(response.completedProviders);
+        }
       } else {
-        console.error('Analysis failed:', response.error);
+        console.error('[Sidepanel] Analysis failed:', response?.error);
       }
     } catch (error) {
-      console.error('Error analyzing IOCs:', error);
+      console.error('[Sidepanel] Error analyzing IOCs:', error);
     } finally {
       setLoading(false);
+      setAnalyzingProviders([]);
     }
   };
 
@@ -136,6 +189,24 @@ const SidePanel: React.FC = () => {
       </header>
 
       <main className="sidepanel-main">
+        {/* API Key Uyarısı */}
+        {hasApiKeys === false && (
+          <div className="warning-card">
+            <AlertTriangle size={20} />
+            <div className="warning-content">
+              <strong>API Anahtarı Gerekli</strong>
+              <p>IOC analizi yapabilmek için en az bir API anahtarı yapılandırmanız gerekiyor.</p>
+              <button
+                onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
+                className="setup-btn"
+              >
+                API Anahtarlarını Yapılandır
+                <ExternalLink size={14} />
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="input-section">
           <label htmlFor="ioc-input" className="input-label">
             IOC'leri Girin veya Yapıştırın
@@ -156,7 +227,7 @@ const SidePanel: React.FC = () => {
             <button
               onClick={() => handleAnalyze()}
               className="analyze-btn"
-              disabled={detectedIOCs.length === 0 || loading}
+              disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
             >
               {loading ? (
                 <>
@@ -172,6 +243,14 @@ const SidePanel: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Provider Status Badges */}
+        {(loading || results.length > 0) && hasApiKeys !== false && (
+          <ProviderStatusBadges
+            analyzingProviders={analyzingProviders}
+            completedProviders={completedProviders}
+          />
+        )}
 
         {detectedIOCs.length > 0 && (
           <div className="detected-section">
@@ -193,33 +272,41 @@ const SidePanel: React.FC = () => {
           <div className="results-section">
             <h2 className="section-title">Analiz Sonuçları</h2>
             <div className="results-list">
-              {results.map((result, index) => (
-                <div key={index} className="result-card">
-                  <div className="result-header">
-                    {getStatusIcon(result.status)}
-                    <div className="result-info">
-                      <div className="result-value">{result.ioc.value}</div>
-                      <div className="result-meta">
-                        <span className="result-type">
-                          {getIOCTypeLabel(result.ioc.type)}
-                        </span>
-                        <span className="result-source">{result.source}</span>
+              {results.map((result, index) => {
+                // Render provider-specific card
+                if (result.source === 'VirusTotal') {
+                  return <VirusTotalResultCard key={index} result={result} />;
+                }
+
+                // Default generic card for other providers
+                return (
+                  <div key={index} className="result-card">
+                    <div className="result-header">
+                      {getStatusIcon(result.status)}
+                      <div className="result-info">
+                        <div className="result-value">{result.ioc.value}</div>
+                        <div className="result-meta">
+                          <span className="result-type">
+                            {getIOCTypeLabel(result.ioc.type)}
+                          </span>
+                          <span className="result-source">{result.source}</span>
+                        </div>
+                      </div>
+                      <div className={`result-status ${result.status}`}>
+                        {getStatusLabel(result.status)}
                       </div>
                     </div>
-                    <div className={`result-status ${result.status}`}>
-                      {getStatusLabel(result.status)}
-                    </div>
+                    {result.details && (
+                      <div className="result-details">
+                        {result.details.message || JSON.stringify(result.details)}
+                      </div>
+                    )}
+                    {result.error && (
+                      <div className="result-error">{result.error}</div>
+                    )}
                   </div>
-                  {result.details && (
-                    <div className="result-details">
-                      {result.details.message || JSON.stringify(result.details)}
-                    </div>
-                  )}
-                  {result.error && (
-                    <div className="result-error">{result.error}</div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -234,7 +321,7 @@ const SidePanel: React.FC = () => {
           </div>
         )}
 
-        {!inputText && !loading && (
+        {!inputText && !loading && detectedIOCs.length === 0 && results.length === 0 && (
           <div className="welcome-state">
             <Shield size={64} />
             <h2>Ahtapot'a Hoş Geldiniz</h2>
