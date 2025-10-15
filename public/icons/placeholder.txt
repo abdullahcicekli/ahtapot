@@ -1,0 +1,12 @@
+# Icon Dosyaları
+
+Bu dizine aşağıdaki boyutlarda Ahtapot logosu eklenmeli:
+- icon-16.png (16x16 piksel)
+- icon-32.png (32x32 piksel)
+- icon-48.png (48x48 piksel)
+- icon-128.png (128x128 piksel)
+
+Geçici olarak, Chrome bu dosyalar olmadan da extension'ı yükleyecektir.
+Gerçek icon'lar daha sonra bir grafik tasarım aracı ile oluşturulabilir.
+
+Logo Önerisi: Ahtapot (octopus) temalı, siber güvenlik hissiyatı veren mor-mavi tonlarda bir tasarım.
