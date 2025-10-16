@@ -1,10 +1,11 @@
 import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { ServiceRegistry } from './ServiceRegistry';
+import { CacheManager } from '@/utils/cacheManager';
 
 /**
  * API Service Layer
  * Farklı güvenlik araçlarının API'leriyle iletişim kurar
- * Refactored to use modular service architecture
+ * Refactored to use modular service architecture with caching support
  */
 
 export class APIService {
@@ -17,20 +18,50 @@ export class APIService {
 
   /**
    * IOC'yi analiz eder (tüm uygun API'leri kullanır)
+   * Cache'den kontrol eder, yoksa API'ye gider ve cache'e kaydeder
    */
   async analyzeIOC(ioc: DetectedIOC): Promise<IOCAnalysisResult[]> {
     const results: IOCAnalysisResult[] = [];
 
+    // Check if cache is enabled
+    const cacheSettings = await CacheManager.getSettings();
+    const isCacheEnabled = cacheSettings.enabled;
+
     // IOC tipine göre hangi API'leri kullanacağımızı belirle
     const providers = this.selectAPIsForIOC(ioc);
 
-    // Her API için paralel olarak analiz yap
-    const promises = providers.map((provider) => {
+    // Her API için paralel olarak analiz yap (cache'den veya API'den)
+    const promises = providers.map(async (provider) => {
       const service = this.serviceRegistry.getService(provider);
       if (!service) {
-        return Promise.reject(new Error(`Service not found: ${provider}`));
+        throw new Error(`Service not found: ${provider}`);
       }
-      return service.analyze(ioc);
+
+      // Try to get from cache first if enabled
+      if (isCacheEnabled) {
+        const cachedResult = await CacheManager.getResult(
+          service.name,
+          ioc.type,
+          ioc.value
+        );
+
+        if (cachedResult) {
+          console.log(`[APIService] Cache hit for ${service.name} - ${ioc.type} - ${ioc.value}`);
+          return cachedResult;
+        }
+      }
+
+      // Cache miss or disabled, call API
+      console.log(`[APIService] Cache miss for ${service.name} - ${ioc.type} - ${ioc.value}, calling API`);
+      const result = await service.analyze(ioc);
+
+      // Store in cache if enabled and successful
+      if (isCacheEnabled && result.status !== 'error') {
+        await CacheManager.storeResult(result);
+        console.log(`[APIService] Cached result for ${service.name} - ${ioc.type} - ${ioc.value}`);
+      }
+
+      return result;
     });
 
     const apiResults = await Promise.allSettled(promises);
