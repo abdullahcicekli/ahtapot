@@ -7,7 +7,7 @@ export type TranslationNamespace =
   | 'ioc'
   | 'errors';
 
-export type TranslationKey<T extends TranslationNamespace> = string;
+export type TranslationKey<T extends TranslationNamespace = TranslationNamespace> = T extends string ? string : string;
 
 export interface TranslationOptions {
   count?: number;
