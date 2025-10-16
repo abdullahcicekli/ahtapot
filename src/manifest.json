@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Ahtapot - IOC Analiz Aracı",
-  "version": "1.0.0",
-  "description": "Siber güvenlik IOC'lerini (Indicator of Compromise) hızlıca analiz edin",
+  "name": "Ahtapot - IOC Analysis Tool",
+  "version": "2.0.0",
+  "description": "Fast IOC analysis with VirusTotal & OTX AlienVault. Tab-based results, cache management, and live API validation.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
@@ -17,11 +17,7 @@
   ],
   "host_permissions": [
     "https://www.virustotal.com/*",
-    "https://api.shodan.io/*",
-    "https://api.abuseipdb.com/*",
-    "https://urlscan.io/*",
-    "https://haveibeenpwned.com/*",
-    "https://blockchain.info/*"
+    "https://otx.alienvault.com/*"
   ],
   "background": {
     "service_worker": "src/background/service-worker.ts",
@@ -37,7 +33,7 @@
   ],
   "action": {
     "default_popup": "src/pages/popup/index.html",
-    "default_title": "Ahtapot IOC Analizi"
+    "default_title": "Ahtapot IOC Analysis"
   },
   "options_page": "src/pages/options/index.html",
   "side_panel": {

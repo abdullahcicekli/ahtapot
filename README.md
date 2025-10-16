@@ -12,12 +12,29 @@
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.0.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys)
 
 </div>
+
+---
+
+## 🆕 What's New in v2.0.0
+
+### Major Updates
+- ✨ **OTX AlienVault Integration** - Comprehensive threat intelligence with pulse-based analysis
+- 🎯 **Tab-Based Results** - Switch seamlessly between provider results (VirusTotal & OTX)
+- ✅ **Live API Validation** - Test and validate API keys before saving
+- 💾 **Smart Cache Management** - Configurable retention periods with detailed statistics
+- 🌍 **Full i18n Support** - Complete Turkish and English translations
+- ⚡ **Per-Field Save** - Individual save buttons for each API provider
+- 🎨 **Enhanced UI** - Minimal, clean tab navigation and improved result cards
+
+### Provider Changes
+- ❌ **Removed**: Shodan, AbuseIPDB, URLScan.io, Have I Been Pwned
+- ✅ **Active**: VirusTotal, OTX AlienVault (with 6 IOC types support)
 
 ---
 
@@ -56,13 +73,11 @@ Automatically detects and analyzes various types of security indicators:
 | Service | Purpose | Rate Limit |
 |---------|---------|------------|
 | **VirusTotal** | Malware & URL scanning | 4 req/min (free) |
-| **AbuseIPDB** | IP reputation | 1000 req/day |
-| **Shodan** | Device intelligence | 1 scan/month |
-| **URLScan.io** | Website threat detection | 100 scans/day |
-| **Have I Been Pwned** | Email breach check | 1 req/1.5s |
+| **OTX AlienVault** | Threat intelligence & IOC pulses | 10,000 req/day |
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
+- **Tab-based provider results** - Switch between VirusTotal and OTX seamlessly
 - Clean, professional design
 - Dark mode optimized
 - Smooth animations
@@ -281,37 +296,31 @@ npm run build
 
 Get free API keys to unlock full analysis capabilities:
 
-### VirusTotal
-- **Purpose:** File, URL, IP, and domain analysis
+### VirusTotal (Required)
+- **Purpose:** Malware, file, URL, IP, and domain analysis
 - **Free Tier:** 4 requests per minute
+- **Supported IOCs:** IPv4, IPv6, Domain, URL, File Hashes (MD5, SHA1, SHA256)
 - **Get Key:** [virustotal.com/gui/join-us](https://www.virustotal.com/gui/join-us)
+- **Features:**
+  - Real-time malware scanning
+  - Comprehensive threat analysis
+  - Detection statistics from 70+ antivirus engines
 
-### AbuseIPDB
-- **Purpose:** IP address reputation and abuse reports
-- **Free Tier:** 1,000 requests per day
-- **Get Key:** [abuseipdb.com/register](https://www.abuseipdb.com/register)
-
-### Shodan
-- **Purpose:** Internet-connected device intelligence
-- **Free Tier:** 1 scan result per month
-- **Get Key:** [account.shodan.io/register](https://account.shodan.io/register)
-
-### URLScan.io
-- **Purpose:** Website scanning and threat detection
-- **Free Tier:** 100 scans per day (public)
-- **Get Key:** [urlscan.io/user/signup](https://urlscan.io/user/signup)
-
-### Have I Been Pwned
-- **Purpose:** Email breach monitoring
-- **Free Tier:** 1 request per 1.5 seconds
-- **Get Key:** [haveibeenpwned.com/API/Key](https://haveibeenpwned.com/API/Key)
-
-### Blockchain.info
-- **Purpose:** Bitcoin address analysis
-- **Free Tier:** Unlimited
-- **Get Key:** No API key required
+### OTX AlienVault (Required)
+- **Purpose:** Threat intelligence and IOC pulse analysis
+- **Free Tier:** 10,000 requests per day (10 req/sec)
+- **Supported IOCs:** IPv4, IPv6, Domain, URL, File Hashes (MD5, SHA1, SHA256), CVE
+- **Get Key:** [otx.alienvault.com/api](https://otx.alienvault.com/api)
+- **Features:**
+  - Community-driven threat intelligence
+  - Pulse-based threat information
+  - Malware family identification
+  - Targeted countries and adversary information
+  - Custom threat scoring algorithm
 
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
+>
+> **Live Validation:** Test your API keys directly in the settings page before saving to ensure they work correctly.
 
 ---
 

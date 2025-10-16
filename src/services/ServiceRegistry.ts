@@ -1,5 +1,6 @@
 import { IToolService } from './base/BaseToolService';
 import { VirusTotalService } from './tools/VirusTotalService';
+import { OTXService } from './tools/OTXService';
 import { APIProvider } from '@/types/ioc';
 
 /**
@@ -68,25 +69,15 @@ export class ServiceRegistry {
         console.log('[ServiceRegistry] VirusTotal service initialized');
         break;
 
-      // Future services will be added here
-      case APIProvider.SHODAN:
-        // this.services.set(provider, new ShodanService({ apiKey }));
-        break;
-
-      case APIProvider.ABUSEIPDB:
-        // this.services.set(provider, new AbuseIPDBService({ apiKey }));
-        break;
-
-      case APIProvider.URLSCAN:
-        // this.services.set(provider, new URLScanService({ apiKey }));
-        break;
-
-      case APIProvider.HIBP:
-        // this.services.set(provider, new HIBPService({ apiKey }));
-        break;
-
-      case APIProvider.BLOCKCHAIN:
-        // this.services.set(provider, new BlockchainService({ apiKey }));
+      case APIProvider.OTX:
+        this.services.set(
+          provider,
+          new OTXService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] OTX AlienVault service initialized');
         break;
 
       default:

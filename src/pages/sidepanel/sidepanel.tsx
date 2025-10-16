@@ -15,6 +15,7 @@ import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
+import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
@@ -30,6 +31,7 @@ const SidePanel: React.FC = () => {
   const [analyzingProviders, setAnalyzingProviders] = useState<APIProvider[]>([]);
   const [completedProviders, setCompletedProviders] = useState<{ provider: APIProvider; status: 'success' | 'error' }[]>([]);
   const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
+  const [activeProviderTab, setActiveProviderTab] = useState<string>('');
 
   useEffect(() => {
     checkAPIKeys();
@@ -108,7 +110,13 @@ const SidePanel: React.FC = () => {
       });
 
       if (response && response.success) {
-        setResults(response.results || []);
+        const responseResults = response.results || [];
+        setResults(responseResults);
+
+        // Set first provider as active tab
+        if (responseResults.length > 0 && !activeProviderTab) {
+          setActiveProviderTab(responseResults[0].source);
+        }
 
         if (response.analyzingProviders) {
           setAnalyzingProviders(response.analyzingProviders);
@@ -247,40 +255,61 @@ const SidePanel: React.FC = () => {
         {results.length > 0 && (
           <div className="results-section">
             <h2 className="section-title">{t('results.title')}</h2>
-            <div className="results-list">
-              {results.map((result, index) => {
-                if (result.source === 'VirusTotal') {
-                  return <VirusTotalResultCard key={index} result={result} />;
-                }
 
-                return (
-                  <div key={index} className="result-card">
-                    <div className="result-header">
-                      {getStatusIcon(result.status)}
-                      <div className="result-info">
-                        <div className="result-value">{result.ioc.value}</div>
-                        <div className="result-meta">
-                          <span className="result-type">
-                            {getIOCTypeLabel(result.ioc.type)}
-                          </span>
-                          <span className="result-source">{result.source}</span>
+            {/* Provider Tabs */}
+            <div className="provider-tabs">
+              {results.map((result, index) => (
+                <button
+                  key={index}
+                  className={`provider-tab ${activeProviderTab === result.source ? 'active' : ''}`}
+                  onClick={() => setActiveProviderTab(result.source)}
+                >
+                  {result.source}
+                </button>
+              ))}
+            </div>
+
+            {/* Active Provider Results */}
+            <div className="results-list">
+              {results
+                .filter((result) => result.source === activeProviderTab)
+                .map((result, index) => {
+                  if (result.source === 'VirusTotal') {
+                    return <VirusTotalResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'OTX AlienVault') {
+                    return <OTXResultCard key={index} result={result} />;
+                  }
+
+                  return (
+                    <div key={index} className="result-card">
+                      <div className="result-header">
+                        {getStatusIcon(result.status)}
+                        <div className="result-info">
+                          <div className="result-value">{result.ioc.value}</div>
+                          <div className="result-meta">
+                            <span className="result-type">
+                              {getIOCTypeLabel(result.ioc.type)}
+                            </span>
+                            <span className="result-source">{result.source}</span>
+                          </div>
+                        </div>
+                        <div className={`result-status ${result.status}`}>
+                          {getStatusLabel(result.status)}
                         </div>
                       </div>
-                      <div className={`result-status ${result.status}`}>
-                        {getStatusLabel(result.status)}
-                      </div>
+                      {result.details && (
+                        <div className="result-details">
+                          {result.details.message || JSON.stringify(result.details)}
+                        </div>
+                      )}
+                      {result.error && (
+                        <div className="result-error">{result.error}</div>
+                      )}
                     </div>
-                    {result.details && (
-                      <div className="result-details">
-                        {result.details.message || JSON.stringify(result.details)}
-                      </div>
-                    )}
-                    {result.error && (
-                      <div className="result-error">{result.error}</div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
         )}
