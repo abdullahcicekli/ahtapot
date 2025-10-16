@@ -55,25 +55,10 @@
       "description": "Dosya, URL ve IP adresi analizi",
       "placeholder": "VirusTotal API anahtarınız"
     },
-    "shodan": {
-      "label": "Shodan",
-      "description": "IP adresi ve ağ cihazları analizi",
-      "placeholder": "Shodan API anahtarınız"
-    },
-    "abuseipdb": {
-      "label": "AbuseIPDB",
-      "description": "IP adresi kötüye kullanım kontrolü",
-      "placeholder": "AbuseIPDB API anahtarınız"
-    },
-    "urlscan": {
-      "label": "URLScan.io",
-      "description": "URL ve web sitesi analizi",
-      "placeholder": "URLScan.io API anahtarınız"
-    },
-    "haveibeenpwned": {
-      "label": "Have I Been Pwned",
-      "description": "E-posta veri ihlali kontrolü",
-      "placeholder": "Have I Been Pwned API anahtarınız"
+    "otx": {
+      "label": "OTX AlienVault",
+      "description": "Tehdit istihbaratı ve IOC analizi",
+      "placeholder": "OTX AlienVault API anahtarınız"
     }
   },
   "info": {
@@ -96,29 +81,11 @@
       "feature3": "URL tarama",
       "feature4": "90+ güvenlik motoru"
     },
-    "shodan": {
-      "feature1": "Açık port tespiti",
-      "feature2": "Servis bilgileri",
-      "feature3": "Banner bilgisi",
-      "feature4": "Coğrafi konum"
-    },
-    "abuseipdb": {
-      "feature1": "Kötüye kullanım puanı",
-      "feature2": "Raporlama geçmişi",
-      "feature3": "ISP bilgisi",
-      "feature4": "Kategori analizi"
-    },
-    "urlscan": {
-      "feature1": "Ekran görüntüsü",
-      "feature2": "DOM analizi",
-      "feature3": "Ağ trafiği",
-      "feature4": "Tehdit tespiti"
-    },
-    "haveibeenpwned": {
-      "feature1": "Veri ihlali kontrolü",
-      "feature2": "İhlal detayları",
-      "feature3": "Parola kontrolü",
-      "feature4": "Domain izleme"
+    "otx": {
+      "feature1": "Tehdit istihbaratı pulse'ları",
+      "feature2": "Zararlı yazılım ailesi tespiti",
+      "feature3": "CVE zafiyet analizi",
+      "feature4": "Topluluk destekli tehdit verisi"
     }
   },
   "limits": {
@@ -126,21 +93,9 @@
       "free": "500 istek/gün",
       "rate": "4 istek/dakika"
     },
-    "shodan": {
-      "free": "100 istek/ay",
-      "rate": "1 istek/saniye"
-    },
-    "abuseipdb": {
-      "free": "1000 istek/gün",
-      "rate": "60 istek/dakika"
-    },
-    "urlscan": {
-      "free": "100 tarama/gün",
-      "rate": "1 tarama/dakika"
-    },
-    "haveibeenpwned": {
-      "free": "Sınırsız",
-      "rate": "1 istek/1.5 saniye"
+    "otx": {
+      "free": "10.000 istek/gün",
+      "rate": "10 istek/saniye"
     }
   },
   "actions": {

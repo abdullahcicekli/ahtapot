@@ -84,11 +84,7 @@ export class APIService {
   private findProviderForService(serviceName: string): APIProvider | null {
     const mapping: Record<string, APIProvider> = {
       'VirusTotal': APIProvider.VIRUSTOTAL,
-      'Shodan': APIProvider.SHODAN,
-      'AbuseIPDB': APIProvider.ABUSEIPDB,
-      'URLScan.io': APIProvider.URLSCAN,
-      'Have I Been Pwned': APIProvider.HIBP,
-      'Blockchain.info': APIProvider.BLOCKCHAIN,
+      'OTX AlienVault': APIProvider.OTX,
     };
 
     return mapping[serviceName] || null;

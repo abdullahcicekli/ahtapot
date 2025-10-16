@@ -14,21 +14,9 @@ export class APIKeyValidator {
       url: 'https://www.virustotal.com/api/v3/ip_addresses/8.8.8.8',
       header: 'x-apikey',
     },
-    [APIProvider.SHODAN]: {
-      url: 'https://api.shodan.io/api-info?key=',
-      header: null,
-    },
-    [APIProvider.ABUSEIPDB]: {
-      url: 'https://api.abuseipdb.com/api/v2/check?ipAddress=8.8.8.8',
-      header: 'Key',
-    },
-    [APIProvider.URLSCAN]: {
-      url: 'https://urlscan.io/api/v1/result/latest/',
-      header: 'API-Key',
-    },
-    [APIProvider.HIBP]: {
-      url: 'https://haveibeenpwned.com/api/v3/breachedaccount/test@example.com',
-      header: 'hibp-api-key',
+    [APIProvider.OTX]: {
+      url: 'https://otx.alienvault.com/api/v1/indicators/IPv4/8.8.8.8/general',
+      header: 'X-OTX-API-KEY',
     },
   };
 
@@ -100,11 +88,6 @@ export class APIKeyValidator {
       }
 
       if (response.status === 404) {
-        // For some providers, 404 on test endpoint might mean the key is valid
-        // but the test resource doesn't exist (which is fine)
-        if (provider === APIProvider.URLSCAN) {
-          return { isValid: true };
-        }
         return {
           isValid: false,
           error: 'API endpoint not found',

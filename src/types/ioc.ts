@@ -32,7 +32,7 @@ export interface DetectedIOC {
  */
 export interface IOCAnalysisResult {
   ioc: DetectedIOC;
-  source: string; // VirusTotal, Shodan, etc.
+  source: string; // VirusTotal
   status: 'safe' | 'suspicious' | 'malicious' | 'unknown' | 'error';
   details?: Record<string, any>;
   error?: string;
@@ -44,11 +44,7 @@ export interface IOCAnalysisResult {
  */
 export enum APIProvider {
   VIRUSTOTAL = 'virustotal',
-  SHODAN = 'shodan',
-  ABUSEIPDB = 'abuseipdb',
-  URLSCAN = 'urlscan',
-  HIBP = 'haveibeenpwned',
-  BLOCKCHAIN = 'blockchain',
+  OTX = 'otx',
 }
 
 /**

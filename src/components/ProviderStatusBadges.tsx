@@ -103,25 +103,4 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
       </div>
     );
   }
-
-  return (
-    <div className="provider-badges-container">
-      <div className="provider-badges">
-        {providers.map((provider) => (
-          <div
-            key={provider.provider}
-            className={`provider-badge ${provider.status}`}
-          >
-            {getStatusIcon(provider.status)}
-            <span className="provider-label">{provider.label}</span>
-            {provider.status === 'analyzing' && (
-              <div className="progress-bar">
-                <div className="progress-fill"></div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 };

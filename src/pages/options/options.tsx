@@ -36,28 +36,10 @@ const API_CONFIGS: APIKeyConfig[] = [
     signupLink: 'https://www.virustotal.com/gui/join-us',
   },
   {
-    provider: APIProvider.SHODAN,
-    label: 'Shodan',
-    link: 'https://account.shodan.io/',
-    signupLink: 'https://account.shodan.io/register',
-  },
-  {
-    provider: APIProvider.ABUSEIPDB,
-    label: 'AbuseIPDB',
-    link: 'https://www.abuseipdb.com/account/api',
-    signupLink: 'https://www.abuseipdb.com/register',
-  },
-  {
-    provider: APIProvider.URLSCAN,
-    label: 'URLScan.io',
-    link: 'https://urlscan.io/user/profile/',
-    signupLink: 'https://urlscan.io/user/signup',
-  },
-  {
-    provider: APIProvider.HIBP,
-    label: 'Have I Been Pwned',
-    link: 'https://haveibeenpwned.com/API/Key',
-    signupLink: 'https://haveibeenpwned.com/API/Key',
+    provider: APIProvider.OTX,
+    label: 'OTX AlienVault',
+    link: 'https://otx.alienvault.com/api',
+    signupLink: 'https://otx.alienvault.com/signup',
   },
 ];
 
