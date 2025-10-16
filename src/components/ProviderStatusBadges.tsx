@@ -17,11 +17,7 @@ interface ProviderStatusBadgesProps {
 
 const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.VIRUSTOTAL]: 'VirusTotal',
-  [APIProvider.SHODAN]: 'Shodan',
-  [APIProvider.ABUSEIPDB]: 'AbuseIPDB',
-  [APIProvider.URLSCAN]: 'URLScan',
-  [APIProvider.HIBP]: 'HIBP',
-  [APIProvider.BLOCKCHAIN]: 'Blockchain',
+  [APIProvider.OTX]: 'OTX AlienVault',
 };
 
 export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
@@ -80,27 +76,36 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
     }
   }
 
-  const getStatusIcon = (status: ProviderStatus['status']) => {
-    switch (status) {
-      case 'analyzing':
-        return <Loader size={14} className="status-icon spinning" />;
-      case 'success':
-        return <CheckCircle size={14} className="status-icon success" />;
-      case 'error':
-        return <XCircle size={14} className="status-icon error" />;
-      default:
-        return null;
-    }
-  };
-
   if (providers.length === 0) {
     return (
       <div className="provider-badges-container">
         <div className="no-providers-warning">
           <AlertCircle size={16} />
-          <span>API anahtarı yapılandırılmamış</span>
+          <span>No API keys configured</span>
         </div>
       </div>
     );
   }
+
+  return (
+    <div className="provider-badges-container">
+      {providers.map((provider) => (
+        <div
+          key={provider.provider}
+          className={`provider-badge ${provider.status}`}
+        >
+          {provider.status === 'analyzing' && (
+            <Loader size={14} className="status-icon spinning" />
+          )}
+          {provider.status === 'success' && (
+            <CheckCircle size={14} className="status-icon success" />
+          )}
+          {provider.status === 'error' && (
+            <XCircle size={14} className="status-icon error" />
+          )}
+          <span>{provider.label}</span>
+        </div>
+      ))}
+    </div>
+  );
 };
