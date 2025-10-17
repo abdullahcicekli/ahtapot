@@ -25,16 +25,19 @@
 
 ### Major Updates
 - ✨ **OTX AlienVault Integration** - Comprehensive threat intelligence with pulse-based analysis
-- 🎯 **Tab-Based Results** - Switch seamlessly between provider results (VirusTotal & OTX)
+- 🔍 **AbuseIPDB Integration** - IP reputation analysis with abuse confidence scoring
+- 🎯 **Smart Provider Support** - See which providers support each IOC type before analysis
+- 🎨 **Enhanced Tab Navigation** - Seamless switching between provider results with improved UX
+- 📊 **Provider Support Indicators** - Badge-based display showing compatible providers for each IOC
 - ✅ **Live API Validation** - Test and validate API keys before saving
 - 💾 **Smart Cache Management** - Configurable retention periods with detailed statistics
 - 🌍 **Full i18n Support** - Complete Turkish and English translations
 - ⚡ **Per-Field Save** - Individual save buttons for each API provider
-- 🎨 **Enhanced UI** - Minimal, clean tab navigation and improved result cards
 
 ### Provider Changes
-- ❌ **Removed**: Shodan, AbuseIPDB, URLScan.io, Have I Been Pwned
-- ✅ **Active**: VirusTotal, OTX AlienVault (with 6 IOC types support)
+- ❌ **Removed**: Shodan, URLScan.io, Have I Been Pwned
+- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB
+- 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
 
 ---
 
@@ -74,10 +77,19 @@ Automatically detects and analyzes various types of security indicators:
 |---------|---------|------------|
 | **VirusTotal** | Malware & URL scanning | 4 req/min (free) |
 | **OTX AlienVault** | Threat intelligence & IOC pulses | 10,000 req/day |
+| **AbuseIPDB** | IP reputation & abuse reports | 1,000 req/day (free) |
+
+### 🎯 **Smart Provider Matching**
+- **Real-time Support Detection** - Each IOC shows compatible providers via badges
+- **Optimized API Calls** - Only queries providers that support the IOC type
+- **No Wasted Requests** - Saves API rate limits by skipping unsupported types
+- **Clear Messaging** - Informative explanations when providers don't support an IOC type
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
-- **Tab-based provider results** - Switch between VirusTotal and OTX seamlessly
+- **Tab-based provider results** - Switch between VirusTotal, OTX AlienVault, and AbuseIPDB seamlessly
+- **Provider support badges** - See which providers support each IOC at a glance
+- **Informative empty states** - Clear explanations when providers don't support an IOC type
 - Clean, professional design
 - Dark mode optimized
 - Smooth animations
@@ -318,9 +330,23 @@ Get free API keys to unlock full analysis capabilities:
   - Targeted countries and adversary information
   - Custom threat scoring algorithm
 
+### AbuseIPDB (Optional)
+- **Purpose:** IP address reputation and abuse confidence scoring
+- **Free Tier:** 1,000 requests per day
+- **Supported IOCs:** IPv4, IPv6 only
+- **Get Key:** [abuseipdb.com/register](https://www.abuseipdb.com/register)
+- **Features:**
+  - Abuse confidence scoring (0-100%)
+  - Detailed abuse reports and categories
+  - Geographic and network information
+  - ISP and usage type detection
+  - Community-reported abuse data
+
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
 >
 > **Live Validation:** Test your API keys directly in the settings page before saving to ensure they work correctly.
+>
+> **Smart Optimization:** Extension automatically detects which providers support each IOC type and only makes necessary API calls, saving your rate limits.
 
 ---
 
