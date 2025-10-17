@@ -19,10 +19,16 @@
   "detected": {
     "title": "Tespit Edilen Göstergeler",
     "count_one": "{{count}} gösterge bulundu",
-    "count_other": "{{count}} gösterge bulundu"
+    "count_other": "{{count}} gösterge bulundu",
+    "supportedBy": "Destekleyen sağlayıcılar:"
   },
   "results": {
     "title": "Analiz Sonuçları"
+  },
+  "providerNoResults": {
+    "title": "{{provider}} Sonuç Bulunamadı",
+    "description": "Bu sağlayıcı analiz edilen IOC tipini desteklemiyor veya veri döndürmedi.",
+    "supportedLabel": "{{provider}} destekler:"
   },
   "emptyState": {
     "noDetection": {

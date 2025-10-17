@@ -48,10 +48,7 @@ export class OTXService extends BaseToolService {
 
     if (!this.supports(ioc.type)) {
       console.log(`[OTX] Unsupported IOC type: ${ioc.type}`);
-      return this.createErrorResult(
-        ioc,
-        `Unsupported IOC type: ${ioc.type}`
-      );
+      return this.createUnsupportedResult(ioc);
     }
 
     console.log(`[OTX] Starting analysis for ${ioc.type}`);
@@ -72,7 +69,7 @@ export class OTXService extends BaseToolService {
         case IOCType.CVE:
           return await this.analyzeCVE(ioc);
         default:
-          return this.createErrorResult(ioc, `Unsupported IOC type: ${ioc.type}`);
+          return this.createUnsupportedResult(ioc);
       }
     } catch (error) {
       return this.createErrorResult(

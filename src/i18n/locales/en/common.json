@@ -33,5 +33,12 @@
   "common": {
     "logoAlt": "Ahtapot Logo",
     "externalLink": "Opens in new tab"
+  },
+  "providers": {
+    "configure": "Click to configure {{provider}} API key",
+    "analyzing": "{{provider}} is analyzing...",
+    "success": "{{provider}} analysis completed",
+    "error": "{{provider}} analysis failed",
+    "ready": "{{provider}} is ready"
   }
 }

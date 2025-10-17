@@ -1,6 +1,7 @@
 import { MessageType, ExtensionMessage } from '@/types/messages';
 import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { APIService } from '@/services/api-service';
+import { getAPIKeys } from '@/utils/apiKeyStorage';
 
 /**
  * Background Service Worker
@@ -95,13 +96,13 @@ async function handleAnalyzeIOC(
   analyzingProviders: APIProvider[];
   completedProviders: { provider: APIProvider; status: 'success' | 'error' }[];
 }> {
-  // API anahtarlarını al ve service'i başlat
-  const apiKeys = await getStoredAPIKeys();
+  // API anahtarlarını al ve service'i başlat (yeni storage format ile)
+  const apiKeys = await getAPIKeys();
   console.log('[Background] Loaded API keys:', Object.keys(apiKeys));
 
-  // API key kontrolü
+  // API key kontrolü - yeni format: { key: string, addedAt: number }
   const hasKeys = Object.values(apiKeys).some(
-    (key) => key && String(key).trim() !== ''
+    (keyData) => keyData?.key && keyData.key.trim() !== ''
   );
 
   if (!hasKeys) {
@@ -182,26 +183,10 @@ function findProviderByServiceName(serviceName: string): APIProvider | null {
   const mapping: Record<string, APIProvider> = {
     'VirusTotal': APIProvider.VIRUSTOTAL,
     'OTX AlienVault': APIProvider.OTX,
+    'AbuseIPDB': APIProvider.ABUSEIPDB,
   };
 
   return mapping[serviceName] || null;
-}
-
-/**
- * Depolanmış API anahtarlarını al
- */
-async function getStoredAPIKeys(): Promise<Record<string, string>> {
-  const result = await chrome.storage.local.get('apiKeys');
-  return result.apiKeys || {};
-}
-
-/**
- * API anahtarlarını depola
- */
-export async function saveAPIKeys(
-  keys: Record<string, string>
-): Promise<void> {
-  await chrome.storage.local.set({ apiKeys: keys });
 }
 
 // Extension icon'a tıklandığında options sayfasını aç

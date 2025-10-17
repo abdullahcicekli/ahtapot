@@ -36,6 +36,8 @@ export interface IOCAnalysisResult {
   status: 'safe' | 'suspicious' | 'malicious' | 'unknown' | 'error';
   details?: Record<string, any>;
   error?: string;
+  unsupportedReason?: string; // Reason why this IOC type is not supported
+  supportedTypes?: IOCType[]; // List of supported IOC types for this provider
   timestamp: number;
 }
 
@@ -45,6 +47,7 @@ export interface IOCAnalysisResult {
 export enum APIProvider {
   VIRUSTOTAL = 'virustotal',
   OTX = 'otx',
+  ABUSEIPDB = 'abuseipdb',
 }
 
 /**

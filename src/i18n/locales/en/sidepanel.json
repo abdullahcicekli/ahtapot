@@ -19,10 +19,16 @@
   "detected": {
     "title": "Detected Indicators",
     "count_one": "{{count}} indicator found",
-    "count_other": "{{count}} indicators found"
+    "count_other": "{{count}} indicators found",
+    "supportedBy": "Supported by:"
   },
   "results": {
     "title": "Analysis Results"
+  },
+  "providerNoResults": {
+    "title": "No Results from {{provider}}",
+    "description": "This provider does not support the analyzed IOC type or returned no data.",
+    "supportedLabel": "{{provider}} supports:"
   },
   "emptyState": {
     "noDetection": {

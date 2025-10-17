@@ -10,15 +10,30 @@ import {
   Settings,
   ExternalLink,
 } from 'lucide-react';
-import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
+import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
 import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
 import { OTXResultCard } from '@/components/results/OTXResultCard';
+import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
+
+// Provider support mapping - mirrors backend service capabilities
+const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
+  'AbuseIPDB': [IOCType.IPV4, IOCType.IPV6],
+  'VirusTotal': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
+  'OTX AlienVault': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256, IOCType.CVE],
+};
+
+// Get providers that support a specific IOC type
+const getSupportingProviders = (iocType: IOCType): string[] => {
+  return Object.entries(PROVIDER_SUPPORT)
+    .filter(([_, types]) => types.includes(iocType))
+    .map(([provider]) => provider);
+};
 
 const SidePanel: React.FC = () => {
   const { t } = useTranslation('sidepanel');
@@ -69,9 +84,17 @@ const SidePanel: React.FC = () => {
     try {
       const result = await chrome.storage.local.get('apiKeys');
       const apiKeys = result.apiKeys || {};
-      const hasKeys = Object.values(apiKeys).some(
-        (key) => key && String(key).trim() !== ''
-      );
+
+      // Support both old format (string) and new format (object with key)
+      const hasKeys = Object.values(apiKeys).some((value: any) => {
+        if (typeof value === 'string') {
+          return value.trim() !== '';
+        } else if (value && typeof value === 'object' && 'key' in value) {
+          return value.key && String(value.key).trim() !== '';
+        }
+        return false;
+      });
+
       setHasApiKeys(hasKeys);
     } catch (error) {
       console.error('Error checking API keys:', error);
@@ -97,6 +120,7 @@ const SidePanel: React.FC = () => {
     setLoading(true);
     setResults([]);
     setCompletedProviders([]);
+    setActiveProviderTab(''); // Reset active tab when starting new analysis
 
     if (hasApiKeys === false) {
       setLoading(false);
@@ -113,8 +137,8 @@ const SidePanel: React.FC = () => {
         const responseResults = response.results || [];
         setResults(responseResults);
 
-        // Set first provider as active tab
-        if (responseResults.length > 0 && !activeProviderTab) {
+        // Always set first provider with results as active tab
+        if (responseResults.length > 0) {
           setActiveProviderTab(responseResults[0].source);
         }
 
@@ -182,7 +206,7 @@ const SidePanel: React.FC = () => {
               <strong>{t('apiWarning.title')}</strong>
               <p>{t('apiWarning.description')}</p>
               <button
-                onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
+                onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html?tab=apiKeys') })}
                 className="setup-btn"
               >
                 {t('apiWarning.configureButton')}
@@ -229,12 +253,16 @@ const SidePanel: React.FC = () => {
           </div>
         </div>
 
-        {(loading || results.length > 0) && hasApiKeys !== false && (
-          <ProviderStatusBadges
-            analyzingProviders={analyzingProviders}
-            completedProviders={completedProviders}
-          />
-        )}
+        <ProviderStatusBadges
+          analyzingProviders={analyzingProviders}
+          completedProviders={completedProviders}
+          activeProvider={activeProviderTab}
+          onProviderClick={(providerName) => {
+            // Always switch to the clicked provider tab
+            // The UI will show either results or a "no results" message
+            setActiveProviderTab(providerName);
+          }}
+        />
 
         {detectedIOCs.length > 0 && (
           <div className="detected-section">
@@ -242,12 +270,27 @@ const SidePanel: React.FC = () => {
               {t('detected.title')} ({detectedIOCs.length})
             </h2>
             <div className="ioc-list">
-              {detectedIOCs.map((ioc, index) => (
-                <div key={index} className="ioc-item">
-                  <div className="ioc-type">{getIOCTypeLabel(ioc.type)}</div>
-                  <div className="ioc-value">{ioc.value}</div>
-                </div>
-              ))}
+              {detectedIOCs.map((ioc, index) => {
+                const supportingProviders = getSupportingProviders(ioc.type);
+                return (
+                  <div key={index} className="ioc-item">
+                    <div className="ioc-item-header">
+                      <div className="ioc-type">{getIOCTypeLabel(ioc.type)}</div>
+                      <div className="ioc-value">{ioc.value}</div>
+                    </div>
+                    <div className="ioc-providers">
+                      <span className="ioc-providers-label">{t('detected.supportedBy')}</span>
+                      <div className="ioc-providers-badges">
+                        {supportingProviders.map((provider, idx) => (
+                          <span key={idx} className="ioc-provider-badge">
+                            {provider}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -256,30 +299,49 @@ const SidePanel: React.FC = () => {
           <div className="results-section">
             <h2 className="section-title">{t('results.title')}</h2>
 
-            {/* Provider Tabs */}
-            <div className="provider-tabs">
-              {results.map((result, index) => (
-                <button
-                  key={index}
-                  className={`provider-tab ${activeProviderTab === result.source ? 'active' : ''}`}
-                  onClick={() => setActiveProviderTab(result.source)}
-                >
-                  {result.source}
-                </button>
-              ))}
-            </div>
-
             {/* Active Provider Results */}
             <div className="results-list">
-              {results
-                .filter((result) => result.source === activeProviderTab)
-                .map((result, index) => {
+              {(() => {
+                const filteredResults = results.filter((result) => result.source === activeProviderTab);
+
+                // If no results for active provider, show informative empty state
+                if (filteredResults.length === 0 && activeProviderTab) {
+                  const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
+                  return (
+                    <div className="provider-no-results">
+                      <Shield size={48} />
+                      <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
+                      <p>{t('providerNoResults.description')}</p>
+
+                      {supportedTypes.length > 0 && (
+                        <div className="provider-supported-types">
+                          <span className="provider-supported-label">
+                            {t('providerNoResults.supportedLabel', { provider: activeProviderTab })}
+                          </span>
+                          <div className="provider-supported-badges">
+                            {supportedTypes.map((type, idx) => (
+                              <span key={idx} className="ioc-type-badge">
+                                {getIOCTypeLabel(type)}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                return filteredResults.map((result, index) => {
                   if (result.source === 'VirusTotal') {
                     return <VirusTotalResultCard key={index} result={result} />;
                   }
 
                   if (result.source === 'OTX AlienVault') {
                     return <OTXResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'AbuseIPDB') {
+                    return <AbuseIPDBResultCard key={index} result={result} />;
                   }
 
                   return (
@@ -299,17 +361,36 @@ const SidePanel: React.FC = () => {
                           {getStatusLabel(result.status)}
                         </div>
                       </div>
+                      {result.unsupportedReason && result.supportedTypes && (
+                        <div className="result-unsupported">
+                          <div className="unsupported-message">
+                            <AlertTriangle size={16} />
+                            <span>{result.unsupportedReason}</span>
+                          </div>
+                          <div className="supported-types">
+                            <span className="supported-types-label">Supported IOC types:</span>
+                            <div className="supported-types-badges">
+                              {result.supportedTypes.map((type, idx) => (
+                                <span key={idx} className="ioc-type-badge">
+                                  {getIOCTypeLabel(type)}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       {result.details && (
                         <div className="result-details">
                           {result.details.message || JSON.stringify(result.details)}
                         </div>
                       )}
-                      {result.error && (
+                      {result.error && !result.unsupportedReason && (
                         <div className="result-error">{result.error}</div>
                       )}
                     </div>
                   );
-                })}
+                });
+              })()}
             </div>
           </div>
         )}

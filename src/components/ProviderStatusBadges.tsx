@@ -1,111 +1,170 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle, Loader, XCircle, AlertCircle } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
+import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
 import './ProviderStatusBadges.css';
 
 interface ProviderStatus {
   provider: APIProvider;
   label: string;
-  status: 'idle' | 'analyzing' | 'success' | 'error';
   enabled: boolean;
+  addedAt?: number; // For sorting
 }
 
 interface ProviderStatusBadgesProps {
   analyzingProviders: APIProvider[];
   completedProviders: { provider: APIProvider; status: 'success' | 'error' }[];
+  activeProvider?: string;
+  onProviderClick?: (providerName: string) => void;
 }
 
 const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.VIRUSTOTAL]: 'VirusTotal',
-  [APIProvider.OTX]: 'OTX AlienVault',
+  [APIProvider.OTX]: 'OTX AlienVault', // Match the source name from API results
+  [APIProvider.ABUSEIPDB]: 'AbuseIPDB',
+};
+
+// Map providers to their logo images
+const PROVIDER_LOGOS: Record<APIProvider, string> = {
+  [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
+  [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
+  [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
+};
+
+// Tooltip messages for disabled providers
+const TOOLTIP_MESSAGES: Record<APIProvider, string> = {
+  [APIProvider.VIRUSTOTAL]: 'Click to configure VirusTotal API key',
+  [APIProvider.OTX]: 'Click to configure OTX AlienVault API key',
+  [APIProvider.ABUSEIPDB]: 'Click to configure AbuseIPDB API key',
 };
 
 export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
   analyzingProviders,
   completedProviders,
+  activeProvider,
+  onProviderClick,
 }) => {
-  const [providers, setProviders] = useState<ProviderStatus[]>([]);
-  const [configuredProviders, setConfiguredProviders] = useState<Set<APIProvider>>(new Set());
+  const [allProviders, setAllProviders] = useState<ProviderStatus[]>([]);
 
-  // API anahtarlarını yükle
+  // Load and sort providers
   useEffect(() => {
-    loadConfiguredProviders();
+    loadAndSortProviders();
+  }, [analyzingProviders, completedProviders]);
+
+  // Listen for API key changes in storage
+  useEffect(() => {
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.apiKeys) {
+        // API keys changed, reload providers
+        loadAndSortProviders();
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, []);
 
-  // Provider durumlarını güncelle
-  useEffect(() => {
-    const newProviders: ProviderStatus[] = [];
-
-    configuredProviders.forEach((provider) => {
-      const isAnalyzing = analyzingProviders.includes(provider);
-      const completed = completedProviders.find((c) => c.provider === provider);
-
-      let status: ProviderStatus['status'] = 'idle';
-      if (isAnalyzing) {
-        status = 'analyzing';
-      } else if (completed) {
-        status = completed.status;
-      }
-
-      newProviders.push({
-        provider,
-        label: PROVIDER_LABELS[provider],
-        status,
-        enabled: true,
-      });
-    });
-
-    setProviders(newProviders);
-  }, [analyzingProviders, completedProviders, configuredProviders]);
-
-  async function loadConfiguredProviders() {
+  async function loadAndSortProviders() {
     try {
-      const result = await chrome.storage.local.get('apiKeys');
-      const apiKeys = result.apiKeys || {};
-      const configured = new Set<APIProvider>();
+      // Get configured providers with timestamps
+      const configuredProviders = await getConfiguredProvidersSorted();
+      const configuredSet = new Set(configuredProviders.map((p) => p.provider));
 
-      Object.entries(apiKeys).forEach(([provider, key]) => {
-        if (key && String(key).trim() !== '') {
-          configured.add(provider as APIProvider);
-        }
+      // Create provider status list
+      const providers: ProviderStatus[] = [];
+
+      // Add enabled providers first (sorted by addedAt)
+      configuredProviders.forEach(({ provider, addedAt }) => {
+        providers.push({
+          provider,
+          label: PROVIDER_LABELS[provider],
+          enabled: true,
+          addedAt,
+        });
       });
 
-      setConfiguredProviders(configured);
+      // Add disabled providers after (alphabetical order)
+      const disabledProviders = Object.values(APIProvider)
+        .filter((provider) => !configuredSet.has(provider))
+        .sort((a, b) => PROVIDER_LABELS[a].localeCompare(PROVIDER_LABELS[b]));
+
+      disabledProviders.forEach((provider) => {
+        providers.push({
+          provider,
+          label: PROVIDER_LABELS[provider],
+          enabled: false,
+        });
+      });
+
+      setAllProviders(providers);
     } catch (error) {
-      console.error('Failed to load configured providers:', error);
+      console.error('Failed to load providers:', error);
     }
   }
 
-  if (providers.length === 0) {
-    return (
-      <div className="provider-badges-container">
-        <div className="no-providers-warning">
-          <AlertCircle size={16} />
-          <span>No API keys configured</span>
-        </div>
-      </div>
-    );
-  }
+  const handleBadgeClick = async (provider: ProviderStatus) => {
+    if (!provider.enabled) {
+      // Get current tab to check if we're on options page
+      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      const currentTab = tabs[0];
+      const optionsUrl = chrome.runtime.getURL('src/pages/options/index.html');
+
+      if (currentTab?.url?.includes('src/pages/options/index.html')) {
+        // We're already on options page
+        const urlObj = new URL(currentTab.url);
+        const currentTab_activeTab = urlObj.searchParams.get('tab') || 'general';
+
+        if (currentTab_activeTab === 'apiKeys') {
+          // Already on API Keys tab, just scroll and highlight
+          chrome.tabs.sendMessage(currentTab.id!, {
+            type: 'SCROLL_TO_PROVIDER',
+            provider: provider.provider
+          });
+        } else {
+          // On different tab (general), switch to API Keys tab
+          chrome.tabs.sendMessage(currentTab.id!, {
+            type: 'SWITCH_TAB_AND_SCROLL',
+            tab: 'apiKeys',
+            provider: provider.provider
+          });
+        }
+      } else {
+        // Not on options page, open in new tab
+        const newUrl = `${optionsUrl}?provider=${provider.provider}`;
+        chrome.tabs.create({ url: newUrl });
+      }
+    } else if (onProviderClick) {
+      // If enabled and onProviderClick is provided, trigger tab change
+      onProviderClick(provider.label);
+    }
+  };
 
   return (
     <div className="provider-badges-container">
-      {providers.map((provider) => (
-        <div
-          key={provider.provider}
-          className={`provider-badge ${provider.status}`}
-        >
-          {provider.status === 'analyzing' && (
-            <Loader size={14} className="status-icon spinning" />
-          )}
-          {provider.status === 'success' && (
-            <CheckCircle size={14} className="status-icon success" />
-          )}
-          {provider.status === 'error' && (
-            <XCircle size={14} className="status-icon error" />
-          )}
-          <span>{provider.label}</span>
-        </div>
-      ))}
+      {allProviders.map((provider) => {
+        const isActive = activeProvider === provider.label;
+        return (
+          <div
+            key={provider.provider}
+            className={`provider-badge ${provider.enabled ? 'enabled' : 'disabled'} ${isActive ? 'active' : ''}`}
+            onClick={() => handleBadgeClick(provider)}
+            title={provider.enabled ? '' : TOOLTIP_MESSAGES[provider.provider]}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="provider-logo-wrapper">
+              <img
+                src={PROVIDER_LOGOS[provider.provider]}
+                alt={provider.label}
+                className="provider-logo"
+              />
+            </div>
+
+            <span className="provider-name">{provider.label}</span>
+          </div>
+        );
+      })}
     </div>
   );
 };

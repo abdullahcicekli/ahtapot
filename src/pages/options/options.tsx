@@ -6,6 +6,7 @@ import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
 import { CacheManager, CacheSettings } from '@/utils/cacheManager';
+import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
 import '@/i18n/config';
 import './options.css';
 
@@ -41,6 +42,12 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://otx.alienvault.com/api',
     signupLink: 'https://otx.alienvault.com/signup',
   },
+  {
+    provider: APIProvider.ABUSEIPDB,
+    label: 'AbuseIPDB',
+    link: 'https://www.abuseipdb.com/account/api',
+    signupLink: 'https://www.abuseipdb.com/register',
+  },
 ];
 
 const OptionsPage: React.FC = () => {
@@ -69,18 +76,86 @@ const OptionsPage: React.FC = () => {
   useEffect(() => {
     loadSettings();
     loadCacheSettings();
+
+    // Check for URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const provider = urlParams.get('provider');
+    const tab = urlParams.get('tab') as TabType | null;
+
+    // Set tab from URL if provided
+    if (tab && (tab === 'general' || tab === 'apiKeys')) {
+      setActiveTab(tab);
+    }
+
+    if (provider) {
+      // Switch to API Keys tab if provider is specified
+      setActiveTab('apiKeys');
+
+      // Scroll to the provider card after a short delay
+      setTimeout(() => {
+        scrollToProvider(provider as APIProvider);
+      }, 300);
+    }
+
+    // Listen for messages from ProviderStatusBadges component
+    const messageListener = (message: any) => {
+      if (message.type === 'SCROLL_TO_PROVIDER') {
+        scrollToProvider(message.provider as APIProvider);
+      } else if (message.type === 'SWITCH_TAB_AND_SCROLL') {
+        setActiveTab(message.tab);
+        setTimeout(() => {
+          scrollToProvider(message.provider as APIProvider);
+        }, 300);
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(messageListener);
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener);
+    };
   }, []);
+
+  // Scroll to specific provider card and highlight it
+  const scrollToProvider = (provider: APIProvider) => {
+    const cardElement = document.querySelector(`[data-provider="${provider}"]`);
+
+    if (cardElement) {
+      cardElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+
+      // Add highlight animation
+      cardElement.classList.add('highlight-flash');
+
+      // Focus the input
+      const input = cardElement.querySelector('input') as HTMLInputElement;
+      if (input) {
+        setTimeout(() => {
+          input.focus();
+        }, 600);
+      }
+
+      // Remove highlight after animation
+      setTimeout(() => {
+        cardElement.classList.remove('highlight-flash');
+      }, 2000);
+    }
+  };
 
   async function loadSettings() {
     try {
-      const result = await chrome.storage.local.get(['apiKeys', 'language']);
-      const apiKeys = result.apiKeys || {};
+      // Load API keys using new storage format
+      const apiKeys = await getAPIKeys();
+      const result = await chrome.storage.local.get('language');
 
       // Initialize state for each provider
       const initialStates: Record<string, APIKeyState> = {};
       API_CONFIGS.forEach((config) => {
+        const keyData = apiKeys[config.provider];
         initialStates[config.provider] = {
-          value: apiKeys[config.provider] || '',
+          value: keyData?.key || '',
           isValidating: false,
           validationResult: null,
           hasChanges: false,
@@ -195,15 +270,8 @@ const OptionsPage: React.FC = () => {
     }));
 
     try {
-      // Load current keys
-      const result = await chrome.storage.local.get('apiKeys');
-      const currentKeys = result.apiKeys || {};
-
-      // Update the specific key
-      currentKeys[provider] = state.value;
-
-      // Save back
-      await chrome.storage.local.set({ apiKeys: currentKeys });
+      // Save using new storage format with timestamp
+      await saveAPIKey(provider, state.value);
 
       setApiKeyStates((prev) => ({
         ...prev,
@@ -505,7 +573,11 @@ const OptionsPage: React.FC = () => {
                   const state = apiKeyStates[config.provider];
 
                   return (
-                    <div key={config.provider} className="api-key-card">
+                    <div
+                      key={config.provider}
+                      className="api-key-card"
+                      data-provider={config.provider}
+                    >
                       <div className="api-key-header">
                         <div className="api-key-title-row">
                           <div>

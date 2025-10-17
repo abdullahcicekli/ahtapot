@@ -251,12 +251,18 @@ body {
 
 .ioc-item {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   padding: 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+}
+
+.ioc-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .ioc-type {
@@ -268,6 +274,7 @@ body {
   padding: 4px 8px;
   border-radius: 4px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ioc-value {
@@ -275,6 +282,38 @@ body {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.8);
   word-break: break-all;
+  flex: 1;
+}
+
+.ioc-providers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ioc-providers-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+
+.ioc-providers-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.ioc-provider-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(74, 158, 255, 0.9);
+  background: rgba(74, 158, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(74, 158, 255, 0.2);
+  white-space: nowrap;
 }
 
 /* Results Section */
@@ -407,9 +446,59 @@ body {
   color: #ef4444;
 }
 
+/* Unsupported IOC Type Display */
+.result-unsupported {
+  padding: 12px 16px;
+  background: rgba(245, 158, 11, 0.1);
+  border-top: 1px solid rgba(245, 158, 11, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.unsupported-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.supported-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.supported-types-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.supported-types-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ioc-type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4a9eff;
+  background: rgba(74, 158, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  white-space: nowrap;
+}
+
 /* Empty States */
 .empty-state,
-.welcome-state {
+.welcome-state,
+.provider-no-results {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -420,25 +509,51 @@ body {
 }
 
 .empty-state svg,
-.welcome-state svg {
+.welcome-state svg,
+.provider-no-results svg {
   margin-bottom: 16px;
   opacity: 0.3;
   color: rgba(255, 255, 255, 0.4);
 }
 
 .empty-state h3,
-.welcome-state h2 {
+.welcome-state h2,
+.provider-no-results h3 {
   font-size: 18px;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 8px;
 }
 
 .empty-state p,
-.welcome-state p {
+.welcome-state p,
+.provider-no-results p {
   font-size: 14px;
   line-height: 1.6;
   max-width: 400px;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.provider-supported-types {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.provider-supported-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.provider-supported-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .supported-iocs {
@@ -495,40 +610,4 @@ body {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Provider Tabs */
-.provider-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 0;
-}
-
-.provider-tab {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.5);
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.provider-tab:hover {
-  color: rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.provider-tab.active {
-  color: #4a9eff;
-  border-bottom-color: #4a9eff;
-  background: rgba(74, 158, 255, 0.05);
-}
-
-.provider-tab.active:hover {
-  color: #6bb0ff;
-  border-bottom-color: #6bb0ff;
-}
+/* Provider tabs removed - now using ProviderStatusBadges component */

@@ -136,6 +136,21 @@ export abstract class BaseToolService implements IToolService {
   }
 
   /**
+   * Helper to create unsupported IOC type result
+   */
+  protected createUnsupportedResult(ioc: DetectedIOC): IOCAnalysisResult {
+    return {
+      ioc,
+      source: this.name,
+      status: 'error',
+      error: `This IOC type is not supported by ${this.name}`,
+      unsupportedReason: `${this.name} does not support ${ioc.type} analysis`,
+      supportedTypes: this.supportedIOCTypes,
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
    * Helper to determine status based on malicious/suspicious counts
    */
   protected determineStatus(
