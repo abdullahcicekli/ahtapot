@@ -59,6 +59,11 @@
       "label": "OTX AlienVault",
       "description": "Threat intelligence and IOC analysis",
       "placeholder": "Your OTX AlienVault API key"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "IP address reputation and abuse reports",
+      "placeholder": "Your AbuseIPDB API key"
     }
   },
   "info": {
@@ -86,6 +91,12 @@
       "feature2": "Malware family detection",
       "feature3": "CVE vulnerability analysis",
       "feature4": "Community-driven threat data"
+    },
+    "abuseipdb": {
+      "feature1": "IP reputation checking",
+      "feature2": "90-day abuse reports",
+      "feature3": "Confidence score analysis",
+      "feature4": "Geographic & ISP information"
     }
   },
   "limits": {
@@ -96,6 +107,10 @@
     "otx": {
       "free": "10,000 requests/day",
       "rate": "10 requests/second"
+    },
+    "abuseipdb": {
+      "free": "1,000 requests/day",
+      "rate": "1 request/second"
     }
   },
   "actions": {

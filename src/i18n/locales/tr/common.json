@@ -33,5 +33,12 @@
   "common": {
     "logoAlt": "Ahtapot Logo",
     "externalLink": "Yeni sekmede açılır"
+  },
+  "providers": {
+    "configure": "{{provider}} API anahtarını yapılandırmak için tıklayın",
+    "analyzing": "{{provider}} analiz ediyor...",
+    "success": "{{provider}} analizi tamamlandı",
+    "error": "{{provider}} analizi başarısız",
+    "ready": "{{provider}} hazır"
   }
 }

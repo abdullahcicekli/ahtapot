@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
+import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
   AlertCircle,
   AlertTriangle,
@@ -154,6 +155,26 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
         <AlertCircle size={16} />
         {statusInfo.description}
       </div>
+
+      {/* Unsupported IOC Type */}
+      {result.unsupportedReason && result.supportedTypes && (
+        <div className="vt-unsupported">
+          <div className="vt-unsupported-message">
+            <AlertTriangle size={16} />
+            <span>{result.unsupportedReason}</span>
+          </div>
+          <div className="vt-supported-types">
+            <span className="vt-supported-label">Supported IOC types:</span>
+            <div className="vt-supported-badges">
+              {result.supportedTypes.map((type, idx) => (
+                <span key={idx} className="vt-ioc-badge">
+                  {getIOCTypeLabel(type)}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="vt-tabs">

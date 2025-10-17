@@ -1,6 +1,7 @@
 import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { ServiceRegistry } from './ServiceRegistry';
 import { CacheManager } from '@/utils/cacheManager';
+import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
 /**
  * API Service Layer
@@ -11,7 +12,7 @@ import { CacheManager } from '@/utils/cacheManager';
 export class APIService {
   private serviceRegistry: ServiceRegistry;
 
-  constructor(apiKeys: Record<string, string>) {
+  constructor(apiKeys: Record<string, string> | APIKeysStorage) {
     this.serviceRegistry = new ServiceRegistry();
     this.serviceRegistry.setAPIKeys(apiKeys);
   }
@@ -116,6 +117,7 @@ export class APIService {
     const mapping: Record<string, APIProvider> = {
       'VirusTotal': APIProvider.VIRUSTOTAL,
       'OTX AlienVault': APIProvider.OTX,
+      'AbuseIPDB': APIProvider.ABUSEIPDB,
     };
 
     return mapping[serviceName] || null;
@@ -124,7 +126,7 @@ export class APIService {
   /**
    * Update API keys (useful for runtime configuration changes)
    */
-  updateAPIKeys(apiKeys: Record<string, string>): void {
+  updateAPIKeys(apiKeys: Record<string, string> | APIKeysStorage): void {
     this.serviceRegistry.setAPIKeys(apiKeys);
   }
 

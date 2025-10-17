@@ -217,6 +217,30 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   transition: all 0.2s;
+  scroll-margin-top: 100px;
+}
+
+/* Highlight flash animation for provider cards */
+.api-key-card.highlight-flash {
+  animation: highlight-pulse 2s ease-out;
+}
+
+@keyframes highlight-pulse {
+  0% {
+    background: rgba(74, 158, 255, 0.3);
+    border-color: rgba(74, 158, 255, 0.8);
+    box-shadow: 0 0 0 0 rgba(74, 158, 255, 0.7), 0 4px 20px rgba(74, 158, 255, 0.4);
+  }
+  50% {
+    background: rgba(74, 158, 255, 0.15);
+    border-color: rgba(74, 158, 255, 0.6);
+    box-shadow: 0 0 0 8px rgba(74, 158, 255, 0), 0 8px 30px rgba(74, 158, 255, 0.3);
+  }
+  100% {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
 }
 
 .api-key-card:hover {

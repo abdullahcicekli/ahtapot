@@ -182,6 +182,56 @@
   border-left: 3px solid #22c55e;
 }
 
+/* Unsupported IOC Type */
+.vt-unsupported {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 20px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border-left: 3px solid #f59e0b;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.vt-unsupported-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.vt-supported-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vt-supported-label {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+  font-weight: 500;
+}
+
+.vt-supported-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vt-ioc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(96, 165, 250, 0.9);
+  background-color: rgba(59, 130, 246, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  white-space: nowrap;
+}
+
 /* Tabs */
 .vt-tabs {
   display: flex;

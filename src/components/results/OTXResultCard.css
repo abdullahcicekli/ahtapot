@@ -179,6 +179,55 @@
   color: #ef4444;
 }
 
+/* Unsupported IOC Type */
+.otx-unsupported {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 20px;
+  background-color: rgba(245, 158, 11, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.otx-unsupported-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.otx-supported-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.otx-supported-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.otx-supported-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.otx-ioc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4a9eff;
+  background-color: rgba(74, 158, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  white-space: nowrap;
+}
+
 /* Tabs */
 .otx-tabs {
   display: flex;

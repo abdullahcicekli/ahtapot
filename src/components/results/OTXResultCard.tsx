@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
+import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
   AlertCircle,
   AlertTriangle,
@@ -127,6 +128,26 @@ export const OTXResultCard: React.FC<OTXResultCardProps> = ({ result }) => {
         <AlertCircle size={16} />
         {statusInfo.description}
       </div>
+
+      {/* Unsupported IOC Type */}
+      {result.unsupportedReason && result.supportedTypes && (
+        <div className="otx-unsupported">
+          <div className="otx-unsupported-message">
+            <AlertTriangle size={16} />
+            <span>{result.unsupportedReason}</span>
+          </div>
+          <div className="otx-supported-types">
+            <span className="otx-supported-label">Supported IOC types:</span>
+            <div className="otx-supported-badges">
+              {result.supportedTypes.map((type, idx) => (
+                <span key={idx} className="otx-ioc-badge">
+                  {getIOCTypeLabel(type)}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="otx-tabs">

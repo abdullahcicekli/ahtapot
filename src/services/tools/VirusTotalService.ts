@@ -50,10 +50,7 @@ export class VirusTotalService extends BaseToolService {
 
     if (!this.supports(ioc.type)) {
       console.log(`[VirusTotal] Unsupported IOC type: ${ioc.type}`);
-      return this.createErrorResult(
-        ioc,
-        `Unsupported IOC type: ${ioc.type}`
-      );
+      return this.createUnsupportedResult(ioc);
     }
 
     console.log(`[VirusTotal] Starting analysis for ${ioc.type}`);
@@ -71,7 +68,7 @@ export class VirusTotalService extends BaseToolService {
         case IOCType.SHA256:
           return await this.analyzeFile(ioc);
         default:
-          return this.createErrorResult(ioc, `Unsupported IOC type: ${ioc.type}`);
+          return this.createUnsupportedResult(ioc);
       }
     } catch (error) {
       return this.createErrorResult(

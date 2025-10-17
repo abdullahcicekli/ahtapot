@@ -1,7 +1,9 @@
 import { IToolService } from './base/BaseToolService';
 import { VirusTotalService } from './tools/VirusTotalService';
 import { OTXService } from './tools/OTXService';
+import { AbuseIPDBService } from './tools/AbuseIPDBService';
 import { APIProvider } from '@/types/ioc';
+import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
 /**
  * Service Registry
@@ -37,10 +39,14 @@ export class ServiceRegistry {
 
   /**
    * Set multiple API keys at once
+   * Supports both old format (Record<string, string>) and new format (APIKeysStorage)
    */
-  setAPIKeys(keys: Record<string, string>): void {
+  setAPIKeys(keys: Record<string, string> | APIKeysStorage): void {
     console.log('[ServiceRegistry] Setting API keys:', Object.keys(keys));
-    Object.entries(keys).forEach(([providerKey, apiKey]) => {
+    Object.entries(keys).forEach(([providerKey, value]) => {
+      // Handle both old format (string) and new format (object with key and addedAt)
+      const apiKey = typeof value === 'string' ? value : value?.key;
+
       // Validate and ensure we have a valid provider
       if (apiKey && apiKey.trim() !== '') {
         console.log(`[ServiceRegistry] Setting key for provider: ${providerKey}`);
@@ -78,6 +84,17 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] OTX AlienVault service initialized');
+        break;
+
+      case APIProvider.ABUSEIPDB:
+        this.services.set(
+          provider,
+          new AbuseIPDBService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] AbuseIPDB service initialized');
         break;
 
       default:

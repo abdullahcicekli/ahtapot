@@ -18,6 +18,10 @@ export class APIKeyValidator {
       url: 'https://otx.alienvault.com/api/v1/indicators/IPv4/8.8.8.8/general',
       header: 'X-OTX-API-KEY',
     },
+    [APIProvider.ABUSEIPDB]: {
+      url: 'https://api.abuseipdb.com/api/v2/check?ipAddress=8.8.8.8',
+      header: 'Key',
+    },
   };
 
   /**
