@@ -48,6 +48,7 @@ export enum APIProvider {
   VIRUSTOTAL = 'virustotal',
   OTX = 'otx',
   ABUSEIPDB = 'abuseipdb',
+  MALWAREBAZAAR = 'malwarebazaar',
 }
 
 /**

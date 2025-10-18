@@ -64,6 +64,11 @@
       "label": "AbuseIPDB",
       "description": "IP address reputation and abuse reports",
       "placeholder": "Your AbuseIPDB API key"
+    },
+    "malwarebazaar": {
+      "label": "MalwareBazaar",
+      "description": "Malware hash analysis and sample information",
+      "placeholder": "Your MalwareBazaar API key"
     }
   },
   "info": {
@@ -72,12 +77,22 @@
     "rateLimit": "Rate Limit:",
     "featuresTitle": "Features",
     "howToTitle": "How to Get an API Key?",
+    "importantNote": "Important Note",
     "steps": {
       "signup": "Create a free account here",
       "verify": "Verify your email address",
       "getKey": "Get your API key",
       "paste": "Paste the key in the field below"
     }
+  },
+  "notes": {
+    "malwarebazaar": "Auth Key is shown only once after generation. If you need to change it, you must generate a new key. Once generated, it cannot be viewed again, so save it to the extension immediately."
+  },
+  "tooltips": {
+    "virustotal": "Add API key",
+    "otx": "Add API key",
+    "abuseipdb": "Add API key",
+    "malwarebazaar": "Add API key"
   },
   "features": {
     "virustotal": {
@@ -97,6 +112,12 @@
       "feature2": "90-day abuse reports",
       "feature3": "Confidence score analysis",
       "feature4": "Geographic & ISP information"
+    },
+    "malwarebazaar": {
+      "feature1": "Hash-based malware lookup",
+      "feature2": "Malware signature identification",
+      "feature3": "File type and delivery method analysis",
+      "feature4": "Code signing information"
     }
   },
   "limits": {
@@ -111,6 +132,10 @@
     "abuseipdb": {
       "free": "1,000 requests/day",
       "rate": "1 request/second"
+    },
+    "malwarebazaar": {
+      "free": "Unlimited (with account)",
+      "rate": "No specified limit"
     }
   },
   "actions": {

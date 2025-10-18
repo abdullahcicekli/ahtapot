@@ -64,6 +64,11 @@
       "label": "AbuseIPDB",
       "description": "IP adresi itibarı ve kötüye kullanım raporları",
       "placeholder": "AbuseIPDB API anahtarınız"
+    },
+    "malwarebazaar": {
+      "label": "MalwareBazaar",
+      "description": "Zararlı yazılım hash analizi ve örnek bilgisi",
+      "placeholder": "MalwareBazaar API anahtarınız"
     }
   },
   "info": {
@@ -72,12 +77,22 @@
     "rateLimit": "İstek Limiti:",
     "featuresTitle": "Özellikler",
     "howToTitle": "API Anahtarı Nasıl Alınır?",
+    "importantNote": "Önemli Not",
     "steps": {
       "signup": "Buradan ücretsiz hesap oluşturun",
       "verify": "E-posta adresinizi doğrulayın",
       "getKey": "API anahtarınızı alın",
       "paste": "Anahtarı aşağıdaki alana yapıştırın"
     }
+  },
+  "notes": {
+    "malwarebazaar": "Auth Key oluşturulduktan sonra sadece bir kez gösterilir. Değiştirmeniz gerekirse yeni bir anahtar oluşturmalısınız. Bir kez oluşturulduktan sonra tekrar görüntülenemez, bu yüzden hemen extension'a kaydedin."
+  },
+  "tooltips": {
+    "virustotal": "API anahtarı ekle",
+    "otx": "API anahtarı ekle",
+    "abuseipdb": "API anahtarı ekle",
+    "malwarebazaar": "API anahtarı ekle"
   },
   "features": {
     "virustotal": {
@@ -97,6 +112,12 @@
       "feature2": "90-günlük kötüye kullanım raporları",
       "feature3": "Güven skoru analizi",
       "feature4": "Coğrafi konum ve ISP bilgisi"
+    },
+    "malwarebazaar": {
+      "feature1": "Hash bazlı zararlı yazılım sorgulama",
+      "feature2": "Zararlı yazılım imza tanımlama",
+      "feature3": "Dosya türü ve dağıtım yöntemi analizi",
+      "feature4": "Kod imzalama bilgisi"
     }
   },
   "limits": {
@@ -111,6 +132,10 @@
     "abuseipdb": {
       "free": "1.000 istek/gün",
       "rate": "1 istek/saniye"
+    },
+    "malwarebazaar": {
+      "free": "Sınırsız (hesap ile)",
+      "rate": "Belirtilen limit yok"
     }
   },
   "actions": {

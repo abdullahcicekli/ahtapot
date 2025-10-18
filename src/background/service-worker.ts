@@ -18,8 +18,6 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Ahtapot ile Analiz Et',
     contexts: ['selection'],
   });
-
-  console.log('Ahtapot extension installed successfully');
 });
 
 // Context menu tıklaması
@@ -35,7 +33,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         payload: { selectedText: info.selectionText },
       });
     } catch (error) {
-      console.error('Side panel açılamadı:', error);
     }
   }
 });
@@ -60,7 +57,6 @@ chrome.runtime.onMessage.addListener(
             sendResponse({ success: true });
           })
           .catch((error) => {
-            console.error('Side panel açılamadı:', error);
             sendResponse({ success: false, error: error.message });
           });
       } else {
@@ -70,18 +66,25 @@ chrome.runtime.onMessage.addListener(
     }
 
     if (message.type === MessageType.ANALYZE_IOC) {
-      console.log('[Background] Received ANALYZE_IOC message:', message.payload.iocs);
-
       handleAnalyzeIOC(message.payload.iocs)
         .then((response) => {
-          console.log('[Background] Analysis complete:', response);
           sendResponse({ success: true, ...response });
         })
         .catch((error) => {
-          console.error('[Background] Analysis error:', error);
           sendResponse({ success: false, error: error.message });
         });
-      return true; // Async response için gerekli
+      return true;
+    }
+
+    if (message.type === MessageType.NAVIGATE_TO_PROVIDER) {
+      handleNavigateToProvider(message.payload.provider)
+        .then((response) => {
+          sendResponse(response);
+        })
+        .catch((error) => {
+          sendResponse({ success: false, error: error.message });
+        });
+      return true;
     }
   }
 );
@@ -98,7 +101,6 @@ async function handleAnalyzeIOC(
 }> {
   // API anahtarlarını al ve service'i başlat (yeni storage format ile)
   const apiKeys = await getAPIKeys();
-  console.log('[Background] Loaded API keys:', Object.keys(apiKeys));
 
   // API key kontrolü - yeni format: { key: string, addedAt: number }
   const hasKeys = Object.values(apiKeys).some(
@@ -106,7 +108,6 @@ async function handleAnalyzeIOC(
   );
 
   if (!hasKeys) {
-    console.log('[Background] No API keys found');
     return {
       results: iocs.map((ioc) => ({
         ioc,
@@ -120,15 +121,11 @@ async function handleAnalyzeIOC(
     };
   }
 
-  console.log('[Background] API keys found, initializing service');
-
   // API service'i başlat
   if (!apiService) {
     apiService = new APIService(apiKeys);
-    console.log('[Background] Created new APIService instance');
   } else {
     apiService.updateAPIKeys(apiKeys);
-    console.log('[Background] Updated existing APIService');
   }
 
   const allResults: IOCAnalysisResult[] = [];
@@ -137,10 +134,8 @@ async function handleAnalyzeIOC(
 
   // Her IOC için analiz yap
   for (const ioc of iocs) {
-    console.log('[Background] Analyzing IOC:', ioc);
     try {
       const results = await apiService.analyzeIOC(ioc);
-      console.log('[Background] IOC analysis results:', results);
 
       // Başarılı ve hatalı servisleri ayır
       results.forEach((result) => {
@@ -156,7 +151,6 @@ async function handleAnalyzeIOC(
         }
       });
     } catch (error) {
-      console.error('[Background] Error analyzing IOC:', error);
       allResults.push({
         ioc,
         source: 'system',
@@ -166,8 +160,6 @@ async function handleAnalyzeIOC(
       });
     }
   }
-
-  console.log('[Background] All results:', allResults);
 
   return {
     results: allResults,
@@ -184,9 +176,57 @@ function findProviderByServiceName(serviceName: string): APIProvider | null {
     'VirusTotal': APIProvider.VIRUSTOTAL,
     'OTX AlienVault': APIProvider.OTX,
     'AbuseIPDB': APIProvider.ABUSEIPDB,
+    'MalwareBazaar': APIProvider.MALWAREBAZAAR,
   };
 
   return mapping[serviceName] || null;
+}
+
+/**
+ * Provider sayfasına navigasyon
+ */
+async function handleNavigateToProvider(provider: string): Promise<{ success: boolean }> {
+  const optionsUrl = chrome.runtime.getURL('src/pages/options/index.html');
+
+  // Extension'ın açık olan tüm view'larını al (tabs izni gerektirmez)
+  const views = chrome.extension.getViews({ type: 'tab' });
+
+  // Options sayfası açık mı kontrol et
+  let optionsView = null;
+  for (const view of views) {
+    if (view.location.href.includes('src/pages/options/index.html')) {
+      optionsView = view;
+      break;
+    }
+  }
+
+  if (optionsView) {
+    // Options sayfası açık, URL'i güncelle
+    const newUrl = `${optionsUrl}?tab=apiKeys&provider=${provider}`;
+    optionsView.location.href = newUrl;
+
+    // Pencereyi öne getir
+    try {
+      const allTabs = await chrome.tabs.query({});
+      for (const tab of allTabs) {
+        if (tab.url && tab.url.includes('src/pages/options/index.html')) {
+          await chrome.tabs.update(tab.id!, { active: true });
+          if (tab.windowId) {
+            await chrome.windows.update(tab.windowId, { focused: true });
+          }
+          break;
+        }
+      }
+    } catch (error) {
+      // Could not focus window
+    }
+  } else {
+    // Options sayfası açık değil, yeni sekme aç
+    const newUrl = `${optionsUrl}?tab=apiKeys&provider=${provider}`;
+    await chrome.tabs.create({ url: newUrl });
+  }
+
+  return { success: true };
 }
 
 // Extension icon'a tıklandığında options sayfasını aç

@@ -118,6 +118,7 @@ export class APIService {
       'VirusTotal': APIProvider.VIRUSTOTAL,
       'OTX AlienVault': APIProvider.OTX,
       'AbuseIPDB': APIProvider.ABUSEIPDB,
+      'MalwareBazaar': APIProvider.MALWAREBAZAAR,
     };
 
     return mapping[serviceName] || null;
