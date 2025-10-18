@@ -422,6 +422,29 @@ body {
   opacity: 0.7;
 }
 
+/* Warning section for special provider notes */
+.api-warning-section {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.api-warning-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f59e0b;
+  margin-bottom: 8px;
+}
+
+.api-warning-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 0;
+}
+
 .api-key-link {
   color: #4a9eff;
   text-decoration: none;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { APIProvider } from '@/types/ioc';
 import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
 import './ProviderStatusBadges.css';
@@ -21,6 +22,7 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.VIRUSTOTAL]: 'VirusTotal',
   [APIProvider.OTX]: 'OTX AlienVault', // Match the source name from API results
   [APIProvider.ABUSEIPDB]: 'AbuseIPDB',
+  [APIProvider.MALWAREBAZAAR]: 'MalwareBazaar',
 };
 
 // Map providers to their logo images
@@ -28,13 +30,15 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
   [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
   [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
+  [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
 };
 
-// Tooltip messages for disabled providers
-const TOOLTIP_MESSAGES: Record<APIProvider, string> = {
-  [APIProvider.VIRUSTOTAL]: 'Click to configure VirusTotal API key',
-  [APIProvider.OTX]: 'Click to configure OTX AlienVault API key',
-  [APIProvider.ABUSEIPDB]: 'Click to configure AbuseIPDB API key',
+// Map provider enum to i18n key
+const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
+  [APIProvider.VIRUSTOTAL]: 'virustotal',
+  [APIProvider.OTX]: 'otx',
+  [APIProvider.ABUSEIPDB]: 'abuseipdb',
+  [APIProvider.MALWAREBAZAAR]: 'malwarebazaar',
 };
 
 export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
@@ -43,6 +47,7 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
   activeProvider,
   onProviderClick,
 }) => {
+  const { t } = useTranslation('options');
   const [allProviders, setAllProviders] = useState<ProviderStatus[]>([]);
 
   // Load and sort providers
@@ -100,41 +105,16 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
 
       setAllProviders(providers);
     } catch (error) {
-      console.error('Failed to load providers:', error);
+      // Failed to load providers
     }
   }
 
   const handleBadgeClick = async (provider: ProviderStatus) => {
     if (!provider.enabled) {
-      // Get current tab to check if we're on options page
-      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      const currentTab = tabs[0];
-      const optionsUrl = chrome.runtime.getURL('src/pages/options/index.html');
-
-      if (currentTab?.url?.includes('src/pages/options/index.html')) {
-        // We're already on options page
-        const urlObj = new URL(currentTab.url);
-        const currentTab_activeTab = urlObj.searchParams.get('tab') || 'general';
-
-        if (currentTab_activeTab === 'apiKeys') {
-          // Already on API Keys tab, just scroll and highlight
-          chrome.tabs.sendMessage(currentTab.id!, {
-            type: 'SCROLL_TO_PROVIDER',
-            provider: provider.provider
-          });
-        } else {
-          // On different tab (general), switch to API Keys tab
-          chrome.tabs.sendMessage(currentTab.id!, {
-            type: 'SWITCH_TAB_AND_SCROLL',
-            tab: 'apiKeys',
-            provider: provider.provider
-          });
-        }
-      } else {
-        // Not on options page, open in new tab
-        const newUrl = `${optionsUrl}?provider=${provider.provider}`;
-        chrome.tabs.create({ url: newUrl });
-      }
+      chrome.runtime.sendMessage({
+        type: 'NAVIGATE_TO_PROVIDER',
+        payload: { provider: provider.provider }
+      });
     } else if (onProviderClick) {
       // If enabled and onProviderClick is provided, trigger tab change
       onProviderClick(provider.label);
@@ -145,12 +125,13 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
     <div className="provider-badges-container">
       {allProviders.map((provider) => {
         const isActive = activeProvider === provider.label;
+        const tooltipKey = PROVIDER_I18N_KEYS[provider.provider];
         return (
           <div
             key={provider.provider}
             className={`provider-badge ${provider.enabled ? 'enabled' : 'disabled'} ${isActive ? 'active' : ''}`}
             onClick={() => handleBadgeClick(provider)}
-            title={provider.enabled ? '' : TOOLTIP_MESSAGES[provider.provider]}
+            title={provider.enabled ? '' : t(`tooltips.${tooltipKey}`)}
             style={{ cursor: 'pointer' }}
           >
             <div className="provider-logo-wrapper">

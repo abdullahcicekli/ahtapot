@@ -17,6 +17,7 @@ import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
 import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
+import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
@@ -26,6 +27,7 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'AbuseIPDB': [IOCType.IPV4, IOCType.IPV6],
   'VirusTotal': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'OTX AlienVault': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256, IOCType.CVE],
+  'MalwareBazaar': [IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
 };
 
 // Get providers that support a specific IOC type
@@ -47,6 +49,7 @@ const SidePanel: React.FC = () => {
   const [completedProviders, setCompletedProviders] = useState<{ provider: APIProvider; status: 'success' | 'error' }[]>([]);
   const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
   const [activeProviderTab, setActiveProviderTab] = useState<string>('');
+  const [isInputExpanded, setIsInputExpanded] = useState(true);
 
   useEffect(() => {
     checkAPIKeys();
@@ -121,6 +124,7 @@ const SidePanel: React.FC = () => {
     setResults([]);
     setCompletedProviders([]);
     setActiveProviderTab(''); // Reset active tab when starting new analysis
+    setIsInputExpanded(false); // Collapse input when analysis starts
 
     if (hasApiKeys === false) {
       setLoading(false);
@@ -216,41 +220,53 @@ const SidePanel: React.FC = () => {
           </div>
         )}
 
-        <div className="input-section">
-          <label htmlFor="ioc-input" className="input-label">
-            {t('input.label')}
-          </label>
-          <textarea
-            id="ioc-input"
-            placeholder={t('input.placeholder')}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            className="ioc-input"
-            rows={6}
-          />
-          <div className="input-actions">
-            <button onClick={handleDetect} className="detect-btn">
-              <Search size={18} />
-              {t('input.detectButton')}
-            </button>
-            <button
-              onClick={() => handleAnalyze()}
-              className="analyze-btn"
-              disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
-            >
-              {loading ? (
-                <>
-                  <Loader size={18} className="spinner" />
-                  {t('input.analyzingButton')}
-                </>
-              ) : (
-                <>
-                  <Shield size={18} />
-                  {t('input.analyzeButton')}
-                </>
-              )}
-            </button>
-          </div>
+        <div className={`input-section ${isInputExpanded ? 'expanded' : 'collapsed'}`}>
+          {!isInputExpanded && (
+            <div className="input-collapsed-header" onClick={() => setIsInputExpanded(true)}>
+              <Search size={16} />
+              <span>{inputText || t('input.label')}</span>
+              <span className="expand-hint">Click to edit</span>
+            </div>
+          )}
+
+          {isInputExpanded && (
+            <>
+              <label htmlFor="ioc-input" className="input-label">
+                {t('input.label')}
+              </label>
+              <textarea
+                id="ioc-input"
+                placeholder={t('input.placeholder')}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                className="ioc-input"
+                rows={6}
+              />
+              <div className="input-actions">
+                <button onClick={handleDetect} className="detect-btn">
+                  <Search size={18} />
+                  {t('input.detectButton')}
+                </button>
+                <button
+                  onClick={() => handleAnalyze()}
+                  className="analyze-btn"
+                  disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
+                >
+                  {loading ? (
+                    <>
+                      <Loader size={18} className="spinner" />
+                      {t('input.analyzingButton')}
+                    </>
+                  ) : (
+                    <>
+                      <Shield size={18} />
+                      {t('input.analyzeButton')}
+                    </>
+                  )}
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         <ProviderStatusBadges
@@ -264,7 +280,7 @@ const SidePanel: React.FC = () => {
           }}
         />
 
-        {detectedIOCs.length > 0 && (
+        {detectedIOCs.length > 0 && results.length === 0 && (
           <div className="detected-section">
             <h2 className="section-title">
               {t('detected.title')} ({detectedIOCs.length})
@@ -342,6 +358,10 @@ const SidePanel: React.FC = () => {
 
                   if (result.source === 'AbuseIPDB') {
                     return <AbuseIPDBResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'MalwareBazaar') {
+                    return <MalwareBazaarResultCard key={index} result={result} />;
                   }
 
                   return (

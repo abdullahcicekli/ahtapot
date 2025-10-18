@@ -48,6 +48,12 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://www.abuseipdb.com/account/api',
     signupLink: 'https://www.abuseipdb.com/register',
   },
+  {
+    provider: APIProvider.MALWAREBAZAAR,
+    label: 'MalwareBazaar',
+    link: 'https://auth.abuse.ch/user/me',
+    signupLink: 'https://auth.abuse.ch/signup',
+  },
 ];
 
 const OptionsPage: React.FC = () => {
@@ -652,6 +658,19 @@ const OptionsPage: React.FC = () => {
                               <li>{t('info.steps.paste', { ns: 'options' })}</li>
                             </ol>
                           </div>
+
+                          {/* Special note for MalwareBazaar */}
+                          {config.provider === APIProvider.MALWAREBAZAAR && (
+                            <div className="api-info-section api-warning-section">
+                              <h4>
+                                <AlertCircle size={16} />
+                                {t('info.importantNote', { ns: 'options' })}
+                              </h4>
+                              <p className="api-warning-text">
+                                {t(`notes.${providerKey}`, { ns: 'options' })}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
 

@@ -2,6 +2,7 @@ import { IToolService } from './base/BaseToolService';
 import { VirusTotalService } from './tools/VirusTotalService';
 import { OTXService } from './tools/OTXService';
 import { AbuseIPDBService } from './tools/AbuseIPDBService';
+import { MalwareBazaarService } from './tools/MalwareBazaarService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
@@ -95,6 +96,17 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] AbuseIPDB service initialized');
+        break;
+
+      case APIProvider.MALWAREBAZAAR:
+        this.services.set(
+          provider,
+          new MalwareBazaarService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] MalwareBazaar service initialized');
         break;
 
       default:

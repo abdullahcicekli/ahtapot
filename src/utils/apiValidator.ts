@@ -22,6 +22,12 @@ export class APIKeyValidator {
       url: 'https://api.abuseipdb.com/api/v2/check?ipAddress=8.8.8.8',
       header: 'Key',
     },
+    [APIProvider.MALWAREBAZAAR]: {
+      url: 'https://mb-api.abuse.ch/api/v1/',
+      header: 'Auth-Key',
+      method: 'POST',
+      testHash: '275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f', // Known malware SHA256
+    },
   };
 
   /**
@@ -51,21 +57,34 @@ export class APIKeyValidator {
         'Accept': 'application/json',
       };
 
-      // Add API key to headers or URL based on provider
+      // Add API key to headers
       if (endpoint.header) {
         headers[endpoint.header] = apiKey;
       }
 
-      const url = endpoint.header
-        ? endpoint.url
-        : `${endpoint.url}${apiKey}`;
+      const url = endpoint.url;
+
+      // Prepare request options based on provider
+      let requestOptions: RequestInit = {
+        method: (endpoint as any).method || 'GET',
+        headers,
+      };
+
+      // Special handling for MalwareBazaar (requires POST with FormData)
+      if (provider === APIProvider.MALWAREBAZAAR) {
+        const formData = new FormData();
+        formData.append('query', 'get_info');
+        formData.append('hash', (endpoint as any).testHash);
+        requestOptions.body = formData;
+        // Remove Content-Type header to let browser set it with boundary
+        delete (headers as any)['Content-Type'];
+      }
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
       const response = await fetch(url, {
-        method: 'GET',
-        headers,
+        ...requestOptions,
         signal: controller.signal,
       });
 

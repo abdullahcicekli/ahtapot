@@ -8,6 +8,7 @@ export enum MessageType {
   ANALYSIS_RESULT = 'ANALYSIS_RESULT',
   OPEN_SIDEPANEL = 'OPEN_SIDEPANEL',
   GET_API_KEYS = 'GET_API_KEYS',
+  NAVIGATE_TO_PROVIDER = 'NAVIGATE_TO_PROVIDER',
 }
 
 /**
@@ -41,9 +42,20 @@ export interface OpenSidePanelMessage {
 }
 
 /**
+ * Provider sayfasına navigasyon mesajı
+ */
+export interface NavigateToProviderMessage {
+  type: MessageType.NAVIGATE_TO_PROVIDER;
+  payload: {
+    provider: string;
+  };
+}
+
+/**
  * Tüm mesaj tipleri
  */
 export type ExtensionMessage =
   | AnalyzeIOCMessage
   | AnalysisResultMessage
-  | OpenSidePanelMessage;
+  | OpenSidePanelMessage
+  | NavigateToProviderMessage;
