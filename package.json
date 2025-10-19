@@ -1,7 +1,7 @@
 {
   "name": "ahtapot-extension",
   "version": "2.1.0",
-  "description": "Chrome extension for IOC analysis with VirusTotal, OTX AlienVault, AbuseIPDB & MalwareBazaar, cache management, and tab-based results",
+  "description": "Chrome extension for fast and secure IOC analysis with multiple threat intelligence providers. Tab-based results, cache management, API validation",
   "type": "module",
   "scripts": {
     "dev": "vite",
