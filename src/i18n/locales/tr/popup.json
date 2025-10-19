@@ -4,8 +4,8 @@
   },
   "menu": {
     "iocAnalysis": {
-      "title": "Gösterge Analizi",
-      "description": "Yan paneli aç ve göstergeleri analiz et"
+      "title": "IOC Analizi",
+      "description": "Yan paneli aç ve IOC analizi yap"
     },
     "apiSettings": {
       "title": "API Ayarları",
@@ -13,10 +13,14 @@
     },
     "about": {
       "title": "Hakkında",
-      "description": "Ahtapot Eklentisi v1.0.0"
+      "description": "Ahtapot Extension v2.1.1"
+    },
+    "feedback": {
+      "title": "Geri Bildirim",
+      "description": "Düşüncelerinizi ve önerilerinizi paylaşın"
     }
   },
   "footer": {
-    "text": "Metin seçerek veya sağ tıklayarak göstergeleri analiz edebilirsiniz"
+    "text": "Metin seçerek veya sağ tıklayarak IOC analizi yapabilirsiniz"
   }
 }

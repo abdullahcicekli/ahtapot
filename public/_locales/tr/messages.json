@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Ahtapot - IOC Analiz Aracı",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Birden fazla tehdit istihbarat sağlayıcısı ile hızlı ve güvenli IOC analizi",
+    "description": "Extension description"
+  }
+}

@@ -4,8 +4,8 @@
   },
   "menu": {
     "iocAnalysis": {
-      "title": "Indicator Analysis",
-      "description": "Open side panel and analyze indicators"
+      "title": "IOC Analysis",
+      "description": "Open side panel and analyze IOC"
     },
     "apiSettings": {
       "title": "API Settings",
@@ -13,10 +13,14 @@
     },
     "about": {
       "title": "About",
-      "description": "Ahtapot Extension v1.0.0"
+      "description": "Ahtapot Extension v2.1.1"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "description": "Share your thoughts and suggestions"
     }
   },
   "footer": {
-    "text": "Select text or right-click to analyze indicators"
+    "text": "Select text or right-click to analyze IOC"
   }
 }

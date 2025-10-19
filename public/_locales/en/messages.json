@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Ahtapot - IOC Analysis Tool",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Fast and secure IOC analysis with multiple threat intelligence providers",
+    "description": "Extension description"
+  }
+}
