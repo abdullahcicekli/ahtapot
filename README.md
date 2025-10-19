@@ -10,12 +10,13 @@
 
 **Fast and secure analysis of Indicators of Compromise (IOC) directly in your browser**
 
+[![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.1.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
+[🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
 
 </div>
 
@@ -39,7 +40,6 @@
 - ⚡ **Per-Field Save** - Individual save buttons for each API provider
 
 ### Provider Changes
-- ❌ **Removed**: Shodan, URLScan.io, Have I Been Pwned
 - ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar
 - 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
 
@@ -112,6 +112,8 @@ Automatically detects and analyzes various types of security indicators:
 ---
 
 ## 📦 Installation
+
+> 🌐 **Visit our website:** [ahtapot.me](https://ahtapot.me) for detailed installation guides and documentation
 
 ### From Source
 
@@ -249,56 +251,6 @@ Results are color-coded for quick threat assessment:
 - **Extension:** Manifest V3
 - **Storage:** Chrome Storage API
 
-### Project Structure
-
-```
-ahtapot-extension/
-├── src/
-│   ├── background/          # Service worker & API management
-│   │   └── service-worker.ts
-│   ├── content/            # Content scripts & page interaction
-│   │   ├── content-script.tsx
-│   │   └── content-script.css
-│   ├── components/         # React components
-│   │   └── FloatingButton.tsx
-│   ├── pages/
-│   │   ├── popup/          # Extension popup
-│   │   ├── options/        # Settings page
-│   │   └── sidepanel/      # Analysis panel
-│   ├── services/           # API service layer
-│   │   └── api-service.ts
-│   ├── utils/              # Utility functions
-│   │   └── ioc-detector.ts # IOC detection logic
-│   ├── types/              # TypeScript type definitions
-│   │   ├── ioc.ts
-│   │   └── messages.ts
-│   └── manifest.json       # Extension manifest
-├── public/                 # Static assets
-│   ├── icons/             # Extension icons
-│   └── ahtapot-logo-*.png # Brand assets
-├── dist/                   # Build output (generated)
-└── README.md
-```
-
-### Development Commands
-
-```bash
-# Install dependencies
-npm install
-
-# Build for development
-npm run build
-
-# Build with watch mode
-npm run build -- --watch
-
-# Type checking
-npx tsc --noEmit
-
-# Production build
-npm run build
-```
-
 ### Building from Source
 
 1. Clone the repository
@@ -313,7 +265,7 @@ npm run build
 
 Get free API keys to unlock full analysis capabilities:
 
-### VirusTotal (Required)
+### VirusTotal
 - **Purpose:** Malware, file, URL, IP, and domain analysis
 - **Free Tier:** 4 requests per minute
 - **Supported IOCs:** IPv4, IPv6, Domain, URL, File Hashes (MD5, SHA1, SHA256)
@@ -323,7 +275,7 @@ Get free API keys to unlock full analysis capabilities:
   - Comprehensive threat analysis
   - Detection statistics from 70+ antivirus engines
 
-### OTX AlienVault (Required)
+### OTX AlienVault
 - **Purpose:** Threat intelligence and IOC pulse analysis
 - **Free Tier:** 10,000 requests per day (10 req/sec)
 - **Supported IOCs:** IPv4, IPv6, Domain, URL, File Hashes (MD5, SHA1, SHA256), CVE
@@ -335,7 +287,7 @@ Get free API keys to unlock full analysis capabilities:
   - Targeted countries and adversary information
   - Custom threat scoring algorithm
 
-### AbuseIPDB (Optional)
+### AbuseIPDB
 - **Purpose:** IP address reputation and abuse confidence scoring
 - **Free Tier:** 1,000 requests per day
 - **Supported IOCs:** IPv4, IPv6 only
@@ -347,7 +299,7 @@ Get free API keys to unlock full analysis capabilities:
   - ISP and usage type detection
   - Community-reported abuse data
 
-### MalwareBazaar (Optional)
+### MalwareBazaar
 - **Purpose:** Malware sample database and hash reputation lookup
 - **Free Tier:** No API key required, no strict rate limits
 - **Supported IOCs:** File Hashes (MD5, SHA1, SHA256) only
@@ -367,31 +319,6 @@ Get free API keys to unlock full analysis capabilities:
 > **Smart Optimization:** Extension automatically detects which providers support each IOC type and only makes necessary API calls, saving your rate limits.
 
 ---
-
-## 🏗️ Architecture
-
-### Security Design
-
-```
-┌─────────────────────────────────────────────────────┐
-│                   Web Page                          │
-│  ┌───────────────────────────────────────────────┐  │
-│  │         Content Script (Isolated)             │  │
-│  │  - IOC Detection                              │  │
-│  │  - Floating Button UI                         │  │
-│  │  - No API Key Access                          │  │
-│  └────────────────┬──────────────────────────────┘  │
-└───────────────────┼──────────────────────────────────┘
-                    │ Message Passing
-                    ▼
-┌─────────────────────────────────────────────────────┐
-│         Background Service Worker                   │
-│  - API Key Storage (Encrypted)                      │
-│  - Secure API Calls                                 │
-│  - Rate Limiting                                    │
-│  - Error Handling                                   │
-└─────────────────────────────────────────────────────┘
-```
 
 ### Data Flow
 
@@ -424,46 +351,6 @@ Contributions are welcome! This project is actively maintained.
    ```
 5. Open a Pull Request
 
-### Code Style
-
-- Use TypeScript for type safety
-- Follow existing code patterns
-- Add comments for complex logic
-- Update README for new features
-- Test thoroughly before submitting
-
----
-
-## 🐛 Troubleshooting
-
-### Floating Button Not Appearing
-
-- ✓ Ensure you're selecting valid IOC text
-- ✓ Check browser console for errors
-- ✓ Reload the extension
-- ✓ Verify content script is injected
-
-### API Results Not Showing
-
-- ✓ Verify API keys are correctly entered
-- ✓ Check if you've exceeded rate limits
-- ✓ Review network tab for API call errors
-- ✓ Ensure stable internet connection
-
-### Extension Not Loading
-
-- ✓ Run `npm run build` first
-- ✓ Verify `dist` folder exists
-- ✓ Check Chrome console for errors
-- ✓ Try restarting Chrome
-
-### Build Errors
-
-- ✓ Ensure Node.js 18+ is installed
-- ✓ Delete `node_modules` and reinstall
-- ✓ Clear build cache: `rm -rf dist`
-- ✓ Check TypeScript errors: `npx tsc --noEmit`
-
 ---
 
 ## 📝 License
@@ -472,19 +359,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🌟 Acknowledgments
-
-- Built with modern web technologies
-- Inspired by the cybersecurity community
-- Icons from [Lucide](https://lucide.dev)
-- Designed for security professionals
-
----
-
 ## 📞 Support
 
+- **Website:** [ahtapot.me](https://ahtapot.me)
 - **Issues:** [GitHub Issues](https://github.com/abdullahcicekli/ahtapot/issues)
-- **Privacy Questions:** See [Privacy Policy](PRIVACY.md)
+- **Discussions:** [GitHub Discussions](https://github.com/abdullahcicekli/ahtapot/discussions)
+- **Privacy Questions:** See [Privacy Policy](docs/PRIVACY.md)
 - **Security Vulnerabilities:** Please report security issues privately via GitHub Security tab
 
 ---
@@ -513,6 +393,6 @@ For detailed versioning guidelines, contribution standards, and changelog format
 
 ⭐ Star this repo if you find it useful!
 
-[Report Bug](https://github.com/yourusername/ahtapot-extension/issues) · [Request Feature](https://github.com/yourusername/ahtapot-extension/issues)
+[🌐 Website](https://ahtapot.me) • [Report Bug](https://github.com/abdullahcicekli/ahtapot/issues) • [Request Feature](https://github.com/abdullahcicekli/ahtapot/issues)
 
 </div>
