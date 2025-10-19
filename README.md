@@ -12,18 +12,22 @@
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.0.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.1.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys)
+[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
 
 </div>
 
 ---
 
-## 🆕 What's New in v2.0.0
+## 🆕 What's New in v2.1.0
 
-### Major Updates
+### Latest Updates
+- 🦠 **MalwareBazaar Integration** - Malware hash analysis with comprehensive sample database
+- 🔍 **Enhanced Hash Analysis** - Improved file hash reputation checking with MalwareBazaar data
+
+### Major Features (v2.0.0+)
 - ✨ **OTX AlienVault Integration** - Comprehensive threat intelligence with pulse-based analysis
 - 🔍 **AbuseIPDB Integration** - IP reputation analysis with abuse confidence scoring
 - 🎯 **Smart Provider Support** - See which providers support each IOC type before analysis
@@ -36,7 +40,7 @@
 
 ### Provider Changes
 - ❌ **Removed**: Shodan, URLScan.io, Have I Been Pwned
-- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB
+- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar
 - 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
 
 ---
@@ -78,6 +82,7 @@ Automatically detects and analyzes various types of security indicators:
 | **VirusTotal** | Malware & URL scanning | 4 req/min (free) |
 | **OTX AlienVault** | Threat intelligence & IOC pulses | 10,000 req/day |
 | **AbuseIPDB** | IP reputation & abuse reports | 1,000 req/day (free) |
+| **MalwareBazaar** | Malware hash database & sample repository | No strict limit (free) |
 
 ### 🎯 **Smart Provider Matching**
 - **Real-time Support Detection** - Each IOC shows compatible providers via badges
@@ -87,7 +92,7 @@ Automatically detects and analyzes various types of security indicators:
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
-- **Tab-based provider results** - Switch between VirusTotal, OTX AlienVault, and AbuseIPDB seamlessly
+- **Tab-based provider results** - Switch between VirusTotal, OTX AlienVault, AbuseIPDB, and MalwareBazaar seamlessly
 - **Provider support badges** - See which providers support each IOC at a glance
 - **Informative empty states** - Clear explanations when providers don't support an IOC type
 - Clean, professional design
@@ -102,7 +107,7 @@ Automatically detects and analyzes various types of security indicators:
 - ✅ Optional caching with configurable retention
 - ✅ Open source and transparent
 - ✅ Content Security Policy compliant
-- ✅ Read our [Privacy Policy](PRIVACY.md) | [Gizlilik Politikası (TR)](PRIVACY_TR.md)
+- ✅ Read our [Privacy Policy](docs/PRIVACY.md) | [Gizlilik Politikası (TR)](docs/PRIVACY_TR.md)
 
 ---
 
@@ -155,8 +160,8 @@ We take your privacy seriously. Here's what you need to know:
 
 ### Full Privacy Policy
 📄 **Read the complete privacy policy:**
-- [English Version](PRIVACY.md)
-- [Türkçe Versiyon](PRIVACY_TR.md)
+- [English Version](docs/PRIVACY.md)
+- [Türkçe Versiyon](docs/PRIVACY_TR.md)
 
 ---
 
@@ -342,6 +347,19 @@ Get free API keys to unlock full analysis capabilities:
   - ISP and usage type detection
   - Community-reported abuse data
 
+### MalwareBazaar (Optional)
+- **Purpose:** Malware sample database and hash reputation lookup
+- **Free Tier:** No API key required, no strict rate limits
+- **Supported IOCs:** File Hashes (MD5, SHA1, SHA256) only
+- **Documentation:** [bazaar.abuse.ch/api](https://bazaar.abuse.ch/api/)
+- **Features:**
+  - Malware sample information and metadata
+  - File type and signature detection
+  - Malware family classification
+  - Submission date and first seen information
+  - Community-driven malware intelligence
+  - No authentication required for basic lookups
+
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
 >
 > **Live Validation:** Test your API keys directly in the settings page before saving to ensure they work correctly.
@@ -465,10 +483,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/ahtapot-extension/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/ahtapot-extension/discussions)
+- **Issues:** [GitHub Issues](https://github.com/abdullahcicekli/ahtapot/issues)
 - **Privacy Questions:** See [Privacy Policy](PRIVACY.md)
 - **Security Vulnerabilities:** Please report security issues privately via GitHub Security tab
+
+---
+
+## 📋 Versioning
+
+This project follows [Semantic Versioning 2.0.0](https://semver.org/) (SemVer).
+
+**Version Format:** `MAJOR.MINOR.PATCH`
+
+- **MAJOR** - Backward-incompatible changes (e.g., removing a provider)
+- **MINOR** - New features, backward compatible (e.g., adding a provider)
+- **PATCH** - Bug fixes and minor improvements
+
+For detailed versioning guidelines, contribution standards, and changelog format, see:
+
+📚 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
+
+**Current Version:** 2.1.0
 
 ---
 
