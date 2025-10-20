@@ -54,6 +54,12 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://auth.abuse.ch/user/me',
     signupLink: 'https://auth.abuse.ch/signup',
   },
+  {
+    provider: APIProvider.SHODAN,
+    label: 'Shodan',
+    link: 'https://developer.shodan.io/api',
+    signupLink: 'https://account.shodan.io/register',
+  },
 ];
 
 const OptionsPage: React.FC = () => {
@@ -785,9 +791,5 @@ const OptionsPage: React.FC = () => {
 // React uygulamasını başlat
 const root = document.getElementById('root');
 if (root) {
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <OptionsPage />
-    </React.StrictMode>
-  );
+  ReactDOM.createRoot(root).render(<OptionsPage />);
 }

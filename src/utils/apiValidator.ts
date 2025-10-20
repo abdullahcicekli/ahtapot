@@ -33,6 +33,10 @@ export class APIKeyValidator {
       method: 'POST',
       testHash: '275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f', // Known malware SHA256
     },
+    [APIProvider.SHODAN]: {
+      url: 'https://api.shodan.io/api-info',
+      header: 'key',
+    },
     // ARIN doesn't need validation - no API key required
   };
 
@@ -63,12 +67,14 @@ export class APIKeyValidator {
         'Accept': 'application/json',
       };
 
-      // Add API key to headers
-      if (endpoint.header) {
+      // Shodan uses query parameter for API key, not header
+      let url = endpoint.url;
+      if (provider === APIProvider.SHODAN) {
+        url = `${endpoint.url}?key=${apiKey}`;
+      } else if (endpoint.header) {
+        // Add API key to headers for other providers
         headers[endpoint.header] = apiKey;
       }
-
-      const url = endpoint.url;
 
       // Prepare request options based on provider
       let requestOptions: RequestInit = {

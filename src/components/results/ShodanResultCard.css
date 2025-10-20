@@ -1,0 +1,540 @@
+/* Shodan Result Card Styles */
+
+.shodan-result-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.shodan-result-card:hover {
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.shodan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.shodan-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.shodan-logo {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #dc2626;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.shodan-logo img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.shodan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shodan-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.shodan-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.shodan-header-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.shodan-ioc-info {
+  text-align: center;
+}
+
+.shodan-ioc-value {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.95);
+  word-break: break-all;
+}
+
+.shodan-ioc-type {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.shodan-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Status Badge */
+.shodan-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.shodan-status-badge.safe {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.shodan-status-badge.suspicious {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.shodan-status-badge.malicious {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.shodan-status-badge.unknown {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.shodan-status-badge.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Error Message */
+.shodan-error {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.shodan-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Not Found Message */
+.shodan-not-found {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.shodan-not-found-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.shodan-not-found-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #92400e;
+  padding-left: 24px;
+}
+
+.shodan-not-found-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Unsupported IOC Type */
+.shodan-unsupported {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.shodan-unsupported-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.shodan-supported-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shodan-supported-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.shodan-supported-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.shodan-ioc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #dc2626;
+  background-color: rgba(220, 38, 38, 0.1);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  white-space: nowrap;
+}
+
+/* Summary */
+.shodan-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: rgba(220, 38, 38, 0.1);
+  color: rgba(220, 38, 38, 0.9);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  margin-bottom: 16px;
+}
+
+/* Content */
+.shodan-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overview Grid */
+.shodan-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.shodan-metric-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.shodan-metric-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.shodan-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.shodan-metric-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shodan-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+  gap: 16px;
+}
+
+.shodan-metric-label {
+  color: rgba(148, 163, 184, 0.8);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.shodan-metric-value {
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.shodan-metric-value.monospace {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+/* Vulnerabilities */
+.shodan-vulnerabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.shodan-vulnerability {
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(252, 165, 165, 0.95);
+  font-weight: 600;
+}
+
+/* Services */
+.shodan-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.shodan-service {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.shodan-service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.shodan-service-port {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(96, 165, 250, 0.95);
+}
+
+.shodan-service-protocol {
+  display: inline-block;
+  padding: 4px 8px;
+  background: rgba(59, 130, 246, 0.15);
+  color: rgba(96, 165, 250, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.shodan-service-product {
+  font-size: 13px;
+  color: rgba(203, 213, 225, 0.9);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.shodan-service-version {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+/* Ports Badge */
+.shodan-ports-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.shodan-port-badge {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(96, 165, 250, 0.95);
+  background: rgba(59, 130, 246, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Tags */
+.shodan-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.shodan-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(220, 38, 38, 0.1);
+  color: rgba(220, 38, 38, 0.9);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Hostnames */
+.shodan-hostnames {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.shodan-hostname {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  color: rgba(203, 213, 225, 0.9);
+  padding: 8px 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+/* External Link */
+.shodan-external-link {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.shodan-link-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(220, 38, 38, 0.2);
+  color: rgba(220, 38, 38, 0.95);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.shodan-link-button:hover {
+  background: rgba(220, 38, 38, 0.3);
+  border-color: rgba(220, 38, 38, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .shodan-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .shodan-header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .shodan-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shodan-metric-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .shodan-metric-value {
+    text-align: left;
+  }
+
+  .shodan-services {
+    grid-template-columns: 1fr;
+  }
+}

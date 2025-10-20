@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.1.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.2.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
@@ -22,11 +22,12 @@
 
 ---
 
-## 🆕 What's New in v2.1.0
+## 🆕 What's New in v2.2.0
 
 ### Latest Updates
-- 🦠 **MalwareBazaar Integration** - Malware hash analysis with comprehensive sample database
-- 🔍 **Enhanced Hash Analysis** - Improved file hash reputation checking with MalwareBazaar data
+- 🔍 **Shodan Integration** - Internet-connected device search with vulnerability and port scanning
+- 🌐 **ARIN WHOIS Integration** - IP address registration information and network allocation data
+- 🛡️ **Enhanced Network Analysis** - Comprehensive IP intelligence from multiple authoritative sources
 
 ### Major Features (v2.0.0+)
 - ✨ **OTX AlienVault Integration** - Comprehensive threat intelligence with pulse-based analysis
@@ -40,8 +41,9 @@
 - ⚡ **Per-Field Save** - Individual save buttons for each API provider
 
 ### Provider Changes
-- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar
+- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar, ARIN, Shodan
 - 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
+- 🆓 **No API Key Required**: ARIN WHOIS (always available)
 
 ---
 
@@ -83,6 +85,8 @@ Automatically detects and analyzes various types of security indicators:
 | **OTX AlienVault** | Threat intelligence & IOC pulses | 10,000 req/day |
 | **AbuseIPDB** | IP reputation & abuse reports | 1,000 req/day (free) |
 | **MalwareBazaar** | Malware hash database & sample repository | No strict limit (free) |
+| **ARIN** | IP WHOIS & network registration | 15 req/min (no key required) |
+| **Shodan** | Device search & vulnerability scanning | 100 results/month (free) |
 
 ### 🎯 **Smart Provider Matching**
 - **Real-time Support Detection** - Each IOC shows compatible providers via badges
@@ -92,7 +96,7 @@ Automatically detects and analyzes various types of security indicators:
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
-- **Tab-based provider results** - Switch between VirusTotal, OTX AlienVault, AbuseIPDB, and MalwareBazaar seamlessly
+- **Tab-based provider results** - Switch between all providers seamlessly (VirusTotal, OTX, AbuseIPDB, MalwareBazaar, ARIN, Shodan)
 - **Provider support badges** - See which providers support each IOC at a glance
 - **Informative empty states** - Clear explanations when providers don't support an IOC type
 - Clean, professional design
@@ -311,6 +315,34 @@ Get free API keys to unlock full analysis capabilities:
   - Submission date and first seen information
   - Community-driven malware intelligence
   - No authentication required for basic lookups
+
+### ARIN
+- **Purpose:** IP address WHOIS and network registration information
+- **Free Tier:** No API key required (public read-only access)
+- **Supported IOCs:** IPv4, IPv6 only
+- **Documentation:** [arin.net/resources/registry/whois/rws](https://www.arin.net/resources/registry/whois/rws/)
+- **Features:**
+  - Network registration details
+  - Organization information
+  - IP address allocation ranges
+  - CIDR notation and network blocks
+  - Registration and update dates
+  - Parent network relationships
+  - Always available without configuration
+
+### Shodan
+- **Purpose:** Internet-connected device search and vulnerability analysis
+- **Free Tier:** 100 results per month
+- **Supported IOCs:** IPv4, IPv6, Domain
+- **Get Key:** Visit [developer.shodan.io/api](https://developer.shodan.io/api) → Click "Show API Key" (top right)
+- **Features:**
+  - Open port and service detection
+  - CVE vulnerability identification
+  - Device banners and service versions
+  - Geographic location data
+  - ISP and organization information
+  - Historical scan data
+  - Subdomain discovery for domains
 
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
 >

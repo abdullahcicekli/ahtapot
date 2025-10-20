@@ -19,6 +19,7 @@ import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
 import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResultCard';
 import { ARINResultCard } from '@/components/results/ARINResultCard';
+import { ShodanResultCard } from '@/components/results/ShodanResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
@@ -30,6 +31,7 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'OTX AlienVault': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256, IOCType.CVE],
   'MalwareBazaar': [IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'ARIN': [IOCType.IPV4, IOCType.IPV6],
+  'Shodan': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN],
 };
 
 // Get providers that support a specific IOC type
@@ -70,7 +72,7 @@ const SidePanel: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener((message) => {
+    const messageListener = (message: any) => {
       if (message.type === MessageType.OPEN_SIDEPANEL) {
         if (message.payload.iocs) {
           const iocs = message.payload.iocs as DetectedIOC[];
@@ -82,7 +84,13 @@ const SidePanel: React.FC = () => {
           handleAnalyze(text);
         }
       }
-    });
+    };
+
+    chrome.runtime.onMessage.addListener(messageListener);
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener);
+    };
   }, []);
 
   async function checkAPIKeys() {
@@ -370,6 +378,10 @@ const SidePanel: React.FC = () => {
                     return <ARINResultCard key={index} result={result} />;
                   }
 
+                  if (result.source === 'Shodan') {
+                    return <ShodanResultCard key={index} result={result} />;
+                  }
+
                   return (
                     <div key={index} className="result-card">
                       <div className="result-header">
@@ -454,9 +466,5 @@ const SidePanel: React.FC = () => {
 
 const root = document.getElementById('root');
 if (root) {
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <SidePanel />
-    </React.StrictMode>
-  );
+  ReactDOM.createRoot(root).render(<SidePanel />);
 }

@@ -69,6 +69,11 @@
       "label": "MalwareBazaar",
       "description": "Malware hash analysis and sample information",
       "placeholder": "Your MalwareBazaar API key"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "Internet-connected device search and vulnerability analysis",
+      "placeholder": "Your Shodan API key"
     }
   },
   "info": {
@@ -92,7 +97,8 @@
     "virustotal": "Add API key",
     "otx": "Add API key",
     "abuseipdb": "Add API key",
-    "malwarebazaar": "Add API key"
+    "malwarebazaar": "Add API key",
+    "shodan": "Add API key"
   },
   "features": {
     "virustotal": {
@@ -118,6 +124,12 @@
       "feature2": "Malware signature identification",
       "feature3": "File type and delivery method analysis",
       "feature4": "Code signing information"
+    },
+    "shodan": {
+      "feature1": "IP and domain lookups",
+      "feature2": "Open port and service detection",
+      "feature3": "CVE vulnerability identification",
+      "feature4": "Device and banner information"
     }
   },
   "limits": {
@@ -136,6 +148,10 @@
     "malwarebazaar": {
       "free": "Unlimited (with account)",
       "rate": "No specified limit"
+    },
+    "shodan": {
+      "free": "100 results/month (free)",
+      "rate": "1 request/second"
     }
   },
   "actions": {

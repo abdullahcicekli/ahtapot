@@ -69,6 +69,11 @@
       "label": "MalwareBazaar",
       "description": "Zararlı yazılım hash analizi ve örnek bilgisi",
       "placeholder": "MalwareBazaar API anahtarınız"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "İnternet'e bağlı cihaz arama ve zafiyet analizi",
+      "placeholder": "Shodan API anahtarınız"
     }
   },
   "info": {
@@ -92,7 +97,8 @@
     "virustotal": "API anahtarı ekle",
     "otx": "API anahtarı ekle",
     "abuseipdb": "API anahtarı ekle",
-    "malwarebazaar": "API anahtarı ekle"
+    "malwarebazaar": "API anahtarı ekle",
+    "shodan": "API anahtarı ekle"
   },
   "features": {
     "virustotal": {
@@ -118,6 +124,12 @@
       "feature2": "Zararlı yazılım imza tanımlama",
       "feature3": "Dosya türü ve dağıtım yöntemi analizi",
       "feature4": "Kod imzalama bilgisi"
+    },
+    "shodan": {
+      "feature1": "IP ve domain sorgulaması",
+      "feature2": "Açık port ve servis tespiti",
+      "feature3": "CVE zafiyet tanımlama",
+      "feature4": "Cihaz ve banner bilgisi"
     }
   },
   "limits": {
@@ -136,6 +148,10 @@
     "malwarebazaar": {
       "free": "Sınırsız (hesap ile)",
       "rate": "Belirtilen limit yok"
+    },
+    "shodan": {
+      "free": "100 sonuç/ay (ücretsiz)",
+      "rate": "1 istek/saniye"
     }
   },
   "actions": {

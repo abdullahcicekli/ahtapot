@@ -50,6 +50,7 @@ export enum APIProvider {
   ABUSEIPDB = 'abuseipdb',
   MALWAREBAZAAR = 'malwarebazaar',
   ARIN = 'arin',
+  SHODAN = 'shodan',
 }
 
 /**

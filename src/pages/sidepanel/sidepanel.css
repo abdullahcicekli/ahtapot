@@ -406,7 +406,7 @@ body {
 }
 
 .status-icon.unknown {
-  color: #6b7280;
+  color: #f59e0b;
 }
 
 .status-icon.error {
@@ -463,8 +463,8 @@ body {
 }
 
 .result-status.unknown {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: #fef3c7;
+  color: #f59e0b;
 }
 
 .result-status.error {

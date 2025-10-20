@@ -177,6 +177,7 @@ function findProviderByServiceName(serviceName: string): APIProvider | null {
     'AbuseIPDB': APIProvider.ABUSEIPDB,
     'MalwareBazaar': APIProvider.MALWAREBAZAAR,
     'ARIN': APIProvider.ARIN,
+    'Shodan': APIProvider.SHODAN,
   };
 
   return mapping[serviceName] || null;

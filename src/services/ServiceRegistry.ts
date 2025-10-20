@@ -4,6 +4,7 @@ import { OTXService } from './tools/OTXService';
 import { AbuseIPDBService } from './tools/AbuseIPDBService';
 import { MalwareBazaarService } from './tools/MalwareBazaarService';
 import { ARINService } from './tools/ARINService';
+import { ShodanService } from './tools/ShodanService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
@@ -123,6 +124,17 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] ARIN service initialized (no API key required)');
+        break;
+
+      case APIProvider.SHODAN:
+        this.services.set(
+          provider,
+          new ShodanService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] Shodan service initialized');
         break;
 
       default:

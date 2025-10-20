@@ -120,6 +120,7 @@ export class APIService {
       'AbuseIPDB': APIProvider.ABUSEIPDB,
       'MalwareBazaar': APIProvider.MALWAREBAZAAR,
       'ARIN': APIProvider.ARIN,
+      'Shodan': APIProvider.SHODAN,
     };
 
     return mapping[serviceName] || null;
