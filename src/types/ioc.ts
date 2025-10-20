@@ -49,6 +49,7 @@ export enum APIProvider {
   OTX = 'otx',
   ABUSEIPDB = 'abuseipdb',
   MALWAREBAZAAR = 'malwarebazaar',
+  ARIN = 'arin',
 }
 
 /**

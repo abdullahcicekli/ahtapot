@@ -119,6 +119,7 @@ export class APIService {
       'OTX AlienVault': APIProvider.OTX,
       'AbuseIPDB': APIProvider.ABUSEIPDB,
       'MalwareBazaar': APIProvider.MALWAREBAZAAR,
+      'ARIN': APIProvider.ARIN,
     };
 
     return mapping[serviceName] || null;

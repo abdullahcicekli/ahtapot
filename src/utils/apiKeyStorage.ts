@@ -58,9 +58,16 @@ export async function saveAPIKey(provider: APIProvider, key: string): Promise<vo
 
 /**
  * Remove an API key
+ * Note: ARIN cannot be removed as it requires no API key and is always available
  */
 export async function removeAPIKey(provider: APIProvider): Promise<void> {
   try {
+    // Prevent removing ARIN - it's always available (no API key needed)
+    if (provider === APIProvider.ARIN) {
+      console.warn('Cannot remove ARIN - it requires no API key and is always available');
+      return;
+    }
+
     const apiKeys = await getAPIKeys();
     delete apiKeys[provider];
     await chrome.storage.local.set({ apiKeys });
@@ -72,6 +79,7 @@ export async function removeAPIKey(provider: APIProvider): Promise<void> {
 
 /**
  * Get configured providers sorted by timestamp (most recent first)
+ * Note: ARIN is always included as it requires no API key
  */
 export async function getConfiguredProvidersSorted(): Promise<
   Array<{ provider: APIProvider; addedAt: number }>
@@ -80,6 +88,7 @@ export async function getConfiguredProvidersSorted(): Promise<
     const apiKeys = await getAPIKeys();
     const configured: Array<{ provider: APIProvider; addedAt: number }> = [];
 
+    // Add API-key-based providers
     Object.entries(apiKeys).forEach(([provider, data]) => {
       if (data && data.key && data.key.trim() !== '') {
         configured.push({
@@ -89,13 +98,23 @@ export async function getConfiguredProvidersSorted(): Promise<
       }
     });
 
+    // Always include ARIN (no API key required, public API)
+    const hasARIN = configured.some(p => p.provider === APIProvider.ARIN);
+    if (!hasARIN) {
+      configured.push({
+        provider: APIProvider.ARIN,
+        addedAt: 0, // Always show first (oldest timestamp)
+      });
+    }
+
     // Sort by addedAt (most recent first)
     configured.sort((a, b) => a.addedAt - b.addedAt);
 
     return configured;
   } catch (error) {
     console.error('Failed to get configured providers:', error);
-    return [];
+    // Even on error, return ARIN as it's always available
+    return [{ provider: APIProvider.ARIN, addedAt: 0 }];
   }
 }
 
@@ -124,9 +143,15 @@ async function migrateAPIKeys(oldKeys: any): Promise<APIKeysStorage> {
 
 /**
  * Check if a provider has an API key configured
+ * Note: ARIN always returns true as it requires no API key (public API)
  */
 export async function hasAPIKey(provider: APIProvider): Promise<boolean> {
   try {
+    // ARIN doesn't require an API key - it's a public API
+    if (provider === APIProvider.ARIN) {
+      return true;
+    }
+
     const apiKeys = await getAPIKeys();
     return !!(apiKeys[provider]?.key && apiKeys[provider].key.trim() !== '');
   } catch (error) {

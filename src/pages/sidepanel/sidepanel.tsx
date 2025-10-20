@@ -18,6 +18,7 @@ import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard'
 import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
 import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResultCard';
+import { ARINResultCard } from '@/components/results/ARINResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
@@ -28,6 +29,7 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'VirusTotal': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'OTX AlienVault': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256, IOCType.CVE],
   'MalwareBazaar': [IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
+  'ARIN': [IOCType.IPV4, IOCType.IPV6],
 };
 
 // Get providers that support a specific IOC type
@@ -362,6 +364,10 @@ const SidePanel: React.FC = () => {
 
                   if (result.source === 'MalwareBazaar') {
                     return <MalwareBazaarResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'ARIN') {
+                    return <ARINResultCard key={index} result={result} />;
                   }
 
                   return (

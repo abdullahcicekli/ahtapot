@@ -9,7 +9,12 @@ export interface ValidationResult {
  * Validate API keys by making test requests
  */
 export class APIKeyValidator {
-  private static readonly TEST_ENDPOINTS = {
+  private static readonly TEST_ENDPOINTS: Partial<Record<APIProvider, {
+    url: string;
+    header: string;
+    method?: string;
+    testHash?: string;
+  }>> = {
     [APIProvider.VIRUSTOTAL]: {
       url: 'https://www.virustotal.com/api/v3/ip_addresses/8.8.8.8',
       header: 'x-apikey',
@@ -28,6 +33,7 @@ export class APIKeyValidator {
       method: 'POST',
       testHash: '275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f', // Known malware SHA256
     },
+    // ARIN doesn't need validation - no API key required
   };
 
   /**

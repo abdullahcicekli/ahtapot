@@ -23,6 +23,7 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.OTX]: 'OTX AlienVault', // Match the source name from API results
   [APIProvider.ABUSEIPDB]: 'AbuseIPDB',
   [APIProvider.MALWAREBAZAAR]: 'MalwareBazaar',
+  [APIProvider.ARIN]: 'ARIN',
 };
 
 // Map providers to their logo images
@@ -31,6 +32,7 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
   [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
   [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
+  [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
 };
 
 // Map provider enum to i18n key
@@ -39,6 +41,7 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.OTX]: 'otx',
   [APIProvider.ABUSEIPDB]: 'abuseipdb',
   [APIProvider.MALWAREBAZAAR]: 'malwarebazaar',
+  [APIProvider.ARIN]: 'arin',
 };
 
 export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({

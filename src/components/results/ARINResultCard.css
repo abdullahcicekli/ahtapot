@@ -1,0 +1,430 @@
+/* ARIN Result Card Styles */
+
+.arin-result-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.arin-result-card:hover {
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.arin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.arin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.arin-network-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.arin-network-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.arin-network-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.arin-network-subtitle {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.arin-network-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.arin-header-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.arin-ioc-info {
+  text-align: center;
+}
+
+.arin-ioc-value {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.95);
+  word-break: break-all;
+}
+
+.arin-ioc-type {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.arin-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Status Badge */
+.arin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.arin-status-badge.info {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Not Found Message */
+.arin-not-found {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.arin-not-found-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.arin-not-found-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #92400e;
+  padding-left: 24px;
+}
+
+.arin-not-found-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Unsupported IOC Type */
+.arin-unsupported {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.arin-unsupported-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.arin-supported-types {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.arin-supported-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.arin-supported-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.arin-ioc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #2563eb;
+  background-color: #dbeafe;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  white-space: nowrap;
+}
+
+/* Summary */
+.arin-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: rgba(59, 130, 246, 0.1);
+  color: rgba(96, 165, 250, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  margin-bottom: 16px;
+}
+
+/* Content */
+.arin-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overview Grid */
+.arin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.arin-metric-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.arin-metric-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.arin-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.arin-metric-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arin-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+  gap: 16px;
+}
+
+.arin-metric-label {
+  color: rgba(148, 163, 184, 0.8);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.arin-metric-value {
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.arin-metric-value.monospace {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+/* Comments */
+.arin-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.arin-comment {
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border-left: 3px solid #60a5fa;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+/* Net Blocks */
+.arin-netblocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.arin-netblock {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.arin-netblock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.arin-netblock-type {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(59, 130, 246, 0.15);
+  color: rgba(96, 165, 250, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.arin-netblock-range {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  color: rgba(203, 213, 225, 0.9);
+  font-weight: 500;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.arin-netblock-cidr {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+  font-weight: 600;
+}
+
+/* External Link */
+.arin-external-link {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.arin-link-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(59, 130, 246, 0.2);
+  color: rgba(96, 165, 250, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.arin-link-button:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .arin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .arin-header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .arin-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .arin-metric-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .arin-metric-value {
+    text-align: left;
+  }
+
+  .arin-netblocks {
+    grid-template-columns: 1fr;
+  }
+}

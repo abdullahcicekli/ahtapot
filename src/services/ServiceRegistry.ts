@@ -3,6 +3,7 @@ import { VirusTotalService } from './tools/VirusTotalService';
 import { OTXService } from './tools/OTXService';
 import { AbuseIPDBService } from './tools/AbuseIPDBService';
 import { MalwareBazaarService } from './tools/MalwareBazaarService';
+import { ARINService } from './tools/ARINService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
@@ -17,6 +18,10 @@ export class ServiceRegistry {
   constructor() {
     this.services = new Map();
     this.apiKeys = new Map();
+
+    // Initialize ARIN service automatically (no API key required)
+    this.initializeService(APIProvider.ARIN);
+    console.log('[ServiceRegistry] ARIN service auto-initialized (no API key required)');
   }
 
   /**
@@ -109,6 +114,17 @@ export class ServiceRegistry {
         console.log('[ServiceRegistry] MalwareBazaar service initialized');
         break;
 
+      case APIProvider.ARIN:
+        // ARIN doesn't require an API key - always initialize
+        this.services.set(
+          provider,
+          new ARINService({
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] ARIN service initialized (no API key required)');
+        break;
+
       default:
         console.warn(`Unknown provider: ${provider}`);
     }
@@ -131,6 +147,8 @@ export class ServiceRegistry {
     const configured: IToolService[] = [];
 
     console.log('[ServiceRegistry] Getting configured services. Total API keys:', this.apiKeys.size);
+
+    // Check API-key-based services
     this.apiKeys.forEach((_, provider) => {
       console.log(`[ServiceRegistry] Checking provider: ${provider}`);
       const service = this.getService(provider);
@@ -143,7 +161,15 @@ export class ServiceRegistry {
       }
     });
 
+    // Always include ARIN service (no API key required, initialized in constructor)
+    const arinService = this.getService(APIProvider.ARIN);
+    if (arinService && arinService.isConfigured()) {
+      console.log('[ServiceRegistry] Including ARIN service (always available, no API key)');
+      configured.push(arinService);
+    }
+
     console.log('[ServiceRegistry] Total configured services:', configured.length);
+    console.log('[ServiceRegistry] Configured service names:', configured.map(s => s.name).join(', '));
     return configured;
   }
 
@@ -157,18 +183,30 @@ export class ServiceRegistry {
 
   /**
    * Remove API key and service
+   * Note: ARIN cannot be removed as it requires no API key and is always available
    */
   removeProvider(provider: APIProvider): void {
+    // Prevent removing ARIN (it's always available)
+    if (provider === APIProvider.ARIN) {
+      console.warn('[ServiceRegistry] Cannot remove ARIN service - it requires no API key and is always available');
+      return;
+    }
+
     this.apiKeys.delete(provider);
     this.services.delete(provider);
   }
 
   /**
    * Clear all services and API keys
+   * Note: ARIN service is re-initialized as it requires no API key
    */
   clear(): void {
     this.services.clear();
     this.apiKeys.clear();
+
+    // Re-initialize ARIN (always available, no API key needed)
+    this.initializeService(APIProvider.ARIN);
+    console.log('[ServiceRegistry] ARIN service re-initialized after clear (no API key required)');
   }
 }
 

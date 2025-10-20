@@ -102,30 +102,29 @@ async function handleAnalyzeIOC(
   // API anahtarlarını al ve service'i başlat (yeni storage format ile)
   const apiKeys = await getAPIKeys();
 
-  // API key kontrolü - yeni format: { key: string, addedAt: number }
-  const hasKeys = Object.values(apiKeys).some(
-    (keyData) => keyData?.key && keyData.key.trim() !== ''
-  );
+  // API service'i başlat (ARIN her zaman mevcut, API key gerektirmez)
+  if (!apiService) {
+    apiService = new APIService(apiKeys);
+  } else {
+    apiService.updateAPIKeys(apiKeys);
+  }
 
-  if (!hasKeys) {
+  // Configured servisleri kontrol et (ARIN dahil)
+  const configuredServices = apiService.getServiceRegistry().getConfiguredServices();
+
+  if (configuredServices.length === 0) {
+    // Hiçbir servis configured değil (ARIN bile yoksa ciddi bir sorun var)
     return {
       results: iocs.map((ioc) => ({
         ioc,
         source: 'system',
         status: 'error' as const,
-        error: 'API anahtarı yapılandırılmamış. Lütfen ayarlardan en az bir API anahtarı ekleyin.',
+        error: 'Hiçbir analiz servisi kullanılamıyor. Lütfen ayarlardan API anahtarı ekleyin veya extension\'ı yeniden yükleyin.',
         timestamp: Date.now(),
       })),
       analyzingProviders: [],
       completedProviders: [],
     };
-  }
-
-  // API service'i başlat
-  if (!apiService) {
-    apiService = new APIService(apiKeys);
-  } else {
-    apiService.updateAPIKeys(apiKeys);
   }
 
   const allResults: IOCAnalysisResult[] = [];
@@ -177,6 +176,7 @@ function findProviderByServiceName(serviceName: string): APIProvider | null {
     'OTX AlienVault': APIProvider.OTX,
     'AbuseIPDB': APIProvider.ABUSEIPDB,
     'MalwareBazaar': APIProvider.MALWAREBAZAAR,
+    'ARIN': APIProvider.ARIN,
   };
 
   return mapping[serviceName] || null;
