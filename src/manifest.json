@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Ahtapot - IOC Analysis Tool",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Fast and secure IOC analysis with multiple threat intelligence providers. Tab-based results, cache management, API validation.",
   "default_locale": "en",
   "icons": {
@@ -22,7 +22,14 @@
     "https://api.abuseipdb.com/*",
     "https://bazaar.abuse.ch/*",
     "https://whois.arin.net/*",
-    "https://api.shodan.io/*"
+    "https://api.shodan.io/*",
+    "https://api.greynoise.io/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["provider-icons/*"],
+      "matches": ["<all_urls>"]
+    }
   ],
   "background": {
     "service_worker": "src/background/service-worker.ts",

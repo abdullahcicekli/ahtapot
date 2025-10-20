@@ -74,6 +74,11 @@
       "label": "Shodan",
       "description": "Internet-connected device search and vulnerability analysis",
       "placeholder": "Your Shodan API key"
+    },
+    "greynoise": {
+      "label": "GreyNoise",
+      "description": "Internet noise classification and threat intelligence",
+      "placeholder": "Your GreyNoise API key"
     }
   },
   "info": {
@@ -98,7 +103,8 @@
     "otx": "Add API key",
     "abuseipdb": "Add API key",
     "malwarebazaar": "Add API key",
-    "shodan": "Add API key"
+    "shodan": "Add API key",
+    "greynoise": "Add API key"
   },
   "features": {
     "virustotal": {
@@ -130,6 +136,12 @@
       "feature2": "Open port and service detection",
       "feature3": "CVE vulnerability identification",
       "feature4": "Device and banner information"
+    },
+    "greynoise": {
+      "feature1": "IP noise classification (benign/malicious/unknown)",
+      "feature2": "Actor and behavior tag identification",
+      "feature3": "TOR/VPN/Proxy detection",
+      "feature4": "RIOT flag for known benign services"
     }
   },
   "limits": {
@@ -152,6 +164,10 @@
     "shodan": {
       "free": "100 results/month (free)",
       "rate": "1 request/second"
+    },
+    "greynoise": {
+      "free": "50 searches/week (Community)",
+      "rate": "Combined with Visualizer usage"
     }
   },
   "actions": {

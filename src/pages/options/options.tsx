@@ -60,6 +60,12 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://developer.shodan.io/api',
     signupLink: 'https://account.shodan.io/register',
   },
+  {
+    provider: APIProvider.GREYNOISE,
+    label: 'GreyNoise',
+    link: 'https://viz.greynoise.io/account/details',
+    signupLink: 'https://viz.greynoise.io/signup',
+  },
 ];
 
 const OptionsPage: React.FC = () => {

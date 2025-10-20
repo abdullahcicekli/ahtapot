@@ -1,0 +1,181 @@
+.rate-limit-confirm-card {
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.08) 0%, rgba(255, 152, 0, 0.12) 100%);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.rate-limit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 152, 0, 0.05);
+  border-bottom: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+.rate-limit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rate-limit-logo {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.rate-limit-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.rate-limit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rate-limit-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.rate-limit-subtitle {
+  font-size: 12px;
+  color: #999;
+}
+
+.rate-limit-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rate-limit-status svg {
+  flex-shrink: 0;
+}
+
+.rate-limit-content {
+  padding: 20px;
+}
+
+.rate-limit-warning-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 152, 0, 0.08);
+  border-left: 4px solid #ff9800;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.rate-limit-warning-banner svg {
+  color: #ff9800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rate-limit-warning-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rate-limit-warning-text strong {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.rate-limit-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rate-limit-message {
+  margin-bottom: 20px;
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+
+.rate-limit-message p {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+}
+
+.rate-limit-usage {
+  font-weight: 600;
+  color: #e0e0e0;
+  font-size: 14px !important;
+}
+
+.rate-limit-warning-small {
+  color: #ff6b6b;
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.rate-limit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rate-limit-confirm-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
+}
+
+.rate-limit-confirm-btn:hover {
+  background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+  box-shadow: 0 3px 6px rgba(255, 152, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.rate-limit-confirm-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(255, 152, 0, 0.3);
+}
+
+.rate-limit-skip-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+  font-style: italic;
+}

@@ -312,5 +312,5 @@ If unsure about version increment:
 
 ---
 
-**Last Updated:** 2025-10-19
-**Current Version:** 2.1.0
+**Last Updated:** 2025-10-21
+**Current Version:** 2.3.0

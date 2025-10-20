@@ -48,5 +48,25 @@
         "crypto": "Kripto Para Adresleri"
       }
     }
+  },
+  "rateLimitConfirm": {
+    "title": "Sınırlı Sağlayıcı",
+    "pendingStatus": "Onay Bekleniyor",
+    "greynoise": {
+      "limit": "50 arama/hafta",
+      "message": "GreyNoise Community planında haftalık 50 arama limiti vardır (Visualizer kullanımı ile birlikte).",
+      "question": "{{count}} göstergeyi GreyNoise ile analiz etmek istiyor musunuz?",
+      "warning": "Bu işlem haftalık kotanızdan {{count}} kullanacaktır."
+    },
+    "shodan": {
+      "limit": "100 sonuç/ay",
+      "message": "Shodan ücretsiz planında aylık 100 sonuç limiti vardır.",
+      "question": "{{count}} göstergeyi Shodan ile analiz etmek istiyor musunuz?",
+      "warning": "Bu işlem aylık kotanızdan {{count}} kullanacaktır."
+    },
+    "iocCount": "{{count}} gösterge analiz ediliyor",
+    "confirm": "Evet, Analiz Et",
+    "cancel": "Atla",
+    "skipHint": "Onaylanmazsa bu sağlayıcı atlanacaktır"
   }
 }

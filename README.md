@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.2.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.3.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
@@ -22,9 +22,15 @@
 
 ---
 
-## 🆕 What's New in v2.2.0
+## 🆕 What's New in v2.3.0
 
 ### Latest Updates
+- 🔍 **GreyNoise Integration** - Internet-wide noise detection and threat classification
+- ⚠️ **Rate Limit Protection System** - Smart confirmation before consuming API quota for rate-limited providers
+- 🎯 **Smart Provider Confirmations** - User confirmation prompts for GreyNoise (50 searches/week) and Shodan (100 results/month)
+- 🌍 **Enhanced i18n** - Complete localization for new features in English and Turkish
+
+### Previous Updates (v2.2.0)
 - 🔍 **Shodan Integration** - Internet-connected device search with vulnerability and port scanning
 - 🌐 **ARIN WHOIS Integration** - IP address registration information and network allocation data
 - 🛡️ **Enhanced Network Analysis** - Comprehensive IP intelligence from multiple authoritative sources
@@ -41,8 +47,9 @@
 - ⚡ **Per-Field Save** - Individual save buttons for each API provider
 
 ### Provider Changes
-- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar, ARIN, Shodan
+- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar, ARIN, Shodan, GreyNoise
 - 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
+- ⚠️ **Rate Limit Protection** - Smart confirmation system for GreyNoise and Shodan to protect your quota
 - 🆓 **No API Key Required**: ARIN WHOIS (always available)
 
 ---
@@ -86,7 +93,10 @@ Automatically detects and analyzes various types of security indicators:
 | **AbuseIPDB** | IP reputation & abuse reports | 1,000 req/day (free) |
 | **MalwareBazaar** | Malware hash database & sample repository | No strict limit (free) |
 | **ARIN** | IP WHOIS & network registration | 15 req/min (no key required) |
-| **Shodan** | Device search & vulnerability scanning | 100 results/month (free) |
+| **Shodan** | Device search & vulnerability scanning | 100 results/month (free) ⚠️ |
+| **GreyNoise** | Internet noise detection & classification | 50 searches/week (free) ⚠️ |
+
+**⚠️** = Rate-limited providers with confirmation system to protect your quota
 
 ### 🎯 **Smart Provider Matching**
 - **Real-time Support Detection** - Each IOC shows compatible providers via badges
@@ -96,7 +106,7 @@ Automatically detects and analyzes various types of security indicators:
 
 ### 🎨 **Modern & Intuitive Interface**
 - Google Translate-style floating button
-- **Tab-based provider results** - Switch between all providers seamlessly (VirusTotal, OTX, AbuseIPDB, MalwareBazaar, ARIN, Shodan)
+- **Tab-based provider results** - Switch between all providers seamlessly (VirusTotal, OTX, AbuseIPDB, MalwareBazaar, ARIN, Shodan, GreyNoise)
 - **Provider support badges** - See which providers support each IOC at a glance
 - **Informative empty states** - Clear explanations when providers don't support an IOC type
 - Clean, professional design
@@ -332,7 +342,7 @@ Get free API keys to unlock full analysis capabilities:
 
 ### Shodan
 - **Purpose:** Internet-connected device search and vulnerability analysis
-- **Free Tier:** 100 results per month
+- **Free Tier:** 100 results per month (⚠️ rate-limited with confirmation)
 - **Supported IOCs:** IPv4, IPv6, Domain
 - **Get Key:** Visit [developer.shodan.io/api](https://developer.shodan.io/api) → Click "Show API Key" (top right)
 - **Features:**
@@ -344,7 +354,22 @@ Get free API keys to unlock full analysis capabilities:
   - Historical scan data
   - Subdomain discovery for domains
 
+### GreyNoise
+- **Purpose:** Internet-wide noise detection and threat classification
+- **Free Tier:** 50 searches per week (⚠️ rate-limited with confirmation, combined with Visualizer usage)
+- **Supported IOCs:** IPv4 only
+- **Get Key:** [viz.greynoise.io/account/details](https://viz.greynoise.io/account/details)
+- **Features:**
+  - Internet scanner detection (mass scanning vs targeted)
+  - RIOT (Rule It Out) - benign service identification
+  - Classification (malicious, benign, unknown)
+  - Actor information and tags
+  - Last seen timestamps
+  - Metadata about scanning activity
+
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
+>
+> **Rate Limit Protection:** GreyNoise and Shodan require user confirmation before consuming your limited quota. You can choose to analyze or skip these providers for each request.
 >
 > **Live Validation:** Test your API keys directly in the settings page before saving to ensure they work correctly.
 >
@@ -415,7 +440,7 @@ For detailed versioning guidelines, contribution standards, and changelog format
 
 📚 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
 
-**Current Version:** 2.1.0
+**Current Version:** 2.3.0
 
 ---
 

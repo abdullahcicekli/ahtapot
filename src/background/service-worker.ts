@@ -66,7 +66,11 @@ chrome.runtime.onMessage.addListener(
     }
 
     if (message.type === MessageType.ANALYZE_IOC) {
-      handleAnalyzeIOC(message.payload.iocs)
+      handleAnalyzeIOC(
+        message.payload.iocs,
+        message.payload.excludeProviders,
+        message.payload.includeProviders
+      )
         .then((response) => {
           sendResponse({ success: true, ...response });
         })
@@ -93,7 +97,9 @@ chrome.runtime.onMessage.addListener(
  * IOC'leri analiz eder
  */
 async function handleAnalyzeIOC(
-  iocs: DetectedIOC[]
+  iocs: DetectedIOC[],
+  excludeProviders?: APIProvider[],
+  includeProviders?: APIProvider[]
 ): Promise<{
   results: IOCAnalysisResult[];
   analyzingProviders: APIProvider[];
@@ -109,24 +115,6 @@ async function handleAnalyzeIOC(
     apiService.updateAPIKeys(apiKeys);
   }
 
-  // Configured servisleri kontrol et (ARIN dahil)
-  const configuredServices = apiService.getServiceRegistry().getConfiguredServices();
-
-  if (configuredServices.length === 0) {
-    // Hiçbir servis configured değil (ARIN bile yoksa ciddi bir sorun var)
-    return {
-      results: iocs.map((ioc) => ({
-        ioc,
-        source: 'system',
-        status: 'error' as const,
-        error: 'Hiçbir analiz servisi kullanılamıyor. Lütfen ayarlardan API anahtarı ekleyin veya extension\'ı yeniden yükleyin.',
-        timestamp: Date.now(),
-      })),
-      analyzingProviders: [],
-      completedProviders: [],
-    };
-  }
-
   const allResults: IOCAnalysisResult[] = [];
   const analyzingProviders: APIProvider[] = [];
   const completedProviders: { provider: APIProvider; status: 'success' | 'error' }[] = [];
@@ -134,7 +122,10 @@ async function handleAnalyzeIOC(
   // Her IOC için analiz yap
   for (const ioc of iocs) {
     try {
-      const results = await apiService.analyzeIOC(ioc);
+      const results = await apiService.analyzeIOC(ioc, {
+        excludeProviders,
+        includeProviders
+      });
 
       // Başarılı ve hatalı servisleri ayır
       results.forEach((result) => {
@@ -178,6 +169,7 @@ function findProviderByServiceName(serviceName: string): APIProvider | null {
     'MalwareBazaar': APIProvider.MALWAREBAZAAR,
     'ARIN': APIProvider.ARIN,
     'Shodan': APIProvider.SHODAN,
+    'GreyNoise': APIProvider.GREYNOISE,
   };
 
   return mapping[serviceName] || null;

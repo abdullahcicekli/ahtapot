@@ -5,6 +5,7 @@ import { AbuseIPDBService } from './tools/AbuseIPDBService';
 import { MalwareBazaarService } from './tools/MalwareBazaarService';
 import { ARINService } from './tools/ARINService';
 import { ShodanService } from './tools/ShodanService';
+import { GreyNoiseService } from './tools/GreyNoiseService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
@@ -135,6 +136,17 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] Shodan service initialized');
+        break;
+
+      case APIProvider.GREYNOISE:
+        this.services.set(
+          provider,
+          new GreyNoiseService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] GreyNoise service initialized');
         break;
 
       default:

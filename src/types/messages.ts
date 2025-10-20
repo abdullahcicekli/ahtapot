@@ -1,4 +1,4 @@
-import { DetectedIOC, IOCAnalysisResult } from './ioc';
+import { DetectedIOC, IOCAnalysisResult, APIProvider } from './ioc';
 
 /**
  * Mesaj türleri (background <-> content script iletişimi)
@@ -18,6 +18,8 @@ export interface AnalyzeIOCMessage {
   type: MessageType.ANALYZE_IOC;
   payload: {
     iocs: DetectedIOC[];
+    excludeProviders?: APIProvider[];
+    includeProviders?: APIProvider[];
   };
 }
 

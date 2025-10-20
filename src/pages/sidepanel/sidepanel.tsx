@@ -20,6 +20,8 @@ import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
 import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResultCard';
 import { ARINResultCard } from '@/components/results/ARINResultCard';
 import { ShodanResultCard } from '@/components/results/ShodanResultCard';
+import { GreyNoiseResultCard } from '@/components/results/GreyNoiseResultCard';
+import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
 import './sidepanel.css';
@@ -32,6 +34,7 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'MalwareBazaar': [IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'ARIN': [IOCType.IPV4, IOCType.IPV6],
   'Shodan': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN],
+  'GreyNoise': [IOCType.IPV4],
 };
 
 // Get providers that support a specific IOC type
@@ -54,6 +57,8 @@ const SidePanel: React.FC = () => {
   const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
   const [activeProviderTab, setActiveProviderTab] = useState<string>('');
   const [isInputExpanded, setIsInputExpanded] = useState(true);
+  const [pendingRateLimitProviders, setPendingRateLimitProviders] = useState<Set<'greynoise' | 'shodan'>>(new Set());
+  const [currentIOCs, setCurrentIOCs] = useState<DetectedIOC[]>([]);
 
   useEffect(() => {
     checkAPIKeys();
@@ -121,7 +126,7 @@ const SidePanel: React.FC = () => {
     setResults([]);
   };
 
-  const handleAnalyze = async (text?: string, providedIOCs?: DetectedIOC[]) => {
+  const handleAnalyze = async (text?: string, providedIOCs?: DetectedIOC[], excludeProviders: Set<APIProvider> = new Set()) => {
     const textToAnalyze = text || inputText;
     const iocs = providedIOCs || detectIOCs(textToAnalyze);
 
@@ -130,21 +135,65 @@ const SidePanel: React.FC = () => {
     }
 
     setDetectedIOCs(iocs);
+    setCurrentIOCs(iocs);
+
+    if (hasApiKeys === false) {
+      return;
+    }
+
+    // Check which rate-limited providers are configured
+    const ipv4IOCs = iocs.filter(ioc => ioc.type === IOCType.IPV4);
+    const pendingProviders = new Set<'greynoise' | 'shodan'>();
+
+    if (ipv4IOCs.length > 0) {
+      try {
+        const result = await chrome.storage.local.get('apiKeys');
+        const apiKeys = result.apiKeys || {};
+
+        // Check if GreyNoise is configured and not excluded
+        const hasGreyNoise = apiKeys['greynoise'] &&
+          (typeof apiKeys['greynoise'] === 'string' ? apiKeys['greynoise'].trim() !== '' : apiKeys['greynoise']?.key?.trim() !== '');
+
+        // Check if Shodan is configured and not excluded
+        const hasShodan = apiKeys['shodan'] &&
+          (typeof apiKeys['shodan'] === 'string' ? apiKeys['shodan'].trim() !== '' : apiKeys['shodan']?.key?.trim() !== '');
+
+        if (hasGreyNoise && !excludeProviders.has(APIProvider.GREYNOISE)) {
+          pendingProviders.add('greynoise');
+        }
+        if (hasShodan && !excludeProviders.has(APIProvider.SHODAN)) {
+          pendingProviders.add('shodan');
+        }
+
+        setPendingRateLimitProviders(pendingProviders);
+      } catch (error) {
+        console.error('[Sidepanel] Error checking API keys for rate limit:', error);
+      }
+    }
+
+    // Proceed with analysis (excluding rate-limited providers for now)
     setLoading(true);
     setResults([]);
     setCompletedProviders([]);
     setActiveProviderTab(''); // Reset active tab when starting new analysis
     setIsInputExpanded(false); // Collapse input when analysis starts
 
-    if (hasApiKeys === false) {
-      setLoading(false);
-      return;
+    // Convert pending providers to APIProvider enum
+    const pendingProviderEnums: APIProvider[] = [];
+    if (pendingProviders.has('greynoise')) {
+      pendingProviderEnums.push(APIProvider.GREYNOISE);
+    }
+    if (pendingProviders.has('shodan')) {
+      pendingProviderEnums.push(APIProvider.SHODAN);
     }
 
     try {
       const response = await chrome.runtime.sendMessage({
         type: MessageType.ANALYZE_IOC,
-        payload: { iocs },
+        payload: {
+          iocs,
+          excludeProviders: Array.from(excludeProviders).concat(pendingProviderEnums)
+        },
       });
 
       if (response && response.success) {
@@ -165,6 +214,47 @@ const SidePanel: React.FC = () => {
       }
     } catch (error) {
       console.error('[Sidepanel] Error analyzing IOCs:', error);
+    } finally {
+      setLoading(false);
+      setAnalyzingProviders([]);
+    }
+  };
+
+  const handleRateLimitConfirm = async (provider: 'greynoise' | 'shodan') => {
+    // Remove this provider from pending
+    const newPending = new Set(pendingRateLimitProviders);
+    newPending.delete(provider);
+    setPendingRateLimitProviders(newPending);
+
+    // Analyze with this specific provider only
+    setLoading(true);
+
+    try {
+      const providerEnum = provider === 'greynoise' ? APIProvider.GREYNOISE : APIProvider.SHODAN;
+
+      const response = await chrome.runtime.sendMessage({
+        type: MessageType.ANALYZE_IOC,
+        payload: {
+          iocs: currentIOCs,
+          includeProviders: [providerEnum] // Only analyze with this provider
+        },
+      });
+
+      if (response && response.success) {
+        const responseResults = response.results || [];
+
+        // Add new results to existing results
+        setResults(prev => [...prev, ...responseResults]);
+
+        if (response.analyzingProviders) {
+          setAnalyzingProviders(response.analyzingProviders);
+        }
+        if (response.completedProviders) {
+          setCompletedProviders(prev => [...prev, ...response.completedProviders]);
+        }
+      }
+    } catch (error) {
+      console.error(`[Sidepanel] Error analyzing with ${provider}:`, error);
     } finally {
       setLoading(false);
       setAnalyzingProviders([]);
@@ -330,8 +420,28 @@ const SidePanel: React.FC = () => {
               {(() => {
                 const filteredResults = results.filter((result) => result.source === activeProviderTab);
 
-                // If no results for active provider, show informative empty state
+                // If no results for active provider
                 if (filteredResults.length === 0 && activeProviderTab) {
+                  // Check if this is a pending rate-limited provider
+                  const isPendingGreyNoise = activeProviderTab === 'GreyNoise' && pendingRateLimitProviders.has('greynoise');
+                  const isPendingShodan = activeProviderTab === 'Shodan' && pendingRateLimitProviders.has('shodan');
+                  const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
+
+                  if ((isPendingGreyNoise || isPendingShodan) && ipv4Count > 0) {
+                    // Show confirmation card for pending provider
+                    return (
+                      <RateLimitConfirmCard
+                        provider={isPendingGreyNoise ? 'greynoise' : 'shodan'}
+                        iocCount={ipv4Count}
+                        onConfirm={() => handleRateLimitConfirm(isPendingGreyNoise ? 'greynoise' : 'shodan')}
+                        logoSrc={isPendingGreyNoise ? '/provider-icons/greynoise-logo.png' : '/provider-icons/shodan-logo.png'}
+                        providerName={activeProviderTab}
+                        subtitle={isPendingGreyNoise ? 'Internet Noise Intelligence' : 'Internet-Wide Port Scanner'}
+                      />
+                    );
+                  }
+
+                  // Show informative empty state for other providers
                   const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
                   return (
                     <div className="provider-no-results">
@@ -357,7 +467,7 @@ const SidePanel: React.FC = () => {
                   );
                 }
 
-                return filteredResults.map((result, index) => {
+                const resultElements = filteredResults.map((result, index) => {
                   if (result.source === 'VirusTotal') {
                     return <VirusTotalResultCard key={index} result={result} />;
                   }
@@ -380,6 +490,10 @@ const SidePanel: React.FC = () => {
 
                   if (result.source === 'Shodan') {
                     return <ShodanResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'GreyNoise') {
+                    return <GreyNoiseResultCard key={index} result={result} />;
                   }
 
                   return (
@@ -428,6 +542,45 @@ const SidePanel: React.FC = () => {
                     </div>
                   );
                 });
+
+                // Add pending rate limit confirmation cards ONLY if no active provider tab
+                // (When a specific provider tab is active, the confirmation is shown above)
+                const pendingCards: JSX.Element[] = [];
+
+                if (!activeProviderTab) {
+                  const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
+
+                  if (pendingRateLimitProviders.has('greynoise') && ipv4Count > 0) {
+                    pendingCards.push(
+                      <RateLimitConfirmCard
+                        key="greynoise-pending"
+                        provider="greynoise"
+                        iocCount={ipv4Count}
+                        onConfirm={() => handleRateLimitConfirm('greynoise')}
+                        logoSrc="/provider-icons/greynoise-logo.png"
+                        providerName="GreyNoise"
+                        subtitle="Internet Noise Intelligence"
+                      />
+                    );
+                  }
+
+                  if (pendingRateLimitProviders.has('shodan') && ipv4Count > 0) {
+                    pendingCards.push(
+                      <RateLimitConfirmCard
+                        key="shodan-pending"
+                        provider="shodan"
+                        iocCount={ipv4Count}
+                        onConfirm={() => handleRateLimitConfirm('shodan')}
+                        logoSrc="/provider-icons/shodan-logo.png"
+                        providerName="Shodan"
+                        subtitle="Internet-Wide Port Scanner"
+                      />
+                    );
+                  }
+
+                }
+
+                return [...resultElements, ...pendingCards];
               })()}
             </div>
           </div>

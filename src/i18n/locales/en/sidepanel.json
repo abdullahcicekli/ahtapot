@@ -48,5 +48,25 @@
         "crypto": "Cryptocurrency Addresses"
       }
     }
+  },
+  "rateLimitConfirm": {
+    "title": "Rate Limited Provider",
+    "pendingStatus": "Pending Confirmation",
+    "greynoise": {
+      "limit": "50 searches/week",
+      "message": "GreyNoise Community plan has a limit of 50 searches per week (combined with Visualizer usage).",
+      "question": "Do you want to analyze {{count}} indicator(s) with GreyNoise?",
+      "warning": "This will use {{count}} of your weekly quota."
+    },
+    "shodan": {
+      "limit": "100 results/month",
+      "message": "Shodan free plan has a limit of 100 results per month.",
+      "question": "Do you want to analyze {{count}} indicator(s) with Shodan?",
+      "warning": "This will use {{count}} of your monthly quota."
+    },
+    "iocCount": "Analyzing {{count}} indicator(s)",
+    "confirm": "Yes, Analyze",
+    "cancel": "Skip",
+    "skipHint": "Analysis will skip this provider if not confirmed"
   }
 }

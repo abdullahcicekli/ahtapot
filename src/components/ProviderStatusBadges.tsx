@@ -25,6 +25,7 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.MALWAREBAZAAR]: 'MalwareBazaar',
   [APIProvider.ARIN]: 'ARIN',
   [APIProvider.SHODAN]: 'Shodan',
+  [APIProvider.GREYNOISE]: 'GreyNoise',
 };
 
 // Map providers to their logo images
@@ -35,6 +36,7 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
   [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
   [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
+  [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
 };
 
 // Map provider enum to i18n key
@@ -45,6 +47,7 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.MALWAREBAZAAR]: 'malwarebazaar',
   [APIProvider.ARIN]: 'arin',
   [APIProvider.SHODAN]: 'shodan',
+  [APIProvider.GREYNOISE]: 'greynoise',
 };
 
 export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({

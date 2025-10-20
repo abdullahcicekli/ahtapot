@@ -21,7 +21,13 @@ export class APIService {
    * IOC'yi analiz eder (tüm uygun API'leri kullanır)
    * Cache'den kontrol eder, yoksa API'ye gider ve cache'e kaydeder
    */
-  async analyzeIOC(ioc: DetectedIOC): Promise<IOCAnalysisResult[]> {
+  async analyzeIOC(
+    ioc: DetectedIOC,
+    options?: {
+      excludeProviders?: APIProvider[];
+      includeProviders?: APIProvider[];
+    }
+  ): Promise<IOCAnalysisResult[]> {
     const results: IOCAnalysisResult[] = [];
 
     // Check if cache is enabled
@@ -29,7 +35,16 @@ export class APIService {
     const isCacheEnabled = cacheSettings.enabled;
 
     // IOC tipine göre hangi API'leri kullanacağımızı belirle
-    const providers = this.selectAPIsForIOC(ioc);
+    let providers = this.selectAPIsForIOC(ioc);
+
+    // Apply filtering if specified
+    if (options?.includeProviders && options.includeProviders.length > 0) {
+      const includeSet = new Set(options.includeProviders);
+      providers = providers.filter(p => includeSet.has(p));
+    } else if (options?.excludeProviders && options.excludeProviders.length > 0) {
+      const excludeSet = new Set(options.excludeProviders);
+      providers = providers.filter(p => !excludeSet.has(p));
+    }
 
     // Her API için paralel olarak analiz yap (cache'den veya API'den)
     const promises = providers.map(async (provider) => {
@@ -121,6 +136,7 @@ export class APIService {
       'MalwareBazaar': APIProvider.MALWAREBAZAAR,
       'ARIN': APIProvider.ARIN,
       'Shodan': APIProvider.SHODAN,
+      'GreyNoise': APIProvider.GREYNOISE,
     };
 
     return mapping[serviceName] || null;

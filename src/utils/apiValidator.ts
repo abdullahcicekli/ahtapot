@@ -37,6 +37,10 @@ export class APIKeyValidator {
       url: 'https://api.shodan.io/api-info',
       header: 'key',
     },
+    [APIProvider.GREYNOISE]: {
+      url: 'https://api.greynoise.io/v3/community/8.8.8.8',
+      header: 'key',
+    },
     // ARIN doesn't need validation - no API key required
   };
 
@@ -123,6 +127,11 @@ export class APIKeyValidator {
       }
 
       if (response.status === 404) {
+        // For GreyNoise, 404 means "IP not found in database" which is a valid response
+        // For other providers, 404 means the endpoint doesn't exist
+        if (provider === APIProvider.GREYNOISE) {
+          return { isValid: true };
+        }
         return {
           isValid: false,
           error: 'API endpoint not found',
