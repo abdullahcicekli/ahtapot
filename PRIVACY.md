@@ -7,6 +7,8 @@
 ## Overview
 Ahtapot Security Extension is committed to protecting your privacy. This extension analyzes cybersecurity indicators (IOCs) using third-party security APIs to help security professionals assess potential threats.
 
+**Install from Chrome Web Store:** [https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
+
 ## Data Collection and Storage
 
 ### What We Store Locally

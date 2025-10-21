@@ -11,7 +11,7 @@
 **Fast and secure analysis of Indicators of Compromise (IOC) directly in your browser**
 
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chrome.google.com)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.3.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -128,6 +128,15 @@ Automatically detects and analyzes various types of security indicators:
 ## 📦 Installation
 
 > 🌐 **Visit our website:** [ahtapot.me](https://ahtapot.me) for detailed installation guides and documentation
+
+### From Chrome Web Store (Recommended)
+
+**The easiest way to install Ahtapot:**
+
+1. Visit the [Chrome Web Store](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
+2. Click "Add to Chrome"
+3. Confirm the permissions
+4. Start analyzing IOCs!
 
 ### From Source
 
@@ -419,6 +428,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - **Website:** [ahtapot.me](https://ahtapot.me)
+- **Chrome Web Store:** [Install Extension](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 - **Issues:** [GitHub Issues](https://github.com/abdullahcicekli/ahtapot/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/abdullahcicekli/ahtapot/discussions)
 - **Privacy Questions:** See [Privacy Policy](docs/PRIVACY.md)
@@ -450,6 +460,6 @@ For detailed versioning guidelines, contribution standards, and changelog format
 
 ⭐ Star this repo if you find it useful!
 
-[🌐 Website](https://ahtapot.me) • [Report Bug](https://github.com/abdullahcicekli/ahtapot/issues) • [Request Feature](https://github.com/abdullahcicekli/ahtapot/issues)
+[🌐 Website](https://ahtapot.me) • [Chrome Web Store](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg) • [Report Bug](https://github.com/abdullahcicekli/ahtapot/issues) • [Request Feature](https://github.com/abdullahcicekli/ahtapot/issues)
 
 </div>

@@ -3,6 +3,7 @@
   "name": "Ahtapot - IOC Analysis Tool",
   "version": "2.3.0",
   "description": "Fast and secure IOC analysis with multiple threat intelligence providers. Tab-based results, cache management, API validation.",
+  "homepage_url": "https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg",
   "default_locale": "en",
   "icons": {
     "16": "icons/icon-16.png",

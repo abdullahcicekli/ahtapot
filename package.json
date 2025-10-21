@@ -2,6 +2,7 @@
   "name": "ahtapot-extension",
   "version": "2.3.0",
   "description": "Chrome extension for fast and secure IOC analysis with multiple threat intelligence providers. Tab-based results, cache management, API validation",
+  "homepage": "https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -7,6 +7,8 @@
 ## Genel Bakış
 Ahtapot Güvenlik Eklentisi, gizliliğinizi korumaya kararlıdır. Bu eklenti, güvenlik profesyonellerinin potansiyel tehditleri değerlendirmesine yardımcı olmak için üçüncü taraf güvenlik API'lerini kullanarak siber güvenlik göstergelerini (IOC'leri) analiz eder.
 
+**Chrome Web Store'dan Yükleyin:** [https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
+
 ## Veri Toplama ve Depolama
 
 ### Yerel Olarak Sakladığımız Veriler
