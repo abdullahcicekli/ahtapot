@@ -2,6 +2,7 @@ import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { ServiceRegistry } from './ServiceRegistry';
 import { CacheManager } from '@/utils/cacheManager';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
+import { findProviderByServiceName } from '@/utils/providerMappings';
 
 /**
  * API Service Layer
@@ -127,19 +128,10 @@ export class APIService {
 
   /**
    * Find provider enum for service name
+   * OPTIMIZED: Uses centralized mapping
    */
   private findProviderForService(serviceName: string): APIProvider | null {
-    const mapping: Record<string, APIProvider> = {
-      'VirusTotal': APIProvider.VIRUSTOTAL,
-      'OTX AlienVault': APIProvider.OTX,
-      'AbuseIPDB': APIProvider.ABUSEIPDB,
-      'MalwareBazaar': APIProvider.MALWAREBAZAAR,
-      'ARIN': APIProvider.ARIN,
-      'Shodan': APIProvider.SHODAN,
-      'GreyNoise': APIProvider.GREYNOISE,
-    };
-
-    return mapping[serviceName] || null;
+    return findProviderByServiceName(serviceName);
   }
 
   /**

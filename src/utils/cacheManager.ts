@@ -126,6 +126,7 @@ export class CacheManager {
 
   /**
    * Retrieve a cached result
+   * OPTIMIZED: Batch fetch all relevant cache keys at once instead of sequential lookups
    */
   static async getResult(
     provider: string,
@@ -140,15 +141,20 @@ export class CacheManager {
     try {
       const iocKey = this.getIOCKey(provider, iocType, iocValue);
 
-      // Check cache for the last N days
+      // Generate all cache keys for retention period
+      const cacheKeys: string[] = [];
       for (let i = 0; i < settings.retentionDays; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
-        const cacheKey = this.getCacheKey(date);
+        cacheKeys.push(this.getCacheKey(date));
+      }
 
-        const storageResult = await chrome.storage.local.get(cacheKey);
+      // OPTIMIZED: Single storage call instead of N sequential calls
+      const storageResult = await chrome.storage.local.get(cacheKeys);
+
+      // Check all retrieved caches
+      for (const cacheKey of cacheKeys) {
         const dailyCache: DailyCacheData = storageResult[cacheKey];
-
         if (dailyCache && dailyCache[iocKey]) {
           console.log(`[CacheManager] Cache hit for ${iocKey} in ${cacheKey}`);
           return dailyCache[iocKey].result;

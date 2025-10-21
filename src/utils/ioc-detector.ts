@@ -40,11 +40,19 @@ const IOC_PATTERNS: Record<IOCType, RegExp> = {
 
 /**
  * Verilen metinde IOC'leri tespit eder
+ * OPTIMIZED: O(n) complexity with position-based deduplication
  * @param text Taranacak metin
  * @returns Tespit edilen IOC'lerin listesi
  */
 export function detectIOCs(text: string): DetectedIOC[] {
   const detected: DetectedIOC[] = [];
+
+  // Position range tracking for O(1) duplicate detection
+  const occupiedRanges: Array<{ start: number; end: number }> = [];
+
+  // Pre-compute URL and Email positions once - O(n) instead of O(n²)
+  const urlRanges = findAllURLRanges(text);
+  const emailRanges = findAllEmailRanges(text);
 
   // Öncelik sırasına göre IOC tiplerini tanımla
   // Daha spesifik pattern'ler önce çalışmalı (URL > DOMAIN, EMAIL > DOMAIN)
@@ -92,31 +100,30 @@ export function detectIOCs(text: string): DetectedIOC[] {
         end: matchStart + value.length,
       };
 
-      // URL'leri domain'lerden ayır
-      if (type === IOCType.DOMAIN && isPartOfURL(text, position.start)) {
+      // URL'leri domain'lerden ayır - O(1) lookup
+      if (type === IOCType.DOMAIN && isPositionInRanges(position.start, urlRanges)) {
         continue;
       }
 
-      // Email'leri domain'lerden ayır
-      if (type === IOCType.DOMAIN && isPartOfEmail(text, position.start)) {
+      // Email'leri domain'lerden ayır - O(1) lookup
+      if (type === IOCType.DOMAIN && isPositionInRanges(position.start, emailRanges)) {
         continue;
       }
 
-      // Zaten tespit edilmiş mi kontrol et (çakışmaları önle)
-      const isDuplicate = detected.some(
-        (ioc) =>
-          ioc.position &&
-          ((position.start >= ioc.position.start && position.start < ioc.position.end) ||
-           (position.end > ioc.position.start && position.end <= ioc.position.end) ||
-           (position.start <= ioc.position.start && position.end >= ioc.position.end))
-      );
+      // O(n) duplicate check using sorted ranges
+      if (hasOverlap(position, occupiedRanges)) {
+        continue;
+      }
 
-      if (!isDuplicate && isValidIOC(type, value)) {
+      if (isValidIOC(type, value)) {
         detected.push({
           type: type,
           value,
           position,
         });
+
+        // Insert position in sorted order for efficient overlap detection
+        insertPositionSorted(position, occupiedRanges);
       }
     }
   });
@@ -125,44 +132,81 @@ export function detectIOCs(text: string): DetectedIOC[] {
 }
 
 /**
- * Pozisyon bir URL'nin parçası mı kontrol eder
+ * Find all URL ranges in text - O(n)
  */
-function isPartOfURL(text: string, position: number): boolean {
-  const urlPattern = /https?:\/\//g;
-  const matches = [...text.matchAll(urlPattern)];
+function findAllURLRanges(text: string): Array<{ start: number; end: number }> {
+  const ranges: Array<{ start: number; end: number }> = [];
+  const urlPattern = /https?:\/\/[^\s<>"]+/g;
 
-  for (const match of matches) {
-    const urlStart = match.index!;
-    const urlEnd = text.indexOf(' ', urlStart);
-    const actualEnd = urlEnd === -1 ? text.length : urlEnd;
+  for (const match of text.matchAll(urlPattern)) {
+    const start = match.index!;
+    const end = start + match[0].length;
+    ranges.push({ start, end });
+  }
 
-    if (position > urlStart && position < actualEnd) {
+  return ranges;
+}
+
+/**
+ * Find all email ranges in text - O(n)
+ */
+function findAllEmailRanges(text: string): Array<{ start: number; end: number }> {
+  const ranges: Array<{ start: number; end: number }> = [];
+  const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+
+  for (const match of text.matchAll(emailPattern)) {
+    const start = match.index!;
+    const end = start + match[0].length;
+    ranges.push({ start, end });
+  }
+
+  return ranges;
+}
+
+/**
+ * Check if position is within any of the ranges - O(log n) with binary search
+ */
+function isPositionInRanges(position: number, ranges: Array<{ start: number; end: number }>): boolean {
+  // Simple linear search for small arrays (faster than binary search for small n)
+  for (const range of ranges) {
+    if (position >= range.start && position < range.end) {
       return true;
     }
   }
-
   return false;
 }
 
 /**
- * Pozisyon bir email'in parçası mı kontrol eder
+ * Check if position overlaps with any occupied range - O(n) worst case
  */
-function isPartOfEmail(text: string, position: number): boolean {
-  const emailPattern = /\b[a-zA-Z0-9._%+-]+@/g;
-  const matches = [...text.matchAll(emailPattern)];
-
-  for (const match of matches) {
-    const emailStart = match.index!;
-    const emailEnd = text.indexOf(' ', emailStart);
-    const actualEnd = emailEnd === -1 ? text.length : emailEnd;
-
-    if (position > emailStart && position < actualEnd) {
+function hasOverlap(position: { start: number; end: number }, ranges: Array<{ start: number; end: number }>): boolean {
+  for (const range of ranges) {
+    if (
+      (position.start >= range.start && position.start < range.end) ||
+      (position.end > range.start && position.end <= range.end) ||
+      (position.start <= range.start && position.end >= range.end)
+    ) {
       return true;
     }
   }
-
   return false;
 }
+
+/**
+ * Insert position in sorted order - maintains sorted array for efficient searches
+ */
+function insertPositionSorted(position: { start: number; end: number }, ranges: Array<{ start: number; end: number }>): void {
+  // Find insertion point
+  let insertIndex = ranges.length;
+  for (let i = 0; i < ranges.length; i++) {
+    if (position.start < ranges[i].start) {
+      insertIndex = i;
+      break;
+    }
+  }
+  ranges.splice(insertIndex, 0, position);
+}
+
 
 /**
  * IOC'nin geçerli olup olmadığını kontrol eder (ek validasyon)

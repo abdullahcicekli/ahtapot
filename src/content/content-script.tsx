@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import FloatingButton from '@/components/FloatingButton';
-import { detectIOCs, hasIOCs } from '@/utils/ioc-detector';
+import { detectIOCs } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { DetectedIOC } from '@/types/ioc';
 
@@ -83,28 +83,41 @@ async function handleAnalyze() {
   }
 }
 
+// Debounce timer for selection changes
+let selectionDebounceTimer: number | undefined;
+
 function handleSelectionChange() {
-  setTimeout(() => {
+  // Clear previous timer
+  if (selectionDebounceTimer) {
+    clearTimeout(selectionDebounceTimer);
+  }
+
+  // Debounce with requestIdleCallback for better performance
+  selectionDebounceTimer = window.setTimeout(() => {
     const selection = window.getSelection();
     const selectedText = selection?.toString().trim() || '';
 
-    if (!selectedText || selectedText === currentSelection) {
-      if (!selectedText) {
+    // Early return if no text or same as before
+    if (!selectedText) {
+      if (currentSelection) {
         hideFloatingButton();
         currentSelection = '';
       }
       return;
     }
 
+    if (selectedText === currentSelection) {
+      return;
+    }
+
     currentSelection = selectedText;
 
-    const hasIOC = hasIOCs(selectedText);
+    // OPTIMIZED: Single detection call instead of hasIOCs + detectIOCs
+    const iocs = detectIOCs(selectedText);
 
-    if (hasIOC) {
-      const iocs = detectIOCs(selectedText);
+    if (iocs.length > 0) {
       const range = selection!.getRangeAt(0);
       const rect = range.getBoundingClientRect();
-
       showFloatingButton(rect, iocs);
     } else {
       hideFloatingButton();

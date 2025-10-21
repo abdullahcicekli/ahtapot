@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { DetectedIOC } from '@/types/ioc';
 
 interface FloatingButtonProps {
@@ -11,8 +11,9 @@ interface FloatingButtonProps {
 /**
  * Floating Button Component
  * Metin seçildiğinde görünen analiz butonu - Medium gibi hover efekti
+ * OPTIMIZED: Memoized to prevent unnecessary re-renders
  */
-const FloatingButton: React.FC<FloatingButtonProps> = ({
+const FloatingButton: React.FC<FloatingButtonProps> = memo(({
   position,
   iocs,
   onAnalyze,
@@ -57,6 +58,8 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
       </button>
     </div>
   );
-};
+});
+
+FloatingButton.displayName = 'FloatingButton';
 
 export default FloatingButton;
