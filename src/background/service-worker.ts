@@ -2,6 +2,7 @@ import { MessageType, ExtensionMessage } from '@/types/messages';
 import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { APIService } from '@/services/api-service';
 import { getAPIKeys } from '@/utils/apiKeyStorage';
+import { findProviderByServiceName } from '@/utils/providerMappings';
 
 /**
  * Background Service Worker
@@ -119,15 +120,38 @@ async function handleAnalyzeIOC(
   const analyzingProviders: APIProvider[] = [];
   const completedProviders: { provider: APIProvider; status: 'success' | 'error' }[] = [];
 
-  // Her IOC için analiz yap
-  for (const ioc of iocs) {
+  // OPTIMIZED: Parallel IOC processing instead of sequential
+  // Process all IOCs in parallel for better performance
+  const iocPromises = iocs.map(async (ioc) => {
     try {
-      const results = await apiService.analyzeIOC(ioc, {
+      // Non-null assertion: apiService is initialized above
+      const results = await apiService!.analyzeIOC(ioc, {
         excludeProviders,
         includeProviders
       });
+      return { success: true, results };
+    } catch (error) {
+      return {
+        success: false,
+        results: [{
+          ioc,
+          source: 'system',
+          status: 'error' as const,
+          error: error instanceof Error ? error.message : 'Bilinmeyen hata',
+          timestamp: Date.now(),
+        }]
+      };
+    }
+  });
 
-      // Başarılı ve hatalı servisleri ayır
+  // Wait for all IOC analyses to complete
+  const settledResults = await Promise.allSettled(iocPromises);
+
+  // Collect all results
+  settledResults.forEach((settledResult) => {
+    if (settledResult.status === 'fulfilled') {
+      const { results } = settledResult.value;
+
       results.forEach((result) => {
         allResults.push(result);
 
@@ -140,16 +164,8 @@ async function handleAnalyzeIOC(
           });
         }
       });
-    } catch (error) {
-      allResults.push({
-        ioc,
-        source: 'system',
-        status: 'error',
-        error: error instanceof Error ? error.message : 'Bilinmeyen hata',
-        timestamp: Date.now(),
-      });
     }
-  }
+  });
 
   return {
     results: allResults,
@@ -158,22 +174,6 @@ async function handleAnalyzeIOC(
   };
 }
 
-/**
- * Service adından provider bul
- */
-function findProviderByServiceName(serviceName: string): APIProvider | null {
-  const mapping: Record<string, APIProvider> = {
-    'VirusTotal': APIProvider.VIRUSTOTAL,
-    'OTX AlienVault': APIProvider.OTX,
-    'AbuseIPDB': APIProvider.ABUSEIPDB,
-    'MalwareBazaar': APIProvider.MALWAREBAZAAR,
-    'ARIN': APIProvider.ARIN,
-    'Shodan': APIProvider.SHODAN,
-    'GreyNoise': APIProvider.GREYNOISE,
-  };
-
-  return mapping[serviceName] || null;
-}
 
 /**
  * Provider sayfasına navigasyon

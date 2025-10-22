@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo, useCallback, useMemo } from 'react';
 import { Settings, Search, Info, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/config';
 
-const Popup: React.FC = () => {
+/**
+ * Popup Component
+ * OPTIMIZED: Memoized with useCallback for handlers and useMemo for menu items
+ */
+const Popup: React.FC = memo(() => {
   const { t, i18n } = useTranslation(['popup']);
 
   useEffect(() => {
@@ -14,22 +18,33 @@ const Popup: React.FC = () => {
       }
     });
   }, [i18n]);
-  const handleOpenOptions = () => {
+
+  // OPTIMIZED: Memoize event handlers
+  const handleOpenOptions = useCallback(() => {
     chrome.tabs.create({
       url: chrome.runtime.getURL('src/pages/options/index.html')
     });
     window.close();
-  };
+  }, []);
 
-  const handleOpenSidePanel = async () => {
+  const handleOpenSidePanel = useCallback(async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab.id) {
       await chrome.sidePanel.open({ tabId: tab.id });
       window.close();
     }
-  };
+  }, []);
 
-  const menuItems = [
+  const handleOpenAbout = useCallback(() => {
+    chrome.tabs.create({ url: 'https://ahtapot.me' });
+  }, []);
+
+  const handleOpenFeedback = useCallback(() => {
+    chrome.tabs.create({ url: 'https://ahtapot.me/#feedback' });
+  }, []);
+
+  // OPTIMIZED: Memoize menuItems to prevent recreation on every render
+  const menuItems = useMemo(() => [
     {
       icon: <Search className="w-5 h-5" />,
       title: t('menu.iocAnalysis.title', { ns: 'popup' }),
@@ -46,23 +61,15 @@ const Popup: React.FC = () => {
       icon: <Info className="w-5 h-5" />,
       title: t('menu.about.title', { ns: 'popup' }),
       description: t('menu.about.description', { ns: 'popup' }),
-      onClick: () => {
-        chrome.tabs.create({
-          url: 'https://ahtapot.me'
-        });
-      },
+      onClick: handleOpenAbout,
     },
     {
       icon: <MessageSquare className="w-5 h-5" />,
       title: t('menu.feedback.title', { ns: 'popup' }),
       description: t('menu.feedback.description', { ns: 'popup' }),
-      onClick: () => {
-        chrome.tabs.create({
-          url: 'https://ahtapot.me/#feedback'
-        });
-      },
+      onClick: handleOpenFeedback,
     },
-  ];
+  ], [t, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback]);
 
   return (
     <div className="popup-container">
@@ -97,6 +104,8 @@ const Popup: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+Popup.displayName = 'Popup';
 
 export default Popup;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { APIProvider } from '@/types/ioc';
 import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
@@ -50,7 +50,11 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.GREYNOISE]: 'greynoise',
 };
 
-export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
+/**
+ * Provider Status Badges Component
+ * OPTIMIZED: Memoized to prevent unnecessary re-renders
+ */
+export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
   analyzingProviders,
   completedProviders,
   activeProvider,
@@ -59,28 +63,8 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
   const { t } = useTranslation('options');
   const [allProviders, setAllProviders] = useState<ProviderStatus[]>([]);
 
-  // Load and sort providers
-  useEffect(() => {
-    loadAndSortProviders();
-  }, [analyzingProviders, completedProviders]);
-
-  // Listen for API key changes in storage
-  useEffect(() => {
-    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes.apiKeys) {
-        // API keys changed, reload providers
-        loadAndSortProviders();
-      }
-    };
-
-    chrome.storage.onChanged.addListener(handleStorageChange);
-
-    return () => {
-      chrome.storage.onChanged.removeListener(handleStorageChange);
-    };
-  }, []);
-
-  async function loadAndSortProviders() {
+  // OPTIMIZED: Memoize loadAndSortProviders to prevent recreation on every render
+  const loadAndSortProviders = useCallback(async () => {
     try {
       // Get configured providers with timestamps
       const configuredProviders = await getConfiguredProvidersSorted();
@@ -116,9 +100,31 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
     } catch (error) {
       // Failed to load providers
     }
-  }
+  }, []);
 
-  const handleBadgeClick = async (provider: ProviderStatus) => {
+  // Load and sort providers
+  useEffect(() => {
+    loadAndSortProviders();
+  }, [analyzingProviders, completedProviders, loadAndSortProviders]);
+
+  // Listen for API key changes in storage
+  useEffect(() => {
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.apiKeys) {
+        // API keys changed, reload providers
+        loadAndSortProviders();
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
+  }, [loadAndSortProviders]);
+
+  // OPTIMIZED: Memoize click handler
+  const handleBadgeClick = useCallback(async (provider: ProviderStatus) => {
     if (!provider.enabled) {
       chrome.runtime.sendMessage({
         type: 'NAVIGATE_TO_PROVIDER',
@@ -128,7 +134,7 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
       // If enabled and onProviderClick is provided, trigger tab change
       onProviderClick(provider.label);
     }
-  };
+  }, [onProviderClick]);
 
   return (
     <div className="provider-badges-container">
@@ -157,4 +163,6 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = ({
       })}
     </div>
   );
-};
+});
+
+ProviderStatusBadges.displayName = 'ProviderStatusBadges';

@@ -28,13 +28,15 @@ export class ServiceRegistry {
 
   /**
    * Set API key for a provider
+   * OPTIMIZED: Lazy initialization - service will be initialized only when needed
    */
   setAPIKey(provider: APIProvider, apiKey: string): void {
     this.apiKeys.set(provider, apiKey);
 
-    // Re-initialize service if it exists
+    // OPTIMIZED: Remove existing service to force lazy re-initialization
+    // Service will be re-created with new key when getService() is called
     if (this.services.has(provider)) {
-      this.initializeService(provider);
+      this.services.delete(provider);
     }
   }
 
@@ -156,8 +158,10 @@ export class ServiceRegistry {
 
   /**
    * Get a service instance
+   * OPTIMIZED: Lazy initialization - creates service only when first requested
    */
   getService(provider: APIProvider): IToolService | undefined {
+    // Lazy initialization: only create service if not already cached
     if (!this.services.has(provider)) {
       this.initializeService(provider);
     }
