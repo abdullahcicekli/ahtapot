@@ -1,18 +1,18 @@
 /* AbuseIPDB Result Card Styles */
 
 .abuseipdb-result-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 12px;
-  padding: 24px;
+  padding: 0;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .abuseipdb-result-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
@@ -20,7 +20,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.5);
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -42,7 +44,7 @@
   border-radius: 50%;
   background: conic-gradient(
     var(--score-color) var(--score-percent),
-    #e5e7eb var(--score-percent)
+    rgba(71, 85, 105, 0.3) var(--score-percent)
   );
   padding: 4px;
 }
@@ -51,7 +53,7 @@
   content: '';
   position: absolute;
   inset: 4px;
-  background: white;
+  background: rgba(15, 23, 42, 0.95);
   border-radius: 50%;
 }
 
@@ -62,16 +64,16 @@
 }
 
 .abuseipdb-score-value {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--score-color);
   line-height: 1;
 }
 
 .abuseipdb-score-label-small {
   font-size: 10px;
   font-weight: 500;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -85,14 +87,14 @@
 .abuseipdb-score-title {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2937;
+  color: rgba(203, 213, 225, 0.9);
 }
 
 .abuseipdb-score-breakdown {
   display: flex;
   gap: 12px;
   font-size: 12px;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.7);
 }
 
 .abuseipdb-reports,
@@ -113,17 +115,17 @@
 }
 
 .abuseipdb-ioc-value {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 16px;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: rgba(226, 232, 240, 0.95);
   word-break: break-all;
 }
 
 .abuseipdb-ioc-type {
-  font-size: 11px;
-  font-weight: 600;
-  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 4px;
@@ -139,31 +141,36 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .abuseipdb-status-badge.malicious {
-  background-color: #fee;
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .abuseipdb-status-badge.suspicious {
-  background-color: #fef3c7;
-  color: #d97706;
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
 }
 
 .abuseipdb-status-badge.clean {
-  background-color: #dcfce7;
-  color: #16a34a;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .abuseipdb-status-badge.whitelisted {
-  background-color: #dbeafe;
-  color: #2563eb;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 /* Status Description */
@@ -171,30 +178,33 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 12px 20px;
   font-size: 13px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
 }
 
 .abuseipdb-status-description.malicious {
-  background-color: #fee;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.1);
+  color: rgba(239, 68, 68, 0.9);
+  border-left: 3px solid #ef4444;
 }
 
 .abuseipdb-status-description.suspicious {
-  background-color: #fef3c7;
-  color: #92400e;
+  background: rgba(234, 179, 8, 0.1);
+  color: rgba(234, 179, 8, 0.9);
+  border-left: 3px solid #eab308;
 }
 
 .abuseipdb-status-description.clean {
-  background-color: #dcfce7;
-  color: #166534;
+  background: rgba(34, 197, 94, 0.1);
+  color: rgba(34, 197, 94, 0.9);
+  border-left: 3px solid #22c55e;
 }
 
 .abuseipdb-status-description.whitelisted {
-  background-color: #dbeafe;
-  color: #1e40af;
+  background: rgba(59, 130, 246, 0.1);
+  color: rgba(59, 130, 246, 0.9);
+  border-left: 3px solid #60a5fa;
 }
 
 /* Unsupported IOC Type */
@@ -202,11 +212,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 12px;
+  padding: 12px 20px;
   background-color: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 8px;
-  margin-bottom: 16px;
+  border-left: 3px solid #f59e0b;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
 }
 
 .abuseipdb-unsupported-message {
@@ -214,7 +223,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #d97706;
+  color: #f59e0b;
   font-weight: 600;
 }
 
@@ -226,7 +235,7 @@
 
 .abuseipdb-supported-label {
   font-size: 12px;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.8);
   font-weight: 500;
 }
 
@@ -240,11 +249,11 @@
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  color: #2563eb;
-  background-color: #dbeafe;
+  color: rgba(96, 165, 250, 0.9);
+  background-color: rgba(59, 130, 246, 0.15);
   padding: 4px 10px;
   border-radius: 4px;
-  border: 1px solid rgba(37, 99, 235, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   white-space: nowrap;
 }
 
@@ -252,7 +261,7 @@
 .abuseipdb-badges {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
+  padding: 0 20px 16px;
   flex-wrap: wrap;
 }
 
@@ -267,77 +276,73 @@
 }
 
 .abuseipdb-badge.tor {
-  background-color: #f3e8ff;
-  color: #7c3aed;
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .abuseipdb-badge.whitelisted {
-  background-color: #dbeafe;
-  color: #2563eb;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 /* Tabs */
 .abuseipdb-tabs {
   display: flex;
-  gap: 8px;
-  border-bottom: 2px solid #e5e7eb;
-  margin-bottom: 20px;
+  background: rgba(15, 23, 42, 0.3);
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
 }
 
 .abuseipdb-tab {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 12px 16px;
-  background: none;
+  background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  cursor: pointer;
-  font-size: 14px;
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
-  transition: all 0.2s;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .abuseipdb-tab:hover {
-  color: #1f2937;
-  background-color: #f9fafb;
+  background: rgba(51, 65, 85, 0.3);
+  color: rgba(203, 213, 225, 0.9);
 }
 
 .abuseipdb-tab.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
+  color: rgba(96, 165, 250, 0.95);
+  background: rgba(30, 58, 138, 0.2);
+}
+
+.abuseipdb-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #60a5fa;
 }
 
 .abuseipdb-tab-badge {
-  background-color: #e5e7eb;
-  color: #6b7280;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
   padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 10px;
+  font-size: 11px;
   font-weight: 600;
-}
-
-.abuseipdb-tab.active .abuseipdb-tab-badge {
-  background-color: #dbeafe;
-  color: #2563eb;
 }
 
 /* Tab Content */
 .abuseipdb-tab-content {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  padding: 20px;
 }
 
 /* Overview Grid */
@@ -348,10 +353,16 @@
 }
 
 .abuseipdb-metric-card {
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 8px;
   padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.abuseipdb-metric-card:hover {
+  background: rgba(51, 65, 85, 0.3);
+  border-color: rgba(71, 85, 105, 0.5);
 }
 
 .abuseipdb-metric-card.full-width {
@@ -363,9 +374,13 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
-  font-size: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  font-size: 12px;
   font-weight: 600;
-  color: #1f2937;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(148, 163, 184, 0.9);
 }
 
 .abuseipdb-metric-body {
@@ -383,38 +398,38 @@
 }
 
 .abuseipdb-metric-label {
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.8);
   font-weight: 500;
 }
 
 .abuseipdb-metric-value {
-  color: #1f2937;
-  font-weight: 600;
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 500;
   text-align: right;
 }
 
 .abuseipdb-metric-value.score-malicious {
-  color: #dc2626;
+  color: #ef4444;
 }
 
 .abuseipdb-metric-value.score-suspicious {
-  color: #d97706;
+  color: #eab308;
 }
 
 .abuseipdb-metric-value.score-clean {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .abuseipdb-metric-value.score-whitelisted {
-  color: #2563eb;
+  color: #60a5fa;
 }
 
 .abuseipdb-metric-value.positive {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .abuseipdb-metric-value.warning {
-  color: #d97706;
+  color: #eab308;
 }
 
 /* Categories */
@@ -428,8 +443,9 @@
 .abuseipdb-category {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #fee;
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 600;
@@ -443,10 +459,16 @@
 }
 
 .abuseipdb-report-item {
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 8px;
   padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.abuseipdb-report-item:hover {
+  background: rgba(51, 65, 85, 0.3);
+  border-color: rgba(71, 85, 105, 0.5);
 }
 
 .abuseipdb-report-header {
@@ -464,18 +486,18 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.7);
 }
 
 .abuseipdb-report-comment {
   margin: 12px 0;
   padding: 12px;
-  background-color: #ffffff;
-  border-left: 3px solid #2563eb;
+  background: rgba(15, 23, 42, 0.5);
+  border-left: 3px solid #60a5fa;
   border-radius: 4px;
   font-size: 13px;
   line-height: 1.6;
-  color: #374151;
+  color: rgba(203, 213, 225, 0.9);
 }
 
 .abuseipdb-report-categories {
@@ -490,9 +512,9 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  color: #374151;
+  background: rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  color: rgba(203, 213, 225, 0.9);
   border-radius: 6px;
   font-size: 11px;
   font-weight: 500;
@@ -504,14 +526,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 24px;
+  padding: 40px 20px;
   text-align: center;
-  color: #6b7280;
+  gap: 12px;
+  color: rgba(148, 163, 184, 0.7);
 }
 
 .abuseipdb-no-reports svg {
   color: #22c55e;
-  margin-bottom: 16px;
 }
 
 .abuseipdb-no-reports p {
@@ -522,38 +544,39 @@
 /* Pagination */
 .abuseipdb-pagination {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  gap: 16px;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
 }
 
 .abuseipdb-page-btn {
-  padding: 8px 16px;
-  background-color: #f3f4f6;
-  border: 1px solid #d1d5db;
+  padding: 6px 14px;
+  background: rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 6px;
-  font-size: 13px;
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 12px;
   font-weight: 500;
-  color: #374151;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .abuseipdb-page-btn:hover:not(:disabled) {
-  background-color: #e5e7eb;
-  border-color: #9ca3af;
+  background: rgba(71, 85, 105, 0.5);
+  border-color: rgba(71, 85, 105, 0.5);
 }
 
 .abuseipdb-page-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .abuseipdb-page-info {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
 }
 
 /* Details Grid */
@@ -564,8 +587,8 @@
 }
 
 .abuseipdb-detail-section {
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 8px;
   padding: 16px;
 }
@@ -579,9 +602,13 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
-  font-size: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  font-size: 12px;
   font-weight: 600;
-  color: #1f2937;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(148, 163, 184, 0.9);
 }
 
 .abuseipdb-detail-items {
@@ -599,23 +626,24 @@
 }
 
 .abuseipdb-detail-label {
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.8);
   font-weight: 500;
 }
 
 .abuseipdb-detail-value {
-  color: #1f2937;
-  font-weight: 600;
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 500;
   text-align: right;
   word-break: break-word;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
 }
 
 .abuseipdb-detail-value.positive {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .abuseipdb-detail-value.warning {
-  color: #d97706;
+  color: #eab308;
 }
 
 /* Hostnames */
@@ -629,39 +657,41 @@
 .abuseipdb-hostname {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  color: #374151;
+  background: rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  color: rgba(203, 213, 225, 0.9);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  font-family: 'Monaco', 'Courier New', monospace;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
 }
 
 /* External Link */
 .abuseipdb-external-link {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
 }
 
 .abuseipdb-link-button {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   padding: 10px 20px;
-  background-color: #2563eb;
-  color: #ffffff;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 8px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .abuseipdb-link-button:hover {
-  background-color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 /* Responsive Design */
