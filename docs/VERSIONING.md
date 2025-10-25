@@ -147,18 +147,54 @@ Use this matrix to determine version increment:
 
 ## Changelog Requirements
 
-Every version must have a changelog entry following [Keep a Changelog](https://keepachangelog.com/) format.
+Every version must have changelog entries in **BOTH** `CHANGELOG.md` and `README.md` following [Keep a Changelog](https://keepachangelog.com/) format.
+
+### Documentation Update Rules
+
+When releasing a new version, you MUST update these files in order:
+
+#### 1. CHANGELOG.md (Complete Version History)
+- **Location:** `/CHANGELOG.md` (project root)
+- **Format:** Keep a Changelog standard
+- **Content:** ALL versions with complete details
+- **Order:** Newest version at the TOP (reverse chronological)
+- **Purpose:** Comprehensive historical record
+
+**Update Process:**
+1. Add new version entry at the TOP of the changelog (after `## [Unreleased]`)
+2. Use format: `## [X.Y.Z] - YYYY-MM-DD`
+3. Include all changes in appropriate categories
+4. Keep all previous versions below
+
+#### 2. README.md (Latest Version Only)
+- **Location:** `/README.md` (project root)
+- **Section:** `## 🆕 What's New in vX.Y.Z`
+- **Content:** ONLY the latest version (concise bullet points)
+- **Link:** Must include link to CHANGELOG.md for full history
+- **Purpose:** Quick overview for new users
+
+**Update Process:**
+1. Replace entire "What's New" section with latest version
+2. Use concise bullet points (5-7 items max)
+3. Focus on user-facing changes
+4. Add link: `📜 **[View Complete Changelog](CHANGELOG.md)**`
 
 ### Changelog Categories
+
+Use these categories in order (include only if applicable):
 
 ```markdown
 ## [2.1.0] - 2025-10-19
 
 ### Added
 - New features and capabilities
+- New integrations or providers
+- New UI components
 
 ### Changed
 - Changes to existing functionality
+- Improvements to existing features
+- Updated dependencies
 
 ### Deprecated
 - Features marked for removal (deprecate in MINOR, remove in MAJOR)
@@ -168,10 +204,84 @@ Every version must have a changelog entry following [Keep a Changelog](https://k
 
 ### Fixed
 - Bug fixes
+- UI/UX corrections
+- Performance fixes
 
 ### Security
 - Security vulnerability patches
+- Security improvements
 ```
+
+### CHANGELOG.md Best Practices
+
+#### Structure
+```markdown
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Added
+- Features in development but not yet released
+
+## [2.3.1] - 2025-10-25  ← NEWEST AT TOP
+### Added
+- ...
+
+## [2.3.0] - 2025-10-21  ← OLDER VERSIONS BELOW
+### Added
+- ...
+```
+
+#### Writing Guidelines
+- **Be Specific:** "Added GreyNoise integration" not "Added new feature"
+- **User-Focused:** Describe impact, not implementation details
+- **Grouping:** Group related changes under same category
+- **Links:** Include links to issues, PRs, or documentation when relevant
+- **Breaking Changes:** Clearly mark with ⚠️ or **BREAKING** prefix
+
+#### Example Entry
+```markdown
+## [2.3.0] - 2025-10-21
+
+### Added
+- **GreyNoise Integration** - Internet-wide noise detection and threat classification
+- Rate limit protection system with user confirmation prompts
+- Smart provider confirmations for GreyNoise (50 searches/week) and Shodan (100 results/month)
+
+### Changed
+- Complete i18n localization for new features in English and Turkish
+- Enhanced provider management with quota protection
+
+### Fixed
+- API rate limit handling for time-based quotas
+- Provider card rendering in dark mode
+```
+
+### README.md Update Template
+
+When updating README for new version:
+
+```markdown
+## 🆕 What's New in vX.Y.Z
+
+### Latest Release (Month Day, Year)
+- 🎯 **Feature Name** - Brief description (5-10 words)
+- 🔧 **Improvement** - What was improved
+- 🐛 **Bug Fix** - What was fixed
+
+### Active Threat Intelligence Providers
+- ✅ **Provider1** • **Provider2** • **Provider3** ...
+- 🎯 **Key Feature** - Brief description
+- ⚠️ **Important Note** - Critical information
+
+📜 **[View Complete Changelog](CHANGELOG.md)** - Full version history and detailed release notes
+```
+
+**Important:** Remove all previous version details from README - keep ONLY latest version.
 
 ---
 
@@ -269,21 +379,111 @@ docs: Update README with new examples     → PATCH bump
 
 ---
 
+## Version Synchronization
+
+**CRITICAL:** All version numbers must be synchronized across the following locations:
+
+### Required Version Updates
+Every version change MUST update these files:
+
+1. **`package.json`** → `version` field
+2. **`src/manifest.json`** → `version` field
+3. **`docs/VERSIONING.md`** → `Current Version` at bottom of file
+
+### Automatic Version Display
+The extension automatically displays the version from `manifest.json` in:
+- **Popup footer**: Shows `v{version}` from `chrome.runtime.getManifest().version`
+- No manual UI updates needed - version is read dynamically
+
+### Validation
+Before committing version changes:
+```bash
+# Verify all versions match
+grep '"version"' package.json src/manifest.json
+grep 'Current Version:' docs/VERSIONING.md
+```
+
+All three outputs should show the same version number.
+
+---
+
 ## Release Checklist
 
-Before releasing a new version:
+Before releasing a new version, complete ALL items in order:
 
+### 1. Version Number Updates
 - [ ] Version incremented in `package.json`
 - [ ] Version incremented in `src/manifest.json`
-- [ ] Changelog updated in README
-- [ ] Documentation reflects new version
+- [ ] Version updated in `docs/VERSIONING.md` (Current Version section at bottom)
+- [ ] Verify all three versions match using grep command:
+  ```bash
+  grep '"version"' package.json src/manifest.json && grep 'Current Version:' docs/VERSIONING.md
+  ```
+
+### 2. Documentation Updates (CRITICAL)
+- [ ] **CHANGELOG.md** - Add new version at TOP (after `## [Unreleased]`)
+  - Use format: `## [X.Y.Z] - YYYY-MM-DD`
+  - Include all changes with proper categories (Added, Changed, Fixed, etc.)
+  - Keep all previous versions below
+- [ ] **README.md** - Replace "What's New" section with latest version ONLY
+  - Remove all old version details
+  - Keep only new version (5-7 concise bullet points)
+  - Include link to CHANGELOG.md
+  - Update "Current Version" at bottom
+- [ ] Verify CHANGELOG link works in README
+
+### 3. Code Quality & Testing
 - [ ] All tests passing
 - [ ] Build successful (`npm run build`)
 - [ ] Extension tested in Chrome
-- [ ] Git tag created: `git tag v2.1.0`
-- [ ] Tag pushed: `git push origin v2.1.0`
-- [ ] GitHub release created with changelog
+- [ ] Verify version displays correctly in popup footer (dynamic from manifest.json)
+- [ ] Test all new features introduced in this version
+- [ ] Verify i18n translations for new features (EN & TR)
+
+### 4. Git & Release
+- [ ] All changes committed with descriptive messages
+- [ ] Git tag created: `git tag vX.Y.Z`
+- [ ] Tag pushed: `git push origin vX.Y.Z`
+- [ ] GitHub release created with changelog content
 - [ ] Chrome Web Store updated (if published)
+
+### 5. Post-Release Verification
+- [ ] Verify GitHub release displays correctly
+- [ ] Check Chrome Web Store listing (if applicable)
+- [ ] Confirm CHANGELOG.md renders properly on GitHub
+- [ ] Test fresh installation from store/release
+
+### Example Release Workflow
+
+```bash
+# 1. Update version numbers
+# Edit: package.json, src/manifest.json, docs/VERSIONING.md
+
+# 2. Verify version sync
+grep '"version"' package.json src/manifest.json && grep 'Current Version:' docs/VERSIONING.md
+
+# 3. Update documentation
+# Edit: CHANGELOG.md (add new version at top)
+# Edit: README.md (replace "What's New" section)
+
+# 4. Build and test
+npm run build
+# Test extension in Chrome
+
+# 5. Commit and tag
+git add .
+git commit -m "chore: Release v2.3.1
+
+- Updated version to 2.3.1 across all files
+- Added CHANGELOG entry for v2.3.1
+- Updated README with latest release notes"
+
+git tag v2.3.1
+git push origin master
+git push origin v2.3.1
+
+# 6. Create GitHub release with CHANGELOG content
+```
 
 ---
 
@@ -312,5 +512,5 @@ If unsure about version increment:
 
 ---
 
-**Last Updated:** 2025-10-21
-**Current Version:** 2.3.0
+**Last Updated:** 2025-10-25
+**Current Version:** 2.3.1

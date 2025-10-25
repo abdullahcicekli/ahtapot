@@ -13,14 +13,18 @@
     },
     "about": {
       "title": "About",
-      "description": "Ahtapot Extension v2.1.1"
+      "description": "Ahtapot Extension"
     },
     "feedback": {
       "title": "Feedback",
       "description": "Share your thoughts and suggestions"
+    },
+    "rateUs": {
+      "title": "Rate Us",
+      "description": "Leave a review on Chrome Web Store"
     }
   },
   "footer": {
-    "text": "Select text or right-click to analyze IOC"
+    "text": "Select text or search in side panel to analyze IOC"
   }
 }

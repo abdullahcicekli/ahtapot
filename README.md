@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.3.1-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
@@ -22,35 +22,22 @@
 
 ---
 
-## 🆕 What's New in v2.3.0
+## 🆕 What's New in v2.3.1
 
-### Latest Updates
-- 🔍 **GreyNoise Integration** - Internet-wide noise detection and threat classification
-- ⚠️ **Rate Limit Protection System** - Smart confirmation before consuming API quota for rate-limited providers
-- 🎯 **Smart Provider Confirmations** - User confirmation prompts for GreyNoise (50 searches/week) and Shodan (100 results/month)
-- 🌍 **Enhanced i18n** - Complete localization for new features in English and Turkish
+### Latest Release (October 25, 2025)
+- ⭐ **Chrome Web Store Integration** - "Rate Us" button for easy user reviews
+- 🔧 **Dynamic Version Display** - Automatic version sync from manifest.json
+- 🎨 **AbuseIPDB Theme Fix** - Resolved provider card styling issues
+- 📝 **Improved Footer Text** - Accurate extension usage description
+- 📚 **Enhanced Documentation** - Comprehensive versioning and changelog system
 
-### Previous Updates (v2.2.0)
-- 🔍 **Shodan Integration** - Internet-connected device search with vulnerability and port scanning
-- 🌐 **ARIN WHOIS Integration** - IP address registration information and network allocation data
-- 🛡️ **Enhanced Network Analysis** - Comprehensive IP intelligence from multiple authoritative sources
+### Active Threat Intelligence Providers
+- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise**
+- 🎯 **Smart API Usage** - Only queries providers supporting the IOC type
+- ⚠️ **Rate Limit Protection** - Confirmation system for GreyNoise and Shodan
+- 🆓 **No API Key Required** - ARIN WHOIS (always available)
 
-### Major Features (v2.0.0+)
-- ✨ **OTX AlienVault Integration** - Comprehensive threat intelligence with pulse-based analysis
-- 🔍 **AbuseIPDB Integration** - IP reputation analysis with abuse confidence scoring
-- 🎯 **Smart Provider Support** - See which providers support each IOC type before analysis
-- 🎨 **Enhanced Tab Navigation** - Seamless switching between provider results with improved UX
-- 📊 **Provider Support Indicators** - Badge-based display showing compatible providers for each IOC
-- ✅ **Live API Validation** - Test and validate API keys before saving
-- 💾 **Smart Cache Management** - Configurable retention periods with detailed statistics
-- 🌍 **Full i18n Support** - Complete Turkish and English translations
-- ⚡ **Per-Field Save** - Individual save buttons for each API provider
-
-### Provider Changes
-- ✅ **Active**: VirusTotal, OTX AlienVault, AbuseIPDB, MalwareBazaar, ARIN, Shodan, GreyNoise
-- 🎯 **Optimized API Usage** - Only sends requests to providers that support the analyzed IOC type
-- ⚠️ **Rate Limit Protection** - Smart confirmation system for GreyNoise and Shodan to protect your quota
-- 🆓 **No API Key Required**: ARIN WHOIS (always available)
+📜 **[View Complete Changelog](CHANGELOG.md)** - Full version history and detailed release notes
 
 ---
 
@@ -446,11 +433,12 @@ This project follows [Semantic Versioning 2.0.0](https://semver.org/) (SemVer).
 - **MINOR** - New features, backward compatible (e.g., adding a provider)
 - **PATCH** - Bug fixes and minor improvements
 
-For detailed versioning guidelines, contribution standards, and changelog format, see:
+For detailed information:
 
 📚 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
+📜 **[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
 
-**Current Version:** 2.3.0
+**Current Version:** 2.3.1
 
 ---
 
