@@ -44,7 +44,292 @@
       "rir": "RIR:",
       "score": "Puan:"
     },
-    "analysisDate": "Son analiz"
+    "analysisDate": "Son analiz",
+    "viewFullReport": "VirusTotal'de Tam Raporu Görüntüle →",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "otx": {
+    "threatIntelligence": "Tehdit İstihbaratı",
+    "malicious": "Zararlı",
+    "suspicious": "Şüpheli",
+    "pulses": "Pulse'lar",
+    "status": {
+      "clean": "Temiz",
+      "malicious": "Zararlı",
+      "suspicious": "Şüpheli",
+      "flagged": "İşaretlenmiş"
+    },
+    "statusDescription": {
+      "clean": "Bu gösterge için tehdit istihbaratı pulse'u bulunamadı",
+      "malicious": "Tehdit tespit edildi: {{reasons}}",
+      "suspicious": "Potansiyel tehdit: {{reasons}}",
+      "flagged": "{{count}} tehdit istihbaratı pulse'unda bulundu - inceleme gerektirir"
+    },
+    "threatSummary": {
+      "title": "Neden işaretlendi?",
+      "description": "Bu gösterge, AlienVault OTX topluluğundan <1>{{count}} tehdit istihbaratı pulse'unda</1> görünüyor. OTX pulse'ları, tehditleri, kampanyaları veya kötü amaçlı altyapıları oluşturan Uzlaşma Göstergeleri (IOC) içerir.",
+      "highSeverity": "<1>{{count}}</1> pulse yüksek önem dereceli tehditler içeriyor (kötü amaçlı yazılım, fidye yazılımı, APT, kimlik avı, vb.)",
+      "mediumSeverity": "<1>{{count}}</1> pulse şüpheli aktivite veya potansiyel tehditler gösteriyor",
+      "recommendation": "<1>Öneri:</1> Bu IOC daha fazla araştırılmalıdır. Bu göstergeyle ilişkili belirli tehditleri anlamak için aşağıdaki pulse ayrıntılarını inceleyin."
+    },
+    "tabs": {
+      "pulses": "Pulse'lar",
+      "details": "Detaylar"
+    },
+    "pulse": {
+      "highSeverity": "Yüksek Önem Derecesi",
+      "mediumSeverity": "Orta Önem Derecesi",
+      "threatIndicator": "Tehdit Göstergesi",
+      "malwareFamilies": "Zararlı Aileleri:",
+      "targetedCountries": "Hedeflenen Ülkeler:",
+      "viewOnOTX": "OTX'de Görüntüle →",
+      "moreCount": "+{{count}} daha"
+    },
+    "details": {
+      "statistics": "İstatistikler",
+      "totalPulses": "Toplam Pulse:",
+      "malicious": "Zararlı:",
+      "suspicious": "Şüpheli:",
+      "harmless": "Zararsız:",
+      "reputation": "İtibar",
+      "score": "Puan:",
+      "relatedAdversaries": "İlgili Saldırganlar",
+      "malwareFamilies": "Zararlı Aileleri:",
+      "targetedIndustries": "Hedeflenen Sektörler"
+    },
+    "noPulses": "Bu gösterge için tehdit istihbaratı pulse'u bulunamadı",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "İnternet Cihaz Araması",
+    "status": {
+      "safe": "Güvenli",
+      "suspicious": "Şüpheli",
+      "malicious": "Zararlı",
+      "error": "Hata",
+      "unknown": "Bilinmiyor"
+    },
+    "hostInformation": "Host Bilgisi",
+    "ipAddress": "IP Adresi:",
+    "operatingSystem": "İşletim Sistemi:",
+    "lastScan": "Son Tarama:",
+    "organization": "Organizasyon",
+    "organizationLabel": "Organizasyon:",
+    "isp": "ISP:",
+    "asn": "ASN:",
+    "location": "Konum",
+    "country": "Ülke:",
+    "city": "Şehir:",
+    "coordinates": "Koordinatlar:",
+    "ports": "Portlar ({{count}})",
+    "moreCount": "+{{count}} daha",
+    "vulnerabilities": "Güvenlik Açıkları ({{count}})",
+    "moreVulnerabilities": "+{{count}} güvenlik açığı daha",
+    "detectedServices": "Tespit Edilen Servisler ({{count}})",
+    "port": "Port {{port}}",
+    "hostnames": "Host Adları ({{count}})",
+    "tags": "Etiketler",
+    "viewFullReport": "Shodan'da Tam Raporu Görüntüle →",
+    "domainInformation": "Domain Bilgisi",
+    "domain": "Domain:",
+    "subdomains": "Alt Domainler:",
+    "subdomainsCount": "Alt Domainler ({{count}})",
+    "moreSubdomains": "+{{count}} alt domain daha",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "abuseipdb": {
+    "abuseConfidence": "İstismar Güven Skoru",
+    "score": "Skor",
+    "reports": "{{count}} Rapor",
+    "users": "{{count}} Kullanıcı",
+    "status": {
+      "whitelisted": "Beyaz Listede",
+      "malicious": "Zararlı",
+      "suspicious": "Şüpheli",
+      "clean": "Temiz"
+    },
+    "statusDescription": {
+      "whitelisted": "Bu IP AbuseIPDB beyaz listesinde ve güvenli kabul ediliyor",
+      "malicious": "Yüksek istismar güven skoru ({{score}}%). Bu IP önemli istismar raporlarına sahip.",
+      "suspicious": "Orta düzeyde istismar güven skoru ({{score}}%). Bu IP ile dikkatli olun.",
+      "clean": "Düşük istismar güven skoru ({{score}}%). Önemli istismar raporu bulunamadı."
+    },
+    "badges": {
+      "torExitNode": "Tor Çıkış Düğümü",
+      "whitelisted": "Beyaz Listede"
+    },
+    "tabs": {
+      "overview": "Genel Bakış",
+      "reports": "Raporlar",
+      "details": "Detaylar"
+    },
+    "overview": {
+      "abuseMetrics": "İstismar Metrikleri",
+      "confidenceScore": "Güven Skoru:",
+      "totalReports": "Toplam Rapor:",
+      "uniqueReporters": "Benzersiz Raporlayıcı:",
+      "lastReported": "Son Rapor Tarihi:",
+      "locationNetwork": "Konum ve Ağ",
+      "country": "Ülke:",
+      "isp": "ISP:",
+      "domain": "Domain:",
+      "usageType": "Kullanım Türü:",
+      "abuseCategories": "İstismar Kategorileri"
+    },
+    "reportsTab": {
+      "noReports": "Bu IP adresi için istismar raporu bulunamadı"
+    },
+    "details": {
+      "ipInformation": "IP Bilgisi",
+      "ipAddress": "IP Adresi:",
+      "ipVersion": "IP Sürümü:",
+      "publicIp": "Genel IP:",
+      "whitelisted": "Beyaz Listede:",
+      "torExitNode": "Tor Çıkış Düğümü:",
+      "yes": "Evet",
+      "no": "Hayır",
+      "hostnames": "Host Adları"
+    },
+    "viewFullReport": "AbuseIPDB'de Tam Raporu Görüntüle →",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "İnternet Gürültü İstihbaratı",
+    "status": {
+      "benign": "Zararsız",
+      "suspicious": "Şüpheli",
+      "malicious": "Zararlı",
+      "error": "Hata",
+      "unknown": "Bilinmiyor"
+    },
+    "classification": "Sınıflandırma",
+    "classificationStatus": "Durum:",
+    "seenByGreyNoise": "GreyNoise Tarafından Görüldü:",
+    "yes": "Evet",
+    "no": "Hayır",
+    "actor": "Aktör:",
+    "knownService": "Bilinen Servis:",
+    "locationOrganization": "Konum ve Organizasyon",
+    "country": "Ülke:",
+    "city": "Şehir:",
+    "organization": "Organizasyon:",
+    "asn": "ASN:",
+    "reverseDns": "Ters DNS:",
+    "activityTimeline": "Aktivite Zaman Çizelgesi",
+    "firstSeen": "İlk Görülme:",
+    "lastSeen": "Son Görülme:",
+    "behaviorTags": "Davranış Etiketleri ({{count}})",
+    "securityIndicators": "Güvenlik Göstergeleri",
+    "torExitNode": "TOR Çıkış Düğümü",
+    "vpn": "VPN",
+    "proxy": "Proxy",
+    "viewFullReport": "GreyNoise Visualizer'da Tam Raporu Görüntüle →",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "malwarebazaar": {
+    "samples": "Örnekler",
+    "malwareAnalysis": "Kötü Amaçlı Yazılım Analizi",
+    "signatures": "{{count}} İmza",
+    "tags": "{{count}} Etiket",
+    "status": {
+      "clean": "Temiz",
+      "malicious": "Zararlı",
+      "unknown": "Bilinmiyor"
+    },
+    "statusDescription": {
+      "clean": "MalwareBazaar veritabanında bu hash için kötü amaçlı yazılım örneği bulunamadı",
+      "malicious": "MalwareBazaar veritabanında bu hash ile eşleşen {{count}} kötü amaçlı yazılım örneği bulundu",
+      "unknown": "Tehdit durumu belirlenemiyor"
+    },
+    "tabs": {
+      "overview": "Genel Bakış",
+      "samples": "Örnekler",
+      "details": "Detaylar"
+    },
+    "overview": {
+      "threatMetrics": "Tehdit Metrikleri",
+      "totalSamples": "Toplam Örnek:",
+      "uniqueSignatures": "Benzersiz İmza:",
+      "firstSeen": "İlk Görülme:",
+      "lastSeen": "Son Görülme:",
+      "intelligence": "İstihbarat",
+      "totalDownloads": "Toplam İndirme:",
+      "totalUploads": "Toplam Yükleme:",
+      "codeSigning": "Kod İmzalama:",
+      "present": "Mevcut",
+      "none": "Yok",
+      "fileTypes": "Dosya Türleri:",
+      "malwareSignatures": "Kötü Amaçlı Yazılım İmzaları",
+      "malwareTags": "Kötü Amaçlı Yazılım Etiketleri"
+    },
+    "sample": {
+      "type": "Tür:",
+      "size": "Boyut:",
+      "reporter": "Raporlayan:",
+      "delivery": "Teslimat:",
+      "origin": "Kaynak:",
+      "first": "İlk:",
+      "last": "Son:",
+      "downloads": "{{count}} indirme",
+      "uploads": "{{count}} yükleme",
+      "codeSignedBy": "{{name}} tarafından kod imzalandı"
+    },
+    "details": {
+      "fileTypes": "Dosya Türleri",
+      "summary": "Özet",
+      "totalSamples": "Toplam Örnek:",
+      "signatures": "İmzalar:",
+      "tags": "Etiketler:",
+      "fileTypesCount": "Dosya Türleri:"
+    },
+    "noSamples": "Örnek detayları mevcut değil",
+    "viewFullReport": "MalwareBazaar'da Tam Raporu Görüntüle →",
+    "checkOnMalwareBazaar": "MalwareBazaar'da Kontrol Et →",
+    "unsupportedType": "Desteklenen IOC türleri:"
+  },
+  "arin": {
+    "header": {
+      "title": "WHOIS Bilgisi"
+    },
+    "status": {
+      "whoisInfo": "WHOIS Bilgisi"
+    },
+    "network": {
+      "title": "Ağ Bilgisi",
+      "networkName": "Ağ Adı:",
+      "handle": "Tanımlayıcı:",
+      "ipVersion": "IP Sürümü:",
+      "cidr": "CIDR:"
+    },
+    "organization": {
+      "title": "Organizasyon",
+      "organization": "Organizasyon:",
+      "orgHandle": "Org Tanımlayıcı:",
+      "type": "Tür:",
+      "customerAssignment": "Müşteri Ataması",
+      "parentNetwork": "Üst Ağ:"
+    },
+    "addressRange": {
+      "title": "IP Adres Aralığı",
+      "startAddress": "Başlangıç Adresi:",
+      "endAddress": "Bitiş Adresi:",
+      "range": "Aralık:"
+    },
+    "registration": {
+      "title": "Kayıt Bilgisi",
+      "registrationDate": "Kayıt Tarihi:",
+      "lastUpdated": "Son Güncelleme:"
+    },
+    "comments": {
+      "title": "Yorumlar"
+    },
+    "netBlocks": {
+      "title": "Ağ Blokları"
+    },
+    "viewFullWhois": "ARIN'de Tam WHOIS Görüntüle →",
+    "unsupportedType": "Desteklenen IOC türleri:"
   },
   "generic": {
     "source": "Kaynak",

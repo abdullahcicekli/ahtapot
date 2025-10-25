@@ -25,9 +25,13 @@
   "results": {
     "title": "Analysis Results"
   },
+  "loading": {
+    "analyzing": "Analyzing security indicators..."
+  },
   "providerNoResults": {
     "title": "No Results from {{provider}}",
-    "description": "This provider does not support the analyzed IOC type or returned no data.",
+    "searchedFor": "You searched for:",
+    "description": "This provider does not support these indicator types.",
     "supportedLabel": "{{provider}} supports:"
   },
   "emptyState": {
@@ -68,5 +72,13 @@
     "confirm": "Yes, Analyze",
     "cancel": "Skip",
     "skipHint": "Analysis will skip this provider if not confirmed"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "Internet Noise Intelligence"
+    },
+    "shodan": {
+      "subtitle": "Internet-Wide Port Scanner"
+    }
   }
 }

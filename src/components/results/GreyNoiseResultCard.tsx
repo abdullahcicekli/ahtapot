@@ -14,6 +14,7 @@ import {
   CheckCircle,
   Network,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './GreyNoiseResultCard.css';
 
 interface GreyNoiseResultCardProps {
@@ -21,6 +22,7 @@ interface GreyNoiseResultCardProps {
 }
 
 export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result }) => {
+  const { t } = useTranslation('results');
   const { details, status, error: resultError } = result;
 
   const getStatusIcon = () => {
@@ -39,15 +41,15 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
   const getStatusText = () => {
     switch (status) {
       case 'safe':
-        return 'Benign';
+        return t('greynoise.status.benign');
       case 'suspicious':
-        return 'Suspicious';
+        return t('greynoise.status.suspicious');
       case 'malicious':
-        return 'Malicious';
+        return t('greynoise.status.malicious');
       case 'error':
-        return resultError || details?.error || 'Error';
+        return resultError || details?.error || t('greynoise.status.error');
       default:
-        return 'Unknown';
+        return t('greynoise.status.unknown');
     }
   };
 
@@ -73,8 +75,8 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
             <img src="/provider-icons/greynoise-logo.png" alt="GreyNoise" />
           </div>
           <div className="greynoise-info">
-            <div className="greynoise-title">GreyNoise</div>
-            <div className="greynoise-subtitle">Internet Noise Intelligence</div>
+            <div className="greynoise-title">{t('greynoise.title')}</div>
+            <div className="greynoise-subtitle">{t('greynoise.subtitle')}</div>
           </div>
         </div>
 
@@ -101,7 +103,7 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
             <span>{result.unsupportedReason}</span>
           </div>
           <div className="greynoise-supported-types">
-            <span className="greynoise-supported-label">Supported IOC types:</span>
+            <span className="greynoise-supported-label">{t('greynoise.unsupportedType')}</span>
             <div className="greynoise-supported-badges">
               {result.supportedTypes.map((type, idx) => (
                 <span key={idx} className="greynoise-ioc-badge">
@@ -142,34 +144,34 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
             <div className="greynoise-metric-card">
               <div className="greynoise-metric-header">
                 <Eye size={18} />
-                <span>Classification</span>
+                <span>{t('greynoise.classification')}</span>
               </div>
               <div className="greynoise-metric-body">
                 <div className="greynoise-metric-item">
-                  <span className="greynoise-metric-label">Status:</span>
+                  <span className="greynoise-metric-label">{t('greynoise.classificationStatus')}</span>
                   <span className={`greynoise-classification-badge ${getClassificationBadgeClass(details.classification)}`}>
                     {details.classification}
                   </span>
                 </div>
                 <div className="greynoise-metric-item">
-                  <span className="greynoise-metric-label">Seen by GreyNoise:</span>
+                  <span className="greynoise-metric-label">{t('greynoise.seenByGreyNoise')}</span>
                   <span className="greynoise-metric-value">
                     {details.seen ? (
-                      <span className="greynoise-seen-yes"><CheckCircle size={14} /> Yes</span>
+                      <span className="greynoise-seen-yes"><CheckCircle size={14} /> {t('greynoise.yes')}</span>
                     ) : (
-                      <span className="greynoise-seen-no">No</span>
+                      <span className="greynoise-seen-no">{t('greynoise.no')}</span>
                     )}
                   </span>
                 </div>
                 {details.actor && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">Actor:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.actor')}</span>
                     <span className="greynoise-metric-value greynoise-actor">{details.actor}</span>
                   </div>
                 )}
                 {details.isRiot && details.riotName && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">Known Service:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.knownService')}</span>
                     <span className="greynoise-riot-badge">
                       <CheckCircle size={14} /> {details.riotName}
                     </span>
@@ -182,12 +184,12 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
             <div className="greynoise-metric-card">
               <div className="greynoise-metric-header">
                 <Building2 size={18} />
-                <span>Location & Organization</span>
+                <span>{t('greynoise.locationOrganization')}</span>
               </div>
               <div className="greynoise-metric-body">
                 {details.country && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">Country:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.country')}</span>
                     <span className="greynoise-metric-value">
                       {details.countryCode && `${details.countryCode} - `}{details.country}
                     </span>
@@ -195,25 +197,25 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
                 )}
                 {details.city && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">City:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.city')}</span>
                     <span className="greynoise-metric-value">{details.city}</span>
                   </div>
                 )}
                 {details.organization && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">Organization:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.organization')}</span>
                     <span className="greynoise-metric-value">{details.organization}</span>
                   </div>
                 )}
                 {details.asn && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">ASN:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.asn')}</span>
                     <span className="greynoise-metric-value monospace">{details.asn}</span>
                   </div>
                 )}
                 {details.rdns && (
                   <div className="greynoise-metric-item">
-                    <span className="greynoise-metric-label">Reverse DNS:</span>
+                    <span className="greynoise-metric-label">{t('greynoise.reverseDns')}</span>
                     <span className="greynoise-metric-value monospace">{details.rdns}</span>
                   </div>
                 )}
@@ -225,12 +227,12 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
               <div className="greynoise-metric-card full-width">
                 <div className="greynoise-metric-header">
                   <Clock size={18} />
-                  <span>Activity Timeline</span>
+                  <span>{t('greynoise.activityTimeline')}</span>
                 </div>
                 <div className="greynoise-metric-body">
                   {details.firstSeen && (
                     <div className="greynoise-metric-item">
-                      <span className="greynoise-metric-label">First Seen:</span>
+                      <span className="greynoise-metric-label">{t('greynoise.firstSeen')}</span>
                       <span className="greynoise-metric-value">
                         {new Date(details.firstSeen).toLocaleDateString()} {new Date(details.firstSeen).toLocaleTimeString()}
                       </span>
@@ -238,7 +240,7 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
                   )}
                   {details.lastSeen && (
                     <div className="greynoise-metric-item">
-                      <span className="greynoise-metric-label">Last Seen:</span>
+                      <span className="greynoise-metric-label">{t('greynoise.lastSeen')}</span>
                       <span className="greynoise-metric-value">
                         {new Date(details.lastSeen).toLocaleDateString()} {new Date(details.lastSeen).toLocaleTimeString()}
                       </span>
@@ -253,7 +255,7 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
               <div className="greynoise-metric-card full-width">
                 <div className="greynoise-metric-header">
                   <Tag size={18} />
-                  <span>Behavior Tags ({details.tags.length})</span>
+                  <span>{t('greynoise.behaviorTags', { count: details.tags.length })}</span>
                 </div>
                 <div className="greynoise-tags">
                   {details.tags.map((tag: string, index: number) => (
@@ -270,22 +272,22 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
               <div className="greynoise-metric-card full-width">
                 <div className="greynoise-metric-header">
                   <Network size={18} />
-                  <span>Security Indicators</span>
+                  <span>{t('greynoise.securityIndicators')}</span>
                 </div>
                 <div className="greynoise-indicators">
                   {details.isTor && (
                     <span className="greynoise-indicator-badge tor">
-                      <Shield size={14} /> TOR Exit Node
+                      <Shield size={14} /> {t('greynoise.torExitNode')}
                     </span>
                   )}
                   {details.isVPN && (
                     <span className="greynoise-indicator-badge vpn">
-                      <Shield size={14} /> VPN
+                      <Shield size={14} /> {t('greynoise.vpn')}
                     </span>
                   )}
                   {details.isProxy && (
                     <span className="greynoise-indicator-badge proxy">
-                      <Shield size={14} /> Proxy
+                      <Shield size={14} /> {t('greynoise.proxy')}
                     </span>
                   )}
                 </div>
@@ -302,7 +304,7 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
               className="greynoise-link-button"
             >
               <Globe size={16} />
-              View Full Report on GreyNoise Visualizer →
+              {t('greynoise.viewFullReport')}
             </a>
           </div>
         </div>

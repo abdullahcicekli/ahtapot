@@ -22,14 +22,14 @@
 
 ---
 
-## 🆕 What's New in v2.3.1
+## 🆕 What's New in v2.3.2
 
 ### Latest Release (October 25, 2025)
-- ⭐ **Chrome Web Store Integration** - "Rate Us" button for easy user reviews
-- 🔧 **Dynamic Version Display** - Automatic version sync from manifest.json
-- 🎨 **AbuseIPDB Theme Fix** - Resolved provider card styling issues
-- 📝 **Improved Footer Text** - Accurate extension usage description
-- 📚 **Enhanced Documentation** - Comprehensive versioning and changelog system
+- 🎨 **Custom Loading Animation** - Branded Ahtapot logo spinner with smooth vertical rotation
+- 🎯 **Enhanced No-Results UX** - Color-coded cards showing searched IOCs and supported types
+- 📊 **Improved AbuseIPDB Layout** - Abuse Categories now appear before Location & Network
+- 🔽 **Collapsible OTX Section** - Threat summary section now collapsible (default closed)
+- 🌍 **Better i18n Coverage** - Enhanced translations for empty states and loading messages
 
 ### Active Threat Intelligence Providers
 - ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise**

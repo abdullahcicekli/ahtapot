@@ -12,6 +12,7 @@ import {
   Hash,
   AlertCircle,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './ShodanResultCard.css';
 
 interface ShodanResultCardProps {
@@ -19,6 +20,7 @@ interface ShodanResultCardProps {
 }
 
 export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) => {
+  const { t } = useTranslation('results');
   const { details, status, error: resultError } = result;
 
   const getStatusIcon = () => {
@@ -37,16 +39,16 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
   const getStatusText = () => {
     switch (status) {
       case 'safe':
-        return 'Safe';
+        return t('shodan.status.safe');
       case 'suspicious':
-        return 'Suspicious';
+        return t('shodan.status.suspicious');
       case 'malicious':
-        return 'Malicious';
+        return t('shodan.status.malicious');
       case 'error':
         // Show the actual error message instead of just "Error"
-        return resultError || details?.error || 'Error';
+        return resultError || details?.error || t('shodan.status.error');
       default:
-        return 'Unknown';
+        return t('shodan.status.unknown');
     }
   };
 
@@ -59,8 +61,8 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <img src="/provider-icons/shodan-logo.png" alt="Shodan" />
           </div>
           <div className="shodan-info">
-            <div className="shodan-title">Shodan</div>
-            <div className="shodan-subtitle">Internet Device Search</div>
+            <div className="shodan-title">{t('shodan.title')}</div>
+            <div className="shodan-subtitle">{t('shodan.subtitle')}</div>
           </div>
         </div>
 
@@ -87,7 +89,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <span>{result.unsupportedReason}</span>
           </div>
           <div className="shodan-supported-types">
-            <span className="shodan-supported-label">Supported IOC types:</span>
+            <span className="shodan-supported-label">{t('shodan.unsupportedType')}</span>
             <div className="shodan-supported-badges">
               {result.supportedTypes.map((type, idx) => (
                 <span key={idx} className="shodan-ioc-badge">
@@ -115,22 +117,22 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <div className="shodan-metric-card">
               <div className="shodan-metric-header">
                 <Server size={18} />
-                <span>Host Information</span>
+                <span>{t('shodan.hostInformation')}</span>
               </div>
               <div className="shodan-metric-body">
                 <div className="shodan-metric-item">
-                  <span className="shodan-metric-label">IP Address:</span>
+                  <span className="shodan-metric-label">{t('shodan.ipAddress')}</span>
                   <span className="shodan-metric-value monospace">{details.ip}</span>
                 </div>
                 {details.os && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">Operating System:</span>
+                    <span className="shodan-metric-label">{t('shodan.operatingSystem')}</span>
                     <span className="shodan-metric-value">{details.os}</span>
                   </div>
                 )}
                 {details.lastUpdate && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">Last Scan:</span>
+                    <span className="shodan-metric-label">{t('shodan.lastScan')}</span>
                     <span className="shodan-metric-value">
                       {new Date(details.lastUpdate).toLocaleDateString()}
                     </span>
@@ -143,24 +145,24 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <div className="shodan-metric-card">
               <div className="shodan-metric-header">
                 <Building2 size={18} />
-                <span>Organization</span>
+                <span>{t('shodan.organization')}</span>
               </div>
               <div className="shodan-metric-body">
                 {details.organization && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">Organization:</span>
+                    <span className="shodan-metric-label">{t('shodan.organizationLabel')}</span>
                     <span className="shodan-metric-value">{details.organization}</span>
                   </div>
                 )}
                 {details.isp && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">ISP:</span>
+                    <span className="shodan-metric-label">{t('shodan.isp')}</span>
                     <span className="shodan-metric-value">{details.isp}</span>
                   </div>
                 )}
                 {details.asn && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">ASN:</span>
+                    <span className="shodan-metric-label">{t('shodan.asn')}</span>
                     <span className="shodan-metric-value monospace">{details.asn}</span>
                   </div>
                 )}
@@ -172,24 +174,24 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card">
                 <div className="shodan-metric-header">
                   <MapPin size={18} />
-                  <span>Location</span>
+                  <span>{t('shodan.location')}</span>
                 </div>
                 <div className="shodan-metric-body">
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">Country:</span>
+                    <span className="shodan-metric-label">{t('shodan.country')}</span>
                     <span className="shodan-metric-value">
                       {details.countryCode && `${details.countryCode} - `}{details.country}
                     </span>
                   </div>
                   {details.city && (
                     <div className="shodan-metric-item">
-                      <span className="shodan-metric-label">City:</span>
+                      <span className="shodan-metric-label">{t('shodan.city')}</span>
                       <span className="shodan-metric-value">{details.city}</span>
                     </div>
                   )}
                   {details.latitude && details.longitude && (
                     <div className="shodan-metric-item">
-                      <span className="shodan-metric-label">Coordinates:</span>
+                      <span className="shodan-metric-label">{t('shodan.coordinates')}</span>
                       <span className="shodan-metric-value monospace">
                         {details.latitude.toFixed(4)}, {details.longitude.toFixed(4)}
                       </span>
@@ -203,7 +205,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <div className="shodan-metric-card">
               <div className="shodan-metric-header">
                 <Hash size={18} />
-                <span>Ports ({details.totalPorts || 0})</span>
+                <span>{t('shodan.ports', { count: details.totalPorts || 0 })}</span>
               </div>
               <div className="shodan-metric-body">
                 {details.openPorts && details.openPorts.length > 0 && (
@@ -215,7 +217,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
                     ))}
                     {details.openPorts.length > 15 && (
                       <span className="shodan-port-badge">
-                        +{details.openPorts.length - 15} more
+                        {t('shodan.moreCount', { count: details.openPorts.length - 15 })}
                       </span>
                     )}
                   </div>
@@ -228,7 +230,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <AlertTriangle size={18} />
-                  <span>Vulnerabilities ({details.totalVulnerabilities})</span>
+                  <span>{t('shodan.vulnerabilities', { count: details.totalVulnerabilities })}</span>
                 </div>
                 <div className="shodan-vulnerabilities">
                   {details.vulnerabilities?.slice(0, 10).map((vuln: string, index: number) => (
@@ -238,7 +240,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
                   ))}
                   {details.vulnerabilities?.length > 10 && (
                     <div className="shodan-vulnerability">
-                      +{details.vulnerabilities.length - 10} more vulnerabilities
+                      {t('shodan.moreVulnerabilities', { count: details.vulnerabilities.length - 10 })}
                     </div>
                   )}
                 </div>
@@ -250,13 +252,13 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <Server size={18} />
-                  <span>Detected Services ({details.services.length})</span>
+                  <span>{t('shodan.detectedServices', { count: details.services.length })}</span>
                 </div>
                 <div className="shodan-services">
                   {details.services.slice(0, 12).map((service: any, index: number) => (
                     <div key={index} className="shodan-service">
                       <div className="shodan-service-header">
-                        <span className="shodan-service-port">Port {service.port}</span>
+                        <span className="shodan-service-port">{t('shodan.port', { port: service.port })}</span>
                         <span className="shodan-service-protocol">{service.protocol}</span>
                       </div>
                       {service.product && (
@@ -276,7 +278,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <Globe size={18} />
-                  <span>Hostnames ({details.hostnames.length})</span>
+                  <span>{t('shodan.hostnames', { count: details.hostnames.length })}</span>
                 </div>
                 <div className="shodan-hostnames">
                   {details.hostnames.map((hostname: string, index: number) => (
@@ -293,7 +295,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <Info size={18} />
-                  <span>Tags</span>
+                  <span>{t('shodan.tags')}</span>
                 </div>
                 <div className="shodan-tags">
                   {details.tags.map((tag: string, index: number) => (
@@ -314,7 +316,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               rel="noopener noreferrer"
               className="shodan-link-button"
             >
-              View Full Report on Shodan →
+              {t('shodan.viewFullReport')}
             </a>
           </div>
         </div>
@@ -328,16 +330,16 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             <div className="shodan-metric-card full-width">
               <div className="shodan-metric-header">
                 <Globe size={18} />
-                <span>Domain Information</span>
+                <span>{t('shodan.domainInformation')}</span>
               </div>
               <div className="shodan-metric-body">
                 <div className="shodan-metric-item">
-                  <span className="shodan-metric-label">Domain:</span>
+                  <span className="shodan-metric-label">{t('shodan.domain')}</span>
                   <span className="shodan-metric-value monospace">{details.domain}</span>
                 </div>
                 {details.totalSubdomains > 0 && (
                   <div className="shodan-metric-item">
-                    <span className="shodan-metric-label">Subdomains:</span>
+                    <span className="shodan-metric-label">{t('shodan.subdomains')}</span>
                     <span className="shodan-metric-value">{details.totalSubdomains}</span>
                   </div>
                 )}
@@ -349,7 +351,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <Server size={18} />
-                  <span>Subdomains ({details.subdomains.length})</span>
+                  <span>{t('shodan.subdomainsCount', { count: details.subdomains.length })}</span>
                 </div>
                 <div className="shodan-hostnames">
                   {details.subdomains.slice(0, 20).map((subdomain: string, index: number) => (
@@ -359,7 +361,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
                   ))}
                   {details.subdomains.length > 20 && (
                     <div className="shodan-hostname">
-                      +{details.subdomains.length - 20} more subdomains
+                      {t('shodan.moreSubdomains', { count: details.subdomains.length - 20 })}
                     </div>
                   )}
                 </div>
@@ -371,7 +373,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               <div className="shodan-metric-card full-width">
                 <div className="shodan-metric-header">
                   <Info size={18} />
-                  <span>Tags</span>
+                  <span>{t('shodan.tags')}</span>
                 </div>
                 <div className="shodan-tags">
                   {details.tags.map((tag: string, index: number) => (
@@ -392,7 +394,7 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
               rel="noopener noreferrer"
               className="shodan-link-button"
             >
-              View Full Report on Shodan →
+              {t('shodan.viewFullReport')}
             </a>
           </div>
         </div>

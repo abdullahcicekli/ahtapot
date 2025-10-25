@@ -10,6 +10,7 @@ import {
   Hash,
   FileText,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './ARINResultCard.css';
 
 interface ARINResultCardProps {
@@ -17,6 +18,7 @@ interface ARINResultCardProps {
 }
 
 export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
+  const { t } = useTranslation('results');
   const { details } = result;
 
   const networkName = details?.networkName || 'Unknown';
@@ -34,7 +36,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
             <Network size={28} />
           </div>
           <div className="arin-network-info">
-            <div className="arin-network-title">WHOIS Information</div>
+            <div className="arin-network-title">{t('arin.header.title')}</div>
             <div className="arin-network-subtitle">
               <span className="arin-network-name">{networkName}</span>
             </div>
@@ -51,7 +53,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
         <div className="arin-header-actions">
           <div className="arin-status-badge info">
             <Info size={16} />
-            <span>WHOIS Info</span>
+            <span>{t('arin.status.whoisInfo')}</span>
           </div>
         </div>
       </div>
@@ -80,7 +82,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
             <span>{result.unsupportedReason}</span>
           </div>
           <div className="arin-supported-types">
-            <span className="arin-supported-label">Supported IOC types:</span>
+            <span className="arin-supported-label">{t('arin.unsupportedType')}</span>
             <div className="arin-supported-badges">
               {result.supportedTypes.map((type, idx) => (
                 <span key={idx} className="arin-ioc-badge">
@@ -108,23 +110,23 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                 <div className="arin-metric-card">
                   <div className="arin-metric-header">
                     <Network size={18} />
-                    <span>Network Information</span>
+                    <span>{t('arin.network.title')}</span>
                   </div>
                   <div className="arin-metric-body">
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">Network Name:</span>
+                      <span className="arin-metric-label">{t('arin.network.networkName')}</span>
                       <span className="arin-metric-value">{details?.networkName}</span>
                     </div>
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">Handle:</span>
+                      <span className="arin-metric-label">{t('arin.network.handle')}</span>
                       <span className="arin-metric-value">{details?.networkHandle}</span>
                     </div>
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">IP Version:</span>
+                      <span className="arin-metric-label">{t('arin.network.ipVersion')}</span>
                       <span className="arin-metric-value">IPv{ipVersion}</span>
                     </div>
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">CIDR:</span>
+                      <span className="arin-metric-label">{t('arin.network.cidr')}</span>
                       <span className="arin-metric-value monospace">{cidr}</span>
                     </div>
                   </div>
@@ -134,28 +136,28 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                 <div className="arin-metric-card">
                   <div className="arin-metric-header">
                     <Building2 size={18} />
-                    <span>Organization</span>
+                    <span>{t('arin.organization.title')}</span>
                   </div>
                   <div className="arin-metric-body">
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">Organization:</span>
+                      <span className="arin-metric-label">{t('arin.organization.organization')}</span>
                       <span className="arin-metric-value">{organizationName}</span>
                     </div>
                     {details?.organizationHandle && (
                       <div className="arin-metric-item">
-                        <span className="arin-metric-label">Org Handle:</span>
+                        <span className="arin-metric-label">{t('arin.organization.orgHandle')}</span>
                         <span className="arin-metric-value">{details.organizationHandle}</span>
                       </div>
                     )}
                     {details?.hasCustomerRef && (
                       <div className="arin-metric-item">
-                        <span className="arin-metric-label">Type:</span>
-                        <span className="arin-metric-value">Customer Assignment</span>
+                        <span className="arin-metric-label">{t('arin.organization.type')}</span>
+                        <span className="arin-metric-value">{t('arin.organization.customerAssignment')}</span>
                       </div>
                     )}
                     {details?.parentNetName && (
                       <div className="arin-metric-item">
-                        <span className="arin-metric-label">Parent Network:</span>
+                        <span className="arin-metric-label">{t('arin.organization.parentNetwork')}</span>
                         <span className="arin-metric-value">{details.parentNetName}</span>
                       </div>
                     )}
@@ -166,19 +168,19 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                 <div className="arin-metric-card full-width">
                   <div className="arin-metric-header">
                     <Hash size={18} />
-                    <span>IP Address Range</span>
+                    <span>{t('arin.addressRange.title')}</span>
                   </div>
                   <div className="arin-metric-body">
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">Start Address:</span>
+                      <span className="arin-metric-label">{t('arin.addressRange.startAddress')}</span>
                       <span className="arin-metric-value monospace">{details?.startAddress}</span>
                     </div>
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">End Address:</span>
+                      <span className="arin-metric-label">{t('arin.addressRange.endAddress')}</span>
                       <span className="arin-metric-value monospace">{details?.endAddress}</span>
                     </div>
                     <div className="arin-metric-item">
-                      <span className="arin-metric-label">Range:</span>
+                      <span className="arin-metric-label">{t('arin.addressRange.range')}</span>
                       <span className="arin-metric-value monospace">{networkRange}</span>
                     </div>
                   </div>
@@ -188,12 +190,12 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                 <div className="arin-metric-card full-width">
                   <div className="arin-metric-header">
                     <Calendar size={18} />
-                    <span>Registration Information</span>
+                    <span>{t('arin.registration.title')}</span>
                   </div>
                   <div className="arin-metric-body">
                     {details?.registrationDate && (
                       <div className="arin-metric-item">
-                        <span className="arin-metric-label">Registration Date:</span>
+                        <span className="arin-metric-label">{t('arin.registration.registrationDate')}</span>
                         <span className="arin-metric-value">
                           {new Date(details.registrationDate).toLocaleDateString('en-US', {
                             year: 'numeric',
@@ -205,7 +207,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                     )}
                     {details?.updateDate && (
                       <div className="arin-metric-item">
-                        <span className="arin-metric-label">Last Updated:</span>
+                        <span className="arin-metric-label">{t('arin.registration.lastUpdated')}</span>
                         <span className="arin-metric-value">
                           {new Date(details.updateDate).toLocaleDateString('en-US', {
                             year: 'numeric',
@@ -223,7 +225,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                   <div className="arin-metric-card full-width">
                     <div className="arin-metric-header">
                       <FileText size={18} />
-                      <span>Comments</span>
+                      <span>{t('arin.comments.title')}</span>
                     </div>
                     <div className="arin-comments">
                       {details.comments.map((comment: string, index: number) => (
@@ -240,7 +242,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                   <div className="arin-metric-card full-width">
                     <div className="arin-metric-header">
                       <Hash size={18} />
-                      <span>Net Blocks</span>
+                      <span>{t('arin.netBlocks.title')}</span>
                     </div>
                     <div className="arin-netblocks">
                       {details.netBlocks.map((block: any, index: number) => (
@@ -269,7 +271,7 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                   rel="noopener noreferrer"
                   className="arin-link-button"
                 >
-                  View Full WHOIS on ARIN →
+                  {t('arin.viewFullWhois')}
                 </a>
               </div>
             </div>

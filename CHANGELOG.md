@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 2025-10-25
+
+### Added
+- Custom Ahtapot logo loading spinner with vertical rotation animation
+- Enhanced provider-specific "no results" card with better UX/UI design
+- Searched IOCs display in no-results state for better user feedback
+- Informative empty state cards with color-coded sections (orange for issues, blue for supported types)
+
+### Fixed
+- OTX adversaries and industries object mapping issues
+- Vertical layout gap during IOC analysis - replaced with custom loading spinner
+- AbuseIPDB Overview tab section ordering (Abuse Categories now appears before Location & Network)
+
+### Changed
+- OTX threat summary section now collapsible (default closed) for cleaner UI
+- Improved i18n coverage for provider no-results messages
+- Enhanced loading state visual feedback with branded animation
+- Better user communication about unsupported IOC types per provider
+
 ## [2.3.1] - 2025-10-25
 
 ### Added

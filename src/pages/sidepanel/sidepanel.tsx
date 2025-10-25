@@ -380,6 +380,17 @@ const SidePanel: React.FC = () => {
           }}
         />
 
+         {loading && (
+          <div className="loading-spinner-container">
+            <img
+              src="/icons/logo-white.png"
+              alt="Loading"
+              className="ahtapot-spinner"
+            />
+            <p className="loading-text">{t('loading.analyzing')}</p>
+          </div>
+        )}
+
         {detectedIOCs.length > 0 && results.length === 0 && (
           <div className="detected-section">
             <h2 className="section-title">
@@ -436,27 +447,48 @@ const SidePanel: React.FC = () => {
                         onConfirm={() => handleRateLimitConfirm(isPendingGreyNoise ? 'greynoise' : 'shodan')}
                         logoSrc={isPendingGreyNoise ? '/provider-icons/greynoise-logo.png' : '/provider-icons/shodan-logo.png'}
                         providerName={activeProviderTab}
-                        subtitle={isPendingGreyNoise ? 'Internet Noise Intelligence' : 'Internet-Wide Port Scanner'}
+                        subtitle={isPendingGreyNoise ? t('providers.greynoise.subtitle') : t('providers.shodan.subtitle')}
                       />
                     );
                   }
 
                   // Show informative empty state for other providers
                   const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
+                  const unsupportedIOCs = currentIOCs.filter(ioc => !supportedTypes.includes(ioc.type));
+
                   return (
-                    <div className="provider-no-results">
-                      <Shield size={48} />
-                      <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
-                      <p>{t('providerNoResults.description')}</p>
+                    <div className="provider-no-results-card">
+                      <div className="no-results-header">
+                        <Shield size={32} className="no-results-icon" />
+                        <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
+                      </div>
+
+                      {unsupportedIOCs.length > 0 && (
+                        <div className="searched-iocs-section">
+                          <p className="searched-iocs-label">
+                            {t('providerNoResults.searchedFor', { count: unsupportedIOCs.length })}
+                          </p>
+                          <div className="searched-iocs-list">
+                            {unsupportedIOCs.map((ioc, idx) => (
+                              <div key={idx} className="searched-ioc-item">
+                                <span className="searched-ioc-type">{getIOCTypeLabel(ioc.type)}</span>
+                                <span className="searched-ioc-value">{ioc.value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <p className="no-results-message">{t('providerNoResults.description')}</p>
 
                       {supportedTypes.length > 0 && (
-                        <div className="provider-supported-types">
-                          <span className="provider-supported-label">
+                        <div className="provider-supported-section">
+                          <span className="supported-section-label">
                             {t('providerNoResults.supportedLabel', { provider: activeProviderTab })}
                           </span>
-                          <div className="provider-supported-badges">
+                          <div className="supported-types-grid">
                             {supportedTypes.map((type, idx) => (
-                              <span key={idx} className="ioc-type-badge">
+                              <span key={idx} className="supported-type-badge">
                                 {getIOCTypeLabel(type)}
                               </span>
                             ))}
@@ -559,7 +591,7 @@ const SidePanel: React.FC = () => {
                         onConfirm={() => handleRateLimitConfirm('greynoise')}
                         logoSrc="/provider-icons/greynoise-logo.png"
                         providerName="GreyNoise"
-                        subtitle="Internet Noise Intelligence"
+                        subtitle={t('providers.greynoise.subtitle')}
                       />
                     );
                   }
@@ -573,7 +605,7 @@ const SidePanel: React.FC = () => {
                         onConfirm={() => handleRateLimitConfirm('shodan')}
                         logoSrc="/provider-icons/shodan-logo.png"
                         providerName="Shodan"
-                        subtitle="Internet-Wide Port Scanner"
+                        subtitle={t('providers.shodan.subtitle')}
                       />
                     );
                   }

@@ -14,6 +14,7 @@ import {
   Flag,
   Tag,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './AbuseIPDBResultCard.css';
 
 interface AbuseIPDBResultCardProps {
@@ -30,6 +31,7 @@ interface Report {
 }
 
 export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result }) => {
+  const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'overview' | 'reports' | 'details'>('overview');
 
   const { details } = result;
@@ -53,32 +55,32 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
     if (isWhitelisted) {
       return {
         icon: <Shield size={20} />,
-        label: 'Whitelisted',
+        label: t('abuseipdb.status.whitelisted'),
         className: 'whitelisted',
-        description: 'This IP is on the AbuseIPDB whitelist and considered safe'
+        description: t('abuseipdb.statusDescription.whitelisted')
       };
     }
     if (abuseScore >= 76) {
       return {
         icon: <XCircle size={20} />,
-        label: 'Malicious',
+        label: t('abuseipdb.status.malicious'),
         className: 'malicious',
-        description: `High abuse confidence score (${abuseScore}%). This IP has significant abuse reports.`
+        description: t('abuseipdb.statusDescription.malicious', { score: abuseScore })
       };
     }
     if (abuseScore >= 26) {
       return {
         icon: <AlertTriangle size={20} />,
-        label: 'Suspicious',
+        label: t('abuseipdb.status.suspicious'),
         className: 'suspicious',
-        description: `Moderate abuse confidence score (${abuseScore}%). Exercise caution with this IP.`
+        description: t('abuseipdb.statusDescription.suspicious', { score: abuseScore })
       };
     }
     return {
       icon: <CheckCircle size={20} />,
-      label: 'Clean',
+      label: t('abuseipdb.status.clean'),
       className: 'clean',
-      description: `Low abuse confidence score (${abuseScore}%). No significant abuse reports found.`
+      description: t('abuseipdb.statusDescription.clean', { score: abuseScore })
     };
   };
 
@@ -107,13 +109,13 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
             } as React.CSSProperties}
           >
             <div className="abuseipdb-score-value">{abuseScore}</div>
-            <div className="abuseipdb-score-label-small">Score</div>
+            <div className="abuseipdb-score-label-small">{t('abuseipdb.score')}</div>
           </div>
           <div className="abuseipdb-score-info">
-            <div className="abuseipdb-score-title">Abuse Confidence</div>
+            <div className="abuseipdb-score-title">{t('abuseipdb.abuseConfidence')}</div>
             <div className="abuseipdb-score-breakdown">
-              <span className="abuseipdb-reports">{totalReports} Reports</span>
-              <span className="abuseipdb-users">{numDistinctUsers} Users</span>
+              <span className="abuseipdb-reports">{t('abuseipdb.reports', { count: totalReports })}</span>
+              <span className="abuseipdb-users">{t('abuseipdb.users', { count: numDistinctUsers })}</span>
             </div>
           </div>
         </div>
@@ -147,7 +149,7 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
             <span>{result.unsupportedReason}</span>
           </div>
           <div className="abuseipdb-supported-types">
-            <span className="abuseipdb-supported-label">Supported IOC types:</span>
+            <span className="abuseipdb-supported-label">{t('abuseipdb.unsupportedType')}</span>
             <div className="abuseipdb-supported-badges">
               {result.supportedTypes.map((type, idx) => (
                 <span key={idx} className="abuseipdb-ioc-badge">
@@ -165,13 +167,13 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
           {isTor && (
             <div className="abuseipdb-badge tor">
               <Shield size={14} />
-              Tor Exit Node
+              {t('abuseipdb.badges.torExitNode')}
             </div>
           )}
           {isWhitelisted && (
             <div className="abuseipdb-badge whitelisted">
               <CheckCircle size={14} />
-              Whitelisted
+              {t('abuseipdb.badges.whitelisted')}
             </div>
           )}
         </div>
@@ -184,14 +186,14 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
           onClick={() => setActiveTab('overview')}
         >
           <Info size={16} />
-          Overview
+          {t('abuseipdb.tabs.overview')}
         </button>
         <button
           className={`abuseipdb-tab ${activeTab === 'reports' ? 'active' : ''}`}
           onClick={() => setActiveTab('reports')}
         >
           <Flag size={16} />
-          Reports
+          {t('abuseipdb.tabs.reports')}
           {reports.length > 0 && (
             <span className="abuseipdb-tab-badge">{reports.length}</span>
           )}
@@ -201,7 +203,7 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
           onClick={() => setActiveTab('details')}
         >
           <Globe size={16} />
-          Details
+          {t('abuseipdb.tabs.details')}
         </button>
       </div>
 
@@ -213,26 +215,26 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
             <div className="abuseipdb-metric-card">
               <div className="abuseipdb-metric-header">
                 <AlertCircle size={18} />
-                <span>Abuse Metrics</span>
+                <span>{t('abuseipdb.overview.abuseMetrics')}</span>
               </div>
               <div className="abuseipdb-metric-body">
                 <div className="abuseipdb-metric-item">
-                  <span className="abuseipdb-metric-label">Confidence Score:</span>
+                  <span className="abuseipdb-metric-label">{t('abuseipdb.overview.confidenceScore')}</span>
                   <span className={`abuseipdb-metric-value score-${statusInfo.className}`}>
                     {abuseScore}%
                   </span>
                 </div>
                 <div className="abuseipdb-metric-item">
-                  <span className="abuseipdb-metric-label">Total Reports:</span>
+                  <span className="abuseipdb-metric-label">{t('abuseipdb.overview.totalReports')}</span>
                   <span className="abuseipdb-metric-value">{totalReports}</span>
                 </div>
                 <div className="abuseipdb-metric-item">
-                  <span className="abuseipdb-metric-label">Unique Reporters:</span>
+                  <span className="abuseipdb-metric-label">{t('abuseipdb.overview.uniqueReporters')}</span>
                   <span className="abuseipdb-metric-value">{numDistinctUsers}</span>
                 </div>
                 {details?.lastReportedAt && (
                   <div className="abuseipdb-metric-item">
-                    <span className="abuseipdb-metric-label">Last Reported:</span>
+                    <span className="abuseipdb-metric-label">{t('abuseipdb.overview.lastReported')}</span>
                     <span className="abuseipdb-metric-value">
                       {new Date(details.lastReportedAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -247,48 +249,12 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
               </div>
             </div>
 
-            {/* Geographic Info */}
-            <div className="abuseipdb-metric-card">
-              <div className="abuseipdb-metric-header">
-                <MapPin size={18} />
-                <span>Location & Network</span>
-              </div>
-              <div className="abuseipdb-metric-body">
-                {details?.countryName && (
-                  <div className="abuseipdb-metric-item">
-                    <span className="abuseipdb-metric-label">Country:</span>
-                    <span className="abuseipdb-metric-value">
-                      {details.countryName} ({details.countryCode})
-                    </span>
-                  </div>
-                )}
-                {details?.isp && (
-                  <div className="abuseipdb-metric-item">
-                    <span className="abuseipdb-metric-label">ISP:</span>
-                    <span className="abuseipdb-metric-value">{details.isp}</span>
-                  </div>
-                )}
-                {details?.domain && (
-                  <div className="abuseipdb-metric-item">
-                    <span className="abuseipdb-metric-label">Domain:</span>
-                    <span className="abuseipdb-metric-value">{details.domain}</span>
-                  </div>
-                )}
-                {details?.usageType && (
-                  <div className="abuseipdb-metric-item">
-                    <span className="abuseipdb-metric-label">Usage Type:</span>
-                    <span className="abuseipdb-metric-value">{details.usageType}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* Abuse Categories */}
             {details?.categoryLabels && details.categoryLabels.length > 0 && (
               <div className="abuseipdb-metric-card full-width">
                 <div className="abuseipdb-metric-header">
                   <Tag size={18} />
-                  <span>Abuse Categories</span>
+                  <span>{t('abuseipdb.overview.abuseCategories')}</span>
                 </div>
                 <div className="abuseipdb-categories">
                   {details.categoryLabels.map((category: string, index: number) => (
@@ -299,6 +265,42 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
                 </div>
               </div>
             )}
+
+            {/* Geographic Info */}
+            <div className="abuseipdb-metric-card">
+              <div className="abuseipdb-metric-header">
+                <MapPin size={18} />
+                <span>{t('abuseipdb.overview.locationNetwork')}</span>
+              </div>
+              <div className="abuseipdb-metric-body">
+                {details?.countryName && (
+                  <div className="abuseipdb-metric-item">
+                    <span className="abuseipdb-metric-label">{t('abuseipdb.overview.country')}</span>
+                    <span className="abuseipdb-metric-value">
+                      {details.countryName} ({details.countryCode})
+                    </span>
+                  </div>
+                )}
+                {details?.isp && (
+                  <div className="abuseipdb-metric-item">
+                    <span className="abuseipdb-metric-label">{t('abuseipdb.overview.isp')}</span>
+                    <span className="abuseipdb-metric-value">{details.isp}</span>
+                  </div>
+                )}
+                {details?.domain && (
+                  <div className="abuseipdb-metric-item">
+                    <span className="abuseipdb-metric-label">{t('abuseipdb.overview.domain')}</span>
+                    <span className="abuseipdb-metric-value">{details.domain}</span>
+                  </div>
+                )}
+                {details?.usageType && (
+                  <div className="abuseipdb-metric-item">
+                    <span className="abuseipdb-metric-label">{t('abuseipdb.overview.usageType')}</span>
+                    <span className="abuseipdb-metric-value">{details.usageType}</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -373,7 +375,7 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
           ) : (
             <div className="abuseipdb-no-reports">
               <CheckCircle size={32} />
-              <p>No abuse reports found for this IP address</p>
+              <p>{t('abuseipdb.reportsTab.noReports')}</p>
             </div>
           )}
         </div>
@@ -386,33 +388,33 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
             <div className="abuseipdb-detail-section">
               <div className="abuseipdb-detail-header">
                 <Globe size={16} />
-                IP Information
+                {t('abuseipdb.details.ipInformation')}
               </div>
               <div className="abuseipdb-detail-items">
                 <div className="abuseipdb-detail-item">
-                  <span className="abuseipdb-detail-label">IP Address:</span>
+                  <span className="abuseipdb-detail-label">{t('abuseipdb.details.ipAddress')}</span>
                   <span className="abuseipdb-detail-value">{details?.ipAddress}</span>
                 </div>
                 <div className="abuseipdb-detail-item">
-                  <span className="abuseipdb-detail-label">IP Version:</span>
+                  <span className="abuseipdb-detail-label">{t('abuseipdb.details.ipVersion')}</span>
                   <span className="abuseipdb-detail-value">IPv{details?.ipVersion}</span>
                 </div>
                 <div className="abuseipdb-detail-item">
-                  <span className="abuseipdb-detail-label">Public IP:</span>
+                  <span className="abuseipdb-detail-label">{t('abuseipdb.details.publicIp')}</span>
                   <span className="abuseipdb-detail-value">
-                    {details?.isPublic ? 'Yes' : 'No'}
+                    {details?.isPublic ? t('abuseipdb.details.yes') : t('abuseipdb.details.no')}
                   </span>
                 </div>
                 <div className="abuseipdb-detail-item">
-                  <span className="abuseipdb-detail-label">Whitelisted:</span>
+                  <span className="abuseipdb-detail-label">{t('abuseipdb.details.whitelisted')}</span>
                   <span className={`abuseipdb-detail-value ${isWhitelisted ? 'positive' : ''}`}>
-                    {isWhitelisted ? 'Yes' : 'No'}
+                    {isWhitelisted ? t('abuseipdb.details.yes') : t('abuseipdb.details.no')}
                   </span>
                 </div>
                 <div className="abuseipdb-detail-item">
-                  <span className="abuseipdb-detail-label">Tor Exit Node:</span>
+                  <span className="abuseipdb-detail-label">{t('abuseipdb.details.torExitNode')}</span>
                   <span className={`abuseipdb-detail-value ${isTor ? 'warning' : ''}`}>
-                    {isTor ? 'Yes' : 'No'}
+                    {isTor ? t('abuseipdb.details.yes') : t('abuseipdb.details.no')}
                   </span>
                 </div>
               </div>
@@ -423,7 +425,7 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
               <div className="abuseipdb-detail-section full-width">
                 <div className="abuseipdb-detail-header">
                   <Globe size={16} />
-                  Hostnames
+                  {t('abuseipdb.details.hostnames')}
                 </div>
                 <div className="abuseipdb-hostnames">
                   {details.hostnames.map((hostname: string, index: number) => (
@@ -444,7 +446,7 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
               rel="noopener noreferrer"
               className="abuseipdb-link-button"
             >
-              View Full Report on AbuseIPDB →
+              {t('abuseipdb.viewFullReport')}
             </a>
           </div>
         </div>
