@@ -1,25 +1,24 @@
-import React, { useEffect, memo, useCallback, useMemo } from 'react';
-import { Settings, Search, Info, MessageSquare } from 'lucide-react';
+import React, { useEffect, memo, useCallback, useMemo, useState } from 'react';
+import { Settings, Search, Info, MessageSquare, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/config';
 
-/**
- * Popup Component
- * OPTIMIZED: Memoized with useCallback for handlers and useMemo for menu items
- */
+
 const Popup: React.FC = memo(() => {
   const { t, i18n } = useTranslation(['popup']);
+  const [version, setVersion] = useState<string>('');
 
   useEffect(() => {
-    // Load language setting from storage
     chrome.storage.local.get('language').then((result) => {
       if (result.language) {
         i18n.changeLanguage(result.language);
       }
     });
+
+    const manifest = chrome.runtime.getManifest();
+    setVersion(manifest.version);
   }, [i18n]);
 
-  // OPTIMIZED: Memoize event handlers
   const handleOpenOptions = useCallback(() => {
     chrome.tabs.create({
       url: chrome.runtime.getURL('src/pages/options/index.html')
@@ -43,7 +42,10 @@ const Popup: React.FC = memo(() => {
     chrome.tabs.create({ url: 'https://ahtapot.me/#feedback' });
   }, []);
 
-  // OPTIMIZED: Memoize menuItems to prevent recreation on every render
+  const handleOpenChromeStore = useCallback(() => {
+    chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg' });
+  }, []);
+
   const menuItems = useMemo(() => [
     {
       icon: <Search className="w-5 h-5" />,
@@ -60,7 +62,7 @@ const Popup: React.FC = memo(() => {
     {
       icon: <Info className="w-5 h-5" />,
       title: t('menu.about.title', { ns: 'popup' }),
-      description: t('menu.about.description', { ns: 'popup' }),
+      description: `${t('menu.about.description', { ns: 'popup' })} ${version ? `v${version}` : ''}`,
       onClick: handleOpenAbout,
     },
     {
@@ -69,7 +71,13 @@ const Popup: React.FC = memo(() => {
       description: t('menu.feedback.description', { ns: 'popup' }),
       onClick: handleOpenFeedback,
     },
-  ], [t, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback]);
+    {
+      icon: <Star className="w-5 h-5" />,
+      title: t('menu.rateUs.title', { ns: 'popup' }),
+      description: t('menu.rateUs.description', { ns: 'popup' }),
+      onClick: handleOpenChromeStore,
+    },
+  ], [t, version, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback, handleOpenChromeStore]);
 
   return (
     <div className="popup-container">
@@ -99,7 +107,7 @@ const Popup: React.FC = memo(() => {
 
       <div className="popup-footer">
         <p className="popup-footer-text">
-          {t('footer.text', { ns: 'popup' })}
+          {t('footer.text', { ns: 'popup' })} {version && `v${version}`}
         </p>
       </div>
     </div>

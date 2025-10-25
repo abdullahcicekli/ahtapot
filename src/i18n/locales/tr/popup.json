@@ -13,14 +13,18 @@
     },
     "about": {
       "title": "Hakkında",
-      "description": "Ahtapot Extension v2.1.1"
+      "description": "Ahtapot Extension"
     },
     "feedback": {
       "title": "Geri Bildirim",
       "description": "Düşüncelerinizi ve önerilerinizi paylaşın"
+    },
+    "rateUs": {
+      "title": "Bizi Değerlendirin",
+      "description": "Chrome Web Store'da yıldız verin"
     }
   },
   "footer": {
-    "text": "Metin seçerek veya sağ tıklayarak IOC analizi yapabilirsiniz"
+    "text": "Metin seçerek veya yan panelde arama yaparak IOC analizi yapabilirsiniz"
   }
 }
