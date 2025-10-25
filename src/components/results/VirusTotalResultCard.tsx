@@ -11,6 +11,7 @@ import {
   Server,
   Shield
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './VirusTotalResultCard.css';
 
 interface VirusTotalResultCardProps {
@@ -24,6 +25,7 @@ interface VendorResult {
 }
 
 export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ result }) => {
+  const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'detection' | 'details'>('detection');
 
   const { details } = result;
@@ -46,24 +48,24 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
     if (maliciousCount > 0) {
       return {
         icon: <XCircle size={20} />,
-        label: 'Malicious',
+        label: t('virustotal.status.malicious'),
         className: 'malicious',
-        description: `${communityScore}/${totalEngines} security vendors flagged this as malicious`
+        description: t('virustotal.statusDescription.malicious', { count: communityScore, total: totalEngines })
       };
     }
     if (suspiciousCount > 0) {
       return {
         icon: <AlertTriangle size={20} />,
-        label: 'Suspicious',
+        label: t('virustotal.status.suspicious'),
         className: 'suspicious',
-        description: `${communityScore}/${totalEngines} security vendors flagged this as suspicious`
+        description: t('virustotal.statusDescription.suspicious', { count: communityScore, total: totalEngines })
       };
     }
     return {
       icon: <CheckCircle size={20} />,
-      label: 'Clean',
+      label: t('virustotal.status.clean'),
       className: 'clean',
-      description: 'No security vendors flagged this as malicious'
+      description: t('virustotal.statusDescription.clean')
     };
   };
 
@@ -97,6 +99,30 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
 
   const statusInfo = getStatusInfo();
 
+  // Generate VirusTotal URL based on IOC type
+  const getVirusTotalUrl = () => {
+    const iocValue = result.ioc.value;
+    const iocType = result.ioc.type;
+
+    switch (iocType) {
+      case 'ipv4':
+      case 'ipv6':
+        return `https://www.virustotal.com/gui/ip-address/${iocValue}`;
+      case 'domain':
+        return `https://www.virustotal.com/gui/domain/${iocValue}`;
+      case 'url':
+        // URL needs to be base64 encoded for VirusTotal
+        const urlIdentifier = btoa(iocValue).replace(/=/g, '');
+        return `https://www.virustotal.com/gui/url/${urlIdentifier}`;
+      case 'md5':
+      case 'sha1':
+      case 'sha256':
+        return `https://www.virustotal.com/gui/file/${iocValue}`;
+      default:
+        return `https://www.virustotal.com/gui/search/${encodeURIComponent(iocValue)}`;
+    }
+  };
+
   return (
     <div className="vt-result-card">
       {/* Header */}
@@ -113,7 +139,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
             <div className="vt-score-total">/ {totalEngines}</div>
           </div>
           <div className="vt-score-label">
-            Community Score
+            {t('virustotal.communityScore')}
             <span className="vt-score-votes">
               {details?.total_votes ?
                 `${details.total_votes.harmless || 0} 👍 ${details.total_votes.malicious || 0} 👎`
@@ -164,7 +190,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
             <span>{result.unsupportedReason}</span>
           </div>
           <div className="vt-supported-types">
-            <span className="vt-supported-label">Supported IOC types:</span>
+            <span className="vt-supported-label">{t('virustotal.unsupportedType')}</span>
             <div className="vt-supported-badges">
               {result.supportedTypes.map((type, idx) => (
                 <span key={idx} className="vt-ioc-badge">
@@ -183,7 +209,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           onClick={() => setActiveTab('detection')}
         >
           <Shield size={16} />
-          Detection
+          {t('virustotal.tabs.detection')}
           {nonCleanVendors.length > 0 && (
             <span className="vt-tab-badge">{nonCleanVendors.length}</span>
           )}
@@ -193,7 +219,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           onClick={() => setActiveTab('details')}
         >
           <Info size={16} />
-          Details
+          {t('virustotal.tabs.details')}
         </button>
       </div>
 
@@ -213,7 +239,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
                         <AlertTriangle size={14} />
                       )}
                       <span className="vt-vendor-category">
-                        {vendor.category === 'malicious' ? 'Malicious' : 'Suspicious'}
+                        {vendor.category === 'malicious' ? t('virustotal.detection.vendorCategory.malicious') : t('virustotal.detection.vendorCategory.suspicious')}
                       </span>
                     </div>
                   </div>
@@ -228,17 +254,17 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
                     onClick={() => setVendorPage(Math.max(0, vendorPage - 1))}
                     disabled={vendorPage === 0}
                   >
-                    Previous
+                    {t('virustotal.pagination.previous')}
                   </button>
                   <span className="vt-page-info">
-                    Page {vendorPage + 1} of {totalPages}
+                    {t('virustotal.pagination.page', { current: vendorPage + 1, total: totalPages })}
                   </span>
                   <button
                     className="vt-page-btn"
                     onClick={() => setVendorPage(Math.min(totalPages - 1, vendorPage + 1))}
                     disabled={vendorPage === totalPages - 1}
                   >
-                    Next
+                    {t('virustotal.pagination.next')}
                   </button>
                 </div>
               )}
@@ -246,7 +272,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           ) : (
             <div className="vt-no-detections">
               <CheckCircle size={32} />
-              <p>No security vendors flagged this as malicious</p>
+              <p>{t('virustotal.detection.noDetections')}</p>
             </div>
           )}
         </div>
@@ -260,18 +286,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
               <div className="vt-detail-section">
                 <div className="vt-detail-header">
                   <Globe size={16} />
-                  Location
+                  {t('virustotal.details.location')}
                 </div>
                 <div className="vt-detail-items">
                   {details?.country && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">Country:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.country')}</span>
                       <span className="vt-detail-value">{details.country}</span>
                     </div>
                   )}
                   {details?.continent && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">Continent:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.continent')}</span>
                       <span className="vt-detail-value">{details.continent}</span>
                     </div>
                   )}
@@ -284,30 +310,30 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
               <div className="vt-detail-section">
                 <div className="vt-detail-header">
                   <Server size={16} />
-                  Network
+                  {t('virustotal.details.network')}
                 </div>
                 <div className="vt-detail-items">
                   {details?.network && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">Network:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.networkRange')}</span>
                       <span className="vt-detail-value">{details.network}</span>
                     </div>
                   )}
                   {details?.asn && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">ASN:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.asn')}</span>
                       <span className="vt-detail-value">AS{details.asn}</span>
                     </div>
                   )}
                   {details?.as_owner && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">Owner:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.owner')}</span>
                       <span className="vt-detail-value">{details.as_owner}</span>
                     </div>
                   )}
                   {details?.regional_internet_registry && (
                     <div className="vt-detail-item">
-                      <span className="vt-detail-label">RIR:</span>
+                      <span className="vt-detail-label">{t('virustotal.details.rir')}</span>
                       <span className="vt-detail-value">{details.regional_internet_registry}</span>
                     </div>
                   )}
@@ -320,11 +346,11 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
               <div className="vt-detail-section">
                 <div className="vt-detail-header">
                   <Shield size={16} />
-                  Reputation
+                  {t('virustotal.details.reputation')}
                 </div>
                 <div className="vt-detail-items">
                   <div className="vt-detail-item">
-                    <span className="vt-detail-label">Score:</span>
+                    <span className="vt-detail-label">{t('virustotal.details.score')}</span>
                     <span className={`vt-detail-value ${details.reputation < 0 ? 'negative' : 'positive'}`}>
                       {details.reputation}
                     </span>
@@ -338,7 +364,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
               <div className="vt-detail-section full-width">
                 <div className="vt-detail-header">
                   <Info size={16} />
-                  Tags
+                  {t('virustotal.details.tags')}
                 </div>
                 <div className="vt-tags">
                   {details.tags.map((tag: string, index: number) => (
@@ -347,6 +373,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
                 </div>
               </div>
             )}
+          </div>
+
+          {/* View on VirusTotal Link */}
+          <div className="vt-external-link">
+            <a
+              href={getVirusTotalUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="vt-link-button"
+            >
+              {t('virustotal.viewFullReport')}
+            </a>
           </div>
         </div>
       )}

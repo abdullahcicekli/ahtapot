@@ -485,6 +485,33 @@
   font-weight: 500;
 }
 
+/* External Link */
+.vt-external-link {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.vt-link-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(59, 130, 246, 0.2);
+  color: rgba(59, 130, 246, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.vt-link-button:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateX(2px);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .vt-header {

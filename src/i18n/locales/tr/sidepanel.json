@@ -25,9 +25,13 @@
   "results": {
     "title": "Analiz Sonuçları"
   },
+  "loading": {
+    "analyzing": "Güvenlik göstergeleri analiz ediliyor..."
+  },
   "providerNoResults": {
     "title": "{{provider}} Sonuç Bulunamadı",
-    "description": "Bu sağlayıcı analiz edilen IOC tipini desteklemiyor veya veri döndürmedi.",
+    "searchedFor": "Aradığınız göstergeler:",
+    "description": "Bu sağlayıcı bu gösterge türlerini desteklemiyor.",
     "supportedLabel": "{{provider}} destekler:"
   },
   "emptyState": {
@@ -68,5 +72,13 @@
     "confirm": "Evet, Analiz Et",
     "cancel": "Atla",
     "skipHint": "Onaylanmazsa bu sağlayıcı atlanacaktır"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "İnternet Gürültü İstihbaratı"
+    },
+    "shodan": {
+      "subtitle": "İnternet Çapında Port Tarayıcı"
+    }
   }
 }

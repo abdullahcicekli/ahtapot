@@ -142,6 +142,12 @@
   border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
+.otx-status-badge.flagged {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
 .otx-status-badge.suspicious {
   background: rgba(234, 179, 8, 0.15);
   color: #eab308;
@@ -169,6 +175,11 @@
   color: #22c55e;
 }
 
+.otx-status-description.flagged {
+  background: rgba(249, 115, 22, 0.08);
+  color: #f97316;
+}
+
 .otx-status-description.suspicious {
   background: rgba(234, 179, 8, 0.08);
   color: #eab308;
@@ -177,6 +188,86 @@
 .otx-status-description.malicious {
   background: rgba(239, 68, 68, 0.08);
   color: #ef4444;
+}
+
+/* Threat Summary */
+.otx-threat-summary {
+  padding: 16px 20px;
+  background: rgba(74, 158, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #4a9eff;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.otx-threat-summary:hover {
+  background-color: rgba(74, 158, 255, 0.08);
+}
+
+.otx-threat-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a9eff;
+  margin-bottom: 0;
+}
+
+.otx-threat-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.otx-threat-summary-content p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.otx-threat-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.otx-threat-summary-item.severity-high {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.otx-threat-summary-item.severity-medium {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.otx-threat-summary-item strong {
+  color: inherit;
+}
+
+.otx-threat-summary-recommendation {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  border-left: 2px solid #4a9eff;
+}
+
+.otx-threat-summary-recommendation strong {
+  color: #4a9eff;
 }
 
 /* Unsupported IOC Type */
@@ -290,6 +381,22 @@
   border-radius: 8px;
   padding: 16px;
   transition: all 0.2s;
+  position: relative;
+}
+
+.otx-pulse-item.severity-high {
+  border-left: 3px solid #ef4444;
+  background: rgba(239, 68, 68, 0.03);
+}
+
+.otx-pulse-item.severity-medium {
+  border-left: 3px solid #eab308;
+  background: rgba(234, 179, 8, 0.03);
+}
+
+.otx-pulse-item.severity-low {
+  border-left: 3px solid #f97316;
+  background: rgba(249, 115, 22, 0.03);
 }
 
 .otx-pulse-item:hover {
@@ -297,12 +404,31 @@
   border-color: rgba(74, 158, 255, 0.3);
 }
 
+.otx-pulse-item.severity-high:hover {
+  border-left-color: #ef4444;
+}
+
+.otx-pulse-item.severity-medium:hover {
+  border-left-color: #eab308;
+}
+
+.otx-pulse-item.severity-low:hover {
+  border-left-color: #f97316;
+}
+
 .otx-pulse-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 10px;
+}
+
+.otx-pulse-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
 }
 
 .otx-pulse-title {
@@ -314,12 +440,34 @@
   color: #ffffff;
 }
 
-.otx-pulse-author {
-  display: flex;
+.otx-pulse-severity-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: fit-content;
+}
+
+.otx-pulse-severity-badge.severity-high {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.otx-pulse-severity-badge.severity-medium {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.otx-pulse-severity-badge.severity-low {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
 .otx-pulse-description {
@@ -364,6 +512,7 @@
   font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 8px;
+  margin-bottom: 8px;
   padding: 8px;
   background: rgba(239, 68, 68, 0.08);
   border-radius: 6px;
