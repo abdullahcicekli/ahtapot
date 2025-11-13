@@ -5,24 +5,14 @@
 }
 
 :root {
-  /* VirusTotal-inspired color scheme */
-  --primary-color: #394EFF;
-  --primary-hover: #5066FF;
+  /* Original color scheme */
   --success-color: #10B981;
-  --error-color: #EF4444;
-  --warning-color: #F59E0B;
-  --bg-dark: #0F0F23;
-  --bg-card: #1A1A2E;
-  --bg-hover: rgba(57, 78, 255, 0.1);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.6);
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
   min-height: 100vh;
   padding: 20px;
   padding-bottom: 100px; /* Footer için ekstra boşluk */
@@ -104,9 +94,9 @@ body {
 }
 
 .tab.active {
-  color: var(--primary-color);
-  border-bottom-color: var(--primary-color);
-  background: var(--bg-hover);
+  color: #4a9eff;
+  border-bottom-color: #4a9eff;
+  background: rgba(74, 158, 255, 0.1);
 }
 
 /* Main Content */
@@ -118,11 +108,11 @@ body {
   display: flex;
   gap: 12px;
   padding: 16px;
-  background: var(--bg-hover);
-  border: 1px solid rgba(57, 78, 255, 0.2);
+  background: rgba(74, 158, 255, 0.1);
+  border: 1px solid rgba(74, 158, 255, 0.2);
   border-radius: 12px;
   margin-bottom: 32px;
-  color: var(--primary-color);
+  color: #4a9eff;
   font-size: 14px;
   line-height: 1.6;
 }

@@ -452,7 +452,12 @@ const OptionsPage: React.FC = () => {
   async function loadProviderOrder() {
     try {
       const order = await getProviderOrder();
-      setProviderOrder(order);
+      // Filter out locked providers (those that don't require API keys)
+      const lockedProviders = API_CONFIGS
+        .filter(config => config.requiresApiKey === false)
+        .map(config => config.provider);
+      const unlockedOrder = order.filter(provider => !lockedProviders.includes(provider));
+      setProviderOrder(unlockedOrder);
     } catch (err) {
       console.error('Error loading provider order:', err);
     }
