@@ -386,6 +386,7 @@ const SidePanel: React.FC = () => {
             // The UI will show either results or a "no results" message
             setActiveProviderTab(providerName);
           }}
+          visibleProviders={results.length > 0 ? Array.from(new Set(results.map(r => r.source))) : undefined}
         />
 
          {loading && (

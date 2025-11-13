@@ -16,6 +16,7 @@ interface ProviderStatusBadgesProps {
   completedProviders: { provider: APIProvider; status: 'success' | 'error' }[];
   activeProvider?: string;
   onProviderClick?: (providerName: string) => void;
+  visibleProviders?: string[]; // Only show these providers (by label name)
 }
 
 const PROVIDER_LABELS: Record<APIProvider, string> = {
@@ -71,6 +72,7 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
   completedProviders,
   activeProvider,
   onProviderClick,
+  visibleProviders,
 }) => {
   const { t } = useTranslation('options');
   const [allProviders, setAllProviders] = useState<ProviderStatus[]>([]);
@@ -148,9 +150,16 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
     }
   }, [onProviderClick]);
 
+  // Filter providers based on visibleProviders prop
+  // If undefined, show nothing (before search)
+  // If array, only show providers in the array
+  const displayedProviders = visibleProviders === undefined
+    ? []
+    : allProviders.filter((provider) => visibleProviders.includes(provider.label));
+
   return (
     <div className="provider-badges-container">
-      {allProviders.map((provider) => {
+      {displayedProviders.map((provider) => {
         const isActive = activeProvider === provider.label;
         const tooltipKey = PROVIDER_I18N_KEYS[provider.provider];
         return (
