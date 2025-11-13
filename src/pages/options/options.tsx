@@ -119,7 +119,6 @@ const OptionsPage: React.FC = () => {
   // Provider order state
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   // Load settings
   useEffect(() => {
@@ -450,53 +449,35 @@ const OptionsPage: React.FC = () => {
   }
 
   // Handle drag start
-  const handleDragStart = (index: number) => {
+  const handleDragStart = (e: React.DragEvent, index: number) => {
     setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
   };
 
   // Handle drag over
   const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
 
     if (draggedIndex === null || draggedIndex === index) return;
 
-    // Set the target drop index
-    setDragOverIndex(index);
-  };
+    // Real-time reorder during drag
+    const newOrder = [...providerOrder];
+    const [draggedItem] = newOrder.splice(draggedIndex, 1);
+    newOrder.splice(index, 0, draggedItem);
 
-  // Handle drag leave
-  const handleDragLeave = (e: React.DragEvent) => {
-    const relatedTarget = e.relatedTarget as HTMLElement;
-    const currentTarget = e.currentTarget as HTMLElement;
-
-    // Only clear if truly leaving the list
-    if (relatedTarget && !currentTarget.contains(relatedTarget)) {
-      return;
-    }
+    setProviderOrder(newOrder);
+    setDraggedIndex(index);
   };
 
   // Handle drop
-  const handleDrop = async (e: React.DragEvent, dropIndex: number) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
-
-    if (draggedIndex === null || draggedIndex === dropIndex) {
-      setDraggedIndex(null);
-      setDragOverIndex(null);
-      return;
-    }
-
-    // Create new order by inserting at target position
-    const newOrder = [...providerOrder];
-    const [draggedItem] = newOrder.splice(draggedIndex, 1);
-    newOrder.splice(dropIndex, 0, draggedItem);
-
-    setProviderOrder(newOrder);
-    setDraggedIndex(null);
-    setDragOverIndex(null);
 
     // Save to storage
     try {
-      await saveProviderOrder(newOrder);
+      await saveProviderOrder(providerOrder);
+      setDraggedIndex(null);
     } catch (err) {
       setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
       console.error('Error saving provider order:', err);
@@ -506,7 +487,6 @@ const OptionsPage: React.FC = () => {
   // Handle drag end
   const handleDragEnd = () => {
     setDraggedIndex(null);
-    setDragOverIndex(null);
   };
 
   // Reset provider order
@@ -700,40 +680,18 @@ const OptionsPage: React.FC = () => {
                   const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
                   const isDragging = draggedIndex === index;
 
-                  // Calculate visual position during drag
-                  let visualIndex = index;
-                  if (draggedIndex !== null && dragOverIndex !== null) {
-                    if (index === draggedIndex) {
-                      visualIndex = dragOverIndex;
-                    } else if (draggedIndex < dragOverIndex) {
-                      // Dragging down
-                      if (index > draggedIndex && index <= dragOverIndex) {
-                        visualIndex = index - 1;
-                      }
-                    } else {
-                      // Dragging up
-                      if (index >= dragOverIndex && index < draggedIndex) {
-                        visualIndex = index + 1;
-                      }
-                    }
-                  }
-
                   return (
                     <div
                       key={provider}
                       className={`provider-order-item ${isDragging ? 'dragging' : ''}`}
-                      style={{
-                        order: visualIndex,
-                      }}
-                      draggable
-                      onDragStart={() => handleDragStart(index)}
+                      draggable={true}
+                      onDragStart={(e) => handleDragStart(e, index)}
                       onDragOver={(e) => handleDragOver(e, index)}
-                      onDragLeave={handleDragLeave}
-                      onDrop={(e) => handleDrop(e, index)}
+                      onDrop={(e) => handleDrop(e)}
                       onDragEnd={handleDragEnd}
                     >
                       <GripVertical size={20} className="drag-handle" />
-                      <span className="provider-order-number">{visualIndex + 1}</span>
+                      <span className="provider-order-number">{index + 1}</span>
                       <span className="provider-order-name">{serviceName}</span>
                     </div>
                   );

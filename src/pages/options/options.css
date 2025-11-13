@@ -875,10 +875,14 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  cursor: move;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
   user-select: none;
   position: relative;
+}
+
+.provider-order-item:active {
+  cursor: grabbing;
 }
 
 .provider-order-item:hover:not(.dragging) {
@@ -888,17 +892,10 @@ body {
 }
 
 .provider-order-item.dragging {
-  opacity: 0;
-  pointer-events: none;
-  height: 48px;
-  min-height: 48px;
-  border: 2px dashed rgba(74, 158, 255, 0.4);
-  background: rgba(74, 158, 255, 0.08);
-  transition: all 0.2s ease;
-}
-
-.provider-order-item.dragging * {
-  opacity: 0;
+  opacity: 0.4;
+  border: 2px dashed rgba(74, 158, 255, 0.5);
+  background: rgba(74, 158, 255, 0.15);
+  transform: scale(1.02);
 }
 
 .drag-handle {
