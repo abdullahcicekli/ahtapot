@@ -876,7 +876,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   cursor: grab;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   position: relative;
 }
@@ -885,17 +885,25 @@ body {
   cursor: grabbing;
 }
 
-.provider-order-item:hover:not(.dragging) {
+.provider-order-item:hover:not(.dragging):not(.shift-up):not(.shift-down) {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(74, 158, 255, 0.3);
   transform: translateX(4px);
 }
 
 .provider-order-item.dragging {
-  opacity: 0.4;
-  border: 2px dashed rgba(74, 158, 255, 0.5);
-  background: rgba(74, 158, 255, 0.15);
-  transform: scale(1.02);
+  opacity: 0.3;
+  border: 2px dashed rgba(74, 158, 255, 0.4);
+  background: rgba(74, 158, 255, 0.08);
+  cursor: grabbing;
+}
+
+.provider-order-item.shift-up {
+  transform: translateY(-56px);
+}
+
+.provider-order-item.shift-down {
+  transform: translateY(56px);
 }
 
 .drag-handle {

@@ -119,6 +119,7 @@ const OptionsPage: React.FC = () => {
   // Provider order state
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   // Load settings
   useEffect(() => {
@@ -461,32 +462,44 @@ const OptionsPage: React.FC = () => {
 
     if (draggedIndex === null || draggedIndex === index) return;
 
-    // Real-time reorder during drag
-    const newOrder = [...providerOrder];
-    const [draggedItem] = newOrder.splice(draggedIndex, 1);
-    newOrder.splice(index, 0, draggedItem);
-
-    setProviderOrder(newOrder);
-    setDraggedIndex(index);
+    // Just set the drop target index for visual feedback
+    setDragOverIndex(index);
   };
 
   // Handle drop
   const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
 
+    if (draggedIndex === null || dragOverIndex === null) {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+
+    // Reorder array on drop
+    const newOrder = [...providerOrder];
+    const [draggedItem] = newOrder.splice(draggedIndex, 1);
+    newOrder.splice(dragOverIndex, 0, draggedItem);
+
+    setProviderOrder(newOrder);
+
     // Save to storage
     try {
-      await saveProviderOrder(providerOrder);
+      await saveProviderOrder(newOrder);
       setDraggedIndex(null);
+      setDragOverIndex(null);
     } catch (err) {
       setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
       console.error('Error saving provider order:', err);
+      setDraggedIndex(null);
+      setDragOverIndex(null);
     }
   };
 
   // Handle drag end
   const handleDragEnd = () => {
     setDraggedIndex(null);
+    setDragOverIndex(null);
   };
 
   // Reset provider order
@@ -680,10 +693,30 @@ const OptionsPage: React.FC = () => {
                   const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
                   const isDragging = draggedIndex === index;
 
+                  // Calculate if this item should shift
+                  let shouldShift = false;
+                  let shiftDirection: 'up' | 'down' = 'down';
+
+                  if (draggedIndex !== null && dragOverIndex !== null && !isDragging) {
+                    if (draggedIndex < dragOverIndex) {
+                      // Dragging down: shift items between draggedIndex and dragOverIndex up
+                      if (index > draggedIndex && index <= dragOverIndex) {
+                        shouldShift = true;
+                        shiftDirection = 'up';
+                      }
+                    } else if (draggedIndex > dragOverIndex) {
+                      // Dragging up: shift items between dragOverIndex and draggedIndex down
+                      if (index >= dragOverIndex && index < draggedIndex) {
+                        shouldShift = true;
+                        shiftDirection = 'down';
+                      }
+                    }
+                  }
+
                   return (
                     <div
                       key={provider}
-                      className={`provider-order-item ${isDragging ? 'dragging' : ''}`}
+                      className={`provider-order-item ${isDragging ? 'dragging' : ''} ${shouldShift ? `shift-${shiftDirection}` : ''}`}
                       draggable={true}
                       onDragStart={(e) => handleDragStart(e, index)}
                       onDragOver={(e) => handleDragOver(e, index)}
