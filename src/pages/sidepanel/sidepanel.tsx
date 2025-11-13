@@ -21,6 +21,10 @@ import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResul
 import { ARINResultCard } from '@/components/results/ARINResultCard';
 import { ShodanResultCard } from '@/components/results/ShodanResultCard';
 import { GreyNoiseResultCard } from '@/components/results/GreyNoiseResultCard';
+import { URLhausResultCard } from '@/components/results/URLhausResultCard';
+import { XForceResultCard } from '@/components/results/XForceResultCard';
+import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
+import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import '@/i18n/config';
@@ -35,6 +39,10 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'ARIN': [IOCType.IPV4, IOCType.IPV6],
   'Shodan': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN],
   'GreyNoise': [IOCType.IPV4],
+  'URLhaus': [IOCType.URL, IOCType.DOMAIN, IOCType.IPV4, IOCType.IPV6, IOCType.MD5, IOCType.SHA256],
+  'X-Force': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
+  'Pulsedive': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
+  'Scamalytics': [IOCType.IPV4, IOCType.IPV6],
 };
 
 // Get providers that support a specific IOC type
@@ -526,6 +534,22 @@ const SidePanel: React.FC = () => {
 
                   if (result.source === 'GreyNoise') {
                     return <GreyNoiseResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'URLhaus') {
+                    return <URLhausResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'X-Force') {
+                    return <XForceResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'Pulsedive') {
+                    return <PulsediveResultCard key={index} result={result} />;
+                  }
+
+                  if (result.source === 'Scamalytics') {
+                    return <ScamalyticsResultCard key={index} result={result} />;
                   }
 
                   return (

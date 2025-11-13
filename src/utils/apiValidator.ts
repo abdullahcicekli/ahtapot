@@ -14,6 +14,7 @@ export class APIKeyValidator {
     header: string;
     method?: string;
     testHash?: string;
+    authType?: 'header' | 'query' | 'basic';
   }>> = {
     [APIProvider.VIRUSTOTAL]: {
       url: 'https://www.virustotal.com/api/v3/ip_addresses/8.8.8.8',
@@ -40,6 +41,25 @@ export class APIKeyValidator {
     [APIProvider.GREYNOISE]: {
       url: 'https://api.greynoise.io/v3/community/8.8.8.8',
       header: 'key',
+    },
+    [APIProvider.URLHAUS]: {
+      url: 'https://urlhaus-api.abuse.ch/v1/url/',
+      header: 'Auth-Key',
+      method: 'POST',
+    },
+    [APIProvider.XFORCE]: {
+      url: 'https://api.xforce.ibmcloud.com/ipr/8.8.8.8',
+      header: 'Authorization',
+      authType: 'basic',
+    },
+    [APIProvider.PULSEDIVE]: {
+      url: 'https://pulsedive.com/api/info.php?indicator=8.8.8.8',
+      header: 'key',
+      authType: 'query',
+    },
+    [APIProvider.SCAMALYTICS]: {
+      url: 'https://api11.scamalytics.com/ip/8.8.8.8',
+      header: 'Authorization',
     },
     // ARIN doesn't need validation - no API key required
   };
@@ -71,12 +91,23 @@ export class APIKeyValidator {
         'Accept': 'application/json',
       };
 
-      // Shodan uses query parameter for API key, not header
+      // Handle different authentication types
       let url = endpoint.url;
-      if (provider === APIProvider.SHODAN) {
-        url = `${endpoint.url}?key=${apiKey}`;
+      const authType = (endpoint as any).authType || 'header';
+
+      if (authType === 'query' || provider === APIProvider.SHODAN) {
+        // Query parameter authentication (Shodan, Pulsedive)
+        url = `${endpoint.url}&key=${apiKey}`;
+      } else if (authType === 'basic') {
+        // Basic authentication (X-Force)
+        const [apiKeyPart, password] = apiKey.split(':');
+        const credentials = btoa(`${apiKeyPart}:${password || ''}`);
+        headers[endpoint.header] = `Basic ${credentials}`;
+      } else if (provider === APIProvider.SCAMALYTICS) {
+        // Bearer token authentication
+        headers[endpoint.header] = `Bearer ${apiKey}`;
       } else if (endpoint.header) {
-        // Add API key to headers for other providers
+        // Standard header authentication
         headers[endpoint.header] = apiKey;
       }
 
@@ -93,6 +124,14 @@ export class APIKeyValidator {
         formData.append('hash', (endpoint as any).testHash);
         requestOptions.body = formData;
         // Remove Content-Type header to let browser set it with boundary
+        delete (headers as any)['Content-Type'];
+      }
+
+      // Special handling for URLhaus (requires POST with FormData)
+      if (provider === APIProvider.URLHAUS) {
+        const formData = new FormData();
+        formData.append('url', 'http://example.com/test');
+        requestOptions.body = formData;
         delete (headers as any)['Content-Type'];
       }
 

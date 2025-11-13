@@ -16,6 +16,10 @@ export const SERVICE_NAME_TO_PROVIDER: Record<string, APIProvider> = {
   'ARIN': APIProvider.ARIN,
   'Shodan': APIProvider.SHODAN,
   'GreyNoise': APIProvider.GREYNOISE,
+  'URLhaus': APIProvider.URLHAUS,
+  'X-Force': APIProvider.XFORCE,
+  'Pulsedive': APIProvider.PULSEDIVE,
+  'Scamalytics': APIProvider.SCAMALYTICS,
 };
 
 /**
@@ -29,6 +33,10 @@ export const PROVIDER_TO_SERVICE_NAME: Record<APIProvider, string> = {
   [APIProvider.ARIN]: 'ARIN',
   [APIProvider.SHODAN]: 'Shodan',
   [APIProvider.GREYNOISE]: 'GreyNoise',
+  [APIProvider.URLHAUS]: 'URLhaus',
+  [APIProvider.XFORCE]: 'X-Force',
+  [APIProvider.PULSEDIVE]: 'Pulsedive',
+  [APIProvider.SCAMALYTICS]: 'Scamalytics',
 };
 
 /**
