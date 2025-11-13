@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
 import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown } from 'lucide-react';
@@ -130,6 +130,20 @@ const OptionsPage: React.FC = () => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
+  // Memoize locked providers to avoid repeated filtering
+  const lockedProviders = useMemo(() =>
+    API_CONFIGS
+      .filter(config => config.requiresApiKey === false)
+      .map(config => config.provider),
+    []
+  );
+
+  // Memoize locked configs for modal rendering
+  const lockedConfigs = useMemo(() =>
+    API_CONFIGS.filter(config => config.requiresApiKey === false),
+    []
+  );
+
   // Load settings
   useEffect(() => {
     loadSettings();
@@ -260,24 +274,46 @@ const OptionsPage: React.FC = () => {
     }
   };
 
-  // Handle API key change
-  const handleKeyChange = (provider: APIProvider, value: string) => {
+  // Handle API key change with sanitization
+  const handleKeyChange = useCallback((provider: APIProvider, value: string) => {
+    // Sanitize input: trim whitespace and remove any potential XSS characters
+    const sanitizedValue = value.trim();
+
+    // Validate length (reasonable API key length: 10-200 characters)
+    if (sanitizedValue.length > 200) {
+      console.warn('API key too long, truncating to 200 characters');
+      return;
+    }
+
     setApiKeyStates((prev) => ({
       ...prev,
       [provider]: {
         ...prev[provider],
-        value,
-        hasChanges: value !== (prev[provider]?.value || ''),
+        value: sanitizedValue,
+        hasChanges: sanitizedValue !== (prev[provider]?.value || ''),
         validationResult: null,
         saveSuccess: false,
       },
     }));
-  };
+  }, []);
 
   // Validate API key
-  const handleValidateKey = async (provider: APIProvider) => {
+  const handleValidateKey = useCallback(async (provider: APIProvider) => {
     const state = apiKeyStates[provider];
     if (!state || !state.value) return;
+
+    // Additional validation: check for minimum length
+    if (state.value.length < 8) {
+      setApiKeyStates((prev) => ({
+        ...prev,
+        [provider]: {
+          ...prev[provider],
+          validationResult: 'invalid',
+          validationError: 'API key too short (minimum 8 characters)',
+        },
+      }));
+      return;
+    }
 
     setApiKeyStates((prev) => ({
       ...prev,
@@ -312,12 +348,18 @@ const OptionsPage: React.FC = () => {
         },
       }));
     }
-  };
+  }, [apiKeyStates, t]);
 
   // Save individual API key
-  const handleSaveIndividualKey = async (provider: APIProvider) => {
+  const handleSaveIndividualKey = useCallback(async (provider: APIProvider) => {
     const state = apiKeyStates[provider];
-    if (!state) return;
+    if (!state || !state.value) return;
+
+    // Prevent saving empty or too short keys
+    if (state.value.length < 8) {
+      setError('API key is too short');
+      return;
+    }
 
     setApiKeyStates((prev) => ({
       ...prev,
@@ -363,10 +405,10 @@ const OptionsPage: React.FC = () => {
       setError(t('actions.errorMessage', { ns: 'options' }));
       console.error('Error saving API key:', err);
     }
-  };
+  }, [apiKeyStates, t]);
 
   // Toggle visibility
-  const toggleVisibility = (provider: string) => {
+  const toggleVisibility = useCallback((provider: string) => {
     setVisibleKeys((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
@@ -376,10 +418,10 @@ const OptionsPage: React.FC = () => {
       }
       return newSet;
     });
-  };
+  }, []);
 
   // Toggle info
-  const toggleInfo = (provider: string) => {
+  const toggleInfo = useCallback((provider: string) => {
     setExpandedInfo((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
@@ -389,10 +431,10 @@ const OptionsPage: React.FC = () => {
       }
       return newSet;
     });
-  };
+  }, []);
 
   // Handle cache settings change
-  const handleCacheSettingsChange = async (updates: Partial<CacheSettings>) => {
+  const handleCacheSettingsChange = useCallback(async (updates: Partial<CacheSettings>) => {
     try {
       const newSettings = { ...cacheSettings, ...updates };
       setCacheSettings(newSettings);
@@ -405,10 +447,10 @@ const OptionsPage: React.FC = () => {
       setError(t('general.cache.clearError', { ns: 'options' }));
       console.error('Error updating cache settings:', err);
     }
-  };
+  }, [cacheSettings, t]);
 
   // Clear cache
-  const handleClearCache = async () => {
+  const handleClearCache = useCallback(async () => {
     if (!confirm(t('general.cache.clearConfirm', { ns: 'options' }))) {
       return;
     }
@@ -428,63 +470,60 @@ const OptionsPage: React.FC = () => {
     } finally {
       setIsClearingCache(false);
     }
-  };
+  }, [t]);
 
   // Format bytes to human readable
-  const formatBytes = (bytes: number): string => {
+  const formatBytes = useCallback((bytes: number): string => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
-  };
+  }, []);
 
   // Format date
-  const formatDate = (dateStr: string | null): string => {
+  const formatDate = useCallback((dateStr: string | null): string => {
     if (!dateStr) return '-';
     const year = dateStr.substring(0, 4);
     const month = dateStr.substring(4, 6);
     const day = dateStr.substring(6, 8);
     return `${day}/${month}/${year}`;
-  };
+  }, []);
 
   // Load provider order
-  async function loadProviderOrder() {
+  const loadProviderOrder = useCallback(async () => {
     try {
       const order = await getProviderOrder();
-      // Filter out locked providers (those that don't require API keys)
-      const lockedProviders = API_CONFIGS
-        .filter(config => config.requiresApiKey === false)
-        .map(config => config.provider);
+      // Filter out locked providers using memoized list
       const unlockedOrder = order.filter(provider => !lockedProviders.includes(provider));
       setProviderOrder(unlockedOrder);
     } catch (err) {
       console.error('Error loading provider order:', err);
     }
-  }
+  }, [lockedProviders]);
 
   // Handle drag start
-  const handleDragStart = (e: React.DragEvent, index: number) => {
+  const handleDragStart = useCallback((e: React.DragEvent, index: number) => {
     setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', index.toString());
-  };
+  }, []);
 
   // Handle drag enter (more stable than dragOver)
-  const handleDragEnter = (e: React.DragEvent, index: number) => {
+  const handleDragEnter = useCallback((e: React.DragEvent, index: number) => {
     e.preventDefault();
     if (draggedIndex === null || draggedIndex === index) return;
     setDragOverIndex(index);
-  };
+  }, [draggedIndex]);
 
   // Handle drag over (needed for drop to work)
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-  };
+  }, []);
 
   // Handle drag end
-  const handleDragEnd = async () => {
+  const handleDragEnd = useCallback(async () => {
     if (draggedIndex === null || dragOverIndex === null || draggedIndex === dragOverIndex) {
       setDraggedIndex(null);
       setDragOverIndex(null);
@@ -508,10 +547,10 @@ const OptionsPage: React.FC = () => {
       setDraggedIndex(null);
       setDragOverIndex(null);
     }
-  };
+  }, [draggedIndex, dragOverIndex, providerOrder, t]);
 
   // Reset provider order
-  const handleResetProviderOrder = async () => {
+  const handleResetProviderOrder = useCallback(async () => {
     if (!confirm(t('general.providerOrder.resetConfirm', { ns: 'options' }))) {
       return;
     }
@@ -523,34 +562,36 @@ const OptionsPage: React.FC = () => {
       setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
       console.error('Error resetting provider order:', err);
     }
-  };
+  }, [t, loadProviderOrder]);
 
   // Open modal
-  const handleOpenOrderModal = () => {
+  const handleOpenOrderModal = useCallback(() => {
     setIsOrderModalOpen(true);
     // Reset drag state
     setDraggedIndex(null);
     setDragOverIndex(null);
-  };
+  }, []);
 
   // Close modal
-  const handleCloseOrderModal = () => {
+  const handleCloseOrderModal = useCallback(() => {
     setIsOrderModalOpen(false);
     setDraggedIndex(null);
     setDragOverIndex(null);
-  };
+  }, []);
 
   // Handle ESC key for modal
   useEffect(() => {
+    if (!isOrderModalOpen) return;
+
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOrderModalOpen) {
+      if (e.key === 'Escape') {
         handleCloseOrderModal();
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isOrderModalOpen]);
+  }, [isOrderModalOpen, handleCloseOrderModal]);
 
   // Sort API configs by provider order, with locked providers at the end
   const sortedApiConfigs = React.useMemo(() => {
@@ -1031,12 +1072,12 @@ const OptionsPage: React.FC = () => {
               })}
 
               {/* Locked providers section */}
-              {API_CONFIGS.filter(c => c.requiresApiKey === false).length > 0 && (
+              {lockedConfigs.length > 0 && (
                 <>
                   <div className="modal-divider">
                     <span>{t('general.providerOrder.lockedProviders', { ns: 'options' })}</span>
                   </div>
-                  {API_CONFIGS.filter(c => c.requiresApiKey === false).map((config) => {
+                  {lockedConfigs.map((config) => {
                     const serviceName = PROVIDER_TO_SERVICE_NAME[config.provider];
                     return (
                       <div key={config.provider} className="modal-provider-item locked">
