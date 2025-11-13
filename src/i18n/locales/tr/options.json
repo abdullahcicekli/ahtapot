@@ -37,6 +37,7 @@
       "description": "Sağlayıcıların analiz sonuçlarında görünme sırasını özelleştirin. Sıralamak için sürükleyin ve bırakın.",
       "customizeButton": "Sıralamayı Özelleştir",
       "modalDescription": "Sıralamak için sağlayıcıları sürükleyin. Değişiklikler otomatik olarak kaydedilir.",
+      "lockedProviders": "Her Zaman Kullanılabilir (API Anahtarı Gerektirmez)",
       "dragHint": "Sıralamak için sürükleyin",
       "resetOrder": "Varsayılana Sıfırla",
       "doneButton": "Tamam",
@@ -111,7 +112,15 @@
       "label": "Scamalytics",
       "description": "IP dolandırıcılık puanı ve dolandırıcılık tespiti",
       "placeholder": "Scamalytics API anahtarınız"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IP adresi kayıt ve ağ bilgileri",
+      "placeholder": "API anahtarı gerektirmez"
     }
+  },
+  "lockedProvider": {
+    "message": "✓ Bu sağlayıcı her zaman kullanılabilirdir ve API anahtarı gerektirmez"
   },
   "info": {
     "limitsTitle": "Ücretsiz Plan Limitleri",

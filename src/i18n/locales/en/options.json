@@ -37,6 +37,7 @@
       "description": "Customize the order in which providers appear in analysis results. Drag and drop to reorder.",
       "customizeButton": "Customize Order",
       "modalDescription": "Drag providers to reorder them. Changes are saved automatically.",
+      "lockedProviders": "Always Available (No API Key Required)",
       "dragHint": "Drag to reorder",
       "resetOrder": "Reset to Default",
       "doneButton": "Done",
@@ -111,7 +112,15 @@
       "label": "Scamalytics",
       "description": "IP fraud score and scam detection",
       "placeholder": "Your Scamalytics API key"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IP address registration and network information",
+      "placeholder": "No API key required"
     }
+  },
+  "lockedProvider": {
+    "message": "✓ This provider is always available and doesn't require an API key"
   },
   "info": {
     "limitsTitle": "Free Plan Limits",

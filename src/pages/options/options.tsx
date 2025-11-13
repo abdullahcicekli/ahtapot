@@ -19,6 +19,7 @@ interface APIKeyConfig {
   label: string;
   link: string;
   signupLink: string;
+  requiresApiKey?: boolean; // Optional, defaults to true
 }
 
 interface APIKeyState {
@@ -91,6 +92,13 @@ const API_CONFIGS: APIKeyConfig[] = [
     label: 'Scamalytics',
     link: 'https://scamalytics.com/ip/api',
     signupLink: 'https://scamalytics.com/ip/api/pricing',
+  },
+  {
+    provider: APIProvider.ARIN,
+    label: 'ARIN WHOIS',
+    link: 'https://www.arin.net/resources/registry/whois/',
+    signupLink: 'https://www.arin.net/resources/registry/whois/',
+    requiresApiKey: false,
   },
 ];
 
@@ -539,11 +547,15 @@ const OptionsPage: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOrderModalOpen]);
 
-  // Sort API configs by provider order
+  // Sort API configs by provider order, with locked providers at the end
   const sortedApiConfigs = React.useMemo(() => {
     if (providerOrder.length === 0) {
       return API_CONFIGS;
     }
+
+    // Separate locked and unlocked providers
+    const lockedConfigs = API_CONFIGS.filter(config => config.requiresApiKey === false);
+    const unlockedConfigs = API_CONFIGS.filter(config => config.requiresApiKey !== false);
 
     // Create a map of provider to its order index
     const orderMap = new Map<APIProvider, number>();
@@ -551,12 +563,15 @@ const OptionsPage: React.FC = () => {
       orderMap.set(provider, index);
     });
 
-    // Sort API_CONFIGS based on provider order
-    return [...API_CONFIGS].sort((a, b) => {
+    // Sort unlocked configs based on provider order
+    const sortedUnlocked = [...unlockedConfigs].sort((a, b) => {
       const orderA = orderMap.get(a.provider) ?? 999;
       const orderB = orderMap.get(b.provider) ?? 999;
       return orderA - orderB;
     });
+
+    // Return unlocked configs followed by locked configs
+    return [...sortedUnlocked, ...lockedConfigs];
   }, [providerOrder]);
 
   return (
@@ -754,11 +769,12 @@ const OptionsPage: React.FC = () => {
                 {sortedApiConfigs.map((config) => {
                   const providerKey = config.provider.toLowerCase();
                   const state = apiKeyStates[config.provider];
+                  const isLocked = config.requiresApiKey === false;
 
                   return (
                     <div
                       key={config.provider}
-                      className="api-key-card"
+                      className={`api-key-card ${isLocked ? 'locked-provider' : ''}`}
                       data-provider={config.provider}
                     >
                       <div className="api-key-header">
@@ -769,19 +785,28 @@ const OptionsPage: React.FC = () => {
                               {t(`providers.${providerKey}.description`, { ns: 'options' })}
                             </p>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => toggleInfo(config.provider)}
-                            className="info-btn"
-                            aria-label="API information"
-                            title="API limits and features"
-                          >
-                            <Info size={18} />
-                          </button>
+                          {!isLocked && (
+                            <button
+                              type="button"
+                              onClick={() => toggleInfo(config.provider)}
+                              className="info-btn"
+                              aria-label="API information"
+                              title="API limits and features"
+                            >
+                              <Info size={18} />
+                            </button>
+                          )}
                         </div>
                       </div>
 
-                      {expandedInfo.has(config.provider) && (
+                      {isLocked ? (
+                        <div className="locked-provider-info">
+                          <CheckCircle size={18} className="locked-icon" />
+                          <p>{t('lockedProvider.message', { ns: 'options' })}</p>
+                        </div>
+                      ) : (
+                        <>
+                          {expandedInfo.has(config.provider) && (
                         <div className="api-info-box">
                           <div className="api-info-section">
                             <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
@@ -851,35 +876,35 @@ const OptionsPage: React.FC = () => {
                         </div>
                       )}
 
-                      <div className="api-key-input-wrapper">
-                        <input
-                          type={visibleKeys.has(config.provider) ? 'text' : 'password'}
-                          placeholder={t(`providers.${providerKey}.placeholder`, { ns: 'options' })}
-                          value={state?.value || ''}
-                          onChange={(e) => handleKeyChange(config.provider, e.target.value)}
-                          className={`api-key-input ${state?.validationResult === 'invalid' ? 'invalid' : ''}`}
-                          aria-label={`${config.label} API key`}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => toggleVisibility(config.provider)}
-                          className="toggle-visibility-btn"
-                          aria-label={
-                            visibleKeys.has(config.provider)
-                              ? t('apiKeys.hideKey', { ns: 'options' })
-                              : t('apiKeys.showKey', { ns: 'options' })
-                          }
-                        >
-                          {visibleKeys.has(config.provider) ? (
-                            <EyeOff size={18} />
-                          ) : (
-                            <Eye size={18} />
-                          )}
-                        </button>
-                      </div>
+                          <div className="api-key-input-wrapper">
+                            <input
+                              type={visibleKeys.has(config.provider) ? 'text' : 'password'}
+                              placeholder={t(`providers.${providerKey}.placeholder`, { ns: 'options' })}
+                              value={state?.value || ''}
+                              onChange={(e) => handleKeyChange(config.provider, e.target.value)}
+                              className={`api-key-input ${state?.validationResult === 'invalid' ? 'invalid' : ''}`}
+                              aria-label={`${config.label} API key`}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => toggleVisibility(config.provider)}
+                              className="toggle-visibility-btn"
+                              aria-label={
+                                visibleKeys.has(config.provider)
+                                  ? t('apiKeys.hideKey', { ns: 'options' })
+                                  : t('apiKeys.showKey', { ns: 'options' })
+                              }
+                            >
+                              {visibleKeys.has(config.provider) ? (
+                                <EyeOff size={18} />
+                              ) : (
+                                <Eye size={18} />
+                              )}
+                            </button>
+                          </div>
 
-                      {/* Validation and Save Buttons */}
-                      <div className="api-key-actions">
+                          {/* Validation and Save Buttons */}
+                          <div className="api-key-actions">
                         <button
                           onClick={() => handleValidateKey(config.provider)}
                           className="validate-btn"
@@ -935,7 +960,9 @@ const OptionsPage: React.FC = () => {
                             {t('actions.saveSuccess', { ns: 'options' })}
                           </span>
                         )}
-                      </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   );
                 })}
@@ -997,6 +1024,27 @@ const OptionsPage: React.FC = () => {
                   </div>
                 );
               })}
+
+              {/* Locked providers section */}
+              {API_CONFIGS.filter(c => c.requiresApiKey === false).length > 0 && (
+                <>
+                  <div className="modal-divider">
+                    <span>{t('general.providerOrder.lockedProviders', { ns: 'options' })}</span>
+                  </div>
+                  {API_CONFIGS.filter(c => c.requiresApiKey === false).map((config) => {
+                    const serviceName = PROVIDER_TO_SERVICE_NAME[config.provider];
+                    return (
+                      <div key={config.provider} className="modal-provider-item locked">
+                        <CheckCircle size={18} className="modal-locked-icon" />
+                        <span className="modal-provider-number">
+                          {providerOrder.length + 1}
+                        </span>
+                        <span className="modal-provider-name">{serviceName}</span>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
             </div>
 
             <div className="modal-actions">
