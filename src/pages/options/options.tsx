@@ -66,6 +66,30 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://viz.greynoise.io/account/details',
     signupLink: 'https://viz.greynoise.io/signup',
   },
+  {
+    provider: APIProvider.URLHAUS,
+    label: 'URLhaus',
+    link: 'https://auth.abuse.ch/user/me',
+    signupLink: 'https://auth.abuse.ch/signup',
+  },
+  {
+    provider: APIProvider.XFORCE,
+    label: 'IBM X-Force Exchange',
+    link: 'https://exchange.xforce.ibmcloud.com/settings/api',
+    signupLink: 'https://exchange.xforce.ibmcloud.com/',
+  },
+  {
+    provider: APIProvider.PULSEDIVE,
+    label: 'Pulsedive',
+    link: 'https://pulsedive.com/account/',
+    signupLink: 'https://pulsedive.com/register',
+  },
+  {
+    provider: APIProvider.SCAMALYTICS,
+    label: 'Scamalytics',
+    link: 'https://scamalytics.com/ip/api',
+    signupLink: 'https://scamalytics.com/ip/api/pricing',
+  },
 ];
 
 const OptionsPage: React.FC = () => {

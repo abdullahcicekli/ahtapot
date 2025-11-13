@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2025-11-13
+
+### Added
+- **URLhaus Integration** - Malicious URL and malware distribution database by abuse.ch
+  - Unlimited free API access with account
+  - URL status monitoring (online/offline/unknown)
+  - Payload and threat classification
+  - Malware distribution tracking
+  - Supports: URL, Domain, IPv4, IPv6, MD5, SHA256
+- **IBM X-Force Exchange Integration** - Enterprise threat intelligence platform
+  - Free tier: 5,000 requests/month
+  - Risk scoring system (1-10 scale)
+  - Historical threat data and trends
+  - Malware family identification
+  - Category classification
+  - Supports: IP, Domain, URL, MD5, SHA1, SHA256
+- **Pulsedive Integration** - Threat intelligence with IOC enrichment
+  - Free tier: 250 requests/day (2,500/month)
+  - Risk level assessment (none/low/medium/high/critical)
+  - Threat feed tracking
+  - Risk factor analysis
+  - Community-driven intelligence
+  - Supports: IP, Domain, URL, MD5, SHA1, SHA256
+- **Scamalytics Integration** - IP fraud detection and scam prevention
+  - Free tier: 5,000 requests/month
+  - Fraud score (0-100)
+  - Risk level classification (very low to very high)
+  - Fraud indicator tracking
+  - Supports: IPv4, IPv6
+- Provider display order configuration system with default sorting
+- Custom result cards for all new providers with provider-specific UI
+- Comprehensive i18n support (EN & TR) for all new integrations
+
+### Changed
+- Enhanced API key validation with support for new authentication methods (Basic Auth, Bearer Token)
+- Improved provider status badges with all 11 providers
+- Updated provider mappings and service registry
+- Version updated across all locations (package.json, manifest.json, i18n footer)
+
+### Technical
+- Added TypeScript type definitions for all new providers
+- Created 4 new service implementations following BaseToolService pattern
+- Implemented provider-specific result card components
+- Enhanced API validator with multiple authentication methods
+- Updated ServiceRegistry with lazy initialization for new providers
+
 ## [2.3.2] - 2025-10-25
 
 ### Added
