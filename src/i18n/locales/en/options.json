@@ -35,8 +35,11 @@
     "providerOrder": {
       "title": "Provider Display Order",
       "description": "Customize the order in which providers appear in analysis results. Drag and drop to reorder.",
+      "customizeButton": "Customize Order",
+      "modalDescription": "Drag providers to reorder them. Changes are saved automatically.",
       "dragHint": "Drag to reorder",
       "resetOrder": "Reset to Default",
+      "doneButton": "Done",
       "resetConfirm": "Are you sure you want to reset the provider order to default?",
       "orderSaved": "Provider order saved successfully",
       "orderSaveError": "Failed to save provider order"

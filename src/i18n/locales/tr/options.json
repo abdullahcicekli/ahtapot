@@ -35,8 +35,11 @@
     "providerOrder": {
       "title": "Sağlayıcı Gösterim Sırası",
       "description": "Sağlayıcıların analiz sonuçlarında görünme sırasını özelleştirin. Sıralamak için sürükleyin ve bırakın.",
+      "customizeButton": "Sıralamayı Özelleştir",
+      "modalDescription": "Sıralamak için sağlayıcıları sürükleyin. Değişiklikler otomatik olarak kaydedilir.",
       "dragHint": "Sıralamak için sürükleyin",
       "resetOrder": "Varsayılana Sıfırla",
+      "doneButton": "Tamam",
       "resetConfirm": "Sağlayıcı sırasını varsayılana sıfırlamak istediğinizden emin misiniz?",
       "orderSaved": "Sağlayıcı sırası başarıyla kaydedildi",
       "orderSaveError": "Sağlayıcı sırası kaydedilemedi"

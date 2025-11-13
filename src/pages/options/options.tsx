@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
@@ -116,7 +116,8 @@ const OptionsPage: React.FC = () => {
   });
   const [isClearingCache, setIsClearingCache] = useState(false);
 
-  // Provider order state
+  // Provider order modal state
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -453,30 +454,31 @@ const OptionsPage: React.FC = () => {
   const handleDragStart = (e: React.DragEvent, index: number) => {
     setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', index.toString());
   };
 
-  // Handle drag over
-  const handleDragOver = (e: React.DragEvent, index: number) => {
+  // Handle drag enter (more stable than dragOver)
+  const handleDragEnter = (e: React.DragEvent, index: number) => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-
     if (draggedIndex === null || draggedIndex === index) return;
-
-    // Just set the drop target index for visual feedback
     setDragOverIndex(index);
   };
 
-  // Handle drop
-  const handleDrop = async (e: React.DragEvent) => {
+  // Handle drag over (needed for drop to work)
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
 
-    if (draggedIndex === null || dragOverIndex === null) {
+  // Handle drag end
+  const handleDragEnd = async () => {
+    if (draggedIndex === null || dragOverIndex === null || draggedIndex === dragOverIndex) {
       setDraggedIndex(null);
       setDragOverIndex(null);
       return;
     }
 
-    // Reorder array on drop
+    // Reorder array
     const newOrder = [...providerOrder];
     const [draggedItem] = newOrder.splice(draggedIndex, 1);
     newOrder.splice(dragOverIndex, 0, draggedItem);
@@ -486,20 +488,13 @@ const OptionsPage: React.FC = () => {
     // Save to storage
     try {
       await saveProviderOrder(newOrder);
-      setDraggedIndex(null);
-      setDragOverIndex(null);
     } catch (err) {
       setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
       console.error('Error saving provider order:', err);
+    } finally {
       setDraggedIndex(null);
       setDragOverIndex(null);
     }
-  };
-
-  // Handle drag end
-  const handleDragEnd = () => {
-    setDraggedIndex(null);
-    setDragOverIndex(null);
   };
 
   // Reset provider order
@@ -516,6 +511,33 @@ const OptionsPage: React.FC = () => {
       console.error('Error resetting provider order:', err);
     }
   };
+
+  // Open modal
+  const handleOpenOrderModal = () => {
+    setIsOrderModalOpen(true);
+    // Reset drag state
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  // Close modal
+  const handleCloseOrderModal = () => {
+    setIsOrderModalOpen(false);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  // Handle ESC key for modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOrderModalOpen) {
+        handleCloseOrderModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOrderModalOpen]);
 
   return (
     <div className="options-container">
@@ -676,69 +698,6 @@ const OptionsPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Provider Order Settings */}
-            <div className="setting-card">
-              <div className="setting-header">
-                <Settings size={20} />
-                <div>
-                  <h3>{t('general.providerOrder.title', { ns: 'options' })}</h3>
-                  <p className="setting-description">
-                    {t('general.providerOrder.description', { ns: 'options' })}
-                  </p>
-                </div>
-              </div>
-
-              <div className="provider-order-list">
-                {providerOrder.map((provider, index) => {
-                  const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
-                  const isDragging = draggedIndex === index;
-
-                  // Calculate if this item should shift
-                  let shouldShift = false;
-                  let shiftDirection: 'up' | 'down' = 'down';
-
-                  if (draggedIndex !== null && dragOverIndex !== null && !isDragging) {
-                    if (draggedIndex < dragOverIndex) {
-                      // Dragging down: shift items between draggedIndex and dragOverIndex up
-                      if (index > draggedIndex && index <= dragOverIndex) {
-                        shouldShift = true;
-                        shiftDirection = 'up';
-                      }
-                    } else if (draggedIndex > dragOverIndex) {
-                      // Dragging up: shift items between dragOverIndex and draggedIndex down
-                      if (index >= dragOverIndex && index < draggedIndex) {
-                        shouldShift = true;
-                        shiftDirection = 'down';
-                      }
-                    }
-                  }
-
-                  return (
-                    <div
-                      key={provider}
-                      className={`provider-order-item ${isDragging ? 'dragging' : ''} ${shouldShift ? `shift-${shiftDirection}` : ''}`}
-                      draggable={true}
-                      onDragStart={(e) => handleDragStart(e, index)}
-                      onDragOver={(e) => handleDragOver(e, index)}
-                      onDrop={(e) => handleDrop(e)}
-                      onDragEnd={handleDragEnd}
-                    >
-                      <GripVertical size={20} className="drag-handle" />
-                      <span className="provider-order-number">{index + 1}</span>
-                      <span className="provider-order-name">{serviceName}</span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <button
-                onClick={handleResetProviderOrder}
-                className="reset-order-btn"
-              >
-                <RotateCcw size={18} />
-                {t('general.providerOrder.resetOrder', { ns: 'options' })}
-              </button>
-            </div>
           </div>
         )}
 
@@ -754,10 +713,22 @@ const OptionsPage: React.FC = () => {
             </div>
 
             <div className="api-keys-section">
-              <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
-              <p className="section-description">
-                {t('apiKeys.sectionDescription', { ns: 'options' })}
-              </p>
+              <div className="api-keys-header">
+                <div>
+                  <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
+                  <p className="section-description">
+                    {t('apiKeys.sectionDescription', { ns: 'options' })}
+                  </p>
+                </div>
+                <button
+                  onClick={handleOpenOrderModal}
+                  className="customize-order-btn"
+                  title={t('general.providerOrder.title', { ns: 'options' })}
+                >
+                  <ArrowUpDown size={18} />
+                  {t('general.providerOrder.customizeButton', { ns: 'options' })}
+                </button>
+              </div>
 
               <div className="api-keys-list">
                 {API_CONFIGS.map((config) => {
@@ -964,6 +935,68 @@ const OptionsPage: React.FC = () => {
       <footer className="options-footer">
         <p>{t('footer.text', { ns: 'options' })}</p>
       </footer>
+
+      {/* Provider Order Modal */}
+      {isOrderModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseOrderModal}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{t('general.providerOrder.title', { ns: 'options' })}</h2>
+              <button
+                onClick={handleCloseOrderModal}
+                className="modal-close-btn"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <p className="modal-description">
+              {t('general.providerOrder.modalDescription', { ns: 'options' })}
+            </p>
+
+            <div className="modal-provider-list">
+              {providerOrder.map((provider, index) => {
+                const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
+                const isDragging = draggedIndex === index;
+                const isDropTarget = dragOverIndex === index && draggedIndex !== index;
+
+                return (
+                  <div
+                    key={provider}
+                    className={`modal-provider-item ${isDragging ? 'dragging' : ''} ${isDropTarget ? 'drop-target' : ''}`}
+                    draggable={true}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragEnter(e, index)}
+                    onDragOver={handleDragOver}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <GripVertical size={18} className="modal-drag-handle" />
+                    <span className="modal-provider-number">{index + 1}</span>
+                    <span className="modal-provider-name">{serviceName}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="modal-actions">
+              <button
+                onClick={handleResetProviderOrder}
+                className="modal-reset-btn"
+              >
+                <RotateCcw size={16} />
+                {t('general.providerOrder.resetOrder', { ns: 'options' })}
+              </button>
+              <button
+                onClick={handleCloseOrderModal}
+                className="modal-done-btn"
+              >
+                {t('general.providerOrder.doneButton', { ns: 'options' })}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
