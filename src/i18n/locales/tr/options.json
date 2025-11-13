@@ -79,6 +79,26 @@
       "label": "GreyNoise",
       "description": "İnternet gürültüsü sınıflandırması ve tehdit istihbaratı",
       "placeholder": "GreyNoise API anahtarınız"
+    },
+    "urlhaus": {
+      "label": "URLhaus",
+      "description": "Kötü amaçlı URL ve kötü yazılım dağıtım sitesi veritabanı",
+      "placeholder": "URLhaus API anahtarınız"
+    },
+    "xforce": {
+      "label": "IBM X-Force Exchange",
+      "description": "Tehdit istihbaratı ve güvenlik açığı verileri",
+      "placeholder": "APIKey:Password formatı"
+    },
+    "pulsedive": {
+      "label": "Pulsedive",
+      "description": "IOC zenginleştirme ile tehdit istihbarat platformu",
+      "placeholder": "Pulsedive API anahtarınız"
+    },
+    "scamalytics": {
+      "label": "Scamalytics",
+      "description": "IP dolandırıcılık puanı ve dolandırıcılık tespiti",
+      "placeholder": "Scamalytics API anahtarınız"
     }
   },
   "info": {
@@ -104,7 +124,11 @@
     "abuseipdb": "API anahtarı ekle",
     "malwarebazaar": "API anahtarı ekle",
     "shodan": "API anahtarı ekle",
-    "greynoise": "API anahtarı ekle"
+    "greynoise": "API anahtarı ekle",
+    "urlhaus": "API anahtarı ekle",
+    "xforce": "API anahtarı ekle",
+    "pulsedive": "API anahtarı ekle",
+    "scamalytics": "API anahtarı ekle"
   },
   "features": {
     "virustotal": {
@@ -142,6 +166,30 @@
       "feature2": "Aktör ve davranış etiket tanımlama",
       "feature3": "TOR/VPN/Proxy tespiti",
       "feature4": "Bilinen iyi huylu servislerin RIOT bayrağı"
+    },
+    "urlhaus": {
+      "feature1": "Kötü amaçlı URL veritabanı",
+      "feature2": "Yük ve tehdit sınıflandırması",
+      "feature3": "URL durum izleme (çevrimiçi/çevrimdışı)",
+      "feature4": "Kötü yazılım dağıtım takibi"
+    },
+    "xforce": {
+      "feature1": "IP/URL/Domain itibar puanlaması",
+      "feature2": "Kötü yazılım ailesi tanımlama",
+      "feature3": "Geçmiş tehdit verileri",
+      "feature4": "Kategori sınıflandırması"
+    },
+    "pulsedive": {
+      "feature1": "Risk seviyesi değerlendirmesi",
+      "feature2": "Tehdit ve feed takibi",
+      "feature3": "Risk faktörü analizi",
+      "feature4": "Topluluk odaklı istihbarat"
+    },
+    "scamalytics": {
+      "feature1": "IP dolandırıcılık puanı (0-100)",
+      "feature2": "Dolandırıcılık ve sahtecilik tespiti",
+      "feature3": "Risk seviyesi sınıflandırması",
+      "feature4": "Dolandırıcılık göstergesi takibi"
     }
   },
   "limits": {
@@ -168,6 +216,22 @@
     "greynoise": {
       "free": "50 arama/hafta (Community)",
       "rate": "Visualizer kullanımı ile birlikte"
+    },
+    "urlhaus": {
+      "free": "Sınırsız (ücretsiz hesap)",
+      "rate": "Belirtilen limit yok"
+    },
+    "xforce": {
+      "free": "5.000 istek/ay (ücretsiz)",
+      "rate": "Makul kullanım"
+    },
+    "pulsedive": {
+      "free": "250 istek/gün (ücretsiz hesap)",
+      "rate": "2.500 istek/ay"
+    },
+    "scamalytics": {
+      "free": "5.000 istek/ay (ücretsiz)",
+      "rate": "Belirtilen limit yok"
     }
   },
   "actions": {
@@ -180,6 +244,6 @@
     "saveError": "Kaydetme başarısız"
   },
   "footer": {
-    "text": "Ahtapot v1.0.0 • Siber Güvenlik Gösterge Analiz Aracı"
+    "text": "Ahtapot v2.4.0 • Siber Güvenlik Gösterge Analiz Aracı"
   }
 }

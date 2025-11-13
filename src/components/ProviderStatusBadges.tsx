@@ -16,6 +16,7 @@ interface ProviderStatusBadgesProps {
   completedProviders: { provider: APIProvider; status: 'success' | 'error' }[];
   activeProvider?: string;
   onProviderClick?: (providerName: string) => void;
+  visibleProviders?: string[]; // Only show these providers (by label name)
 }
 
 const PROVIDER_LABELS: Record<APIProvider, string> = {
@@ -26,6 +27,10 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.ARIN]: 'ARIN',
   [APIProvider.SHODAN]: 'Shodan',
   [APIProvider.GREYNOISE]: 'GreyNoise',
+  [APIProvider.URLHAUS]: 'URLhaus',
+  [APIProvider.XFORCE]: 'X-Force',
+  [APIProvider.PULSEDIVE]: 'Pulsedive',
+  [APIProvider.SCAMALYTICS]: 'Scamalytics',
 };
 
 // Map providers to their logo images
@@ -37,6 +42,10 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
   [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
   [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
+  [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
+  [APIProvider.XFORCE]: '/provider-icons/xforce-logo.png',
+  [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
+  [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
 };
 
 // Map provider enum to i18n key
@@ -48,6 +57,10 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.ARIN]: 'arin',
   [APIProvider.SHODAN]: 'shodan',
   [APIProvider.GREYNOISE]: 'greynoise',
+  [APIProvider.URLHAUS]: 'urlhaus',
+  [APIProvider.XFORCE]: 'xforce',
+  [APIProvider.PULSEDIVE]: 'pulsedive',
+  [APIProvider.SCAMALYTICS]: 'scamalytics',
 };
 
 /**
@@ -59,6 +72,7 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
   completedProviders,
   activeProvider,
   onProviderClick,
+  visibleProviders,
 }) => {
   const { t } = useTranslation('options');
   const [allProviders, setAllProviders] = useState<ProviderStatus[]>([]);
@@ -136,9 +150,16 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
     }
   }, [onProviderClick]);
 
+  // Filter providers based on visibleProviders prop
+  // If undefined, show nothing (before search)
+  // If array, only show providers in the array
+  const displayedProviders = visibleProviders === undefined
+    ? []
+    : allProviders.filter((provider) => visibleProviders.includes(provider.label));
+
   return (
     <div className="provider-badges-container">
-      {allProviders.map((provider) => {
+      {displayedProviders.map((provider) => {
         const isActive = activeProvider === provider.label;
         const tooltipKey = PROVIDER_I18N_KEYS[provider.provider];
         return (

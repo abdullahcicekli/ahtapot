@@ -52,6 +52,10 @@ export enum APIProvider {
   ARIN = 'arin',
   SHODAN = 'shodan',
   GREYNOISE = 'greynoise',
+  URLHAUS = 'urlhaus',
+  XFORCE = 'xforce',
+  PULSEDIVE = 'pulsedive',
+  SCAMALYTICS = 'scamalytics',
 }
 
 /**

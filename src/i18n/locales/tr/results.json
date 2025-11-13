@@ -331,6 +331,33 @@
     "viewFullWhois": "ARIN'de Tam WHOIS Görüntüle →",
     "unsupportedType": "Desteklenen IOC türleri:"
   },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "URL Durumu",
+    "threat": "Tehdit",
+    "urlCount": "URL Sayısı",
+    "onlineCount": "Aktif URL'ler",
+    "tags": "Etiketler"
+  },
+  "xforce": {
+    "title": "X-Force Exchange",
+    "riskScore": "Risk Puanı",
+    "location": "Konum",
+    "categories": "Kategoriler",
+    "reason": "Sebep"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "Risk Seviyesi",
+    "threats": "Tehditler",
+    "riskFactors": "Risk Faktörleri",
+    "feeds": "Tehdit Kaynakları"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "Dolandırıcılık Puanı",
+    "indicators": "Dolandırıcılık Göstergeleri"
+  },
   "generic": {
     "source": "Kaynak",
     "type": "Tür",

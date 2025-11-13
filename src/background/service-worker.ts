@@ -3,6 +3,7 @@ import { DetectedIOC, IOCAnalysisResult, APIProvider } from '@/types/ioc';
 import { APIService } from '@/services/api-service';
 import { getAPIKeys } from '@/utils/apiKeyStorage';
 import { findProviderByServiceName } from '@/utils/providerMappings';
+import { initializeDevelopmentAPIKeys } from '@/utils/devApiKeys';
 
 /**
  * Background Service Worker
@@ -13,12 +14,15 @@ import { findProviderByServiceName } from '@/utils/providerMappings';
 let apiService: APIService | null = null;
 
 // Context menu oluştur
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
   chrome.contextMenus.create({
     id: 'ahtapot-analyze',
     title: 'Ahtapot ile Analiz Et',
     contexts: ['selection'],
   });
+
+  // Initialize development API keys from .env (only in dev mode)
+  await initializeDevelopmentAPIKeys();
 });
 
 // Context menu tıklaması

@@ -331,6 +331,33 @@
     "viewFullWhois": "View Full WHOIS on ARIN →",
     "unsupportedType": "Supported IOC types:"
   },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "URL Status",
+    "threat": "Threat",
+    "urlCount": "URL Count",
+    "onlineCount": "Online URLs",
+    "tags": "Tags"
+  },
+  "xforce": {
+    "title": "X-Force Exchange",
+    "riskScore": "Risk Score",
+    "location": "Location",
+    "categories": "Categories",
+    "reason": "Reason"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "Risk Level",
+    "threats": "Threats",
+    "riskFactors": "Risk Factors",
+    "feeds": "Threat Feeds"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "Fraud Score",
+    "indicators": "Fraud Indicators"
+  },
   "generic": {
     "source": "Source",
     "type": "Type",

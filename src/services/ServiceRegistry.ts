@@ -6,6 +6,10 @@ import { MalwareBazaarService } from './tools/MalwareBazaarService';
 import { ARINService } from './tools/ARINService';
 import { ShodanService } from './tools/ShodanService';
 import { GreyNoiseService } from './tools/GreyNoiseService';
+import { URLhausService } from './tools/URLhausService';
+import { XForceService } from './tools/XForceService';
+import { PulsediveService } from './tools/PulsediveService';
+import { ScamalyticsService } from './tools/ScamalyticsService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 
@@ -149,6 +153,50 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] GreyNoise service initialized');
+        break;
+
+      case APIProvider.URLHAUS:
+        this.services.set(
+          provider,
+          new URLhausService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] URLhaus service initialized');
+        break;
+
+      case APIProvider.XFORCE:
+        this.services.set(
+          provider,
+          new XForceService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] X-Force service initialized');
+        break;
+
+      case APIProvider.PULSEDIVE:
+        this.services.set(
+          provider,
+          new PulsediveService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] Pulsedive service initialized');
+        break;
+
+      case APIProvider.SCAMALYTICS:
+        this.services.set(
+          provider,
+          new ScamalyticsService({
+            apiKey,
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] Scamalytics service initialized');
         break;
 
       default:

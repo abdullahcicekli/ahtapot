@@ -1,0 +1,176 @@
+/* Common Result Card Styles */
+.result-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.result-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.result-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-icon {
+  flex-shrink: 0;
+}
+
+.status-icon.malicious {
+  color: #ef4444;
+}
+
+.status-icon.suspicious {
+  color: #eab308;
+}
+
+.status-icon.safe {
+  color: #22c55e;
+}
+
+.external-link {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.external-link:hover {
+  color: var(--text);
+}
+
+.result-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-message {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.info-row svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--text-secondary);
+}
+
+.info-section {
+  margin-top: 8px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--background-hover);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--background-hover);
+  border-radius: 8px;
+}
+
+.score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid;
+  flex-shrink: 0;
+}
+
+.score-value {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-max {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.score-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.risk-level {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.score-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.threat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.threat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background: var(--background-hover);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.threat-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.threat-category {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
