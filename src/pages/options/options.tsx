@@ -539,6 +539,26 @@ const OptionsPage: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOrderModalOpen]);
 
+  // Sort API configs by provider order
+  const sortedApiConfigs = React.useMemo(() => {
+    if (providerOrder.length === 0) {
+      return API_CONFIGS;
+    }
+
+    // Create a map of provider to its order index
+    const orderMap = new Map<APIProvider, number>();
+    providerOrder.forEach((provider, index) => {
+      orderMap.set(provider, index);
+    });
+
+    // Sort API_CONFIGS based on provider order
+    return [...API_CONFIGS].sort((a, b) => {
+      const orderA = orderMap.get(a.provider) ?? 999;
+      const orderB = orderMap.get(b.provider) ?? 999;
+      return orderA - orderB;
+    });
+  }, [providerOrder]);
+
   return (
     <div className="options-container">
       <header className="options-header">
@@ -731,7 +751,7 @@ const OptionsPage: React.FC = () => {
               </div>
 
               <div className="api-keys-list">
-                {API_CONFIGS.map((config) => {
+                {sortedApiConfigs.map((config) => {
                   const providerKey = config.provider.toLowerCase();
                   const state = apiKeyStates[config.provider];
 
