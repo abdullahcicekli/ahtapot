@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
 import { CacheManager, CacheSettings } from '@/utils/cacheManager';
 import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
+import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils/providerOrderStorage';
+import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import '@/i18n/config';
 import './options.css';
 
@@ -114,10 +116,16 @@ const OptionsPage: React.FC = () => {
   });
   const [isClearingCache, setIsClearingCache] = useState(false);
 
+  // Provider order state
+  const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
   // Load settings
   useEffect(() => {
     loadSettings();
     loadCacheSettings();
+    loadProviderOrder();
 
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -431,6 +439,80 @@ const OptionsPage: React.FC = () => {
     return `${day}/${month}/${year}`;
   };
 
+  // Load provider order
+  async function loadProviderOrder() {
+    try {
+      const order = await getProviderOrder();
+      setProviderOrder(order);
+    } catch (err) {
+      console.error('Error loading provider order:', err);
+    }
+  }
+
+  // Handle drag start
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  // Handle drag over
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    setDragOverIndex(index);
+  };
+
+  // Handle drag leave
+  const handleDragLeave = () => {
+    setDragOverIndex(null);
+  };
+
+  // Handle drop
+  const handleDrop = async (e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+
+    if (draggedIndex === null || draggedIndex === dropIndex) {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+
+    const newOrder = [...providerOrder];
+    const [draggedItem] = newOrder.splice(draggedIndex, 1);
+    newOrder.splice(dropIndex, 0, draggedItem);
+
+    setProviderOrder(newOrder);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+
+    // Save to storage
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
+      console.error('Error saving provider order:', err);
+    }
+  };
+
+  // Handle drag end
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  // Reset provider order
+  const handleResetProviderOrder = async () => {
+    if (!confirm(t('general.providerOrder.resetConfirm', { ns: 'options' }))) {
+      return;
+    }
+
+    try {
+      await resetProviderOrder();
+      await loadProviderOrder();
+    } catch (err) {
+      setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
+      console.error('Error resetting provider order:', err);
+    }
+  };
+
   return (
     <div className="options-container">
       <header className="options-header">
@@ -588,6 +670,52 @@ const OptionsPage: React.FC = () => {
                   )}
                 </button>
               </div>
+            </div>
+
+            {/* Provider Order Settings */}
+            <div className="setting-card">
+              <div className="setting-header">
+                <Settings size={20} />
+                <div>
+                  <h3>{t('general.providerOrder.title', { ns: 'options' })}</h3>
+                  <p className="setting-description">
+                    {t('general.providerOrder.description', { ns: 'options' })}
+                  </p>
+                </div>
+              </div>
+
+              <div className="provider-order-list">
+                {providerOrder.map((provider, index) => {
+                  const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
+                  const isDragging = draggedIndex === index;
+                  const isDragOver = dragOverIndex === index;
+
+                  return (
+                    <div
+                      key={provider}
+                      className={`provider-order-item ${isDragging ? 'dragging' : ''} ${isDragOver ? 'drag-over' : ''}`}
+                      draggable
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={(e) => handleDragOver(e, index)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, index)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <GripVertical size={20} className="drag-handle" />
+                      <span className="provider-order-number">{index + 1}</span>
+                      <span className="provider-order-name">{serviceName}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={handleResetProviderOrder}
+                className="reset-order-btn"
+              >
+                <RotateCcw size={18} />
+                {t('general.providerOrder.resetOrder', { ns: 'options' })}
+              </button>
             </div>
           </div>
         )}

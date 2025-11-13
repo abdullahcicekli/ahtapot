@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.1-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.5.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
@@ -22,14 +22,14 @@
 
 ---
 
-## 🆕 What's New in v2.3.2
+## 🆕 What's New in v2.5.0
 
-### Latest Release (October 25, 2025)
-- 🎨 **Custom Loading Animation** - Branded Ahtapot logo spinner with smooth vertical rotation
-- 🎯 **Enhanced No-Results UX** - Color-coded cards showing searched IOCs and supported types
-- 📊 **Improved AbuseIPDB Layout** - Abuse Categories now appear before Location & Network
-- 🔽 **Collapsible OTX Section** - Threat summary section now collapsible (default closed)
-- 🌍 **Better i18n Coverage** - Enhanced translations for empty states and loading messages
+### Latest Release (November 13, 2025)
+- 🎯 **Customizable Provider Order** - Drag-and-drop reordering of providers in settings
+- 📊 **Personalized Results Display** - Analysis results appear in your custom provider order
+- 💾 **Persistent Preferences** - Your provider order is saved and synced automatically
+- 🔄 **Easy Reset** - One-click reset to default alphabetical order
+- 🌍 **Full i18n Support** - Complete English and Turkish translations for the new feature
 
 ### Active Threat Intelligence Providers
 - ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise**

@@ -31,6 +31,15 @@
       "clearConfirm": "Are you sure you want to clear all cached data?",
       "clearSuccess": "Cache cleared successfully",
       "clearError": "Failed to clear cache"
+    },
+    "providerOrder": {
+      "title": "Provider Display Order",
+      "description": "Customize the order in which providers appear in analysis results. Drag and drop to reorder.",
+      "dragHint": "Drag to reorder",
+      "resetOrder": "Reset to Default",
+      "resetConfirm": "Are you sure you want to reset the provider order to default?",
+      "orderSaved": "Provider order saved successfully",
+      "orderSaveError": "Failed to save provider order"
     }
   },
   "privacyNote": {
@@ -244,6 +253,6 @@
     "saveError": "Failed to save"
   },
   "footer": {
-    "text": "Ahtapot v2.4.0 • Cybersecurity Indicator Analysis Tool"
+    "text": "Ahtapot v2.5.0 • Cybersecurity Indicator Analysis Tool"
   }
 }

@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2025-11-13
+
+### Added
+- **Customizable Provider Display Order** - New drag-and-drop interface in General Settings
+  - Reorder providers according to personal preference
+  - Visual drag handles with smooth animations
+  - Real-time order preview with numbered indicators
+  - One-click reset to default alphabetical order
+- **Persistent Provider Ordering** - Custom order saved to Chrome storage
+  - Automatic synchronization across extension components
+  - Results display respects custom provider order
+  - Default alphabetical sorting for new installations
+- **Provider Order Storage System** - New utility module for order management
+  - `providerOrderStorage.ts` with complete CRUD operations
+  - Automatic handling of new providers added in future updates
+  - Smart sorting algorithm for results based on custom order
+- **Enhanced General Settings UI** - New section with modern design
+  - Drag-and-drop provider list with visual feedback
+  - Hover effects and drag-over animations
+  - Color-coded numbering system
+  - Responsive layout optimized for settings page
+
+### Changed
+- Results in sidepanel now appear in user-defined provider order
+- Provider tabs maintain custom ordering for better UX consistency
+- Complete i18n support for English and Turkish
+  - General Settings > Provider Display Order section
+  - Drag hints, reset confirmation, and success messages
+- Version bumped to 2.5.0 (MINOR update - new feature)
+  - Updated in package.json, manifest.json, and i18n footer
+
+### Technical
+- Added `src/utils/providerOrderStorage.ts` utility module
+- Enhanced options page with drag-and-drop event handlers
+- Implemented `sortResultsByProviderOrder()` helper function
+- Added CSS animations for drag states (dragging, drag-over)
+- Provider order state management in both options and sidepanel components
+
 ## [2.4.0] - 2025-11-13
 
 ### Added

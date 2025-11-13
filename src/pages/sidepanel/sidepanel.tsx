@@ -27,6 +27,7 @@ import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
 import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { getProviderOrder, sortResultsByProviderOrder } from '@/utils/providerOrderStorage';
 import '@/i18n/config';
 import './sidepanel.css';
 
@@ -67,6 +68,20 @@ const SidePanel: React.FC = () => {
   const [isInputExpanded, setIsInputExpanded] = useState(true);
   const [pendingRateLimitProviders, setPendingRateLimitProviders] = useState<Set<'greynoise' | 'shodan'>>(new Set());
   const [currentIOCs, setCurrentIOCs] = useState<DetectedIOC[]>([]);
+  const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+
+  // Load provider order
+  useEffect(() => {
+    async function loadOrder() {
+      try {
+        const order = await getProviderOrder();
+        setProviderOrder(order);
+      } catch (error) {
+        console.error('[Sidepanel] Error loading provider order:', error);
+      }
+    }
+    loadOrder();
+  }, []);
 
   useEffect(() => {
     checkAPIKeys();
@@ -206,11 +221,14 @@ const SidePanel: React.FC = () => {
 
       if (response && response.success) {
         const responseResults = response.results || [];
-        setResults(responseResults);
+
+        // Sort results by custom provider order
+        const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(responseResults, providerOrder);
+        setResults(sortedResults);
 
         // Always set first provider with results as active tab
-        if (responseResults.length > 0) {
-          setActiveProviderTab(responseResults[0].source);
+        if (sortedResults.length > 0) {
+          setActiveProviderTab(sortedResults[0].source);
         }
 
         if (response.analyzingProviders) {
@@ -251,8 +269,10 @@ const SidePanel: React.FC = () => {
       if (response && response.success) {
         const responseResults = response.results || [];
 
-        // Add new results to existing results
-        setResults(prev => [...prev, ...responseResults]);
+        // Add new results to existing results and sort
+        const combinedResults = [...results, ...responseResults];
+        const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(combinedResults, providerOrder);
+        setResults(sortedResults);
 
         if (response.analyzingProviders) {
           setAnalyzingProviders(response.analyzingProviders);
