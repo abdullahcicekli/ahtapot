@@ -876,7 +876,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   cursor: move;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   position: relative;
 }
@@ -888,22 +888,17 @@ body {
 }
 
 .provider-order-item.dragging {
-  opacity: 0.4;
-  transform: scale(0.95) rotate(2deg);
-  z-index: 1000;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  border-color: rgba(74, 158, 255, 0.5);
-  background: rgba(74, 158, 255, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  height: 48px;
+  min-height: 48px;
+  border: 2px dashed rgba(74, 158, 255, 0.4);
+  background: rgba(74, 158, 255, 0.08);
+  transition: all 0.2s ease;
 }
 
-.provider-order-item.shift-up {
-  transform: translateY(-56px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.provider-order-item.shift-down {
-  transform: translateY(56px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.provider-order-item.dragging * {
+  opacity: 0;
 }
 
 .drag-handle {

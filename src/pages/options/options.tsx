@@ -458,30 +458,20 @@ const OptionsPage: React.FC = () => {
   const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
 
-    if (draggedIndex === null) return;
+    if (draggedIndex === null || draggedIndex === index) return;
 
-    // Determine if we should show the drop indicator above or below
-    const rect = e.currentTarget.getBoundingClientRect();
-    const midpoint = rect.top + rect.height / 2;
-    const isAbove = e.clientY < midpoint;
-
-    // Calculate the target index based on position
-    let targetIndex = index;
-    if (!isAbove && draggedIndex !== null && index >= draggedIndex) {
-      targetIndex = index;
-    } else if (isAbove && draggedIndex !== null && index > draggedIndex) {
-      targetIndex = index - 1;
-    }
-
-    setDragOverIndex(targetIndex);
+    // Set the target drop index
+    setDragOverIndex(index);
   };
 
   // Handle drag leave
   const handleDragLeave = (e: React.DragEvent) => {
-    // Only clear if leaving the container entirely
     const relatedTarget = e.relatedTarget as HTMLElement;
-    if (!relatedTarget || !relatedTarget.closest('.provider-order-item')) {
-      setDragOverIndex(null);
+    const currentTarget = e.currentTarget as HTMLElement;
+
+    // Only clear if truly leaving the list
+    if (relatedTarget && !currentTarget.contains(relatedTarget)) {
+      return;
     }
   };
 
@@ -489,32 +479,16 @@ const OptionsPage: React.FC = () => {
   const handleDrop = async (e: React.DragEvent, dropIndex: number) => {
     e.preventDefault();
 
-    if (draggedIndex === null) {
-      setDragOverIndex(null);
-      return;
-    }
-
-    // Calculate actual drop position
-    const rect = e.currentTarget.getBoundingClientRect();
-    const midpoint = rect.top + rect.height / 2;
-    const isAbove = e.clientY < midpoint;
-
-    let targetIndex = dropIndex;
-    if (!isAbove && dropIndex >= draggedIndex) {
-      targetIndex = dropIndex;
-    } else if (isAbove && dropIndex > draggedIndex) {
-      targetIndex = dropIndex - 1;
-    }
-
-    if (draggedIndex === targetIndex) {
+    if (draggedIndex === null || draggedIndex === dropIndex) {
       setDraggedIndex(null);
       setDragOverIndex(null);
       return;
     }
 
+    // Create new order by inserting at target position
     const newOrder = [...providerOrder];
     const [draggedItem] = newOrder.splice(draggedIndex, 1);
-    newOrder.splice(targetIndex, 0, draggedItem);
+    newOrder.splice(dropIndex, 0, draggedItem);
 
     setProviderOrder(newOrder);
     setDraggedIndex(null);
@@ -726,26 +700,31 @@ const OptionsPage: React.FC = () => {
                   const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
                   const isDragging = draggedIndex === index;
 
-                  // Calculate if this item should shift up or down
-                  let shouldShift = false;
-                  let shiftDirection: 'up' | 'down' = 'down';
-
-                  if (draggedIndex !== null && dragOverIndex !== null && !isDragging) {
-                    if (draggedIndex < dragOverIndex) {
-                      // Dragging down: shift items between draggedIndex and dragOverIndex up
-                      shouldShift = index > draggedIndex && index <= dragOverIndex;
-                      shiftDirection = 'up';
-                    } else if (draggedIndex > dragOverIndex) {
-                      // Dragging up: shift items between dragOverIndex and draggedIndex down
-                      shouldShift = index >= dragOverIndex && index < draggedIndex;
-                      shiftDirection = 'down';
+                  // Calculate visual position during drag
+                  let visualIndex = index;
+                  if (draggedIndex !== null && dragOverIndex !== null) {
+                    if (index === draggedIndex) {
+                      visualIndex = dragOverIndex;
+                    } else if (draggedIndex < dragOverIndex) {
+                      // Dragging down
+                      if (index > draggedIndex && index <= dragOverIndex) {
+                        visualIndex = index - 1;
+                      }
+                    } else {
+                      // Dragging up
+                      if (index >= dragOverIndex && index < draggedIndex) {
+                        visualIndex = index + 1;
+                      }
                     }
                   }
 
                   return (
                     <div
                       key={provider}
-                      className={`provider-order-item ${isDragging ? 'dragging' : ''} ${shouldShift ? `shift-${shiftDirection}` : ''}`}
+                      className={`provider-order-item ${isDragging ? 'dragging' : ''}`}
+                      style={{
+                        order: visualIndex,
+                      }}
                       draggable
                       onDragStart={() => handleDragStart(index)}
                       onDragOver={(e) => handleDragOver(e, index)}
@@ -754,7 +733,7 @@ const OptionsPage: React.FC = () => {
                       onDragEnd={handleDragEnd}
                     >
                       <GripVertical size={20} className="drag-handle" />
-                      <span className="provider-order-number">{index + 1}</span>
+                      <span className="provider-order-number">{visualIndex + 1}</span>
                       <span className="provider-order-name">{serviceName}</span>
                     </div>
                   );
