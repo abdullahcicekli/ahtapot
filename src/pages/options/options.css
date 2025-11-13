@@ -864,6 +864,7 @@ body {
   flex-direction: column;
   gap: 8px;
   margin: 20px 0;
+  position: relative;
 }
 
 .provider-order-item {
@@ -875,25 +876,34 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   cursor: move;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
+  position: relative;
 }
 
-.provider-order-item:hover {
+.provider-order-item:hover:not(.dragging) {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(74, 158, 255, 0.3);
+  transform: translateX(4px);
 }
 
 .provider-order-item.dragging {
-  opacity: 0.5;
-  transform: scale(0.98);
+  opacity: 0.4;
+  transform: scale(0.95) rotate(2deg);
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(74, 158, 255, 0.5);
+  background: rgba(74, 158, 255, 0.15);
 }
 
-.provider-order-item.drag-over {
-  border-color: #4a9eff;
-  background: rgba(74, 158, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
+.provider-order-item.shift-up {
+  transform: translateY(-56px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.provider-order-item.shift-down {
+  transform: translateY(56px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .drag-handle {
