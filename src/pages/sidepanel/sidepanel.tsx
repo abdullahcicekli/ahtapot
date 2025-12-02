@@ -22,7 +22,6 @@ import { ARINResultCard } from '@/components/results/ARINResultCard';
 import { ShodanResultCard } from '@/components/results/ShodanResultCard';
 import { GreyNoiseResultCard } from '@/components/results/GreyNoiseResultCard';
 import { URLhausResultCard } from '@/components/results/URLhausResultCard';
-import { XForceResultCard } from '@/components/results/XForceResultCard';
 import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
 import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
@@ -41,7 +40,6 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'Shodan': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN],
   'GreyNoise': [IOCType.IPV4],
   'URLhaus': [IOCType.URL, IOCType.DOMAIN, IOCType.IPV4, IOCType.IPV6, IOCType.MD5, IOCType.SHA256],
-  'X-Force': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'Pulsedive': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'Scamalytics': [IOCType.IPV4, IOCType.IPV6],
 };
@@ -406,7 +404,20 @@ const SidePanel: React.FC = () => {
             // The UI will show either results or a "no results" message
             setActiveProviderTab(providerName);
           }}
-          visibleProviders={results.length > 0 ? Array.from(new Set(results.map(r => r.source))) : undefined}
+          visibleProviders={results.length > 0 ? (() => {
+            // Get providers from results
+            const resultProviders = Array.from(new Set(results.map(r => r.source)));
+            
+            // Add pending rate-limited providers to visible list
+            if (pendingRateLimitProviders.has('greynoise')) {
+              resultProviders.push('GreyNoise');
+            }
+            if (pendingRateLimitProviders.has('shodan')) {
+              resultProviders.push('Shodan');
+            }
+            
+            return resultProviders;
+          })() : undefined}
         />
 
          {loading && (
@@ -561,9 +572,6 @@ const SidePanel: React.FC = () => {
                     return <URLhausResultCard key={index} result={result} />;
                   }
 
-                  if (result.source === 'X-Force') {
-                    return <XForceResultCard key={index} result={result} />;
-                  }
 
                   if (result.source === 'Pulsedive') {
                     return <PulsediveResultCard key={index} result={result} />;

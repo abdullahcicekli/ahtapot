@@ -98,11 +98,6 @@
       "description": "Kötü amaçlı URL ve kötü yazılım dağıtım sitesi veritabanı",
       "placeholder": "URLhaus API anahtarınız"
     },
-    "xforce": {
-      "label": "IBM X-Force Exchange",
-      "description": "Tehdit istihbaratı ve güvenlik açığı verileri",
-      "placeholder": "APIKey:Password formatı"
-    },
     "pulsedive": {
       "label": "Pulsedive",
       "description": "IOC zenginleştirme ile tehdit istihbarat platformu",
@@ -137,7 +132,8 @@
     }
   },
   "notes": {
-    "malwarebazaar": "Auth Key oluşturulduktan sonra sadece bir kez gösterilir. Değiştirmeniz gerekirse yeni bir anahtar oluşturmalısınız. Bir kez oluşturulduktan sonra tekrar görüntülenemez, bu yüzden hemen extension'a kaydedin."
+    "malwarebazaar": "Auth Key oluşturulduktan sonra sadece bir kez gösterilir. Değiştirmeniz gerekirse yeni bir anahtar oluşturmalısınız. Bir kez oluşturulduktan sonra tekrar görüntülenemez, bu yüzden hemen extension'a kaydedin.",
+    "scamalytics": "Kayıt için manuel inceleme gereklidir. Onay sonrası API bilgilerinizi içeren özel bir link (30 gün geçerli) alacaksınız. Ücretsiz plan aylık 5.000 kredi ve ESSENTIAL alanları içerir. PREMIUM alanlar 15 günlük deneme süresince kullanılabilir."
   },
   "tooltips": {
     "virustotal": "API anahtarı ekle",
@@ -147,7 +143,6 @@
     "shodan": "API anahtarı ekle",
     "greynoise": "API anahtarı ekle",
     "urlhaus": "API anahtarı ekle",
-    "xforce": "API anahtarı ekle",
     "pulsedive": "API anahtarı ekle",
     "scamalytics": "API anahtarı ekle"
   },
@@ -194,12 +189,6 @@
       "feature3": "URL durum izleme (çevrimiçi/çevrimdışı)",
       "feature4": "Kötü yazılım dağıtım takibi"
     },
-    "xforce": {
-      "feature1": "IP/URL/Domain itibar puanlaması",
-      "feature2": "Kötü yazılım ailesi tanımlama",
-      "feature3": "Geçmiş tehdit verileri",
-      "feature4": "Kategori sınıflandırması"
-    },
     "pulsedive": {
       "feature1": "Risk seviyesi değerlendirmesi",
       "feature2": "Tehdit ve feed takibi",
@@ -207,10 +196,10 @@
       "feature4": "Topluluk odaklı istihbarat"
     },
     "scamalytics": {
-      "feature1": "IP dolandırıcılık puanı (0-100)",
-      "feature2": "Dolandırıcılık ve sahtecilik tespiti",
-      "feature3": "Risk seviyesi sınıflandırması",
-      "feature4": "Dolandırıcılık göstergesi takibi"
+      "feature1": "IP dolandırıcılık risk puanı (0-100)",
+      "feature2": "Datacenter & VPN tespiti",
+      "feature3": "TOR çıkış düğümü tespiti",
+      "feature4": "Harici kara liste kontrolleri"
     }
   },
   "limits": {
@@ -242,17 +231,13 @@
       "free": "Sınırsız (ücretsiz hesap)",
       "rate": "Belirtilen limit yok"
     },
-    "xforce": {
-      "free": "5.000 istek/ay (ücretsiz)",
-      "rate": "Makul kullanım"
-    },
     "pulsedive": {
       "free": "250 istek/gün (ücretsiz hesap)",
       "rate": "2.500 istek/ay"
     },
     "scamalytics": {
-      "free": "5.000 istek/ay (ücretsiz)",
-      "rate": "Belirtilen limit yok"
+      "free": "5.000 kredi/ay",
+      "rate": "15 gün PREMIUM deneme"
     }
   },
   "actions": {
@@ -265,6 +250,6 @@
     "saveError": "Kaydetme başarısız"
   },
   "footer": {
-    "text": "Ahtapot v2.5.0 • Siber Güvenlik Gösterge Analiz Aracı"
+    "text": "Ahtapot v{{version}} • Siber Güvenlik Gösterge Analiz Aracı"
   }
 }

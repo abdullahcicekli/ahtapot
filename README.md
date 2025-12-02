@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.5.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.6.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
@@ -22,20 +22,20 @@
 
 ---
 
-## 🆕 What's New in v2.5.0
+## 🆕 What's New in v2.6.0
 
-### Latest Release (November 13, 2025)
-- 🎯 **Customizable Provider Order** - Drag-and-drop reordering of providers in settings
-- 📊 **Personalized Results Display** - Analysis results appear in your custom provider order
-- 💾 **Persistent Preferences** - Your provider order is saved and synced automatically
-- 🔄 **Easy Reset** - One-click reset to default alphabetical order
-- 🌍 **Full i18n Support** - Complete English and Turkish translations for the new feature
+### Latest Release (December 2, 2025)
+- 🎨 **Enhanced Provider Cards** - Completely redesigned Pulsedive, URLhaus & Scamalytics result cards
+- 🔒 **Scamalytics API v3** - Full integration with fraud score, proxy detection & blacklist checks
+- 📊 **Rich Data Display** - Stats grids, threat indicators, and detailed sections for all providers
+- 🔗 **URL-based Settings** - Settings tabs now controllable via URL (?tab=apiKeys)
+- 🛡️ **Rate Limit Badges** - Shodan & GreyNoise visible in badges when pending confirmation
 
-### Active Threat Intelligence Providers
-- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise**
+### Active Threat Intelligence Providers (10 Providers)
+- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise** • **URLhaus** • **Pulsedive** • **Scamalytics**
 - 🎯 **Smart API Usage** - Only queries providers supporting the IOC type
 - ⚠️ **Rate Limit Protection** - Confirmation system for GreyNoise and Shodan
-- 🆓 **No API Key Required** - ARIN WHOIS (always available)
+- 🆓 **No API Key Required** - ARIN WHOIS & URLhaus (always available)
 
 📜 **[View Complete Changelog](CHANGELOG.md)** - Full version history and detailed release notes
 
@@ -82,6 +82,9 @@ Automatically detects and analyzes various types of security indicators:
 | **ARIN** | IP WHOIS & network registration | 15 req/min (no key required) |
 | **Shodan** | Device search & vulnerability scanning | 100 results/month (free) ⚠️ |
 | **GreyNoise** | Internet noise detection & classification | 50 searches/week (free) ⚠️ |
+| **URLhaus** | Malicious URL & malware distribution database | Unlimited (free) |
+| **Pulsedive** | Threat intelligence with IOC enrichment | 250 req/day (free) |
+| **Scamalytics** | IP fraud score & scam detection | 5,000 credits/month (free) |
 
 **⚠️** = Rate-limited providers with confirmation system to protect your quota
 
@@ -438,7 +441,7 @@ For detailed information:
 📚 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
 📜 **[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
 
-**Current Version:** 2.3.1
+**Current Version:** 2.6.0
 
 ---
 

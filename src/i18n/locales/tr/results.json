@@ -335,28 +335,75 @@
     "title": "URLhaus",
     "urlStatus": "URL Durumu",
     "threat": "Tehdit",
+    "threats": "Tehditler",
     "urlCount": "URL Sayısı",
     "onlineCount": "Aktif URL'ler",
-    "tags": "Etiketler"
-  },
-  "xforce": {
-    "title": "X-Force Exchange",
-    "riskScore": "Risk Puanı",
-    "location": "Konum",
-    "categories": "Kategoriler",
-    "reason": "Sebep"
+    "offlineCount": "Çevrimdışı URL'ler",
+    "online": "Aktif",
+    "offline": "Çevrimdışı",
+    "firstSeen": "İlk Görülme:",
+    "blacklists": "Kara Listeler",
+    "blacklistStatus": "Kara Liste Durumu",
+    "tags": "Etiketler",
+    "sampleUrls": "Örnek URL'ler",
+    "details": "Detaylar",
+    "reporter": "Raporlayan:",
+    "status": {
+      "malicious": "Zararlı",
+      "suspicious": "Şüpheli",
+      "clean": "Temiz"
+    },
+    "statusDescription": {
+      "malicious": "Bu host üzerinde {{count}} aktif zararlı URL tespit edildi",
+      "suspicious": "{{count}} zararlı URL bulundu ancak şu anda çevrimdışı",
+      "clean": "Bu gösterge için zararlı URL bulunamadı"
+    },
+    "viewFullReport": "URLhaus'da Tam Raporu Görüntüle →"
   },
   "pulsedive": {
     "title": "Pulsedive",
     "risk": "Risk Seviyesi",
+    "location": "Konum",
+    "country": "Ülke:",
+    "region": "Bölge:",
+    "org": "Organizasyon",
+    "orgName": "Ad:",
+    "netname": "Ağ:",
+    "timestamps": "Zaman Damgaları",
+    "firstSeen": "İlk Görülme:",
+    "lastUpdated": "Son Güncelleme:",
+    "lastSeen": "Son Görülme:",
     "threats": "Tehditler",
     "riskFactors": "Risk Faktörleri",
-    "feeds": "Tehdit Kaynakları"
+    "feeds": "Tehdit Kaynakları",
+    "status": {
+      "critical": "Kritik",
+      "high": "Yüksek Risk",
+      "medium": "Orta Risk",
+      "low": "Düşük Risk",
+      "clean": "Temiz",
+      "unknown": "Bilinmiyor"
+    },
+    "viewFullReport": "Pulsedive'da Tam Raporu Görüntüle →"
   },
   "scamalytics": {
     "title": "Scamalytics",
     "fraudScore": "Dolandırıcılık Puanı",
-    "indicators": "Dolandırıcılık Göstergeleri"
+    "riskLevel": "Risk Seviyesi",
+    "ispScore": "ISP Puanı",
+    "blacklisted": "Kara Listede",
+    "indicators": "Dolandırıcılık Göstergeleri",
+    "proxyDetection": "Proxy Tespiti",
+    "noDescription": "Ek risk bilgisi mevcut değil",
+    "status": {
+      "veryHigh": "Çok Yüksek Risk",
+      "high": "Yüksek Risk",
+      "medium": "Orta Risk",
+      "low": "Düşük Risk",
+      "veryLow": "Çok Düşük Risk",
+      "unknown": "Bilinmiyor"
+    },
+    "viewFullReport": "Scamalytics'te Tam Raporu Görüntüle →"
   },
   "generic": {
     "source": "Kaynak",

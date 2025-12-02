@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2025-12-02
+
+### Added
+- **Enhanced Provider Result Cards** - Completely redesigned Pulsedive, URLhaus, and Scamalytics result cards
+  - Modern UI matching VirusTotal/ARIN/OTX design language
+  - Rich data display with all API response fields
+  - Stats grids, threat indicators, and detailed sections
+- **Scamalytics API v3 Integration** - Full implementation with correct endpoint format
+  - Support for single API key and username:key formats
+  - Fraud score, risk level, ISP score display
+  - Proxy detection (VPN, Datacenter, Tor, iCloud Private Relay)
+  - External blacklist status
+- **Rate-Limited Provider Badges** - Shodan and GreyNoise now visible in provider badges when pending confirmation
+- **URL-based Tab Management** - Settings page tabs now controllable via URL parameter (?tab=apiKeys)
+- **Environment Variables Example** - Added `.env.example` file for development setup
+
+### Changed
+- **Pulsedive Result Card** - Complete redesign with:
+  - Risk indicator with color-coded circle
+  - Location, organization, and timestamp sections
+  - Threats, risk factors, and feeds display
+  - Consistent styling with other provider cards
+- **URLhaus Result Card** - Complete redesign with:
+  - URL count stats circle with active/offline breakdown
+  - Stats grid (URL Count, Active, Offline, Blacklists)
+  - Threat tags and sample URLs with status indicators
+  - Blacklist status display (Spamhaus DBL, SURBL)
+- **Scamalytics Result Card** - Complete redesign with:
+  - Fraud score circle with risk color
+  - Stats grid (Score, Risk Level, ISP Score, Blacklisted)
+  - Fraud indicators section
+  - Proxy detection details
+- Updated Scamalytics info notes with accurate registration process
+- Improved Turkish and English translations for all new features
+
+### Fixed
+- Scamalytics API endpoint format (now supports multiple authentication methods)
+- Provider status badges now show pending rate-limited providers
+- Result card theme compatibility issues
+
+### Removed
+- **IBM X-Force Exchange Integration** - Temporarily removed due to API key creation issues (will be re-added when clarified)
+
+### Technical
+- Added dedicated CSS files for Pulsedive, URLhaus, and Scamalytics result cards
+- Enhanced ScamalyticsService with auto-detection of API key format
+- Updated type definitions for Scamalytics API v3 response
+- Centralized version display from manifest.json
+
 ## [2.5.0] - 2025-11-13
 
 ### Added
@@ -221,6 +270,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
+- **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
+- **2.5.x** - Customizable provider display order, drag-and-drop reordering
+- **2.4.x** - URLhaus, Pulsedive, Scamalytics integrations
 - **2.3.x** - UX enhancements, rate limit protection, GreyNoise integration
 - **2.2.x** - Shodan and ARIN WHOIS integrations, enhanced network analysis
 - **2.1.x** - AbuseIPDB and MalwareBazaar integrations

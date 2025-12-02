@@ -7,7 +7,6 @@ import { ARINService } from './tools/ARINService';
 import { ShodanService } from './tools/ShodanService';
 import { GreyNoiseService } from './tools/GreyNoiseService';
 import { URLhausService } from './tools/URLhausService';
-import { XForceService } from './tools/XForceService';
 import { PulsediveService } from './tools/PulsediveService';
 import { ScamalyticsService } from './tools/ScamalyticsService';
 import { APIProvider } from '@/types/ioc';
@@ -164,17 +163,6 @@ export class ServiceRegistry {
           })
         );
         console.log('[ServiceRegistry] URLhaus service initialized');
-        break;
-
-      case APIProvider.XFORCE:
-        this.services.set(
-          provider,
-          new XForceService({
-            apiKey,
-            timeout: 30000,
-          })
-        );
-        console.log('[ServiceRegistry] X-Force service initialized');
         break;
 
       case APIProvider.PULSEDIVE:

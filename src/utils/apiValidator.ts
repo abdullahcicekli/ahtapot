@@ -47,11 +47,6 @@ export class APIKeyValidator {
       header: 'Auth-Key',
       method: 'POST',
     },
-    [APIProvider.XFORCE]: {
-      url: 'https://api.xforce.ibmcloud.com/ipr/8.8.8.8',
-      header: 'Authorization',
-      authType: 'basic',
-    },
     [APIProvider.PULSEDIVE]: {
       url: 'https://pulsedive.com/api/info.php?indicator=8.8.8.8',
       header: 'key',
@@ -98,11 +93,6 @@ export class APIKeyValidator {
       if (authType === 'query' || provider === APIProvider.SHODAN) {
         // Query parameter authentication (Shodan, Pulsedive)
         url = `${endpoint.url}&key=${apiKey}`;
-      } else if (authType === 'basic') {
-        // Basic authentication (X-Force)
-        const [apiKeyPart, password] = apiKey.split(':');
-        const credentials = btoa(`${apiKeyPart}:${password || ''}`);
-        headers[endpoint.header] = `Basic ${credentials}`;
       } else if (provider === APIProvider.SCAMALYTICS) {
         // Bearer token authentication
         headers[endpoint.header] = `Bearer ${apiKey}`;

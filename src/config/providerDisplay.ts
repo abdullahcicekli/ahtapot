@@ -12,7 +12,6 @@ import { APIProvider } from '@/types/ioc';
 export const DEFAULT_PROVIDER_ORDER: APIProvider[] = [
   APIProvider.VIRUSTOTAL,
   APIProvider.URLHAUS,
-  APIProvider.XFORCE,
   APIProvider.ABUSEIPDB,
   APIProvider.PULSEDIVE,
   APIProvider.OTX,

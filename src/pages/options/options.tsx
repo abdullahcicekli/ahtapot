@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
@@ -76,12 +76,6 @@ const API_CONFIGS: APIKeyConfig[] = [
     signupLink: 'https://auth.abuse.ch/signup',
   },
   {
-    provider: APIProvider.XFORCE,
-    label: 'IBM X-Force Exchange',
-    link: 'https://exchange.xforce.ibmcloud.com/settings/api',
-    signupLink: 'https://exchange.xforce.ibmcloud.com/',
-  },
-  {
     provider: APIProvider.PULSEDIVE,
     label: 'Pulsedive',
     link: 'https://pulsedive.com/account/',
@@ -104,7 +98,18 @@ const API_CONFIGS: APIKeyConfig[] = [
 
 const OptionsPage: React.FC = () => {
   const { t, i18n } = useTranslation(['options', 'common']);
-  const [activeTab, setActiveTab] = useState<TabType>('general');
+  
+  // Get initial tab from URL
+  const getInitialTab = (): TabType => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab') as TabType | null;
+    if (tab && (tab === 'general' || tab === 'apiKeys')) {
+      return tab;
+    }
+    return 'general';
+  };
+  
+  const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
   const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(i18n.language as SupportedLanguage || 'en');
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
@@ -153,16 +158,11 @@ const OptionsPage: React.FC = () => {
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const provider = urlParams.get('provider');
-    const tab = urlParams.get('tab') as TabType | null;
-
-    // Set tab from URL if provided
-    if (tab && (tab === 'general' || tab === 'apiKeys')) {
-      setActiveTab(tab);
-    }
 
     if (provider) {
       // Switch to API Keys tab if provider is specified
       setActiveTab('apiKeys');
+      updateURL('apiKeys');
 
       // Scroll to the provider card after a short delay
       setTimeout(() => {
@@ -188,6 +188,23 @@ const OptionsPage: React.FC = () => {
       chrome.runtime.onMessage.removeListener(messageListener);
     };
   }, []);
+
+  // Update URL when tab changes
+  const updateURL = useCallback((tab: TabType) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    // Remove provider param when switching tabs (unless it's apiKeys)
+    if (tab !== 'apiKeys') {
+      url.searchParams.delete('provider');
+    }
+    window.history.replaceState({}, '', url.toString());
+  }, []);
+
+  // Handle tab change with URL update
+  const handleTabChange = useCallback((tab: TabType) => {
+    setActiveTab(tab);
+    updateURL(tab);
+  }, [updateURL]);
 
   // Scroll to specific provider card and highlight it
   const scrollToProvider = (provider: APIProvider) => {
@@ -593,6 +610,50 @@ const OptionsPage: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOrderModalOpen, handleCloseOrderModal]);
 
+  // Move provider up in the list
+  const handleMoveUp = useCallback(async (index: number) => {
+    if (index === 0) return;
+
+    const newOrder = [...providerOrder];
+    [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
+    setProviderOrder(newOrder);
+
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      console.error('Error saving provider order:', err);
+    }
+  }, [providerOrder]);
+
+  // Move provider down in the list
+  const handleMoveDown = useCallback(async (index: number) => {
+    if (index === providerOrder.length - 1) return;
+
+    const newOrder = [...providerOrder];
+    [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
+    setProviderOrder(newOrder);
+
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      console.error('Error saving provider order:', err);
+    }
+  }, [providerOrder]);
+
+  // Provider logo mapping
+  const PROVIDER_LOGOS: Record<APIProvider, string> = {
+    [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
+    [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
+    [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
+    [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
+    [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
+    [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
+    [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
+    [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
+    [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
+    [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
+  };
+
   // Sort API configs by provider order, with locked providers at the end
   const sortedApiConfigs = React.useMemo(() => {
     if (providerOrder.length === 0) {
@@ -640,14 +701,14 @@ const OptionsPage: React.FC = () => {
       <div className="tabs-container">
         <button
           className={`tab ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => setActiveTab('general')}
+          onClick={() => handleTabChange('general')}
         >
           <Settings size={18} />
           {t('tabs.general', { ns: 'options' })}
         </button>
         <button
           className={`tab ${activeTab === 'apiKeys' ? 'active' : ''}`}
-          onClick={() => setActiveTab('apiKeys')}
+          onClick={() => handleTabChange('apiKeys')}
         >
           <Key size={18} />
           {t('tabs.apiKeys', { ns: 'options' })}
@@ -919,6 +980,19 @@ const OptionsPage: React.FC = () => {
                               </p>
                             </div>
                           )}
+
+                          {/* Special note for Scamalytics */}
+                          {config.provider === APIProvider.SCAMALYTICS && (
+                            <div className="api-info-section api-warning-section">
+                              <h4>
+                                <AlertCircle size={16} />
+                                {t('info.importantNote', { ns: 'options' })}
+                              </h4>
+                              <p className="api-warning-text">
+                                {t(`notes.${providerKey}`, { ns: 'options' })}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
 
@@ -1026,15 +1100,23 @@ const OptionsPage: React.FC = () => {
       </main>
 
       <footer className="options-footer">
-        <p>{t('footer.text', { ns: 'options' })}</p>
+        <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
       </footer>
 
       {/* Provider Order Modal */}
       {isOrderModalOpen && (
         <div className="modal-overlay" onClick={handleCloseOrderModal}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-container provider-order-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{t('general.providerOrder.title', { ns: 'options' })}</h2>
+              <div className="modal-header-content">
+                <div className="modal-header-icon">
+                  <Sparkles size={24} />
+                </div>
+                <div>
+                  <h2>{t('general.providerOrder.title', { ns: 'options' })}</h2>
+                  <p className="modal-header-subtitle">{t('general.providerOrder.modalDescription', { ns: 'options' })}</p>
+                </div>
+              </div>
               <button
                 onClick={handleCloseOrderModal}
                 className="modal-close-btn"
@@ -1044,15 +1126,18 @@ const OptionsPage: React.FC = () => {
               </button>
             </div>
 
-            <p className="modal-description">
-              {t('general.providerOrder.modalDescription', { ns: 'options' })}
-            </p>
+            <div className="modal-drag-hint">
+              <Move size={16} />
+              <span>{t('general.providerOrder.dragHint', { ns: 'options' })}</span>
+            </div>
 
             <div className="modal-provider-list">
               {providerOrder.map((provider, index) => {
                 const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
                 const isDragging = draggedIndex === index;
                 const isDropTarget = dragOverIndex === index && draggedIndex !== index;
+                const isFirst = index === 0;
+                const isLast = index === providerOrder.length - 1;
 
                 return (
                   <div
@@ -1064,9 +1149,42 @@ const OptionsPage: React.FC = () => {
                     onDragOver={handleDragOver}
                     onDragEnd={handleDragEnd}
                   >
-                    <GripVertical size={18} className="modal-drag-handle" />
+                    <div className="modal-drag-handle-wrapper">
+                      <GripVertical size={18} className="modal-drag-handle" />
+                    </div>
                     <span className="modal-provider-number">{index + 1}</span>
+                    <div className="modal-provider-logo-wrapper">
+                      <img
+                        src={PROVIDER_LOGOS[provider]}
+                        alt={serviceName}
+                        className="modal-provider-logo"
+                      />
+                    </div>
                     <span className="modal-provider-name">{serviceName}</span>
+                    <div className="modal-provider-actions">
+                      <button
+                        className={`modal-move-btn ${isFirst ? 'disabled' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMoveUp(index);
+                        }}
+                        disabled={isFirst}
+                        title="Move up"
+                      >
+                        <ChevronUp size={16} />
+                      </button>
+                      <button
+                        className={`modal-move-btn ${isLast ? 'disabled' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMoveDown(index);
+                        }}
+                        disabled={isLast}
+                        title="Move down"
+                      >
+                        <ChevronDown size={16} />
+                      </button>
+                    </div>
                   </div>
                 );
               })}
@@ -1081,10 +1199,19 @@ const OptionsPage: React.FC = () => {
                     const serviceName = PROVIDER_TO_SERVICE_NAME[config.provider];
                     return (
                       <div key={config.provider} className="modal-provider-item locked">
-                        <CheckCircle size={18} className="modal-locked-icon" />
-                        <span className="modal-provider-number">
+                        <div className="modal-locked-icon-wrapper">
+                          <CheckCircle size={18} className="modal-locked-icon" />
+                        </div>
+                        <span className="modal-provider-number locked-number">
                           {providerOrder.length + 1}
                         </span>
+                        <div className="modal-provider-logo-wrapper">
+                          <img
+                            src={PROVIDER_LOGOS[config.provider]}
+                            alt={serviceName}
+                            className="modal-provider-logo"
+                          />
+                        </div>
                         <span className="modal-provider-name">{serviceName}</span>
                       </div>
                     );
@@ -1105,6 +1232,7 @@ const OptionsPage: React.FC = () => {
                 onClick={handleCloseOrderModal}
                 className="modal-done-btn"
               >
+                <CheckCircle size={16} />
                 {t('general.providerOrder.doneButton', { ns: 'options' })}
               </button>
             </div>

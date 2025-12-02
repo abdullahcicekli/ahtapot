@@ -98,11 +98,6 @@
       "description": "Malicious URL and malware distribution site database",
       "placeholder": "Your URLhaus API key"
     },
-    "xforce": {
-      "label": "IBM X-Force Exchange",
-      "description": "Threat intelligence and vulnerability data",
-      "placeholder": "APIKey:Password format"
-    },
     "pulsedive": {
       "label": "Pulsedive",
       "description": "Threat intelligence platform with IOC enrichment",
@@ -137,7 +132,8 @@
     }
   },
   "notes": {
-    "malwarebazaar": "Auth Key is shown only once after generation. If you need to change it, you must generate a new key. Once generated, it cannot be viewed again, so save it to the extension immediately."
+    "malwarebazaar": "Auth Key is shown only once after generation. If you need to change it, you must generate a new key. Once generated, it cannot be viewed again, so save it to the extension immediately.",
+    "scamalytics": "Manual review is required for registration. After approval, you'll receive a private link (expires in 30 days) containing your API credentials. Free plan includes 5,000 credits/month with ESSENTIAL fields. PREMIUM fields are available for a 15-day trial."
   },
   "tooltips": {
     "virustotal": "Add API key",
@@ -147,7 +143,6 @@
     "shodan": "Add API key",
     "greynoise": "Add API key",
     "urlhaus": "Add API key",
-    "xforce": "Add API key",
     "pulsedive": "Add API key",
     "scamalytics": "Add API key"
   },
@@ -194,12 +189,6 @@
       "feature3": "URL status monitoring (online/offline)",
       "feature4": "Malware distribution tracking"
     },
-    "xforce": {
-      "feature1": "IP/URL/Domain reputation scoring",
-      "feature2": "Malware family identification",
-      "feature3": "Historical threat data",
-      "feature4": "Category classification"
-    },
     "pulsedive": {
       "feature1": "Risk level assessment",
       "feature2": "Threat and feed tracking",
@@ -207,10 +196,10 @@
       "feature4": "Community-driven intelligence"
     },
     "scamalytics": {
-      "feature1": "IP fraud score (0-100)",
-      "feature2": "Scam and fraud detection",
-      "feature3": "Risk level classification",
-      "feature4": "Fraud indicator tracking"
+      "feature1": "IP fraud risk score (0-100)",
+      "feature2": "Datacenter & VPN detection",
+      "feature3": "TOR exit node detection",
+      "feature4": "External blacklist checks"
     }
   },
   "limits": {
@@ -242,17 +231,13 @@
       "free": "Unlimited (free account)",
       "rate": "No specified limit"
     },
-    "xforce": {
-      "free": "5,000 requests/month (free)",
-      "rate": "Reasonable use"
-    },
     "pulsedive": {
       "free": "250 requests/day (free account)",
       "rate": "2,500 requests/month"
     },
     "scamalytics": {
-      "free": "5,000 requests/month (free)",
-      "rate": "No specified limit"
+      "free": "5,000 credits/month",
+      "rate": "15-day PREMIUM trial"
     }
   },
   "actions": {
@@ -265,6 +250,6 @@
     "saveError": "Failed to save"
   },
   "footer": {
-    "text": "Ahtapot v2.5.0 • Cybersecurity Indicator Analysis Tool"
+    "text": "Ahtapot v{{version}} • Cybersecurity Indicator Analysis Tool"
   }
 }

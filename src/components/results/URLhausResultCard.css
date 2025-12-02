@@ -1,0 +1,539 @@
+/* URLhaus Result Card */
+.urlhaus-result-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.urlhaus-result-card:hover {
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.urlhaus-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.5);
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  flex-wrap: wrap;
+}
+
+.urlhaus-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.urlhaus-stats-circle {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 3px solid var(--status-color, rgba(71, 85, 105, 0.5));
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.urlhaus-stats-value {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--status-color, #6b7280);
+  line-height: 1;
+}
+
+.urlhaus-stats-label-small {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.7);
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.urlhaus-stats-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.urlhaus-stats-title {
+  font-size: 13px;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.urlhaus-stats-breakdown {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.urlhaus-online {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.urlhaus-offline {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.urlhaus-header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.urlhaus-ioc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.urlhaus-ioc-value {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Monaco', 'Courier New', monospace;
+  color: rgba(226, 232, 240, 0.95);
+  word-break: break-all;
+}
+
+.urlhaus-ioc-type {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.urlhaus-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.urlhaus-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.urlhaus-status-badge.malicious {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.urlhaus-status-badge.suspicious {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.urlhaus-status-badge.clean {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.urlhaus-external-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  color: #3b82f6;
+  transition: all 0.2s;
+}
+
+.urlhaus-external-link:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: #3b82f6;
+}
+
+/* Status Description */
+.urlhaus-status-description {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  font-size: 13px;
+  color: rgba(203, 213, 225, 0.9);
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.urlhaus-status-description.malicious {
+  background: rgba(239, 68, 68, 0.08);
+  color: #fca5a5;
+}
+
+.urlhaus-status-description.suspicious {
+  background: rgba(234, 179, 8, 0.08);
+  color: #fde047;
+}
+
+.urlhaus-status-description.clean {
+  background: rgba(34, 197, 94, 0.08);
+  color: #86efac;
+}
+
+/* Content */
+.urlhaus-content {
+  padding: 20px;
+}
+
+/* Info Message */
+.urlhaus-info-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 13px;
+}
+
+.urlhaus-info-message svg {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+/* Overview Grid */
+.urlhaus-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.urlhaus-overview-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+/* Metric Card */
+.urlhaus-metric-card {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.urlhaus-metric-card:hover {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.urlhaus-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.urlhaus-metric-header svg {
+  color: #3b82f6;
+}
+
+.urlhaus-metric-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.urlhaus-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.urlhaus-metric-label {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+  flex-shrink: 0;
+}
+
+.urlhaus-metric-value {
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 500;
+  text-align: right;
+  word-break: break-word;
+}
+
+.urlhaus-metric-value.danger {
+  color: #ef4444;
+}
+
+.urlhaus-metric-value.success {
+  color: #22c55e;
+}
+
+.urlhaus-metric-value.monospace {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+/* Stats Grid */
+.urlhaus-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.urlhaus-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.urlhaus-stat-item:hover {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.urlhaus-stat-label {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.urlhaus-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.95);
+}
+
+.urlhaus-stat-value.danger {
+  color: #ef4444;
+}
+
+.urlhaus-stat-value.success {
+  color: #22c55e;
+}
+
+/* Tags */
+.urlhaus-tags-section {
+  margin-bottom: 16px;
+}
+
+.urlhaus-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.urlhaus-section-title svg {
+  color: #3b82f6;
+}
+
+.urlhaus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.urlhaus-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  color: rgba(203, 213, 225, 0.9);
+  transition: all 0.2s;
+}
+
+.urlhaus-tag:hover {
+  background: rgba(71, 85, 105, 0.5);
+}
+
+.urlhaus-tag.threat {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* URL List */
+.urlhaus-urls-section {
+  margin-bottom: 16px;
+}
+
+.urlhaus-url-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.urlhaus-url-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.urlhaus-url-item:hover {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.urlhaus-url-item.online {
+  border-left: 3px solid #ef4444;
+}
+
+.urlhaus-url-item.offline {
+  border-left: 3px solid rgba(71, 85, 105, 0.5);
+}
+
+.urlhaus-url-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.urlhaus-url-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.urlhaus-url-text {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 11px;
+  color: rgba(203, 213, 225, 0.9);
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.urlhaus-url-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.urlhaus-url-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.urlhaus-url-status.online {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.urlhaus-url-status.offline {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+/* External Link Button */
+.urlhaus-link-container {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.urlhaus-link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  color: #3b82f6;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.urlhaus-link-button:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: #3b82f6;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .urlhaus-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .urlhaus-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .urlhaus-header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .urlhaus-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .urlhaus-ioc-info {
+    text-align: left;
+  }
+
+  .urlhaus-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
