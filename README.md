@@ -312,11 +312,12 @@ Get free API keys to unlock full analysis capabilities:
   - ISP and usage type detection
   - Community-reported abuse data
 
-### MalwareBazaar
+### MalwareBazaar (abuse.ch)
 - **Purpose:** Malware sample database and hash reputation lookup
 - **Free Tier:** No API key required, no strict rate limits
 - **Supported IOCs:** File Hashes (MD5, SHA1, SHA256) only
 - **Documentation:** [bazaar.abuse.ch/api](https://bazaar.abuse.ch/api/)
+- **Note:** Part of the [abuse.ch](https://abuse.ch) project (same organization as URLhaus)
 - **Features:**
   - Malware sample information and metadata
   - File type and signature detection
@@ -365,6 +366,44 @@ Get free API keys to unlock full analysis capabilities:
   - Actor information and tags
   - Last seen timestamps
   - Metadata about scanning activity
+
+### URLhaus (abuse.ch)
+- **Purpose:** Malicious URL and malware distribution database
+- **Free Tier:** Unlimited (free account)
+- **Supported IOCs:** URL, Domain, IPv4, IPv6, MD5, SHA256
+- **Documentation:** [urlhaus.abuse.ch/api](https://urlhaus.abuse.ch/api/)
+- **Note:** Part of the [abuse.ch](https://abuse.ch) project (same organization as MalwareBazaar)
+- **Features:**
+  - Malicious URL database
+  - Payload and threat classification
+  - URL status monitoring (online/offline)
+  - Malware distribution tracking
+  - Blacklist status (Spamhaus DBL, SURBL)
+
+### Pulsedive
+- **Purpose:** Threat intelligence platform with IOC enrichment
+- **Free Tier:** 250 requests/day (2,500/month)
+- **Supported IOCs:** IPv4, IPv6, Domain, URL, MD5, SHA1, SHA256
+- **Get Key:** [pulsedive.com/account](https://pulsedive.com/account/)
+- **Features:**
+  - Risk level assessment (none/low/medium/high/critical)
+  - Threat feed tracking
+  - Risk factor analysis
+  - Geographic and organization data
+  - Community-driven intelligence
+
+### Scamalytics
+- **Purpose:** IP fraud score and scam detection
+- **Free Tier:** 5,000 credits/month (15-day PREMIUM trial)
+- **Supported IOCs:** IPv4, IPv6 only
+- **Get Key:** [scamalytics.com/ip/api](https://scamalytics.com/ip/api) (requires manual approval)
+- **Note:** Registration requires manual review. You'll receive API credentials via email within 24 hours.
+- **Features:**
+  - IP fraud risk score (0-100)
+  - Datacenter & VPN detection
+  - TOR exit node detection
+  - External blacklist checks
+  - Proxy detection (iCloud Private Relay, AWS, Google)
 
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
 >

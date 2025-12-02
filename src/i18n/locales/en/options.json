@@ -80,7 +80,7 @@
     },
     "malwarebazaar": {
       "label": "MalwareBazaar",
-      "description": "Malware hash analysis and sample information",
+      "description": "Malware hash analysis and sample information (by abuse.ch)",
       "placeholder": "Your MalwareBazaar API key"
     },
     "shodan": {
@@ -95,7 +95,7 @@
     },
     "urlhaus": {
       "label": "URLhaus",
-      "description": "Malicious URL and malware distribution site database",
+      "description": "Malicious URL and malware distribution database (by abuse.ch)",
       "placeholder": "Your URLhaus API key"
     },
     "pulsedive": {

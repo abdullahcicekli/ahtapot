@@ -80,7 +80,7 @@
     },
     "malwarebazaar": {
       "label": "MalwareBazaar",
-      "description": "Zararlı yazılım hash analizi ve örnek bilgisi",
+      "description": "Zararlı yazılım hash analizi ve örnek bilgisi (abuse.ch)",
       "placeholder": "MalwareBazaar API anahtarınız"
     },
     "shodan": {
@@ -95,7 +95,7 @@
     },
     "urlhaus": {
       "label": "URLhaus",
-      "description": "Kötü amaçlı URL ve kötü yazılım dağıtım sitesi veritabanı",
+      "description": "Kötü amaçlı URL ve kötü yazılım dağıtım veritabanı (abuse.ch)",
       "placeholder": "URLhaus API anahtarınız"
     },
     "pulsedive": {
