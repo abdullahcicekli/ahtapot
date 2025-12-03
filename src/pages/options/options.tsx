@@ -9,6 +9,7 @@ import { CacheManager, CacheSettings } from '@/utils/cacheManager';
 import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
 import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils/providerOrderStorage';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
+import { isProviderEnabled } from '@/config/providerDisplay';
 import '@/i18n/config';
 import './options.css';
 
@@ -669,9 +670,12 @@ const OptionsPage: React.FC = () => {
       return API_CONFIGS;
     }
 
+    // Filter out disabled providers first
+    const enabledConfigs = API_CONFIGS.filter(config => isProviderEnabled(config.provider));
+    
     // Separate locked and unlocked providers
-    const lockedConfigs = API_CONFIGS.filter(config => config.requiresApiKey === false);
-    const unlockedConfigs = API_CONFIGS.filter(config => config.requiresApiKey !== false);
+    const lockedConfigs = enabledConfigs.filter(config => config.requiresApiKey === false);
+    const unlockedConfigs = enabledConfigs.filter(config => config.requiresApiKey !== false);
 
     // Create a map of provider to its order index
     const orderMap = new Map<APIProvider, number>();

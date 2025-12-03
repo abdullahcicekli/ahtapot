@@ -11,6 +11,7 @@ import { PulsediveService } from './tools/PulsediveService';
 import { ScamalyticsService } from './tools/ScamalyticsService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
+import { isProviderEnabled } from '@/config/providerDisplay';
 
 /**
  * Service Registry
@@ -195,8 +196,15 @@ export class ServiceRegistry {
   /**
    * Get a service instance
    * OPTIMIZED: Lazy initialization - creates service only when first requested
+   * Returns undefined for disabled providers
    */
   getService(provider: APIProvider): IToolService | undefined {
+    // Check if provider is enabled in config
+    if (!isProviderEnabled(provider)) {
+      console.log(`[ServiceRegistry] Provider ${provider} is disabled in config`);
+      return undefined;
+    }
+    
     // Lazy initialization: only create service if not already cached
     if (!this.services.has(provider)) {
       this.initializeService(provider);

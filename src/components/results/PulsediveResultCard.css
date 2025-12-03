@@ -1,398 +1,324 @@
 /* Pulsedive Result Card */
+
 .pulsedive-result-card {
   position: relative;
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(71, 85, 105, 0.3);
-  border-radius: 12px;
+  background: var(--bg-card, #222228);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 10px);
   overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.pulsedive-result-card:hover {
-  border-color: rgba(71, 85, 105, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
 .pulsedive-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px;
-  background: rgba(15, 23, 42, 0.5);
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  gap: var(--space-lg, 16px);
+  padding: var(--space-xl, 20px);
+  padding-right: 50px;
+  background: var(--bg-header, #1A1A1F);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
 
 .pulsedive-header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-md, 12px);
 }
 
+/* Risk Circle */
 .pulsedive-risk-circle {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
+  background: var(--bg-section, #2A2A32);
+  border: 3px solid var(--risk-color, var(--success, #22c55e));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border: 3px solid var(--risk-color, rgba(71, 85, 105, 0.5));
-  background: rgba(15, 23, 42, 0.8);
+  flex-shrink: 0;
 }
 
 .pulsedive-risk-icon {
-  position: relative;
-  z-index: 1;
-  color: var(--risk-color, #6b7280);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--risk-color, var(--success, #22c55e));
+}
+
+.pulsedive-risk-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .pulsedive-risk-label-small {
-  position: relative;
-  z-index: 1;
-  font-size: 10px;
-  color: rgba(148, 163, 184, 0.7);
+  font-size: var(--text-xs, 10px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   margin-top: 2px;
-  text-transform: uppercase;
 }
 
 .pulsedive-risk-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .pulsedive-risk-title {
-  font-size: 13px;
-  color: rgba(203, 213, 225, 0.9);
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .pulsedive-risk-value {
-  font-size: 20px;
+  font-size: var(--text-lg, 14px);
   font-weight: 700;
-  text-transform: capitalize;
-  color: var(--risk-color, #6b7280);
 }
 
 .pulsedive-header-right {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 0;
 }
 
 .pulsedive-ioc-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  text-align: center;
+  gap: 2px;
 }
 
 .pulsedive-ioc-value {
-  font-size: 16px;
+  font-size: var(--text-lg, 14px);
   font-weight: 600;
-  font-family: 'Monaco', 'Courier New', monospace;
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--text-primary, #FFFFFF);
+  font-family: var(--font-mono, 'Monaco', monospace);
   word-break: break-all;
 }
 
 .pulsedive-ioc-type {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(148, 163, 184, 0.8);
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .pulsedive-header-actions {
   display: flex;
+  gap: var(--space-sm, 8px);
   align-items: center;
-  gap: 12px;
 }
 
+/* Status Badge */
 .pulsedive-status-badge {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-base, 12px);
   font-weight: 600;
 }
 
-.pulsedive-status-badge.clean {
-  background: rgba(34, 197, 94, 0.15);
-  color: #22c55e;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-}
-
-.pulsedive-status-badge.unknown {
-  background: rgba(107, 114, 128, 0.15);
-  color: #9ca3af;
-  border: 1px solid rgba(107, 114, 128, 0.3);
-}
-
-.pulsedive-status-badge.low {
-  background: rgba(59, 130, 246, 0.15);
-  color: #3b82f6;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.pulsedive-status-badge.medium {
-  background: rgba(234, 179, 8, 0.15);
-  color: #eab308;
-  border: 1px solid rgba(234, 179, 8, 0.3);
+.pulsedive-status-badge.critical {
+  background: rgba(220, 38, 38, 0.15);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
 .pulsedive-status-badge.high {
-  background: rgba(249, 115, 22, 0.15);
-  color: #f97316;
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
 }
 
-.pulsedive-status-badge.critical {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+.pulsedive-status-badge.medium {
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
 }
 
+.pulsedive-status-badge.low {
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+}
+
+.pulsedive-status-badge.clean {
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+}
+
+.pulsedive-status-badge.unknown {
+  background: var(--bg-section, #2A2A32);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+/* External Link in header */
 .pulsedive-external-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 8px;
-  color: #3b82f6;
-  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  text-decoration: none;
 }
 
 .pulsedive-external-link:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #3b82f6;
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border-color: var(--accent-border, rgba(255, 247, 112, 0.3));
+  color: var(--accent, #FFF770);
 }
 
 /* Content */
 .pulsedive-content {
-  padding: 20px;
+  padding: var(--space-xl, 20px);
 }
 
 /* Info Message */
 .pulsedive-info-message {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 8px;
-  color: rgba(203, 213, 225, 0.9);
-  font-size: 13px;
-}
-
-.pulsedive-info-message svg {
-  color: #3b82f6;
-  flex-shrink: 0;
+  gap: var(--space-md, 12px);
+  padding: var(--space-lg, 16px);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+  border-radius: var(--radius-lg, 8px);
+  color: var(--info, #60a5fa);
+  font-size: var(--text-md, 13px);
 }
 
 /* Overview Grid */
 .pulsedive-overview-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-lg, 16px);
 }
 
-.pulsedive-overview-grid .full-width {
-  grid-column: 1 / -1;
-}
-
-/* Metric Card */
 .pulsedive-metric-card {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(71, 85, 105, 0.2);
-  border-radius: 10px;
-  padding: 16px;
-  transition: all 0.2s ease;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-lg, 16px);
 }
 
-.pulsedive-metric-card:hover {
-  border-color: rgba(71, 85, 105, 0.4);
-  background: rgba(15, 23, 42, 0.5);
+.pulsedive-metric-card.full-width {
+  grid-column: 1 / -1;
 }
 
 .pulsedive-metric-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
-  color: rgba(203, 213, 225, 0.9);
-  font-size: 13px;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
   font-weight: 600;
+  color: var(--accent, #FFF770);
+  margin-bottom: var(--space-md, 12px);
+  padding-bottom: var(--space-sm, 8px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .pulsedive-metric-header svg {
-  color: #3b82f6;
+  color: var(--accent, #FFF770);
 }
 
 .pulsedive-metric-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-sm, 8px);
 }
 
 .pulsedive-metric-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  font-size: var(--text-base, 12px);
 }
 
 .pulsedive-metric-label {
-  font-size: 12px;
-  color: rgba(148, 163, 184, 0.8);
-  flex-shrink: 0;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .pulsedive-metric-value {
-  font-size: 13px;
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--text-primary, #FFFFFF);
   font-weight: 500;
-  text-align: right;
-  word-break: break-word;
 }
 
 .pulsedive-metric-value.monospace {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 12px;
-}
-
-/* Tags */
-.pulsedive-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.pulsedive-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  background: rgba(71, 85, 105, 0.3);
-  border-radius: 6px;
-  font-size: 12px;
-  color: rgba(203, 213, 225, 0.9);
-  transition: all 0.2s;
-}
-
-.pulsedive-tag:hover {
-  background: rgba(71, 85, 105, 0.5);
-}
-
-.pulsedive-tag.threat {
-  background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
-
-.pulsedive-tag.feed {
-  background: rgba(59, 130, 246, 0.15);
-  color: #93c5fd;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-sm, 11px);
 }
 
 /* Threat List */
 .pulsedive-threat-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-sm, 8px);
 }
 
 .pulsedive-threat-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.15);
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-
-.pulsedive-threat-item:hover {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.25);
+  justify-content: space-between;
+  padding: var(--space-md, 12px);
+  background: var(--danger-bg, rgba(239, 68, 68, 0.1));
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  border-radius: var(--radius-md, 6px);
 }
 
 .pulsedive-threat-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(226, 232, 240, 0.95);
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--danger, #ef4444);
 }
 
 .pulsedive-threat-category {
-  font-size: 11px;
-  color: rgba(148, 163, 184, 0.8);
-  background: rgba(0, 0, 0, 0.2);
-  padding: 3px 8px;
-  border-radius: 4px;
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  padding: 4px 8px;
+  background: var(--bg-header, #1A1A1F);
+  border-radius: var(--radius-sm, 4px);
 }
 
-/* External Link Button */
-.pulsedive-link-container {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(71, 85, 105, 0.2);
+/* Tags */
+.pulsedive-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 8px);
 }
 
-.pulsedive-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 8px;
-  color: #3b82f6;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s;
+.pulsedive-tag {
+  padding: 5px 10px;
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-sm, 11px);
+  color: var(--accent, #FFF770);
 }
 
-.pulsedive-link-button:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #3b82f6;
+.pulsedive-tag.threat {
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border-color: var(--danger-border, rgba(239, 68, 68, 0.3));
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+.pulsedive-tag.feed {
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border-color: var(--info-border, rgba(96, 165, 250, 0.3));
+}
+
+@media (max-width: 768px) {
   .pulsedive-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .pulsedive-header-right {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
+  
   .pulsedive-overview-grid {
     grid-template-columns: 1fr;
   }
-
-  .pulsedive-ioc-info {
-    text-align: left;
-  }
 }
-
-
-

@@ -5,14 +5,16 @@
 
 import { APIProvider } from '@/types/ioc';
 import { PROVIDER_TO_SERVICE_NAME } from './providerMappings';
+import { isProviderEnabled, getEnabledProviders } from '@/config/providerDisplay';
 
 const STORAGE_KEY = 'providerOrder';
 
 /**
  * Get all providers in their default order (alphabetical by service name)
+ * Only returns enabled providers
  */
 export function getDefaultProviderOrder(): APIProvider[] {
-  return Object.values(APIProvider).sort((a, b) => {
+  return getEnabledProviders().sort((a, b) => {
     const nameA = PROVIDER_TO_SERVICE_NAME[a] || a;
     const nameB = PROVIDER_TO_SERVICE_NAME[b] || b;
     return nameA.localeCompare(nameB);
@@ -22,6 +24,7 @@ export function getDefaultProviderOrder(): APIProvider[] {
 /**
  * Get custom provider order from storage
  * If no custom order exists, returns default order
+ * Only returns enabled providers
  */
 export async function getProviderOrder(): Promise<APIProvider[]> {
   try {
@@ -30,12 +33,15 @@ export async function getProviderOrder(): Promise<APIProvider[]> {
     if (result[STORAGE_KEY] && Array.isArray(result[STORAGE_KEY])) {
       const storedOrder = result[STORAGE_KEY] as APIProvider[];
 
-      // Ensure all providers are included (in case new providers were added)
-      const allProviders = Object.values(APIProvider);
-      const missingProviders = allProviders.filter(p => !storedOrder.includes(p));
+      // Filter out disabled providers from stored order
+      const enabledStoredOrder = storedOrder.filter(p => isProviderEnabled(p));
 
-      // Add any missing providers at the end
-      return [...storedOrder, ...missingProviders];
+      // Ensure all enabled providers are included (in case new providers were added)
+      const enabledProviders = getEnabledProviders();
+      const missingProviders = enabledProviders.filter(p => !enabledStoredOrder.includes(p));
+
+      // Add any missing enabled providers at the end
+      return [...enabledStoredOrder, ...missingProviders];
     }
 
     return getDefaultProviderOrder();

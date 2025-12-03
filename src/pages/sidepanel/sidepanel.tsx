@@ -30,6 +30,7 @@ import { useTranslation } from '@/i18n/hooks/useTranslation';
 import { getProviderOrder, sortResultsByProviderOrder } from '@/utils/providerOrderStorage';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import '@/i18n/config';
+import '@/components/results/ResultCard.css';
 import './sidepanel.css';
 
 // Provider support mapping - mirrors backend service capabilities

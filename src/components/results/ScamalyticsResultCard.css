@@ -1,468 +1,369 @@
 /* Scamalytics Result Card */
+
 .scamalytics-result-card {
   position: relative;
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(71, 85, 105, 0.3);
-  border-radius: 12px;
+  background: var(--bg-card, #222228);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 10px);
   overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.scamalytics-result-card:hover {
-  border-color: rgba(71, 85, 105, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
 .scamalytics-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px;
-  background: rgba(15, 23, 42, 0.5);
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  gap: var(--space-lg, 16px);
+  padding: var(--space-xl, 20px);
+  padding-right: 50px;
+  background: var(--bg-header, #1A1A1F);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
 
 .scamalytics-header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-md, 12px);
 }
 
+/* Score Circle */
 .scamalytics-score-circle {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
+  background: var(--bg-section, #2A2A32);
+  border: 3px solid var(--score-color, var(--warning, #f59e0b));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border: 3px solid var(--score-color, rgba(71, 85, 105, 0.5));
-  background: rgba(15, 23, 42, 0.8);
+  flex-shrink: 0;
 }
 
 .scamalytics-score-value {
-  position: relative;
-  z-index: 1;
-  font-size: 24px;
+  font-size: var(--text-xl, 16px);
   font-weight: 700;
   line-height: 1;
 }
 
 .scamalytics-score-label-small {
-  position: relative;
-  z-index: 1;
-  font-size: 11px;
-  color: rgba(148, 163, 184, 0.7);
+  font-size: var(--text-xs, 10px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   margin-top: 2px;
 }
 
 .scamalytics-score-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .scamalytics-score-title {
-  font-size: 13px;
-  color: rgba(203, 213, 225, 0.9);
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .scamalytics-risk-value {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--text-base, 12px);
+  font-weight: 600;
 }
 
 .scamalytics-header-right {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 0;
 }
 
 .scamalytics-ioc-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  text-align: center;
+  gap: 2px;
 }
 
 .scamalytics-ioc-value {
-  font-size: 16px;
+  font-size: var(--text-lg, 14px);
   font-weight: 600;
-  font-family: 'Monaco', 'Courier New', monospace;
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--text-primary, #FFFFFF);
+  font-family: var(--font-mono, 'Monaco', monospace);
   word-break: break-all;
 }
 
 .scamalytics-ioc-type {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(148, 163, 184, 0.8);
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .scamalytics-header-actions {
   display: flex;
+  gap: var(--space-sm, 8px);
   align-items: center;
-  gap: 12px;
 }
 
+/* Status Badge */
 .scamalytics-status-badge {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-base, 12px);
   font-weight: 600;
 }
 
-.scamalytics-status-badge.very-high {
-  background: rgba(220, 38, 38, 0.15);
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-}
-
+.scamalytics-status-badge.very-high,
 .scamalytics-status-badge.high {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
 }
 
 .scamalytics-status-badge.medium {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
 }
 
 .scamalytics-status-badge.low {
-  background: rgba(59, 130, 246, 0.15);
-  color: #3b82f6;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
 }
 
 .scamalytics-status-badge.very-low {
-  background: rgba(34, 197, 94, 0.15);
-  color: #22c55e;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
 }
 
 .scamalytics-status-badge.unknown {
-  background: rgba(107, 114, 128, 0.15);
-  color: #9ca3af;
-  border: 1px solid rgba(107, 114, 128, 0.3);
+  background: var(--bg-section, #2A2A32);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
+/* External Link in header */
 .scamalytics-external-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 8px;
-  color: #3b82f6;
-  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  text-decoration: none;
 }
 
 .scamalytics-external-link:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #3b82f6;
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border-color: var(--accent-border, rgba(255, 247, 112, 0.3));
+  color: var(--accent, #FFF770);
 }
 
 /* Status Description */
 .scamalytics-status-description {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  font-size: 13px;
-  color: rgba(203, 213, 225, 0.9);
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 12px) var(--space-xl, 20px);
+  font-size: var(--text-md, 13px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  background: var(--bg-section, #2A2A32);
 }
 
 .scamalytics-status-description.malicious {
-  background: rgba(239, 68, 68, 0.08);
-  color: #fca5a5;
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border-left: 3px solid var(--danger, #ef4444);
 }
 
 .scamalytics-status-description.suspicious {
-  background: rgba(245, 158, 11, 0.08);
-  color: #fde047;
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border-left: 3px solid var(--warning, #f59e0b);
 }
 
-.scamalytics-status-description.safe {
-  background: rgba(34, 197, 94, 0.08);
-  color: #86efac;
+.scamalytics-status-description.clean {
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border-left: 3px solid var(--success, #22c55e);
 }
 
 /* Content */
 .scamalytics-content {
-  padding: 20px;
+  padding: var(--space-xl, 20px);
 }
 
 /* Info Message */
 .scamalytics-info-message {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 8px;
-  color: rgba(203, 213, 225, 0.9);
-  font-size: 13px;
-}
-
-.scamalytics-info-message svg {
-  color: #ef4444;
-  flex-shrink: 0;
+  gap: var(--space-md, 12px);
+  padding: var(--space-lg, 16px);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+  border-radius: var(--radius-lg, 8px);
+  color: var(--info, #60a5fa);
+  font-size: var(--text-md, 13px);
 }
 
 /* Stats Grid */
 .scamalytics-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: var(--space-md, 12px);
+  margin-bottom: var(--space-lg, 16px);
 }
 
 .scamalytics-stat-item {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 14px;
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(71, 85, 105, 0.2);
-  border-radius: 10px;
+  padding: var(--space-md, 12px);
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
   text-align: center;
-  transition: all 0.2s ease;
-}
-
-.scamalytics-stat-item:hover {
-  border-color: rgba(71, 85, 105, 0.4);
-  background: rgba(15, 23, 42, 0.5);
 }
 
 .scamalytics-stat-label {
-  font-size: 11px;
-  color: rgba(148, 163, 184, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .scamalytics-stat-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(226, 232, 240, 0.95);
+  font-size: var(--text-lg, 14px);
+  font-weight: 600;
+  color: var(--text-primary, #FFFFFF);
 }
 
 .scamalytics-stat-value.danger {
-  color: #ef4444;
+  color: var(--danger, #ef4444);
 }
 
 .scamalytics-stat-value.success {
-  color: #22c55e;
-}
-
-.scamalytics-stat-value.warning {
-  color: #f59e0b;
+  color: var(--success, #22c55e);
 }
 
 /* Indicators Section */
 .scamalytics-indicators-section {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg, 16px);
 }
 
 .scamalytics-section-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-size: 13px;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: rgba(203, 213, 225, 0.9);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  margin-bottom: var(--space-md, 12px);
 }
 
 .scamalytics-section-title svg {
-  color: #3b82f6;
+  color: var(--accent, #FFF770);
 }
 
 .scamalytics-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-sm, 8px);
 }
 
 .scamalytics-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
   padding: 5px 10px;
-  background: rgba(71, 85, 105, 0.3);
-  border-radius: 6px;
-  font-size: 12px;
-  color: rgba(203, 213, 225, 0.9);
-  transition: all 0.2s;
-}
-
-.scamalytics-tag:hover {
-  background: rgba(71, 85, 105, 0.5);
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-sm, 11px);
+  color: var(--accent, #FFF770);
 }
 
 .scamalytics-tag.warning {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fde047;
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.scamalytics-tag.danger {
-  background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border-color: var(--warning-border, rgba(245, 158, 11, 0.3));
 }
 
 /* Overview Grid */
 .scamalytics-overview-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-lg, 16px);
 }
 
-.scamalytics-overview-grid .full-width {
-  grid-column: 1 / -1;
-}
-
-/* Metric Card */
 .scamalytics-metric-card {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(71, 85, 105, 0.2);
-  border-radius: 10px;
-  padding: 16px;
-  transition: all 0.2s ease;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-lg, 16px);
 }
 
-.scamalytics-metric-card:hover {
-  border-color: rgba(71, 85, 105, 0.4);
-  background: rgba(15, 23, 42, 0.5);
+.scamalytics-metric-card.full-width {
+  grid-column: 1 / -1;
 }
 
 .scamalytics-metric-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
-  color: rgba(203, 213, 225, 0.9);
-  font-size: 13px;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
   font-weight: 600;
+  color: var(--accent, #FFF770);
+  margin-bottom: var(--space-md, 12px);
+  padding-bottom: var(--space-sm, 8px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .scamalytics-metric-header svg {
-  color: #3b82f6;
+  color: var(--accent, #FFF770);
 }
 
 .scamalytics-metric-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-sm, 8px);
 }
 
 .scamalytics-metric-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  font-size: var(--text-base, 12px);
 }
 
 .scamalytics-metric-label {
-  font-size: 12px;
-  color: rgba(148, 163, 184, 0.8);
-  flex-shrink: 0;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .scamalytics-metric-value {
-  font-size: 13px;
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--text-primary, #FFFFFF);
   font-weight: 500;
-  text-align: right;
-  word-break: break-word;
 }
 
 .scamalytics-metric-value.warning {
-  color: #f59e0b;
+  color: var(--warning, #f59e0b);
 }
 
 .scamalytics-metric-value.danger {
-  color: #ef4444;
+  color: var(--danger, #ef4444);
 }
 
-/* External Link Button */
-.scamalytics-link-container {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(71, 85, 105, 0.2);
-}
-
-.scamalytics-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 8px;
-  color: #3b82f6;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.scamalytics-link-button:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #3b82f6;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .scamalytics-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .scamalytics-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .scamalytics-header-right {
-    width: 100%;
-    justify-content: flex-start;
+  
+  .scamalytics-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-
+  
   .scamalytics-overview-grid {
     grid-template-columns: 1fr;
   }
-
-  .scamalytics-ioc-info {
-    text-align: left;
-  }
-
-  .scamalytics-stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
-
-
-

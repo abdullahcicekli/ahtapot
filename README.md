@@ -22,17 +22,17 @@
 
 ---
 
-## 🆕 What's New in v2.6.0
+## 🆕 What's New in v2.7.0
 
-### Latest Release (December 2, 2025)
-- 🎨 **Enhanced Provider Cards** - Completely redesigned Pulsedive, URLhaus & Scamalytics result cards
-- 🔒 **Scamalytics API v3** - Full integration with fraud score, proxy detection & blacklist checks
-- 📊 **Rich Data Display** - Stats grids, threat indicators, and detailed sections for all providers
-- 🔗 **URL-based Settings** - Settings tabs now controllable via URL (?tab=apiKeys)
-- 🛡️ **Rate Limit Badges** - Shodan & GreyNoise visible in badges when pending confirmation
+### Latest Release (December 3, 2025)
+- ⚙️ **Provider Enable/Disable System** - Centralized control for provider availability
+- 🔧 **Easy Provider Management** - Toggle providers on/off without code changes
+- 🔄 **Dynamic Filtering** - All UI components respect provider enabled status
+- ⏸️ **Scamalytics Temporarily Disabled** - Pending API activation confirmation
+- 🔢 **9 Active Providers** - Streamlined provider count with easy expansion
 
-### Active Threat Intelligence Providers (10 Providers)
-- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise** • **URLhaus** • **Pulsedive** • **Scamalytics**
+### Active Threat Intelligence Providers (9 Providers)
+- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise** • **URLhaus** • **Pulsedive**
 - 🎯 **Smart API Usage** - Only queries providers supporting the IOC type
 - ⚠️ **Rate Limit Protection** - Confirmation system for GreyNoise and Shodan
 - 🆓 **No API Key Required** - ARIN WHOIS & URLhaus (always available)

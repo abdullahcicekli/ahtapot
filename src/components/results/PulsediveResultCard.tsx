@@ -63,11 +63,22 @@ export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result
   const statusBadge = getStatusBadge();
   const riskColor = getRiskColor(risk);
 
+  // Pulsedive expects base64 encoded IOC value in the URL
+  // Example: 144.172.104.117 -> MTQ0LjE3Mi4xMDQuMTE3
+  const getPulsediveUrl = () => {
+    if (iid) {
+      return `https://pulsedive.com/indicator/?iid=${iid}`;
+    }
+    // Base64 encode the IOC value
+    const base64Value = window.btoa(result.ioc.value);
+    return `https://pulsedive.com/indicator/?ioc=${base64Value}`;
+  };
+
   return (
     <div className="pulsedive-result-card" ref={cardRef}>
       {/* External Link - Top Right */}
       <a
-        href={iid ? `https://pulsedive.com/indicator/?iid=${iid}` : `https://pulsedive.com/indicator/?value=${encodeURIComponent(result.ioc.value)}`}
+        href={getPulsediveUrl()}
         target="_blank"
         rel="noopener noreferrer"
         className="card-external-link"
@@ -107,16 +118,6 @@ export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result
             {statusBadge.icon}
             <span>{statusBadge.label}</span>
           </div>
-          {iid && (
-            <a
-              href={`https://pulsedive.com/indicator/?iid=${iid}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pulsedive-external-link"
-            >
-              <ExternalLink size={16} />
-            </a>
-          )}
         </div>
       </div>
 

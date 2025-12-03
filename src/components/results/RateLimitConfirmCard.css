@@ -1,41 +1,46 @@
+/* Rate Limit Confirm Card */
+
 .rate-limit-confirm-card {
-  background: #222228;
-  border: 1px solid rgba(255, 152, 0, 0.3);
-  border-radius: 8px;
-  padding: 0;
-  margin-bottom: 16px;
+  position: relative;
+  background: var(--bg-card, #222228);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
+/* Header */
 .rate-limit-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background: rgba(255, 152, 0, 0.05);
-  border-bottom: 1px solid rgba(255, 152, 0, 0.2);
+  justify-content: space-between;
+  gap: var(--space-lg, 16px);
+  padding: var(--space-xl, 20px);
+  background: var(--bg-header, #1A1A1F);
+  border-bottom: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  flex-wrap: wrap;
 }
 
 .rate-limit-header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-md, 12px);
 }
 
 .rate-limit-logo {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-section, #2A2A32);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .rate-limit-logo img {
-  width: 100%;
-  height: 100%;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
 }
 
@@ -46,14 +51,14 @@
 }
 
 .rate-limit-title {
+  font-size: var(--text-lg, 14px);
   font-weight: 600;
-  font-size: 14px;
-  color: #e0e0e0;
+  color: var(--warning, #f59e0b);
 }
 
 .rate-limit-subtitle {
-  font-size: 12px;
-  color: #999;
+  font-size: var(--text-md, 13px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .rate-limit-status {
@@ -61,98 +66,107 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
-  border: 1px solid rgba(255, 152, 0, 0.3);
-  border-radius: 16px;
-  font-size: 12px;
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+  border-radius: var(--radius-md, 6px);
+  color: var(--info, #60a5fa);
+  font-size: var(--text-base, 12px);
   font-weight: 500;
 }
 
 .rate-limit-status svg {
-  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
+/* Content */
 .rate-limit-content {
-  padding: 20px;
+  padding: var(--space-xl, 20px);
 }
 
+/* Warning Banner */
 .rate-limit-warning-banner {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(255, 152, 0, 0.08);
-  border-left: 4px solid #ff9800;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  padding: var(--space-md, 12px) var(--space-lg, 16px);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  border-radius: var(--radius-lg, 8px);
+  margin-bottom: var(--space-lg, 16px);
 }
 
 .rate-limit-warning-banner svg {
-  color: #ff9800;
+  color: var(--warning, #f59e0b);
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .rate-limit-warning-text {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  flex-wrap: wrap;
 }
 
 .rate-limit-warning-text strong {
-  font-size: 14px;
-  color: #e0e0e0;
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--warning, #f59e0b);
 }
 
 .rate-limit-badge {
-  display: inline-block;
+  display: inline-flex;
   padding: 4px 10px;
-  background: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
-  border: 1px solid rgba(255, 152, 0, 0.3);
-  border-radius: 12px;
-  font-size: 12px;
+  background: var(--warning, #f59e0b);
+  color: var(--bg-header, #1A1A1F);
+  border-radius: var(--radius-sm, 4px);
+  font-size: var(--text-sm, 11px);
   font-weight: 600;
 }
 
+/* Message */
 .rate-limit-message {
-  margin-bottom: 20px;
-  color: #b0b0b0;
-  line-height: 1.6;
+  margin-bottom: var(--space-lg, 16px);
 }
 
 .rate-limit-message p {
-  margin: 0 0 12px 0;
-  font-size: 13px;
+  font-size: var(--text-md, 13px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  line-height: 1.6;
+  margin: 0 0 var(--space-sm, 8px) 0;
 }
 
 .rate-limit-usage {
-  font-weight: 600;
-  color: #e0e0e0;
-  font-size: 14px !important;
+  font-weight: 500;
+  color: var(--text-primary, #FFFFFF) !important;
 }
 
 .rate-limit-warning-small {
-  color: #ff6b6b;
-  font-size: 12px !important;
-  font-weight: 500;
+  font-size: var(--text-base, 12px) !important;
+  color: var(--warning, #f59e0b) !important;
 }
 
+/* Actions */
 .rate-limit-actions {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  padding-top: var(--space-lg, 16px);
+  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  flex-wrap: wrap;
 }
 
 .rate-limit-confirm-btn {
-  width: 100%;
-  padding: 12px 20px;
-  background: #FFF770;
-  color: #1A1A1F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 12px) var(--space-xl, 20px);
+  background: var(--accent, #FFF770);
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: var(--radius-lg, 8px);
+  color: var(--bg-header, #1A1A1F);
+  font-size: var(--text-md, 13px);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -163,14 +177,24 @@
   transform: translateY(-1px);
 }
 
-.rate-limit-confirm-btn:active {
-  transform: translateY(0);
+.rate-limit-skip-hint {
+  font-size: var(--text-base, 12px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin: 0;
 }
 
-.rate-limit-skip-hint {
-  text-align: center;
-  font-size: 12px;
-  color: #888;
-  margin: 0;
-  font-style: italic;
+@media (max-width: 480px) {
+  .rate-limit-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .rate-limit-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .rate-limit-skip-hint {
+    text-align: center;
+  }
 }

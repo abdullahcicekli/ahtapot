@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2025-12-03
+
+### Added
+- **Provider Enable/Disable Configuration System** - Centralized control for provider availability
+  - New `PROVIDER_ENABLED_STATUS` config in `providerDisplay.ts`
+  - `isProviderEnabled()`, `getEnabledProviders()`, `getDisabledProviders()` utility functions
+  - Easy toggle to enable/disable providers without code changes across multiple files
+- **Dynamic Provider Filtering** - All UI components now respect provider enabled status
+  - ServiceRegistry skips disabled providers
+  - Options page hides disabled providers from API key settings
+  - ProviderSlider and sidepanel filter out disabled providers
+  - Provider order storage filters disabled providers
+
+### Changed
+- **Scamalytics Integration Temporarily Disabled** - Pending API activation confirmation
+  - Scamalytics hidden from all UI components
+  - No API calls made to Scamalytics service
+  - Will be re-enabled once API access is confirmed
+- Updated ahtapot.me website to reflect 9 active providers
+- Provider count updated from 10 to 9 across all documentation and UI text
+
+### Technical
+- Enhanced `providerDisplay.ts` with provider enable/disable configuration
+- Updated `ServiceRegistry.ts` to check `isProviderEnabled()` before service initialization
+- Modified `providerOrderStorage.ts` to filter disabled providers from order lists
+- Updated `options.tsx` to only show enabled providers in API key settings
+
 ## [2.6.0] - 2025-12-02
 
 ### Added
@@ -270,6 +297,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
+- **2.7.x** - Provider enable/disable config system, Scamalytics temporarily disabled
 - **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
 - **2.5.x** - Customizable provider display order, drag-and-drop reordering
 - **2.4.x** - URLhaus, Pulsedive, Scamalytics integrations
