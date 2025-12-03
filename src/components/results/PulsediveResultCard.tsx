@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { 
   AlertCircle, 
@@ -15,6 +15,7 @@ import {
   Activity
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatPulsediveResults } from './ResultCopyButtons';
 import './PulsediveResultCard.css';
 
 interface PulsediveResultCardProps {
@@ -23,6 +24,7 @@ interface PulsediveResultCardProps {
 
 export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details } = result;
 
   const risk = details?.risk || details?.risk_recommended || 'unknown';
@@ -62,7 +64,17 @@ export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result
   const riskColor = getRiskColor(risk);
 
   return (
-    <div className="pulsedive-result-card">
+    <div className="pulsedive-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={iid ? `https://pulsedive.com/indicator/?iid=${iid}` : `https://pulsedive.com/indicator/?value=${encodeURIComponent(result.ioc.value)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on Pulsedive"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="pulsedive-header">
         <div className="pulsedive-header-left">
@@ -263,21 +275,14 @@ export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result
           </div>
         )}
 
-        {/* External Link */}
-        {iid && !details?.message && (
-          <div className="pulsedive-link-container">
-            <a
-              href={`https://pulsedive.com/indicator/?iid=${iid}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pulsedive-link-button"
-            >
-              <ExternalLink size={14} />
-              {t('pulsedive.viewFullReport')}
-            </a>
-          </div>
-        )}
       </div>
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatPulsediveResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

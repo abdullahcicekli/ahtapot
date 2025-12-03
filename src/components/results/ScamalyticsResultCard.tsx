@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { 
   AlertCircle, 
@@ -11,6 +11,7 @@ import {
   Info
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatScamalyticsResults } from './ResultCopyButtons';
 import './ScamalyticsResultCard.css';
 
 interface ScamalyticsResultCardProps {
@@ -19,6 +20,7 @@ interface ScamalyticsResultCardProps {
 
 export const ScamalyticsResultCard: React.FC<ScamalyticsResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details, status, ioc } = result;
 
   const score = details?.score ?? 0;
@@ -59,7 +61,17 @@ export const ScamalyticsResultCard: React.FC<ScamalyticsResultCardProps> = ({ re
   const riskColor = getRiskColor(risk);
 
   return (
-    <div className="scamalytics-result-card">
+    <div className="scamalytics-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={scamalyticsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on Scamalytics"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="scamalytics-header">
         <div className="scamalytics-header-left">
@@ -209,21 +221,16 @@ export const ScamalyticsResultCard: React.FC<ScamalyticsResultCardProps> = ({ re
               </div>
             )}
 
-            {/* External Link */}
-            <div className="scamalytics-link-container">
-              <a
-                href={scamalyticsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="scamalytics-link-button"
-              >
-                <ExternalLink size={14} />
-                {t('scamalytics.viewFullReport')}
-              </a>
-            </div>
           </>
         )}
       </div>
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatScamalyticsResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

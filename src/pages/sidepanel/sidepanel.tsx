@@ -28,6 +28,7 @@ import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCar
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import { getProviderOrder, sortResultsByProviderOrder } from '@/utils/providerOrderStorage';
+import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import '@/i18n/config';
 import './sidepanel.css';
 
@@ -237,8 +238,36 @@ const SidePanel: React.FC = () => {
         const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(responseResults, providerOrder);
         setResults(sortedResults);
 
-        // Always set first provider with results as active tab
-        if (sortedResults.length > 0) {
+        // Get unique providers that have results
+        const providersWithResults = Array.from(new Set(sortedResults.map(r => r.source)));
+        
+        // Find the first provider in user's order that has results
+        if (providersWithResults.length > 0 && providerOrder.length > 0) {
+          // Sort providers with results by user's custom order
+          const sortedProviders = [...providersWithResults].sort((a, b) => {
+            const indexA = providerOrder.findIndex(p => 
+              PROVIDER_TO_SERVICE_NAME[p] === a
+            );
+            const indexB = providerOrder.findIndex(p => 
+              PROVIDER_TO_SERVICE_NAME[p] === b
+            );
+            // If not found, put at end
+            const orderA = indexA === -1 ? 999 : indexA;
+            const orderB = indexB === -1 ? 999 : indexB;
+            return orderA - orderB;
+          });
+          
+          // Set first provider in order as active
+          const firstProvider = sortedProviders[0];
+          setActiveProviderTab(firstProvider);
+          
+          // Set first IOC of that provider as active
+          const firstProviderResult = sortedResults.find(r => r.source === firstProvider);
+          if (firstProviderResult) {
+            setActiveIOCTab(firstProviderResult.ioc.value);
+          }
+        } else if (sortedResults.length > 0) {
+          // Fallback if providerOrder is not loaded yet
           setActiveProviderTab(sortedResults[0].source);
           setActiveIOCTab(sortedResults[0].ioc.value);
         }

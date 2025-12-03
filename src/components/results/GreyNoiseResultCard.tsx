@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -7,14 +7,15 @@ import {
   Shield,
   Eye,
   Tag,
-  Globe,
   Building2,
   Clock,
   AlertCircle,
   CheckCircle,
   Network,
+  ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatGreyNoiseResults } from './ResultCopyButtons';
 import './GreyNoiseResultCard.css';
 
 interface GreyNoiseResultCardProps {
@@ -23,6 +24,7 @@ interface GreyNoiseResultCardProps {
 
 export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details, status, error: resultError } = result;
 
   const getStatusIcon = () => {
@@ -67,7 +69,17 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
   };
 
   return (
-    <div className="greynoise-result-card">
+    <div className="greynoise-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={details?.link || `https://viz.greynoise.io/ip/${result.ioc.value}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on GreyNoise"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="greynoise-header">
         <div className="greynoise-header-left">
@@ -295,20 +307,15 @@ export const GreyNoiseResultCard: React.FC<GreyNoiseResultCardProps> = ({ result
             )}
           </div>
 
-          {/* View on GreyNoise Link */}
-          <div className="greynoise-external-link">
-            <a
-              href={details.link || `https://viz.greynoise.io/ip/${result.ioc.value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="greynoise-link-button"
-            >
-              <Globe size={16} />
-              {t('greynoise.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatGreyNoiseResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

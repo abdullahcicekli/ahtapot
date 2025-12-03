@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -9,9 +9,11 @@ import {
   Info,
   Globe,
   Server,
-  Shield
+  Shield,
+  ExternalLink
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatVirusTotalResults } from './ResultCopyButtons';
 import './VirusTotalResultCard.css';
 
 interface VirusTotalResultCardProps {
@@ -27,6 +29,7 @@ interface VendorResult {
 export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'detection' | 'details'>('detection');
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { details } = result;
 
@@ -124,7 +127,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
   };
 
   return (
-    <div className="vt-result-card">
+    <div className="vt-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={getVirusTotalUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on VirusTotal"
+      >
+        <ExternalLink size={16} />
+      </a>
+
       {/* Header */}
       <div className="vt-header">
         <div className="vt-header-left">
@@ -375,19 +389,15 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
             )}
           </div>
 
-          {/* View on VirusTotal Link */}
-          <div className="vt-external-link">
-            <a
-              href={getVirusTotalUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="vt-link-button"
-            >
-              {t('virustotal.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatVirusTotalResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

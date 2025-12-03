@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { 
   AlertCircle, 
@@ -12,6 +12,7 @@ import {
   Tag
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatURLhausResults } from './ResultCopyButtons';
 import './URLhausResultCard.css';
 
 interface URLhausResultCardProps {
@@ -20,6 +21,7 @@ interface URLhausResultCardProps {
 
 export const URLhausResultCard: React.FC<URLhausResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details } = result;
 
   const urlhausRef = details?.urlhaus_reference;
@@ -83,7 +85,17 @@ export const URLhausResultCard: React.FC<URLhausResultCardProps> = ({ result }) 
   const statusColor = getStatusColor();
 
   return (
-    <div className="urlhaus-result-card">
+    <div className="urlhaus-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={urlhausRef || `https://urlhaus.abuse.ch/browse.php?search=${encodeURIComponent(result.ioc.value)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on URLhaus"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="urlhaus-header">
         <div className="urlhaus-header-left">
@@ -289,23 +301,16 @@ export const URLhausResultCard: React.FC<URLhausResultCardProps> = ({ result }) 
               </div>
             )}
 
-            {/* External Link */}
-            {urlhausRef && (
-              <div className="urlhaus-link-container">
-                <a
-                  href={urlhausRef}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="urlhaus-link-button"
-                >
-                  <ExternalLink size={14} />
-                  {t('urlhaus.viewFullReport')}
-                </a>
-              </div>
-            )}
           </>
         )}
       </div>
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatURLhausResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

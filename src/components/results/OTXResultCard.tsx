@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -11,9 +11,11 @@ import {
   Target,
   Tag,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatOTXResults } from './ResultCopyButtons';
 import './OTXResultCard.css';
 
 interface OTXResultCardProps {
@@ -35,6 +37,7 @@ export const OTXResultCard: React.FC<OTXResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'pulses' | 'details'>('pulses');
   const [isThreatSummaryOpen, setIsThreatSummaryOpen] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { details } = result;
 
@@ -163,7 +166,25 @@ export const OTXResultCard: React.FC<OTXResultCardProps> = ({ result }) => {
   const statusInfo = getStatusInfo();
 
   return (
-    <div className="otx-result-card">
+    <div className="otx-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={(() => {
+          const type = result.ioc.type;
+          const value = result.ioc.value;
+          if (type === 'ipv4' || type === 'ipv6') return `https://otx.alienvault.com/indicator/ip/${value}`;
+          if (type === 'domain') return `https://otx.alienvault.com/indicator/domain/${value}`;
+          if (type === 'url') return `https://otx.alienvault.com/indicator/url/${encodeURIComponent(value)}`;
+          if (type === 'md5' || type === 'sha1' || type === 'sha256') return `https://otx.alienvault.com/indicator/file/${value}`;
+          return `https://otx.alienvault.com/indicator/ip/${value}`;
+        })()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on OTX AlienVault"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="otx-header">
         <div className="otx-header-left">
@@ -547,6 +568,13 @@ export const OTXResultCard: React.FC<OTXResultCardProps> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatOTXResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

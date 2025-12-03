@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -13,8 +13,10 @@ import {
   Clock,
   Flag,
   Tag,
+  ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatAbuseIPDBResults } from './ResultCopyButtons';
 import './AbuseIPDBResultCard.css';
 
 interface AbuseIPDBResultCardProps {
@@ -33,6 +35,7 @@ interface Report {
 export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'overview' | 'reports' | 'details'>('overview');
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { details } = result;
 
@@ -97,7 +100,18 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
   const statusInfo = getStatusInfo();
 
   return (
-    <div className="abuseipdb-result-card">
+    <div className="abuseipdb-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={`https://www.abuseipdb.com/check/${details?.ipAddress || result.ioc.value}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on AbuseIPDB"
+      >
+        <ExternalLink size={16} />
+      </a>
+
       {/* Header */}
       <div className="abuseipdb-header">
         <div className="abuseipdb-header-left">
@@ -438,19 +452,15 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
             )}
           </div>
 
-          {/* View on AbuseIPDB Link */}
-          <div className="abuseipdb-external-link">
-            <a
-              href={`https://www.abuseipdb.com/check/${details?.ipAddress}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="abuseipdb-link-button"
-            >
-              {t('abuseipdb.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatAbuseIPDBResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -11,8 +11,10 @@ import {
   MapPin,
   Hash,
   AlertCircle,
+  ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatShodanResults } from './ResultCopyButtons';
 import './ShodanResultCard.css';
 
 interface ShodanResultCardProps {
@@ -21,6 +23,7 @@ interface ShodanResultCardProps {
 
 export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details, status, error: resultError } = result;
 
   const getStatusIcon = () => {
@@ -53,7 +56,19 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
   };
 
   return (
-    <div className="shodan-result-card">
+    <div className="shodan-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={details?.domain 
+          ? `https://www.shodan.io/domain/${result.ioc.value}` 
+          : `https://www.shodan.io/host/${result.ioc.value}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on Shodan"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="shodan-header">
         <div className="shodan-header-left">
@@ -308,17 +323,6 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             )}
           </div>
 
-          {/* View on Shodan Link */}
-          <div className="shodan-external-link">
-            <a
-              href={`https://www.shodan.io/host/${result.ioc.value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shodan-link-button"
-            >
-              {t('shodan.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
 
@@ -386,19 +390,15 @@ export const ShodanResultCard: React.FC<ShodanResultCardProps> = ({ result }) =>
             )}
           </div>
 
-          {/* View on Shodan Link */}
-          <div className="shodan-external-link">
-            <a
-              href={`https://www.shodan.io/domain/${result.ioc.value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shodan-link-button"
-            >
-              {t('shodan.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatShodanResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };
