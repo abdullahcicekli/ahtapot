@@ -1,29 +1,15 @@
 import { BaseToolService, ToolServiceConfig } from '../base/BaseToolService';
 import { DetectedIOC, IOCAnalysisResult, IOCType } from '@/types/ioc';
-
-/**
- * Scamalytics Response Types (from web scraping)
- */
-interface ScamalyticsScrapedData {
-  score?: string;
-  risk?: string;
-  'Anonymizing VPN'?: string;
-  'Tor Exit Node'?: string;
-  'Server'?: string;
-  'Public Proxy'?: string;
-  'Web Proxy'?: string;
-  'Search Engine Robot'?: string;
-  // Additional fields that might be present
-  [key: string]: string | undefined;
-}
+import { ScamalyticsResponse } from '@/types/scamalytics';
 
 /**
  * Scamalytics Service
- * Uses web scraping to get IP fraud scores from scamalytics.com
- * No API key required - scrapes the public website
+ * Uses the official Scamalytics IP Fraud Risk API v3
+ * API key format: username:apikey
+ * API endpoint: https://api12.scamalytics.com/v3/{username}/?key={apikey}&ip={ip}
  */
 export class ScamalyticsService extends BaseToolService {
-  private readonly publicURL = 'https://scamalytics.com/ip';
+  private readonly apiBaseURL = 'https://api12.scamalytics.com/v3';
 
   constructor(config: ToolServiceConfig) {
     super(config);
@@ -39,14 +25,32 @@ export class ScamalyticsService extends BaseToolService {
 
   /**
    * Check if service is configured
-   * Scamalytics works without API key (web scraping)
+   * Requires API key in format: username:apikey
    */
   isConfigured(): boolean {
-    return true; // Always configured - uses public website
+    const credentials = this.parseCredentials();
+    return !!(credentials.username && credentials.apiKey);
   }
 
   /**
-   * Analyze an IOC using Scamalytics
+   * Parse credentials from apiKey (format: username:apikey)
+   */
+  private parseCredentials(): { username: string; apiKey: string } {
+    const apiKey = this.config.apiKey || '';
+    const parts = apiKey.split(':');
+    
+    if (parts.length >= 2) {
+      return {
+        username: parts[0].trim(),
+        apiKey: parts.slice(1).join(':').trim(), // Handle case where apikey might contain colons
+      };
+    }
+    
+    return { username: '', apiKey: '' };
+  }
+
+  /**
+   * Analyze an IOC using Scamalytics API
    */
   async analyze(ioc: DetectedIOC): Promise<IOCAnalysisResult> {
     console.log(`[Scamalytics] Analyzing IOC: ${ioc.value} (${ioc.type})`);
@@ -56,9 +60,13 @@ export class ScamalyticsService extends BaseToolService {
       return this.createUnsupportedResult(ioc);
     }
 
-    console.log(`[Scamalytics] Starting web scraping analysis for ${ioc.value}`);
+    if (!this.isConfigured()) {
+      console.log('[Scamalytics] Not configured - API credentials missing');
+      return this.createErrorResult(ioc, 'Scamalytics API credentials not configured. Format: username:apikey');
+    }
+
     try {
-      return await this.scrapeIP(ioc);
+      return await this.queryAPI(ioc);
     } catch (error) {
       console.error('[Scamalytics] Analysis error:', error);
       return this.createErrorResult(
@@ -69,140 +77,57 @@ export class ScamalyticsService extends BaseToolService {
   }
 
   /**
-   * Scrape IP information from scamalytics.com
-   * Similar to the Go ipchecker package approach
+   * Query Scamalytics API
    */
-  private async scrapeIP(ioc: DetectedIOC): Promise<IOCAnalysisResult> {
-    const url = `${this.publicURL}/${ioc.value}`;
-    console.log(`[Scamalytics] Fetching: ${url}`);
+  private async queryAPI(ioc: DetectedIOC): Promise<IOCAnalysisResult> {
+    const { username, apiKey } = this.parseCredentials();
+    const url = `${this.apiBaseURL}/${encodeURIComponent(username)}/?key=${encodeURIComponent(apiKey)}&ip=${encodeURIComponent(ioc.value)}`;
+    
+    console.log(`[Scamalytics] Fetching API: ${this.apiBaseURL}/${username}/?key=***&ip=${ioc.value}`);
 
     const response = await this.fetchWithTimeout(url, {
-        method: 'GET',
-        headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-      });
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
 
     console.log(`[Scamalytics] Response status: ${response.status}`);
 
     if (!response.ok) {
-      throw new Error(`Scamalytics returned HTTP ${response.status}`);
+      const errorText = await response.text();
+      console.error('[Scamalytics] API error:', errorText);
+      
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('Invalid API credentials');
+      } else if (response.status === 429) {
+        throw new Error('Rate limit exceeded');
+      }
+      
+      throw new Error(`API returned HTTP ${response.status}`);
     }
 
-    const html = await response.text();
-    
-    // Extract JSON from <pre> tags (like Go code does)
-    const preMatch = html.match(/<pre[^>]*>([\s\S]*?)<\/pre>/i);
-    if (!preMatch || !preMatch[1]) {
-      console.log('[Scamalytics] Could not find <pre> tag, trying alternative parsing');
-      return this.parseFromHTML(ioc, html);
-    }
+    const data: ScamalyticsResponse = await response.json();
+    console.log('[Scamalytics] API response:', JSON.stringify(data, null, 2));
 
-    let jsonStr = preMatch[1].trim();
-    console.log('[Scamalytics] Raw pre content:', jsonStr.substring(0, 200));
-
-    // Clean up the JSON string (like Go code does)
-    // Remove trailing "..." and fix trailing commas
-    jsonStr = jsonStr.replace(/\.\.\./, '');
-    jsonStr = jsonStr.replace(/,(\s*})/, '$1');
-    jsonStr = jsonStr.replace(/,(\s*$)/, '');
-    
-    // Wrap in braces if needed
-    if (!jsonStr.startsWith('{')) {
-      jsonStr = '{' + jsonStr + '}';
-    }
-
-    let data: ScamalyticsScrapedData;
-    try {
-      data = JSON.parse(jsonStr);
-      console.log('[Scamalytics] Parsed data:', data);
-    } catch (parseError) {
-      console.error('[Scamalytics] JSON parse error:', parseError);
-      console.log('[Scamalytics] Falling back to HTML parsing');
-      return this.parseFromHTML(ioc, html);
-    }
-
-    return this.buildResult(ioc, data, html);
+    return this.buildResult(ioc, data);
   }
 
   /**
-   * Parse data from HTML when JSON extraction fails
+   * Build result from API response
    */
-  private parseFromHTML(ioc: DetectedIOC, html: string): IOCAnalysisResult {
-    // Try to extract score from HTML
-    const scoreMatch = html.match(/Fraud\s*Score[:\s]*(\d+)/i) || 
-                       html.match(/score[:\s]*["']?(\d+)["']?/i);
-    const score = scoreMatch ? parseInt(scoreMatch[1], 10) : 0;
+  private buildResult(ioc: DetectedIOC, response: ScamalyticsResponse): IOCAnalysisResult {
+    const scamalytics = response.scamalytics;
 
-    // Try to extract risk level
-    const riskMatch = html.match(/risk[:\s]*["']?([^"'<\n,]+)["']?/i);
-    const risk = riskMatch ? riskMatch[1].trim().toLowerCase() : 'unknown';
-
-    // Check for proxy indicators in HTML
-    const isVPN = /vpn[:\s]*["']?yes["']?/i.test(html) || html.includes('Anonymizing VPN');
-    const isTor = /tor[:\s]*["']?yes["']?/i.test(html) || html.includes('Tor Exit Node');
-    const isProxy = /proxy[:\s]*["']?yes["']?/i.test(html);
-    const isDatacenter = /server[:\s]*["']?yes["']?/i.test(html) || /datacenter/i.test(html);
-
-    const proxyInfo = {
-      is_vpn: isVPN,
-      is_tor: isTor,
-      is_datacenter: isDatacenter,
-    };
-
-    // Determine status
-    let status: 'safe' | 'suspicious' | 'malicious' = 'safe';
-    if (score >= 75 || risk === 'very high' || risk === 'high') {
-      status = 'malicious';
-    } else if (score >= 40 || risk === 'medium') {
-      status = 'suspicious';
+    if (scamalytics.status === 'error') {
+      return this.createErrorResult(ioc, scamalytics.error || 'API returned error status');
     }
 
-    const fraudIndicators: string[] = [];
-    if (isVPN) fraudIndicators.push('VPN');
-    if (isTor) fraudIndicators.push('Tor Exit Node');
-    if (isProxy) fraudIndicators.push('Proxy');
-    if (isDatacenter) fraudIndicators.push('Datacenter/Server');
+    const score = scamalytics.scamalytics_score ?? 0;
+    const risk = (scamalytics.scamalytics_risk || 'unknown').toLowerCase();
+    const proxyInfo = scamalytics.scamalytics_proxy || {};
 
-    return {
-      ioc,
-      source: this.name,
-      status,
-      details: {
-        score,
-        risk,
-        risk_description: this.getRiskDescription(risk),
-        proxy_info: proxyInfo,
-        fraud_indicators: fraudIndicators,
-        is_blacklisted: false,
-        scamalytics_url: `https://scamalytics.com/ip/${ioc.value}`,
-      },
-      timestamp: Date.now(),
-    };
-  }
-
-  /**
-   * Build result from scraped data
-   */
-  private buildResult(ioc: DetectedIOC, data: ScamalyticsScrapedData, _html: string): IOCAnalysisResult {
-    const score = data.score ? parseInt(data.score, 10) : 0;
-    const risk = (data.risk || 'unknown').toLowerCase();
-
-    // Parse proxy indicators
-    const isYes = (val: string | undefined) => val?.toLowerCase() === 'yes';
-    
-    const proxyInfo = {
-      is_vpn: isYes(data['Anonymizing VPN']),
-      is_tor: isYes(data['Tor Exit Node']),
-      is_datacenter: isYes(data['Server']),
-      is_public_proxy: isYes(data['Public Proxy']),
-      is_web_proxy: isYes(data['Web Proxy']),
-      is_search_engine_robot: isYes(data['Search Engine Robot']),
-    };
-
-    // Determine status
+    // Determine status based on score and risk
     let status: 'safe' | 'suspicious' | 'malicious' = 'safe';
     if (score >= 75 || risk === 'very high' || risk === 'high') {
       status = 'malicious';
@@ -214,10 +139,22 @@ export class ScamalyticsService extends BaseToolService {
     const fraudIndicators: string[] = [];
     if (proxyInfo.is_vpn) fraudIndicators.push('VPN');
     if (proxyInfo.is_tor) fraudIndicators.push('Tor Exit Node');
-    if (proxyInfo.is_datacenter) fraudIndicators.push('Datacenter/Server');
-    if (proxyInfo.is_public_proxy) fraudIndicators.push('Public Proxy');
-    if (proxyInfo.is_web_proxy) fraudIndicators.push('Web Proxy');
-    if (proxyInfo.is_search_engine_robot) fraudIndicators.push('Search Engine Robot');
+    if (proxyInfo.is_datacenter) fraudIndicators.push('Datacenter');
+    if (proxyInfo.is_apple_icloud_private_relay) fraudIndicators.push('iCloud Private Relay');
+    if (proxyInfo.is_amazon_aws) fraudIndicators.push('Amazon AWS');
+    if (proxyInfo.is_google) fraudIndicators.push('Google');
+
+    // Extract external datasource info
+    const externalData = response.external_datasources || {};
+    const geoInfo = externalData.maxmind_geolite2 || externalData.ipinfo || {};
+    const firehol = externalData.firehol || {};
+    const ipsum = externalData.ipsum || {};
+
+    // Check if blacklisted
+    const isBlacklisted = scamalytics.is_blacklisted_external || 
+                          firehol.ip_blacklisted_30 || 
+                          firehol.ip_blacklisted_1day ||
+                          ipsum.ip_blacklisted || false;
 
     return {
       ioc,
@@ -227,11 +164,30 @@ export class ScamalyticsService extends BaseToolService {
         score,
         risk,
         risk_description: this.getRiskDescription(risk),
-        proxy_info: proxyInfo,
+        isp_score: scamalytics.scamalytics_isp_score,
+        isp_risk: scamalytics.scamalytics_isp_risk,
+        proxy_info: {
+          is_vpn: proxyInfo.is_vpn || false,
+          is_tor: proxyInfo.is_tor || false,
+          is_datacenter: proxyInfo.is_datacenter || false,
+          is_icloud_relay: proxyInfo.is_apple_icloud_private_relay || false,
+          is_aws: proxyInfo.is_amazon_aws || false,
+          is_google: proxyInfo.is_google || false,
+        },
         fraud_indicators: fraudIndicators,
-        is_blacklisted: false,
-        scamalytics_url: `https://scamalytics.com/ip/${ioc.value}`,
-        raw_data: data,
+        is_blacklisted: isBlacklisted,
+        geo_info: {
+          country_code: geoInfo.ip_country_code,
+          country_name: geoInfo.ip_country_name,
+          city: geoInfo.ip_city,
+          state: geoInfo.ip_state_name,
+          asn: geoInfo.asn,
+          as_name: geoInfo.as_name,
+          isp: geoInfo.isp_name,
+        },
+        credits: scamalytics.credits,
+        scamalytics_url: scamalytics.scamalytics_url || `https://scamalytics.com/ip/${ioc.value}`,
+        mode: scamalytics.mode,
       },
       timestamp: Date.now(),
     };

@@ -214,6 +214,18 @@ body {
   margin-bottom: 24px;
 }
 
+.api-keys-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.api-keys-icon {
+  color: var(--accent);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
 .api-keys-section h2 {
   font-size: 24px;
   font-weight: 600;

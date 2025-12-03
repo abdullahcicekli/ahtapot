@@ -412,5 +412,31 @@
     "status": "Status",
     "details": "Details",
     "error": "Error"
+  },
+  "error": {
+    "status": "Error",
+    "unknown": "An unknown error occurred",
+    "types": {
+      "apiError": "API Error",
+      "authError": "Authentication Error",
+      "notFound": "Not Found",
+      "rateLimit": "Rate Limited",
+      "serverError": "Server Error",
+      "clientError": "Request Error"
+    },
+    "possibleCauses": "Possible causes:",
+    "tips": {
+      "invalidApiKey": "Invalid or missing API key",
+      "expiredApiKey": "API key may have expired",
+      "checkSettings": "Check your API configuration in Settings",
+      "rateLimitExceeded": "API rate limit exceeded for this provider",
+      "waitAndRetry": "Wait a few minutes and try again",
+      "upgradePlan": "Consider upgrading your API plan for higher limits",
+      "serverIssue": "The provider service is temporarily unavailable",
+      "tryAgainLater": "Try again in a few minutes",
+      "checkStatus": "Check the provider's status page",
+      "checkApiKey": "Verify your API key is correct",
+      "networkIssue": "Network connection issue"
+    }
   }
 }

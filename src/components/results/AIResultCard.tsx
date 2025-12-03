@@ -76,7 +76,7 @@ export const AIResultCard: React.FC<AIResultCardProps> = ({ result, defaultExpan
       // Ordered lists
       .replace(/^\s*\d+\.\s+(.*)$/gim, '<li>$1</li>')
       // Tables (basic support)
-      .replace(/\|(.+)\|/g, (match, content) => {
+      .replace(/\|(.+)\|/g, (_match, content) => {
         const cells = content.split('|').map((cell: string) => cell.trim());
         if (cells.every((cell: string) => /^[-:]+$/.test(cell))) {
           return ''; // Skip separator row

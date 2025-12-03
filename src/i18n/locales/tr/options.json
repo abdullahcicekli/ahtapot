@@ -118,7 +118,7 @@
     "scamalytics": {
       "label": "Scamalytics",
       "description": "IP dolandırıcılık puanı ve dolandırıcılık tespiti",
-      "placeholder": "Scamalytics API anahtarınız"
+      "placeholder": "kullanici:apikey (örn: myuser:abc123...)"
     },
     "arin": {
       "label": "ARIN WHOIS",

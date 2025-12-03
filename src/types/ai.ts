@@ -28,6 +28,8 @@ export interface AIProviderConfig {
   provider: AIProvider;
   modelName: string;
   displayName: string;
+  shortName: string;
+  logo: string;
   apiKeyUrl: string;
   signupUrl: string;
   pricingUrl: string;
@@ -80,6 +82,8 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     provider: AIProvider.CLAUDE,
     modelName: 'claude-sonnet-4-20250514',
     displayName: 'Claude Sonnet 4',
+    shortName: 'Claude',
+    logo: '/provider-icons/claude-logo.png',
     apiKeyUrl: 'https://console.anthropic.com/settings/keys',
     signupUrl: 'https://console.anthropic.com/',
     pricingUrl: 'https://www.anthropic.com/pricing',
@@ -93,6 +97,8 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     provider: AIProvider.GEMINI,
     modelName: 'gemini-2.0-flash',
     displayName: 'Gemini 2.0 Flash',
+    shortName: 'Gemini',
+    logo: '/provider-icons/gemini-logo.png',
     apiKeyUrl: 'https://aistudio.google.com/apikey',
     signupUrl: 'https://aistudio.google.com/',
     pricingUrl: 'https://ai.google.dev/pricing',
@@ -106,6 +112,8 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     provider: AIProvider.OPENAI,
     modelName: 'gpt-4o-mini',
     displayName: 'GPT-4o Mini',
+    shortName: 'GPT-4o',
+    logo: '/provider-icons/openai-logo.svg',
     apiKeyUrl: 'https://platform.openai.com/api-keys',
     signupUrl: 'https://platform.openai.com/signup',
     pricingUrl: 'https://openai.com/api/pricing/',

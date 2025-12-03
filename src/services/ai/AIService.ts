@@ -21,17 +21,22 @@ export class AIService {
 
   /**
    * Analyze IOC results using AI
+   * @param mode - Analysis mode (summary, analysis, detailed)
+   * @param iocList - List of IOCs to analyze
+   * @param analysisResults - Results from security providers
+   * @param language - Output language code (e.g., 'en', 'tr')
    */
   async analyze(
     mode: AIAnalysisMode,
     iocList: Array<{ type: string; value: string }>,
-    analysisResults: IOCAnalysisResult[]
+    analysisResults: IOCAnalysisResult[],
+    language: string = 'en'
   ): Promise<AIAnalysisResult> {
     // Build analysis data from results
     const analysisData = this.buildAnalysisData(analysisResults);
 
-    // Build prompts
-    const { system, user } = buildPromptForMode(mode, iocList, analysisData);
+    // Build prompts with language support
+    const { system, user } = buildPromptForMode(mode, iocList, analysisData, language);
 
     try {
       // Call the appropriate AI provider

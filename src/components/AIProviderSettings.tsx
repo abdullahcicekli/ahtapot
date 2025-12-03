@@ -5,9 +5,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, Info, ExternalLink, Save, CheckCircle, Loader, AlertCircle, Sparkles, DollarSign } from 'lucide-react';
+import { Eye, EyeOff, Info, ExternalLink, Save, CheckCircle, Loader, AlertCircle, Bot, DollarSign } from 'lucide-react';
 import { AIProvider, AI_PROVIDER_CONFIGS } from '@/types/ai';
-import { getAIKeys, saveAIKey, validateAIKeyFormat, AIKeysStorage } from '@/utils/aiKeyStorage';
+import { getAIKeys, saveAIKey, validateAIKeyFormat } from '@/utils/aiKeyStorage';
 import './AIProviderSettings.css';
 
 interface AIKeyState {
@@ -172,7 +172,7 @@ export const AIProviderSettings: React.FC = () => {
     <div className="ai-providers-section">
       <div className="ai-providers-header">
         <div className="ai-providers-title">
-          <Sparkles size={20} className="ai-providers-icon" />
+          <Bot size={22} className="ai-providers-icon" />
           <div>
             <h2>{t('ai.sectionTitle', { ns: 'options' })}</h2>
             <p className="section-description">{t('ai.sectionDescription', { ns: 'options' })}</p>

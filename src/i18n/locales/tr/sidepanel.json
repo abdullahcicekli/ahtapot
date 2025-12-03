@@ -92,9 +92,81 @@
       "analysis": "Analiz",
       "detailed": "Detaylı"
     },
+    "modeInfo": {
+      "title": "Analiz Modları",
+      "summary": "L1 analistleri için hızlı triage kararları",
+      "analysis": "L1/L2 aktarımı için eskalasyon kararları",
+      "detailed": "L2/L3 + IR ekipleri için tam araştırma"
+    },
     "analyzing": "Analiz Ediliyor...",
     "start": "Analiz Et",
     "copyResult": "Sonucu kopyala",
+    "copyMarkdown": "Markdown Olarak Kopyala",
+    "reanalyze": "Tekrar Analiz Et",
+    "exportImage": "Görsel Olarak Dışa Aktar",
+    "cached": "Önbellekten",
+    "sections": {
+      "summary": "Özet",
+      "keySignals": "Önemli Sinyaller",
+      "assessment": "Değerlendirme",
+      "providerAnalysis": "Sağlayıcı Analizi",
+      "consensus": "Uzlaşı",
+      "threatIntel": "Tehdit İstihbaratı",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "Önerilen Aksiyonlar",
+      "analystNotes": "Analist Notları",
+      "executiveSummary": "Yönetici Özeti",
+      "iocAnalysis": "IOC Analizi",
+      "crossReference": "Çapraz Referans Analizi",
+      "infrastructure": "Altyapı",
+      "falsePositive": "Yanlış Pozitif Analizi",
+      "responseActions": "Yanıt Aksiyonları",
+      "detectionEngineering": "Tespit Mühendisliği",
+      "references": "Referanslar"
+    },
+    "labels": {
+      "verdict": "Karar",
+      "risk": "Risk",
+      "confidence": "Güven",
+      "escalation": "Eskalasyon Gerekli",
+      "priority": "Öncelik",
+      "detection": "Tespit",
+      "reputation": "İtibar",
+      "associations": "İlişkiler",
+      "agreement": "Anlaşma",
+      "conflicts": "Çelişkiler",
+      "dataGaps": "Veri Eksiklikleri",
+      "knownAssociations": "Bilinen İlişkiler",
+      "historicalActivity": "Geçmiş Aktivite",
+      "infrastructureInfo": "Altyapı",
+      "immediate": "Acil",
+      "shortTerm": "Kısa Vadeli",
+      "longTerm": "Uzun Vadeli",
+      "investigation": "Araştırma",
+      "confidenceFactors": "Güven Faktörleri",
+      "limitations": "Kısıtlamalar",
+      "followUp": "Takip",
+      "source": "Kaynak"
+    },
+    "verdicts": {
+      "malicious": "Kötü Amaçlı",
+      "suspicious": "Şüpheli",
+      "likely_benign": "Muhtemelen Zararsız",
+      "clean": "Temiz",
+      "unknown": "Bilinmiyor"
+    },
+    "riskLevels": {
+      "critical": "Kritik",
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük",
+      "info": "Bilgi"
+    },
+    "confidenceLevels": {
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük"
+    },
     "errors": {
       "noApiKey": "Lütfen Ayarlar'dan bu AI sağlayıcı için bir API anahtarı yapılandırın",
       "unknown": "AI analizi sırasında beklenmeyen bir hata oluştu"

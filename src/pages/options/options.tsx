@@ -905,11 +905,14 @@ const OptionsPage: React.FC = () => {
 
             <div className="api-keys-section">
               <div className="api-keys-header">
-                <div>
-                  <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
-                  <p className="section-description">
-                    {t('apiKeys.sectionDescription', { ns: 'options' })}
-                  </p>
+                <div className="api-keys-title">
+                  <Key size={22} className="api-keys-icon" />
+                  <div>
+                    <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
+                    <p className="section-description">
+                      {t('apiKeys.sectionDescription', { ns: 'options' })}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={handleOpenOrderModal}

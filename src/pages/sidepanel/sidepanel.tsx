@@ -29,8 +29,10 @@ import { URLhausResultCard } from '@/components/results/URLhausResultCard';
 import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
 import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
+import { ErrorResultCard, isErrorResult } from '@/components/results/ErrorResultCard';
 import { AIAnalysisSection } from '@/components/AIAnalysisSection';
-import { AIResultCard } from '@/components/results/AIResultCard';
+import { AIStructuredResultCard } from '@/components/results/AIStructuredResultCard';
+import { getCachedAIResult, cacheAIResult, clearCachedAIResult } from '@/utils/aiResultCache';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import { getProviderOrder, sortResultsByProviderOrder } from '@/utils/providerOrderStorage';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
@@ -39,7 +41,7 @@ import { getAIKeyValue } from '@/utils/aiKeyStorage';
 import '@/i18n/config';
 import '@/components/results/ResultCard.css';
 import '@/components/AIAnalysisSection.css';
-import '@/components/results/AIResultCard.css';
+import '@/components/results/AIStructuredResultCard.css';
 import './sidepanel.css';
 
 // Provider support mapping - mirrors backend service capabilities
@@ -64,7 +66,7 @@ const getSupportingProviders = (iocType: IOCType): string[] => {
 };
 
 const SidePanel: React.FC = () => {
-  const { t } = useTranslation('sidepanel');
+  const { t, language } = useTranslation('sidepanel');
   const tCommon = useTranslation('common').t;
 
   const [inputText, setInputText] = useState('');
@@ -82,6 +84,12 @@ const SidePanel: React.FC = () => {
   const [aiResult, setAiResult] = useState<AIAnalysisResult | null>(null);
   const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
   const [isProviderResultsExpanded, setIsProviderResultsExpanded] = useState(true);
+  const [isAiResultCached, setIsAiResultCached] = useState(false);
+  const [lastAiQuery, setLastAiQuery] = useState<{
+    provider: AIProvider;
+    mode: AIAnalysisMode;
+    iocValue: string;
+  } | null>(null);
 
   // IOC tabs drag-to-scroll
   const iocTabsRef = useRef<HTMLDivElement>(null);
@@ -333,11 +341,27 @@ const SidePanel: React.FC = () => {
     }
   };
 
-  // Handle AI Analysis
-  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode) => {
+  // Handle AI Analysis with caching
+  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode, forceRefresh: boolean = false) => {
     if (results.length === 0) return;
 
+    // Get primary IOC value for cache key
+    const primaryIOC = currentIOCs[0]?.value || '';
+    
+    // Check cache first (unless force refresh)
+    if (!forceRefresh && primaryIOC) {
+      const cachedResult = await getCachedAIResult(provider, primaryIOC, mode, language);
+      if (cachedResult) {
+        setAiResult(cachedResult);
+        setIsAiResultCached(true);
+        setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+        setIsProviderResultsExpanded(false);
+        return;
+      }
+    }
+
     setIsAiAnalyzing(true);
+    setIsAiResultCached(false);
 
     try {
       // Get the API key for the selected provider
@@ -354,13 +378,19 @@ const SidePanel: React.FC = () => {
         return;
       }
 
-      // Create AI service and analyze
+      // Create AI service and analyze with current language
       const aiService = createAIService(provider, apiKey);
       const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
 
-      const result = await aiService.analyze(mode, iocList, results);
+      const result = await aiService.analyze(mode, iocList, results, language);
 
       setAiResult(result);
+      setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+
+      // Cache the result if successful
+      if (!result.error && primaryIOC) {
+        await cacheAIResult(provider, primaryIOC, mode, language, result);
+      }
 
       // Collapse provider results when AI result comes in
       if (!result.error) {
@@ -378,6 +408,22 @@ const SidePanel: React.FC = () => {
     } finally {
       setIsAiAnalyzing(false);
     }
+  };
+
+  // Handle re-query (force refresh)
+  const handleAiRequery = async () => {
+    if (!lastAiQuery) return;
+    
+    // Clear the cached result first
+    await clearCachedAIResult(
+      lastAiQuery.provider,
+      lastAiQuery.iocValue,
+      lastAiQuery.mode,
+      language
+    );
+    
+    // Re-run analysis with force refresh
+    await handleAiAnalysis(lastAiQuery.provider, lastAiQuery.mode, true);
   };
 
   const getStatusIcon = (status: IOCAnalysisResult['status']) => {
@@ -493,7 +539,12 @@ const SidePanel: React.FC = () => {
 
         {/* AI Result */}
         {aiResult && (
-          <AIResultCard result={aiResult} defaultExpanded={true} />
+          <AIStructuredResultCard 
+            result={aiResult} 
+            defaultExpanded={true}
+            isCached={isAiResultCached}
+            onRequery={handleAiRequery}
+          />
         )}
 
         <ProviderSlider
@@ -713,6 +764,11 @@ const SidePanel: React.FC = () => {
                   ) : null;
 
                   const resultElements = filteredResults.map((result, index) => {
+                    // Check for error status first - show error card for all providers
+                    if (isErrorResult(result)) {
+                      return <ErrorResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
                     if (result.source === 'VirusTotal') {
                       return <VirusTotalResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                     }

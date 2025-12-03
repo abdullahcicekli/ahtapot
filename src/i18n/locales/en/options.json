@@ -118,7 +118,7 @@
     "scamalytics": {
       "label": "Scamalytics",
       "description": "IP fraud score and scam detection",
-      "placeholder": "Your Scamalytics API key"
+      "placeholder": "username:apikey (e.g. myuser:abc123...)"
     },
     "arin": {
       "label": "ARIN WHOIS",

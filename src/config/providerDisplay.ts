@@ -16,7 +16,7 @@ export const PROVIDER_ENABLED_STATUS: Record<APIProvider, boolean> = {
   [APIProvider.ABUSEIPDB]: true,
   [APIProvider.PULSEDIVE]: true,
   [APIProvider.OTX]: true,
-  [APIProvider.SCAMALYTICS]: false,  // Disabled - API integration pending
+  [APIProvider.SCAMALYTICS]: true,  // Enabled - Using API v3 (api12.scamalytics.com)
   [APIProvider.GREYNOISE]: true,
   [APIProvider.SHODAN]: true,
   [APIProvider.MALWAREBAZAAR]: true,
@@ -59,7 +59,7 @@ export const DEFAULT_PROVIDER_ORDER: APIProvider[] = [
   APIProvider.ABUSEIPDB,
   APIProvider.PULSEDIVE,
   APIProvider.OTX,
-  // APIProvider.SCAMALYTICS, // Disabled
+  APIProvider.SCAMALYTICS,
   APIProvider.GREYNOISE,
   APIProvider.SHODAN,
   APIProvider.MALWAREBAZAAR,

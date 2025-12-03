@@ -412,5 +412,31 @@
     "status": "Durum",
     "details": "Detaylar",
     "error": "Hata"
+  },
+  "error": {
+    "status": "Hata",
+    "unknown": "Bilinmeyen bir hata oluştu",
+    "types": {
+      "apiError": "API Hatası",
+      "authError": "Kimlik Doğrulama Hatası",
+      "notFound": "Bulunamadı",
+      "rateLimit": "Limit Aşıldı",
+      "serverError": "Sunucu Hatası",
+      "clientError": "İstek Hatası"
+    },
+    "possibleCauses": "Olası nedenler:",
+    "tips": {
+      "invalidApiKey": "Geçersiz veya eksik API anahtarı",
+      "expiredApiKey": "API anahtarının süresi dolmuş olabilir",
+      "checkSettings": "Ayarlar'dan API yapılandırmanızı kontrol edin",
+      "rateLimitExceeded": "Bu sağlayıcı için API limiti aşıldı",
+      "waitAndRetry": "Birkaç dakika bekleyip tekrar deneyin",
+      "upgradePlan": "Daha yüksek limitler için API planınızı yükseltmeyi düşünün",
+      "serverIssue": "Sağlayıcı hizmeti geçici olarak kullanılamıyor",
+      "tryAgainLater": "Birkaç dakika içinde tekrar deneyin",
+      "checkStatus": "Sağlayıcının durum sayfasını kontrol edin",
+      "checkApiKey": "API anahtarınızın doğru olduğunu doğrulayın",
+      "networkIssue": "Ağ bağlantı sorunu"
+    }
   }
 }
