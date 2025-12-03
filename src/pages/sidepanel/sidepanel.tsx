@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   Search,
@@ -9,11 +9,12 @@ import {
   Loader,
   Settings,
   ExternalLink,
+  TrendingUp,
 } from 'lucide-react';
 import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
 import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
-import { ProviderStatusBadges } from '@/components/ProviderStatusBadges';
+import { ProviderSlider } from '@/components/ProviderSlider';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
 import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
@@ -59,14 +60,24 @@ const SidePanel: React.FC = () => {
   const [detectedIOCs, setDetectedIOCs] = useState<DetectedIOC[]>([]);
   const [results, setResults] = useState<IOCAnalysisResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [analyzingProviders, setAnalyzingProviders] = useState<APIProvider[]>([]);
-  const [completedProviders, setCompletedProviders] = useState<{ provider: APIProvider; status: 'success' | 'error' }[]>([]);
   const [hasApiKeys, setHasApiKeys] = useState<boolean | null>(null);
   const [activeProviderTab, setActiveProviderTab] = useState<string>('');
-  const [isInputExpanded, setIsInputExpanded] = useState(true);
+  const [activeIOCTab, setActiveIOCTab] = useState<string>('');
   const [pendingRateLimitProviders, setPendingRateLimitProviders] = useState<Set<'greynoise' | 'shodan'>>(new Set());
   const [currentIOCs, setCurrentIOCs] = useState<DetectedIOC[]>([]);
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+
+  // IOC tabs drag-to-scroll
+  const iocTabsRef = useRef<HTMLDivElement>(null);
+  const [isIOCTabsDragging, setIsIOCTabsDragging] = useState(false);
+  const [iocTabsStartX, setIOCTabsStartX] = useState(0);
+  const [iocTabsScrollLeft, setIOCTabsScrollLeft] = useState(0);
+
+  // Helper function to truncate IOC value for tab display
+  const truncateIOC = (value: string, maxLength: number = 20): string => {
+    if (value.length <= maxLength) return value;
+    return value.substring(0, maxLength) + '...';
+  };
 
   // Load provider order
   useEffect(() => {
@@ -87,6 +98,10 @@ const SidePanel: React.FC = () => {
     const handleStorageChange = (changes: any) => {
       if (changes.apiKeys) {
         checkAPIKeys();
+      }
+      // Reload sidepanel when language changes (fallback if message doesn't arrive)
+      if (changes.language) {
+        window.location.reload();
       }
     };
 
@@ -109,6 +124,11 @@ const SidePanel: React.FC = () => {
           setInputText(text);
           handleAnalyze(text);
         }
+      }
+      
+      // Reload sidepanel when language changes
+      if (message.type === 'LANGUAGE_CHANGED') {
+        window.location.reload();
       }
     };
 
@@ -140,12 +160,6 @@ const SidePanel: React.FC = () => {
       setHasApiKeys(false);
     }
   }
-
-  const handleDetect = () => {
-    const iocs = detectIOCs(inputText);
-    setDetectedIOCs(iocs);
-    setResults([]);
-  };
 
   const handleAnalyze = async (text?: string, providedIOCs?: DetectedIOC[], excludeProviders: Set<APIProvider> = new Set()) => {
     const textToAnalyze = text || inputText;
@@ -195,9 +209,8 @@ const SidePanel: React.FC = () => {
     // Proceed with analysis (excluding rate-limited providers for now)
     setLoading(true);
     setResults([]);
-    setCompletedProviders([]);
     setActiveProviderTab(''); // Reset active tab when starting new analysis
-    setIsInputExpanded(false); // Collapse input when analysis starts
+    setActiveIOCTab(''); // Reset IOC tab when starting new analysis
 
     // Convert pending providers to APIProvider enum
     const pendingProviderEnums: APIProvider[] = [];
@@ -227,20 +240,13 @@ const SidePanel: React.FC = () => {
         // Always set first provider with results as active tab
         if (sortedResults.length > 0) {
           setActiveProviderTab(sortedResults[0].source);
-        }
-
-        if (response.analyzingProviders) {
-          setAnalyzingProviders(response.analyzingProviders);
-        }
-        if (response.completedProviders) {
-          setCompletedProviders(response.completedProviders);
+          setActiveIOCTab(sortedResults[0].ioc.value);
         }
       }
     } catch (error) {
       console.error('[Sidepanel] Error analyzing IOCs:', error);
     } finally {
       setLoading(false);
-      setAnalyzingProviders([]);
     }
   };
 
@@ -271,19 +277,11 @@ const SidePanel: React.FC = () => {
         const combinedResults = [...results, ...responseResults];
         const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(combinedResults, providerOrder);
         setResults(sortedResults);
-
-        if (response.analyzingProviders) {
-          setAnalyzingProviders(response.analyzingProviders);
-        }
-        if (response.completedProviders) {
-          setCompletedProviders(prev => [...prev, ...response.completedProviders]);
-        }
       }
     } catch (error) {
       console.error(`[Sidepanel] Error analyzing with ${provider}:`, error);
     } finally {
       setLoading(false);
-      setAnalyzingProviders([]);
     }
   };
 
@@ -346,63 +344,58 @@ const SidePanel: React.FC = () => {
           </div>
         )}
 
-        <div className={`input-section ${isInputExpanded ? 'expanded' : 'collapsed'}`}>
-          {!isInputExpanded && (
-            <div className="input-collapsed-header" onClick={() => setIsInputExpanded(true)}>
-              <Search size={16} />
-              <span>{inputText || t('input.label')}</span>
-              <span className="expand-hint">Click to edit</span>
-            </div>
-          )}
-
-          {isInputExpanded && (
-            <>
-              <label htmlFor="ioc-input" className="input-label">
-                {t('input.label')}
-              </label>
-              <textarea
-                id="ioc-input"
-                placeholder={t('input.placeholder')}
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                className="ioc-input"
-                rows={6}
-              />
-              <div className="input-actions">
-                <button onClick={handleDetect} className="detect-btn">
-                  <Search size={18} />
-                  {t('input.detectButton')}
-                </button>
-                <button
-                  onClick={() => handleAnalyze()}
-                  className="analyze-btn"
-                  disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
-                >
-                  {loading ? (
-                    <>
-                      <Loader size={18} className="spinner" />
-                      {t('input.analyzingButton')}
-                    </>
-                  ) : (
-                    <>
-                      <Shield size={18} />
-                      {t('input.analyzeButton')}
-                    </>
-                  )}
-                </button>
-              </div>
-            </>
-          )}
+        <div className="search-section">
+          <div className="search-bar">
+            <Search size={18} className="search-icon" />
+            <textarea
+              id="ioc-input"
+              placeholder={t('input.placeholder')}
+              value={inputText}
+              onChange={(e) => {
+                setInputText(e.target.value);
+                // Auto-detect IOCs on input change
+                const iocs = detectIOCs(e.target.value);
+                setDetectedIOCs(iocs);
+              }}
+              onKeyDown={(e) => {
+                // Shift+Enter: new line, Enter alone: search
+                if (e.key === 'Enter' && !e.shiftKey && detectedIOCs.length > 0 && !loading && hasApiKeys !== false) {
+                  e.preventDefault();
+                  handleAnalyze();
+                }
+              }}
+              className="search-input"
+              rows={1}
+            />
+            <button
+              onClick={() => handleAnalyze()}
+              className="analyze-btn-compact"
+              disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
+              title={t('input.analyzeButton')}
+            >
+              {loading ? (
+                <Loader size={20} className="spinner" />
+              ) : (
+                <TrendingUp size={20} />
+              )}
+            </button>
+          </div>
+          <div className="search-hint">
+            <span>💡 {t('input.multipleHint')}</span>
+            {detectedIOCs.length > 0 && (
+              <span className="detected-count">{t('input.detectedCount', { count: detectedIOCs.length })}</span>
+            )}
+          </div>
         </div>
 
-        <ProviderStatusBadges
-          analyzingProviders={analyzingProviders}
-          completedProviders={completedProviders}
+        <ProviderSlider
           activeProvider={activeProviderTab}
           onProviderClick={(providerName) => {
             // Always switch to the clicked provider tab
             // The UI will show either results or a "no results" message
             setActiveProviderTab(providerName);
+            // Reset IOC tab when provider changes - first IOC will be auto-selected
+            setActiveIOCTab('');
           }}
           visibleProviders={results.length > 0 ? (() => {
             // Get providers from results
@@ -469,7 +462,21 @@ const SidePanel: React.FC = () => {
             {/* Active Provider Results */}
             <div className="results-list">
               {(() => {
-                const filteredResults = results.filter((result) => result.source === activeProviderTab);
+                const providerResults = results.filter((result) => result.source === activeProviderTab);
+                
+                // Get unique IOCs for this provider
+                const uniqueIOCs = Array.from(new Set(providerResults.map(r => r.ioc.value)));
+                const hasMultipleIOCs = uniqueIOCs.length > 1;
+                
+                // Set default active IOC if not set or invalid
+                const currentActiveIOC = activeIOCTab && uniqueIOCs.includes(activeIOCTab) 
+                  ? activeIOCTab 
+                  : uniqueIOCs[0] || '';
+                
+                // Filter results by active IOC
+                const filteredResults = hasMultipleIOCs 
+                  ? providerResults.filter(r => r.ioc.value === currentActiveIOC)
+                  : providerResults;
 
                 // If no results for active provider
                 if (filteredResults.length === 0 && activeProviderTab) {
@@ -539,50 +546,95 @@ const SidePanel: React.FC = () => {
                   );
                 }
 
+                // IOC Tabs for multiple IOCs
+                const handleIOCTabsMouseDown = (e: React.MouseEvent) => {
+                  if (!iocTabsRef.current) return;
+                  setIsIOCTabsDragging(true);
+                  setIOCTabsStartX(e.pageX - iocTabsRef.current.offsetLeft);
+                  setIOCTabsScrollLeft(iocTabsRef.current.scrollLeft);
+                };
+
+                const handleIOCTabsMouseUp = () => {
+                  setIsIOCTabsDragging(false);
+                };
+
+                const handleIOCTabsMouseMove = (e: React.MouseEvent) => {
+                  if (!isIOCTabsDragging || !iocTabsRef.current) return;
+                  e.preventDefault();
+                  const x = e.pageX - iocTabsRef.current.offsetLeft;
+                  const walk = (x - iocTabsStartX) * 1.5;
+                  iocTabsRef.current.scrollLeft = iocTabsScrollLeft - walk;
+                };
+
+                const handleIOCTabsMouseLeave = () => {
+                  setIsIOCTabsDragging(false);
+                };
+
+                const iocTabs = hasMultipleIOCs ? (
+                  <div 
+                    className={`ioc-tabs-container ${isIOCTabsDragging ? 'dragging' : ''}`}
+                    ref={iocTabsRef}
+                    onMouseDown={handleIOCTabsMouseDown}
+                    onMouseUp={handleIOCTabsMouseUp}
+                    onMouseMove={handleIOCTabsMouseMove}
+                    onMouseLeave={handleIOCTabsMouseLeave}
+                  >
+                    {uniqueIOCs.map((iocValue) => (
+                      <button
+                        key={iocValue}
+                        className={`ioc-tab ${currentActiveIOC === iocValue ? 'active' : ''}`}
+                        onClick={() => !isIOCTabsDragging && setActiveIOCTab(iocValue)}
+                        title={iocValue}
+                      >
+                        {truncateIOC(iocValue)}
+                      </button>
+                    ))}
+                  </div>
+                ) : null;
+
                 const resultElements = filteredResults.map((result, index) => {
                   if (result.source === 'VirusTotal') {
-                    return <VirusTotalResultCard key={index} result={result} />;
+                    return <VirusTotalResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'OTX AlienVault') {
-                    return <OTXResultCard key={index} result={result} />;
+                    return <OTXResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'AbuseIPDB') {
-                    return <AbuseIPDBResultCard key={index} result={result} />;
+                    return <AbuseIPDBResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'MalwareBazaar') {
-                    return <MalwareBazaarResultCard key={index} result={result} />;
+                    return <MalwareBazaarResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'ARIN') {
-                    return <ARINResultCard key={index} result={result} />;
+                    return <ARINResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'Shodan') {
-                    return <ShodanResultCard key={index} result={result} />;
+                    return <ShodanResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'GreyNoise') {
-                    return <GreyNoiseResultCard key={index} result={result} />;
+                    return <GreyNoiseResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'URLhaus') {
-                    return <URLhausResultCard key={index} result={result} />;
+                    return <URLhausResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
-
                   if (result.source === 'Pulsedive') {
-                    return <PulsediveResultCard key={index} result={result} />;
+                    return <PulsediveResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   if (result.source === 'Scamalytics') {
-                    return <ScamalyticsResultCard key={index} result={result} />;
+                    return <ScamalyticsResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                   }
 
                   return (
-                    <div key={index} className="result-card">
+                    <div key={`${result.ioc.value}-${index}`} className="result-card">
                       <div className="result-header">
                         {getStatusIcon(result.status)}
                         <div className="result-info">
@@ -665,7 +717,13 @@ const SidePanel: React.FC = () => {
 
                 }
 
-                return [...resultElements, ...pendingCards];
+                return (
+                  <>
+                    {iocTabs}
+                    {resultElements}
+                    {pendingCards}
+                  </>
+                );
               })()}
             </div>
           </div>

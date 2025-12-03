@@ -18,6 +18,7 @@
     "cache": {
       "title": "Cache Settings",
       "description": "Configure cache behavior for IOC analysis results",
+      "infoTitle": "Information about cache",
       "enabled": "Enable cache",
       "enabledDescription": "Store analysis results to avoid repeated API calls",
       "retentionDays": "Retention period (days)",
@@ -30,7 +31,18 @@
       "clearCache": "Clear all cache",
       "clearConfirm": "Are you sure you want to clear all cached data?",
       "clearSuccess": "Cache cleared successfully",
-      "clearError": "Failed to clear cache"
+      "clearError": "Failed to clear cache",
+      "info": {
+        "whyTitle": "Why Does Cache Exist?",
+        "whyDescription": "The cache system stores the results of previously analyzed IOCs on your device. This way, when you query the same IOC again, you get instant results without making an API call.",
+        "benefitsTitle": "Benefits",
+        "benefit1": "⚡ Fast Results: Repeated queries respond instantly",
+        "benefit2": "📊 API Quota Protection: Preserves your daily/monthly API limits",
+        "benefit3": "🔒 Privacy: Data is stored only on your device",
+        "benefit4": "💾 Offline Access: Access previous results without internet",
+        "howTitle": "How Does It Work?",
+        "howDescription": "Every successful analysis result is automatically cached. Old entries are automatically deleted after the period you specify. You can manually clear all cache at any time."
+      }
     },
     "providerOrder": {
       "title": "Provider Display Order",

@@ -14,7 +14,9 @@
     "placeholder": "IP adresleri, domain'ler, hash'ler, URL'ler veya diğer güvenlik göstergelerini buraya yapıştırın...",
     "detectButton": "Göstergeleri Tara",
     "analyzeButton": "Tehditleri Analiz Et",
-    "analyzingButton": "Analiz Ediliyor..."
+    "analyzingButton": "Analiz Ediliyor...",
+    "multipleHint": "Birden fazla IOC için virgül (,) ile ayırın veya Shift+Enter ile alt satıra geçin",
+    "detectedCount": "{{count}} IOC bulundu"
   },
   "detected": {
     "title": "Tespit Edilen Göstergeler",

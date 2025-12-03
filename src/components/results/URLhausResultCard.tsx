@@ -5,15 +5,11 @@ import {
   AlertTriangle, 
   CheckCircle, 
   ExternalLink, 
-  FileText, 
   Clock, 
   Link2, 
   Shield, 
-  Activity, 
   XCircle,
-  Info,
-  Tag,
-  Globe
+  Tag
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './URLhausResultCard.css';
@@ -24,7 +20,7 @@ interface URLhausResultCardProps {
 
 export const URLhausResultCard: React.FC<URLhausResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
-  const { details, status } = result;
+  const { details } = result;
 
   const urlhausRef = details?.urlhaus_reference;
   const urls = details?.urls || [];

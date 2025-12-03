@@ -14,7 +14,9 @@
     "placeholder": "Paste IP addresses, domains, hashes, URLs, or other security indicators here...",
     "detectButton": "Scan for Indicators",
     "analyzeButton": "Analyze Threats",
-    "analyzingButton": "Analyzing..."
+    "analyzingButton": "Analyzing...",
+    "multipleHint": "For multiple IOCs, separate with comma (,) or use Shift+Enter for new line",
+    "detectedCount": "{{count}} IOCs detected"
   },
   "detected": {
     "title": "Detected Indicators",

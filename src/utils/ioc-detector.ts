@@ -4,35 +4,35 @@ import { IOCType, DetectedIOC } from '@/types/ioc';
  * IOC tespit etmek için regex pattern'leri
  */
 const IOC_PATTERNS: Record<IOCType, RegExp> = {
-  // IPv4 adresi (0-255 arası değerler) - word boundary yerine lookahead/lookbehind
-  [IOCType.IPV4]: /(?:^|[^0-9.])(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:[^0-9.]|$)/g,
+  // IPv4 adresi (0-255 arası değerler) - newline ve whitespace ile başlayabilir
+  [IOCType.IPV4]: /(?:^|[\s,;|]|[^0-9.])(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=[\s,;|]|[^0-9.]|$)/gm,
 
-  // IPv6 adresi (tam ve kısaltılmış notasyon)
-  [IOCType.IPV6]: /(?:^|[^:0-9a-fA-F])(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?::[0-9a-fA-F]{1,4}){1,6}|::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|::(?:[0-9a-fA-F]{1,4}:){0,5}:[0-9a-fA-F]{1,4})(?:[^:0-9a-fA-F]|$)/g,
+  // IPv6 adresi (tam ve kısaltılmış notasyon) - multiline
+  [IOCType.IPV6]: /(?:^|[\s,;|]|[^:0-9a-fA-F])(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?::[0-9a-fA-F]{1,4}){1,6}|::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|::(?:[0-9a-fA-F]{1,4}:){0,5}:[0-9a-fA-F]{1,4})(?=[\s,;|]|[^:0-9a-fA-F]|$)/gm,
 
-  // Domain (geçerli TLD'ler ile) - word boundary yerine daha esnek kontrol
-  [IOCType.DOMAIN]: /(?:^|[^a-zA-Z0-9.-])(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?:[^a-zA-Z0-9.-]|$)/g,
+  // Domain (geçerli TLD'ler ile) - newline ve whitespace ile başlayabilir
+  [IOCType.DOMAIN]: /(?:^|[\s,;|]|[^a-zA-Z0-9.-])(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|$)/gm,
 
   // URL (http/https) - daha basit pattern
   [IOCType.URL]: /https?:\/\/[^\s<>"]+/g,
 
-  // MD5 hash (32 hex karakter) - word boundary yerine lookahead/lookbehind
-  [IOCType.MD5]: /(?:^|[^a-fA-F0-9])[a-fA-F0-9]{32}(?:[^a-fA-F0-9]|$)/g,
+  // MD5 hash (32 hex karakter) - multiline
+  [IOCType.MD5]: /(?:^|[\s,;|]|[^a-fA-F0-9])[a-fA-F0-9]{32}(?=[\s,;|]|[^a-fA-F0-9]|$)/gm,
 
-  // SHA1 hash (40 hex karakter)
-  [IOCType.SHA1]: /(?:^|[^a-fA-F0-9])[a-fA-F0-9]{40}(?:[^a-fA-F0-9]|$)/g,
+  // SHA1 hash (40 hex karakter) - multiline
+  [IOCType.SHA1]: /(?:^|[\s,;|]|[^a-fA-F0-9])[a-fA-F0-9]{40}(?=[\s,;|]|[^a-fA-F0-9]|$)/gm,
 
-  // SHA256 hash (64 hex karakter)
-  [IOCType.SHA256]: /(?:^|[^a-fA-F0-9])[a-fA-F0-9]{64}(?:[^a-fA-F0-9]|$)/g,
+  // SHA256 hash (64 hex karakter) - multiline
+  [IOCType.SHA256]: /(?:^|[\s,;|]|[^a-fA-F0-9])[a-fA-F0-9]{64}(?=[\s,;|]|[^a-fA-F0-9]|$)/gm,
 
-  // Email adresi (RFC 5322 basitleştirilmiş)
-  [IOCType.EMAIL]: /(?:^|[^a-zA-Z0-9._%+-])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:[^a-zA-Z0-9.-]|$)/g,
+  // Email adresi (RFC 5322 basitleştirilmiş) - multiline
+  [IOCType.EMAIL]: /(?:^|[\s,;|]|[^a-zA-Z0-9._%+-])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|$)/gm,
 
   // CVE numarası (CVE-YYYY-NNNNN formatı)
   [IOCType.CVE]: /CVE-\d{4}-\d{4,7}/gi,
 
-  // Bitcoin adresi (Base58, 1 veya 3 ile başlar, veya bc1 Bech32)
-  [IOCType.BITCOIN]: /(?:^|[^a-km-zA-HJ-NP-Z1-9])(?:[13][a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[a-z0-9]{39,59})(?:[^a-km-zA-HJ-NP-Z0-9]|$)/g,
+  // Bitcoin adresi (Base58, 1 veya 3 ile başlar, veya bc1 Bech32) - multiline
+  [IOCType.BITCOIN]: /(?:^|[\s,;|]|[^a-km-zA-HJ-NP-Z1-9])(?:[13][a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[a-z0-9]{39,59})(?=[\s,;|]|[^a-km-zA-HJ-NP-Z0-9]|$)/gm,
 
   // Ethereum adresi (0x ile başlayan 40 hex karakter)
   [IOCType.ETHEREUM]: /0x[a-fA-F0-9]{40}/g,
@@ -40,15 +40,18 @@ const IOC_PATTERNS: Record<IOCType, RegExp> = {
 
 /**
  * Verilen metinde IOC'leri tespit eder
- * OPTIMIZED: O(n) complexity with position-based deduplication
+ * OPTIMIZED: O(n) complexity with position-based and value-based deduplication
  * @param text Taranacak metin
- * @returns Tespit edilen IOC'lerin listesi
+ * @returns Tespit edilen IOC'lerin listesi (unique values only)
  */
 export function detectIOCs(text: string): DetectedIOC[] {
   const detected: DetectedIOC[] = [];
 
   // Position range tracking for O(1) duplicate detection
   const occupiedRanges: Array<{ start: number; end: number }> = [];
+  
+  // Value-based deduplication: track unique IOC values (type:value as key)
+  const seenValues = new Set<string>();
 
   // Pre-compute URL and Email positions once - O(n) instead of O(n²)
   const urlRanges = findAllURLRanges(text);
@@ -95,6 +98,17 @@ export function detectIOCs(text: string): DetectedIOC[] {
         value = value.substring(0, value.length - trailingMatch[0].length);
       }
 
+      // Normalize value for comparison (lowercase for domains/emails)
+      const normalizedValue = (type === IOCType.DOMAIN || type === IOCType.EMAIL || type === IOCType.URL) 
+        ? value.toLowerCase() 
+        : value;
+      
+      // Check for duplicate value (same IOC entered multiple times)
+      const valueKey = `${type}:${normalizedValue}`;
+      if (seenValues.has(valueKey)) {
+        continue;
+      }
+
       const position = {
         start: matchStart,
         end: matchStart + value.length,
@@ -121,6 +135,9 @@ export function detectIOCs(text: string): DetectedIOC[] {
           value,
           position,
         });
+
+        // Mark this value as seen
+        seenValues.add(valueKey);
 
         // Insert position in sorted order for efficient overlap detection
         insertPositionSorted(position, occupiedRanges);

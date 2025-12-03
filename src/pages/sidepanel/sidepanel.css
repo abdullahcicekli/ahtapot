@@ -143,134 +143,117 @@ body {
   box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
 }
 
-/* Input Section */
-.input-section {
-  margin-bottom: 24px;
-  transition: all 0.3s ease;
+/* Search Section - New Design */
+.search-section {
+  margin-bottom: 20px;
 }
 
-.input-section.collapsed {
-  padding: 0;
-  background: transparent;
-  border: none;
-  margin-bottom: 16px;
-}
-
-.input-collapsed-header {
+.search-bar {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: rgba(25, 30, 45, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: all 0.25s ease;
 }
 
-.input-collapsed-header:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(74, 158, 255, 0.3);
+.search-bar:focus-within {
+  border-color: rgba(74, 158, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.15);
+  background: rgba(30, 35, 50, 0.98);
 }
 
-.input-collapsed-header span:first-of-type {
+.search-icon {
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.search-bar:focus-within .search-icon {
+  color: rgba(74, 158, 255, 0.8);
+}
+
+.search-input {
   flex: 1;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: 'Courier New', monospace;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 4px 0;
+  min-width: 0;
+  resize: none;
+  min-height: 24px;
+  max-height: 120px;
+  overflow-y: auto;
+  line-height: 1.4;
+  field-sizing: content;
 }
 
-.expand-hint {
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Search hint */
+.search-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 0 4px;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.input-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 8px;
-}
-
-.ioc-input {
-  width: 100%;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: 'Courier New', monospace;
-  color: #ffffff;
-  resize: vertical;
-  transition: all 0.2s;
-}
-
-.ioc-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.ioc-input:focus {
-  outline: none;
-  border-color: #4a9eff;
-  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2);
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.input-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.detect-btn,
-.analyze-btn {
+.search-hint span:first-child {
   flex: 1;
+}
+
+.detected-count {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  background: rgba(74, 158, 255, 0.15);
+  color: #4a9eff;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.analyze-btn-compact {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.detect-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.detect-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.analyze-btn {
+  width: 44px;
+  height: 44px;
   background: linear-gradient(135deg, #4a9eff 0%, #667eea 100%);
-  color: white;
   border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
 }
 
-.analyze-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(74, 158, 255, 0.4);
+.analyze-btn-compact:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(74, 158, 255, 0.45);
 }
 
-.analyze-btn:disabled {
-  opacity: 0.6;
+.analyze-btn-compact:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.analyze-btn-compact:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .spinner {
@@ -377,6 +360,63 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* IOC Tabs */
+.ioc-tabs-container {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  margin-bottom: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  overflow-x: auto;
+  cursor: grab;
+  user-select: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ioc-tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.ioc-tabs-container.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.ioc-tabs-container:not(.dragging) {
+  scroll-behavior: smooth;
+}
+
+.ioc-tab {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ioc-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ioc-tab.active {
+  background: rgba(74, 158, 255, 0.2);
+  color: #4a9eff;
+  font-weight: 600;
+}
+
+.ioc-tab.active:hover {
+  background: rgba(74, 158, 255, 0.25);
 }
 
 .result-card {

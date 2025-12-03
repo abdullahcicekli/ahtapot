@@ -1,0 +1,213 @@
+.provider-slider-container {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.provider-slider {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 4px 12px 4px;
+  cursor: grab;
+  user-select: none;
+  
+  /* Hide scrollbar but keep functionality */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.provider-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.provider-slider.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.provider-slider:not(.dragging) {
+  scroll-behavior: smooth;
+}
+
+.provider-slide-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+  padding: 12px 16px;
+  background: rgba(30, 35, 50, 0.6);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Enabled state */
+.provider-slide-item.enabled {
+  background: rgba(35, 40, 55, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.provider-slide-item.enabled:hover {
+  background: rgba(45, 50, 70, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Active state - highlighted with blue border */
+.provider-slide-item.active {
+  background: rgba(40, 60, 90, 0.9);
+  border-color: #4a9eff;
+  box-shadow: 0 0 0 1px rgba(74, 158, 255, 0.3),
+              0 4px 12px rgba(74, 158, 255, 0.2);
+}
+
+.provider-slide-item.active:hover {
+  background: rgba(45, 65, 100, 0.95);
+  border-color: #5aafff;
+}
+
+/* Disabled state */
+.provider-slide-item.disabled {
+  background: rgba(25, 28, 40, 0.5);
+  border-color: rgba(255, 255, 255, 0.05);
+  opacity: 0.6;
+}
+
+.provider-slide-item.disabled:hover {
+  background: rgba(30, 35, 50, 0.6);
+  border-color: rgba(74, 158, 255, 0.15);
+  opacity: 0.8;
+}
+
+/* Logo container */
+.provider-slide-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.provider-slide-item.enabled .provider-slide-logo {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.provider-slide-item.active .provider-slide-logo {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.provider-slide-logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: all 0.2s ease;
+}
+
+/* Enabled logo - colorful */
+.provider-slide-item.enabled .provider-slide-logo img {
+  filter: brightness(1.1);
+}
+
+/* Disabled logo - grayscale */
+.provider-slide-item.disabled .provider-slide-logo img {
+  filter: grayscale(100%) opacity(0.4);
+}
+
+.provider-slide-item.disabled:hover .provider-slide-logo img {
+  filter: grayscale(60%) opacity(0.6);
+}
+
+/* Provider name */
+.provider-slide-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  white-space: nowrap;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.provider-slide-item.enabled .provider-slide-name {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.provider-slide-item.active .provider-slide-name {
+  color: #ffffff;
+}
+
+.provider-slide-item.disabled .provider-slide-name {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Scroll button */
+.slider-scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #4a9eff 0%, #667eea 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4),
+              -8px 0 16px 8px rgba(20, 20, 30, 0.95);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.slider-scroll-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 16px rgba(74, 158, 255, 0.5),
+              -8px 0 16px 8px rgba(20, 20, 30, 0.95);
+}
+
+.slider-scroll-btn:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .provider-slide-item {
+    min-width: 70px;
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .provider-slide-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .provider-slide-logo img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .provider-slide-name {
+    font-size: 10px;
+  }
+
+  .slider-scroll-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+

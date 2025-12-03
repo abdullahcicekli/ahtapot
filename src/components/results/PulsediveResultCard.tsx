@@ -6,10 +6,8 @@ import {
   CheckCircle, 
   ExternalLink, 
   Shield, 
-  MapPin, 
   Building, 
   Clock, 
-  Server, 
   Globe, 
   HelpCircle,
   Info,
@@ -25,7 +23,7 @@ interface PulsediveResultCardProps {
 
 export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
-  const { details, status } = result;
+  const { details } = result;
 
   const risk = details?.risk || details?.risk_recommended || 'unknown';
   

@@ -5,8 +5,6 @@ import {
   AlertTriangle, 
   CheckCircle, 
   ExternalLink, 
-  Shield, 
-  Globe,
   Server,
   Eye,
   XCircle,
@@ -26,7 +24,6 @@ export const ScamalyticsResultCard: React.FC<ScamalyticsResultCardProps> = ({ re
   const score = details?.score ?? 0;
   const risk = details?.risk || 'unknown';
   const ispScore = details?.isp_score;
-  const ispRisk = details?.isp_risk;
   const proxyInfo = details?.proxy_info || {};
   const fraudIndicators = details?.fraud_indicators || [];
   const isBlacklisted = details?.is_blacklisted || false;

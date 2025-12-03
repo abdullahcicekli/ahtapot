@@ -18,6 +18,7 @@
     "cache": {
       "title": "Önbellek Ayarları",
       "description": "IOC analiz sonuçları için önbellek davranışını yapılandırın",
+      "infoTitle": "Önbellek hakkında bilgi",
       "enabled": "Önbelleği etkinleştir",
       "enabledDescription": "Tekrarlayan API çağrılarını önlemek için analiz sonuçlarını saklayın",
       "retentionDays": "Saklama süresi (gün)",
@@ -30,7 +31,18 @@
       "clearCache": "Tüm önbelleği temizle",
       "clearConfirm": "Tüm önbelleğe alınmış verileri silmek istediğinizden emin misiniz?",
       "clearSuccess": "Önbellek başarıyla temizlendi",
-      "clearError": "Önbellek temizlenemedi"
+      "clearError": "Önbellek temizlenemedi",
+      "info": {
+        "whyTitle": "Önbellek Neden Var?",
+        "whyDescription": "Önbellek sistemi, daha önce analiz ettiğiniz IOC'lerin sonuçlarını cihazınızda saklar. Bu sayede aynı IOC'yi tekrar sorguladığınızda API çağrısı yapmadan anında sonuç alırsınız.",
+        "benefitsTitle": "Faydaları",
+        "benefit1": "⚡ Hızlı Sonuçlar: Tekrar edilen sorgular anlık yanıt verir",
+        "benefit2": "📊 API Kotası Koruması: Günlük/aylık API limitinizi korur",
+        "benefit3": "🔒 Gizlilik: Veriler sadece cihazınızda saklanır",
+        "benefit4": "💾 Çevrimdışı Erişim: İnternet olmadan önceki sonuçlara ulaşın",
+        "howTitle": "Nasıl Çalışır?",
+        "howDescription": "Her başarılı analiz sonucu otomatik olarak önbelleğe alınır. Belirlediğiniz süre sonunda eski kayıtlar otomatik silinir. İstediğiniz zaman tüm önbelleği manuel olarak temizleyebilirsiniz."
+      }
     },
     "providerOrder": {
       "title": "Sağlayıcı Gösterim Sırası",

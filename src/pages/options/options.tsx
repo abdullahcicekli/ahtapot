@@ -114,6 +114,7 @@ const OptionsPage: React.FC = () => {
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
+  const [showCacheInfo, setShowCacheInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Cache settings state
@@ -284,6 +285,14 @@ const OptionsPage: React.FC = () => {
       setCurrentLanguage(lang);
       await i18n.changeLanguage(lang);
       await chrome.storage.local.set({ language: lang });
+      
+      // Notify sidepanel to reload for language change
+      try {
+        await chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', payload: { language: lang } });
+      } catch {
+        // Sidepanel might not be open, ignore error
+      }
+      
       setError(null);
     } catch (err) {
       setError(t('actions.errorMessage', { ns: 'options' }));
@@ -759,7 +768,38 @@ const OptionsPage: React.FC = () => {
                     {t('general.cache.description', { ns: 'options' })}
                   </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCacheInfo(!showCacheInfo)}
+                  className={`info-btn ${showCacheInfo ? 'active' : ''}`}
+                  aria-label="Cache information"
+                  title={t('general.cache.infoTitle', { ns: 'options' })}
+                >
+                  <Info size={18} />
+                </button>
               </div>
+
+              {showCacheInfo && (
+                <div className="cache-info-box">
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.whyTitle', { ns: 'options' })}</h4>
+                    <p>{t('general.cache.info.whyDescription', { ns: 'options' })}</p>
+                  </div>
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.benefitsTitle', { ns: 'options' })}</h4>
+                    <ul className="cache-info-list">
+                      <li>{t('general.cache.info.benefit1', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit2', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit3', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit4', { ns: 'options' })}</li>
+                    </ul>
+                  </div>
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.howTitle', { ns: 'options' })}</h4>
+                    <p>{t('general.cache.info.howDescription', { ns: 'options' })}</p>
+                  </div>
+                </div>
+              )}
 
               <div className="cache-settings">
                 {/* Enable/Disable Cache */}
