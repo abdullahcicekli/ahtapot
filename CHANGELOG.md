@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2025-12-03
+
+### Added
+- **Structured AI JSON Responses** - AI now returns structured JSON with fixed schemas for each analysis mode
+  - Summary mode: Verdict, risk level, confidence, key signals, recommended action
+  - Analysis mode: Provider analysis table, consensus, MITRE ATT&CK mapping, actionable recommendations
+  - Detailed mode: Full investigation report with threat intel, infrastructure, false positive analysis
+- **AI Result Caching System** - Intelligent caching to avoid duplicate queries
+  - Cache key format: `{provider}-{ioc}-{mode}-{language}`
+  - Language-aware caching (TR results cached separately from EN)
+  - 24-hour cache expiry with automatic cleanup
+  - "Re-analyze" button to force fresh analysis
+- **Enhanced AI Result UI** - Completely redesigned AI result cards
+  - Localized verdict labels (Malicious → Kötü Amaçlı)
+  - Localized risk levels (Critical → Kritik, High → Yüksek)
+  - Localized confidence levels (High → Yüksek güven)
+  - Color-coded confidence badges (green=high, yellow=medium, red=low)
+- **Copy as Markdown** - AI responses include hidden `copy_markdown` field
+  - Beautiful markdown export for documentation
+  - One-click copy to clipboard
+- **Export as Image** - Export AI analysis as PNG image
+  - html2canvas integration
+  - Full card capture with styling
+- **Clickable Links in AI Results** - URLs are truncated and clickable
+  - Max 50 characters with ellipsis
+  - Opens in new tab
+- **Suggestive Tone** - AI recommendations now use suggestive language
+  - "You should consider..." instead of "Do this immediately"
+  - More professional and advisory tone
+
+### Changed
+- **Full Localization** - All AI UI elements now properly localized
+  - Verdict labels (Malicious, Suspicious, Likely Benign, Clean, Unknown)
+  - Risk levels (Critical, High, Medium, Low, Info)
+  - Confidence levels (High, Medium, Low)
+  - Section headers (Summary, Key Signals, Assessment, etc.)
+  - Button labels (Copy as Markdown, Re-analyze, Export as Image)
+- **Confidence Badge Colors** - Fixed color logic
+  - HIGH confidence = Green (reliable result)
+  - MEDIUM confidence = Yellow/Orange (moderate reliability)
+  - LOW confidence = Red (uncertain result)
+- **Provider Analysis Cards** - Improved styling with inline confidence colors
+- **Turkish Translations** - Full Turkish character support (Ö, Ü, İ, Ş, Ç, Ğ)
+
+### Fixed
+- "high güven" → "Yüksek güven" - Proper Turkish localization
+- Mixed language labels in AI results
+- Inverted confidence badge colors in provider analysis
+- Long URLs causing layout overflow
+
+### Technical
+- New `AIStructuredResultCard` component with JSON parsing
+- `aiResultCache.ts` utility for cache management
+- Updated `aiResponse.ts` types with `copy_markdown` field
+- Enhanced prompt templates with JSON schema requirements
+- Added `getConfidenceConfig()`, `getRiskLabel()`, `getConfidenceLabel()` helpers
+
 ## [2.7.0] - 2025-12-03
 
 ### Added
@@ -297,7 +354,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
-- **2.7.x** - Provider enable/disable config system, Scamalytics temporarily disabled
+- **2.8.x** - AI structured JSON responses, caching, full localization, export features
+- **2.7.x** - Provider enable/disable config system, Scamalytics re-enabled
 - **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
 - **2.5.x** - Customizable provider display order, drag-and-drop reordering
 - **2.4.x** - URLhaus, Pulsedive, Scamalytics integrations

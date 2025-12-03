@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.6.0-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-2.8.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [Website](https://ahtapot.me) | [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Privacy](#privacy) | [Development](#development) | [API Keys](#api-keys) | [Versioning](#versioning)
@@ -22,15 +22,19 @@
 
 ---
 
-## What's New in v2.7.0
+## What's New in v2.8.0
 
 ### Latest Release (December 3, 2025)
-- **AI-Powered Analysis** - Claude, Gemini, GPT-4o integration with 3 analysis modes
-- **Multi-Language AI Output** - AI generates analysis in user's selected language
-- **Scamalytics Re-enabled** - Official API v3 integration with fraud scoring
-- **Provider Enable/Disable System** - Centralized control for provider availability
-- **Easy Provider Management** - Toggle providers on/off without code changes
-- **10 Active Providers** - Full threat intelligence coverage
+- **Structured AI Responses** - JSON-based analysis with consistent schema per mode
+- **AI Result Caching** - Smart caching by provider, IOC, mode, and language
+- **Full Localization** - All AI labels translated (verdicts, risks, confidence)
+- **Copy as Markdown** - Export AI analysis as formatted markdown
+- **Export as Image** - Download AI results as PNG
+- **Clickable Links** - URLs in AI results are truncated and clickable
+- **Re-analyze Button** - Force fresh AI analysis bypassing cache
+
+### AI Providers (3 Providers)
+**Claude** (Sonnet 4) | **Gemini** (2.0 Flash) | **GPT-4o** (Mini)
 
 ### Active Threat Intelligence Providers (10 Providers)
 **VirusTotal** | **OTX AlienVault** | **AbuseIPDB** | **MalwareBazaar** | **ARIN** | **Shodan** | **GreyNoise** | **URLhaus** | **Pulsedive** | **Scamalytics**
@@ -590,7 +594,7 @@ For detailed information:
 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
 **[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
 
-**Current Version:** 2.7.0
+**Current Version:** 2.8.0
 
 ---
 

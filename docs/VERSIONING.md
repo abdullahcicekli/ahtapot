@@ -513,4 +513,4 @@ If unsure about version increment:
 ---
 
 **Last Updated:** 2025-12-03
-**Current Version:** 2.7.0
+**Current Version:** 2.8.0
