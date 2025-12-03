@@ -280,6 +280,49 @@ body {
   margin-bottom: 12px;
 }
 
+/* Section title wrapper for collapsible sections */
+.section-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-title-wrapper .section-title {
+  margin-bottom: 0;
+}
+
+.section-title-wrapper.collapsible {
+  cursor: pointer;
+  padding: 8px 12px;
+  margin: 0 -12px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.section-title-wrapper.collapsible:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .ioc-list {
   display: flex;
   flex-direction: column;

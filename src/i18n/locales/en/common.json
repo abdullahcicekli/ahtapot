@@ -1,4 +1,5 @@
 {
+  "loading": "Loading...",
   "buttons": {
     "save": "Save",
     "saveChanges": "Save Changes",

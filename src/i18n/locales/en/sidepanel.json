@@ -82,5 +82,22 @@
     "shodan": {
       "subtitle": "Internet-Wide Port Scanner"
     }
+  },
+  "ai": {
+    "title": "AI Analysis",
+    "noProviders": "Configure an AI provider to enable AI-powered analysis",
+    "configure": "Configure",
+    "modes": {
+      "summary": "Summary",
+      "analysis": "Analysis",
+      "detailed": "Detailed"
+    },
+    "analyzing": "Analyzing...",
+    "start": "Analyze",
+    "copyResult": "Copy result",
+    "errors": {
+      "noApiKey": "Please configure an API key for this AI provider in Settings",
+      "unknown": "An unexpected error occurred during AI analysis"
+    }
   }
 }

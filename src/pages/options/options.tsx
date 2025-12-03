@@ -10,7 +10,9 @@ import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
 import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils/providerOrderStorage';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
+import { AIProviderSettings } from '@/components/AIProviderSettings';
 import '@/i18n/config';
+import '@/components/AIProviderSettings.css';
 import './options.css';
 
 type TabType = 'general' | 'apiKeys';
@@ -897,6 +899,9 @@ const OptionsPage: React.FC = () => {
                 {t('privacyNote.description', { ns: 'options' })}
               </div>
             </div>
+
+            {/* AI Provider Settings - At the top */}
+            <AIProviderSettings />
 
             <div className="api-keys-section">
               <div className="api-keys-header">

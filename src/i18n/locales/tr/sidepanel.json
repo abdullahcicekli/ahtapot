@@ -82,5 +82,22 @@
     "shodan": {
       "subtitle": "İnternet Çapında Port Tarayıcı"
     }
+  },
+  "ai": {
+    "title": "AI Analizi",
+    "noProviders": "AI destekli analiz için bir AI sağlayıcı yapılandırın",
+    "configure": "Yapılandır",
+    "modes": {
+      "summary": "Özet",
+      "analysis": "Analiz",
+      "detailed": "Detaylı"
+    },
+    "analyzing": "Analiz Ediliyor...",
+    "start": "Analiz Et",
+    "copyResult": "Sonucu kopyala",
+    "errors": {
+      "noApiKey": "Lütfen Ayarlar'dan bu AI sağlayıcı için bir API anahtarı yapılandırın",
+      "unknown": "AI analizi sırasında beklenmeyen bir hata oluştu"
+    }
   }
 }

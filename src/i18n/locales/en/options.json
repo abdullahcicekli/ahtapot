@@ -261,6 +261,42 @@
     "saveSuccess": "Saved successfully",
     "saveError": "Failed to save"
   },
+  "ai": {
+    "sectionTitle": "AI Providers",
+    "sectionDescription": "Configure AI providers for intelligent IOC analysis. AI can provide summaries, detailed analysis, and recommendations.",
+    "providers": {
+      "claude": {
+        "description": "Anthropic's Claude - Advanced reasoning and analysis",
+        "placeholder": "Enter your Claude API key (sk-ant-...)",
+        "step2": "Add payment method (required for API access)"
+      },
+      "gemini": {
+        "description": "Google's Gemini - Fast and efficient analysis",
+        "placeholder": "Enter your Gemini API key",
+        "step2": "Enable the Gemini API in your Google Cloud Console"
+      },
+      "openai": {
+        "description": "OpenAI's GPT - Versatile language understanding",
+        "placeholder": "Enter your OpenAI API key (sk-...)",
+        "step2": "Add payment method and purchase credits"
+      }
+    },
+    "pricing": {
+      "title": "Pricing",
+      "input": "Input",
+      "output": "Output",
+      "viewMore": "View full pricing"
+    },
+    "howTo": {
+      "title": "How to Get an API Key",
+      "signup": "Create an account",
+      "getKey": "Get your API key",
+      "paste": "Paste the key below"
+    },
+    "model": {
+      "title": "Model Used"
+    }
+  },
   "footer": {
     "text": "Ahtapot v{{version}} • Cybersecurity Indicator Analysis Tool"
   }

@@ -261,6 +261,42 @@
     "saveSuccess": "Başarıyla kaydedildi",
     "saveError": "Kaydetme başarısız"
   },
+  "ai": {
+    "sectionTitle": "AI Sağlayıcıları",
+    "sectionDescription": "Akıllı IOC analizi için AI sağlayıcılarını yapılandırın. AI, özetler, detaylı analizler ve öneriler sunabilir.",
+    "providers": {
+      "claude": {
+        "description": "Anthropic'in Claude'u - Gelişmiş muhakeme ve analiz",
+        "placeholder": "Claude API anahtarınızı girin (sk-ant-...)",
+        "step2": "Ödeme yöntemi ekleyin (API erişimi için gerekli)"
+      },
+      "gemini": {
+        "description": "Google'ın Gemini'si - Hızlı ve verimli analiz",
+        "placeholder": "Gemini API anahtarınızı girin",
+        "step2": "Google Cloud Console'da Gemini API'yi etkinleştirin"
+      },
+      "openai": {
+        "description": "OpenAI'nin GPT'si - Çok yönlü dil anlama",
+        "placeholder": "OpenAI API anahtarınızı girin (sk-...)",
+        "step2": "Ödeme yöntemi ekleyin ve kredi satın alın"
+      }
+    },
+    "pricing": {
+      "title": "Fiyatlandırma",
+      "input": "Girdi",
+      "output": "Çıktı",
+      "viewMore": "Tam fiyatlandırmayı görüntüle"
+    },
+    "howTo": {
+      "title": "API Anahtarı Nasıl Alınır",
+      "signup": "Hesap oluşturun",
+      "getKey": "API anahtarınızı alın",
+      "paste": "Anahtarı aşağıya yapıştırın"
+    },
+    "model": {
+      "title": "Kullanılan Model"
+    }
+  },
   "footer": {
     "text": "Ahtapot v{{version}} • Siber Güvenlik Gösterge Analiz Aracı"
   }

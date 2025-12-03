@@ -10,8 +10,11 @@ import {
   Settings,
   ExternalLink,
   TrendingUp,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
+import { AIProvider, AIAnalysisMode, AIAnalysisResult } from '@/types/ai';
 import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { ProviderSlider } from '@/components/ProviderSlider';
@@ -26,11 +29,17 @@ import { URLhausResultCard } from '@/components/results/URLhausResultCard';
 import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
 import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
+import { AIAnalysisSection } from '@/components/AIAnalysisSection';
+import { AIResultCard } from '@/components/results/AIResultCard';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import { getProviderOrder, sortResultsByProviderOrder } from '@/utils/providerOrderStorage';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
+import { createAIService } from '@/services/ai';
+import { getAIKeyValue } from '@/utils/aiKeyStorage';
 import '@/i18n/config';
 import '@/components/results/ResultCard.css';
+import '@/components/AIAnalysisSection.css';
+import '@/components/results/AIResultCard.css';
 import './sidepanel.css';
 
 // Provider support mapping - mirrors backend service capabilities
@@ -68,6 +77,11 @@ const SidePanel: React.FC = () => {
   const [pendingRateLimitProviders, setPendingRateLimitProviders] = useState<Set<'greynoise' | 'shodan'>>(new Set());
   const [currentIOCs, setCurrentIOCs] = useState<DetectedIOC[]>([]);
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+
+  // AI Analysis state
+  const [aiResult, setAiResult] = useState<AIAnalysisResult | null>(null);
+  const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
+  const [isProviderResultsExpanded, setIsProviderResultsExpanded] = useState(true);
 
   // IOC tabs drag-to-scroll
   const iocTabsRef = useRef<HTMLDivElement>(null);
@@ -173,6 +187,10 @@ const SidePanel: React.FC = () => {
 
     setDetectedIOCs(iocs);
     setCurrentIOCs(iocs);
+
+    // Reset AI results when starting new analysis
+    setAiResult(null);
+    setIsProviderResultsExpanded(true);
 
     if (hasApiKeys === false) {
       return;
@@ -315,6 +333,53 @@ const SidePanel: React.FC = () => {
     }
   };
 
+  // Handle AI Analysis
+  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode) => {
+    if (results.length === 0) return;
+
+    setIsAiAnalyzing(true);
+
+    try {
+      // Get the API key for the selected provider
+      const apiKey = await getAIKeyValue(provider);
+
+      if (!apiKey) {
+        setAiResult({
+          provider,
+          mode,
+          content: '',
+          timestamp: Date.now(),
+          error: t('ai.errors.noApiKey'),
+        });
+        return;
+      }
+
+      // Create AI service and analyze
+      const aiService = createAIService(provider, apiKey);
+      const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
+
+      const result = await aiService.analyze(mode, iocList, results);
+
+      setAiResult(result);
+
+      // Collapse provider results when AI result comes in
+      if (!result.error) {
+        setIsProviderResultsExpanded(false);
+      }
+    } catch (error) {
+      console.error('[Sidepanel] Error during AI analysis:', error);
+      setAiResult({
+        provider,
+        mode,
+        content: '',
+        timestamp: Date.now(),
+        error: error instanceof Error ? error.message : t('ai.errors.unknown'),
+      });
+    } finally {
+      setIsAiAnalyzing(false);
+    }
+  };
+
   const getStatusIcon = (status: IOCAnalysisResult['status']) => {
     switch (status) {
       case 'safe':
@@ -418,6 +483,19 @@ const SidePanel: React.FC = () => {
           </div>
         </div>
 
+        {/* AI Analysis Section - Show after results are loaded */}
+        <AIAnalysisSection
+          onStartAnalysis={handleAiAnalysis}
+          isAnalyzing={isAiAnalyzing}
+          hasResults={results.length > 0}
+          disabled={loading}
+        />
+
+        {/* AI Result */}
+        {aiResult && (
+          <AIResultCard result={aiResult} defaultExpanded={true} />
+        )}
+
         <ProviderSlider
           activeProvider={activeProviderTab}
           onProviderClick={(providerName) => {
@@ -454,7 +532,7 @@ const SidePanel: React.FC = () => {
           </div>
         )}
 
-        {detectedIOCs.length > 0 && results.length === 0 && (
+        {detectedIOCs.length > 0 && results.length === 0 && !loading && (
           <div className="detected-section">
             <h2 className="section-title">
               {t('detected.title')} ({detectedIOCs.length})
@@ -487,275 +565,288 @@ const SidePanel: React.FC = () => {
 
         {results.length > 0 && (
           <div className="results-section">
-            <h2 className="section-title">{t('results.title')}</h2>
+            {/* Collapsible header for provider results when AI result exists */}
+            <div 
+              className={`section-title-wrapper ${aiResult ? 'collapsible' : ''}`}
+              onClick={() => aiResult && setIsProviderResultsExpanded(!isProviderResultsExpanded)}
+            >
+              <h2 className="section-title">{t('results.title')}</h2>
+              {aiResult && (
+                <button className="collapse-btn">
+                  {isProviderResultsExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </button>
+              )}
+            </div>
 
-            {/* Active Provider Results */}
-            <div className="results-list">
-              {(() => {
-                const providerResults = results.filter((result) => result.source === activeProviderTab);
-                
-                // Get unique IOCs for this provider
-                const uniqueIOCs = Array.from(new Set(providerResults.map(r => r.ioc.value)));
-                const hasMultipleIOCs = uniqueIOCs.length > 1;
-                
-                // Set default active IOC if not set or invalid
-                const currentActiveIOC = activeIOCTab && uniqueIOCs.includes(activeIOCTab) 
-                  ? activeIOCTab 
-                  : uniqueIOCs[0] || '';
-                
-                // Filter results by active IOC
-                const filteredResults = hasMultipleIOCs 
-                  ? providerResults.filter(r => r.ioc.value === currentActiveIOC)
-                  : providerResults;
+            {/* Active Provider Results - Collapsible when AI result exists */}
+            {isProviderResultsExpanded && (
+              <div className="results-list">
+                {(() => {
+                  const providerResults = results.filter((result) => result.source === activeProviderTab);
+                  
+                  // Get unique IOCs for this provider
+                  const uniqueIOCs = Array.from(new Set(providerResults.map(r => r.ioc.value)));
+                  const hasMultipleIOCs = uniqueIOCs.length > 1;
+                  
+                  // Set default active IOC if not set or invalid
+                  const currentActiveIOC = activeIOCTab && uniqueIOCs.includes(activeIOCTab) 
+                    ? activeIOCTab 
+                    : uniqueIOCs[0] || '';
+                  
+                  // Filter results by active IOC
+                  const filteredResults = hasMultipleIOCs 
+                    ? providerResults.filter(r => r.ioc.value === currentActiveIOC)
+                    : providerResults;
 
-                // If no results for active provider
-                if (filteredResults.length === 0 && activeProviderTab) {
-                  // Check if this is a pending rate-limited provider
-                  const isPendingGreyNoise = activeProviderTab === 'GreyNoise' && pendingRateLimitProviders.has('greynoise');
-                  const isPendingShodan = activeProviderTab === 'Shodan' && pendingRateLimitProviders.has('shodan');
-                  const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
+                  // If no results for active provider
+                  if (filteredResults.length === 0 && activeProviderTab) {
+                    // Check if this is a pending rate-limited provider
+                    const isPendingGreyNoise = activeProviderTab === 'GreyNoise' && pendingRateLimitProviders.has('greynoise');
+                    const isPendingShodan = activeProviderTab === 'Shodan' && pendingRateLimitProviders.has('shodan');
+                    const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
 
-                  if ((isPendingGreyNoise || isPendingShodan) && ipv4Count > 0) {
-                    // Show confirmation card for pending provider
+                    if ((isPendingGreyNoise || isPendingShodan) && ipv4Count > 0) {
+                      // Show confirmation card for pending provider
+                      return (
+                        <RateLimitConfirmCard
+                          provider={isPendingGreyNoise ? 'greynoise' : 'shodan'}
+                          iocCount={ipv4Count}
+                          onConfirm={() => handleRateLimitConfirm(isPendingGreyNoise ? 'greynoise' : 'shodan')}
+                          logoSrc={isPendingGreyNoise ? '/provider-icons/greynoise-logo.png' : '/provider-icons/shodan-logo.png'}
+                          providerName={activeProviderTab}
+                          subtitle={isPendingGreyNoise ? t('providers.greynoise.subtitle') : t('providers.shodan.subtitle')}
+                        />
+                      );
+                    }
+
+                    // Show informative empty state for other providers
+                    const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
+                    const unsupportedIOCs = currentIOCs.filter(ioc => !supportedTypes.includes(ioc.type));
+
                     return (
-                      <RateLimitConfirmCard
-                        provider={isPendingGreyNoise ? 'greynoise' : 'shodan'}
-                        iocCount={ipv4Count}
-                        onConfirm={() => handleRateLimitConfirm(isPendingGreyNoise ? 'greynoise' : 'shodan')}
-                        logoSrc={isPendingGreyNoise ? '/provider-icons/greynoise-logo.png' : '/provider-icons/shodan-logo.png'}
-                        providerName={activeProviderTab}
-                        subtitle={isPendingGreyNoise ? t('providers.greynoise.subtitle') : t('providers.shodan.subtitle')}
-                      />
-                    );
-                  }
-
-                  // Show informative empty state for other providers
-                  const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
-                  const unsupportedIOCs = currentIOCs.filter(ioc => !supportedTypes.includes(ioc.type));
-
-                  return (
-                    <div className="provider-no-results-card">
-                      <div className="no-results-header">
-                        <Shield size={32} className="no-results-icon" />
-                        <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
-                      </div>
-
-                      {unsupportedIOCs.length > 0 && (
-                        <div className="searched-iocs-section">
-                          <p className="searched-iocs-label">
-                            {t('providerNoResults.searchedFor', { count: unsupportedIOCs.length })}
-                          </p>
-                          <div className="searched-iocs-list">
-                            {unsupportedIOCs.map((ioc, idx) => (
-                              <div key={idx} className="searched-ioc-item">
-                                <span className="searched-ioc-type">{getIOCTypeLabel(ioc.type)}</span>
-                                <span className="searched-ioc-value">{ioc.value}</span>
-                              </div>
-                            ))}
-                          </div>
+                      <div className="provider-no-results-card">
+                        <div className="no-results-header">
+                          <Shield size={32} className="no-results-icon" />
+                          <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
                         </div>
-                      )}
 
-                      <p className="no-results-message">{t('providerNoResults.description')}</p>
-
-                      {supportedTypes.length > 0 && (
-                        <div className="provider-supported-section">
-                          <span className="supported-section-label">
-                            {t('providerNoResults.supportedLabel', { provider: activeProviderTab })}
-                          </span>
-                          <div className="supported-types-grid">
-                            {supportedTypes.map((type, idx) => (
-                              <span key={idx} className="supported-type-badge">
-                                {getIOCTypeLabel(type)}
-                              </span>
-                            ))}
+                        {unsupportedIOCs.length > 0 && (
+                          <div className="searched-iocs-section">
+                            <p className="searched-iocs-label">
+                              {t('providerNoResults.searchedFor', { count: unsupportedIOCs.length })}
+                            </p>
+                            <div className="searched-iocs-list">
+                              {unsupportedIOCs.map((ioc, idx) => (
+                                <div key={idx} className="searched-ioc-item">
+                                  <span className="searched-ioc-type">{getIOCTypeLabel(ioc.type)}</span>
+                                  <span className="searched-ioc-value">{ioc.value}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
+                        )}
 
-                // IOC Tabs for multiple IOCs
-                const handleIOCTabsMouseDown = (e: React.MouseEvent) => {
-                  if (!iocTabsRef.current) return;
-                  setIsIOCTabsDragging(true);
-                  setIOCTabsStartX(e.pageX - iocTabsRef.current.offsetLeft);
-                  setIOCTabsScrollLeft(iocTabsRef.current.scrollLeft);
-                };
+                        <p className="no-results-message">{t('providerNoResults.description')}</p>
 
-                const handleIOCTabsMouseUp = () => {
-                  setIsIOCTabsDragging(false);
-                };
-
-                const handleIOCTabsMouseMove = (e: React.MouseEvent) => {
-                  if (!isIOCTabsDragging || !iocTabsRef.current) return;
-                  e.preventDefault();
-                  const x = e.pageX - iocTabsRef.current.offsetLeft;
-                  const walk = (x - iocTabsStartX) * 1.5;
-                  iocTabsRef.current.scrollLeft = iocTabsScrollLeft - walk;
-                };
-
-                const handleIOCTabsMouseLeave = () => {
-                  setIsIOCTabsDragging(false);
-                };
-
-                const iocTabs = hasMultipleIOCs ? (
-                  <div 
-                    className={`ioc-tabs-container ${isIOCTabsDragging ? 'dragging' : ''}`}
-                    ref={iocTabsRef}
-                    onMouseDown={handleIOCTabsMouseDown}
-                    onMouseUp={handleIOCTabsMouseUp}
-                    onMouseMove={handleIOCTabsMouseMove}
-                    onMouseLeave={handleIOCTabsMouseLeave}
-                  >
-                    {uniqueIOCs.map((iocValue) => (
-                      <button
-                        key={iocValue}
-                        className={`ioc-tab ${currentActiveIOC === iocValue ? 'active' : ''}`}
-                        onClick={() => !isIOCTabsDragging && setActiveIOCTab(iocValue)}
-                        title={iocValue}
-                      >
-                        {truncateIOC(iocValue)}
-                      </button>
-                    ))}
-                  </div>
-                ) : null;
-
-                const resultElements = filteredResults.map((result, index) => {
-                  if (result.source === 'VirusTotal') {
-                    return <VirusTotalResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'OTX AlienVault') {
-                    return <OTXResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'AbuseIPDB') {
-                    return <AbuseIPDBResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'MalwareBazaar') {
-                    return <MalwareBazaarResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'ARIN') {
-                    return <ARINResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'Shodan') {
-                    return <ShodanResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'GreyNoise') {
-                    return <GreyNoiseResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'URLhaus') {
-                    return <URLhausResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'Pulsedive') {
-                    return <PulsediveResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  if (result.source === 'Scamalytics') {
-                    return <ScamalyticsResultCard key={`${result.ioc.value}-${index}`} result={result} />;
-                  }
-
-                  return (
-                    <div key={`${result.ioc.value}-${index}`} className="result-card">
-                      <div className="result-header">
-                        {getStatusIcon(result.status)}
-                        <div className="result-info">
-                          <div className="result-value">{result.ioc.value}</div>
-                          <div className="result-meta">
-                            <span className="result-type">
-                              {getIOCTypeLabel(result.ioc.type)}
+                        {supportedTypes.length > 0 && (
+                          <div className="provider-supported-section">
+                            <span className="supported-section-label">
+                              {t('providerNoResults.supportedLabel', { provider: activeProviderTab })}
                             </span>
-                            <span className="result-source">{result.source}</span>
-                          </div>
-                        </div>
-                        <div className={`result-status ${result.status}`}>
-                          {getStatusLabel(result.status)}
-                        </div>
-                      </div>
-                      {result.unsupportedReason && result.supportedTypes && (
-                        <div className="result-unsupported">
-                          <div className="unsupported-message">
-                            <AlertTriangle size={16} />
-                            <span>{result.unsupportedReason}</span>
-                          </div>
-                          <div className="supported-types">
-                            <span className="supported-types-label">Supported IOC types:</span>
-                            <div className="supported-types-badges">
-                              {result.supportedTypes.map((type, idx) => (
-                                <span key={idx} className="ioc-type-badge">
+                            <div className="supported-types-grid">
+                              {supportedTypes.map((type, idx) => (
+                                <span key={idx} className="supported-type-badge">
                                   {getIOCTypeLabel(type)}
                                 </span>
                               ))}
                             </div>
                           </div>
-                        </div>
-                      )}
-                      {result.details && (
-                        <div className="result-details">
-                          {result.details.message || JSON.stringify(result.details)}
-                        </div>
-                      )}
-                      {result.error && !result.unsupportedReason && (
-                        <div className="result-error">{result.error}</div>
-                      )}
+                        )}
+                      </div>
+                    );
+                  }
+
+                  // IOC Tabs for multiple IOCs
+                  const handleIOCTabsMouseDown = (e: React.MouseEvent) => {
+                    if (!iocTabsRef.current) return;
+                    setIsIOCTabsDragging(true);
+                    setIOCTabsStartX(e.pageX - iocTabsRef.current.offsetLeft);
+                    setIOCTabsScrollLeft(iocTabsRef.current.scrollLeft);
+                  };
+
+                  const handleIOCTabsMouseUp = () => {
+                    setIsIOCTabsDragging(false);
+                  };
+
+                  const handleIOCTabsMouseMove = (e: React.MouseEvent) => {
+                    if (!isIOCTabsDragging || !iocTabsRef.current) return;
+                    e.preventDefault();
+                    const x = e.pageX - iocTabsRef.current.offsetLeft;
+                    const walk = (x - iocTabsStartX) * 1.5;
+                    iocTabsRef.current.scrollLeft = iocTabsScrollLeft - walk;
+                  };
+
+                  const handleIOCTabsMouseLeave = () => {
+                    setIsIOCTabsDragging(false);
+                  };
+
+                  const iocTabs = hasMultipleIOCs ? (
+                    <div 
+                      className={`ioc-tabs-container ${isIOCTabsDragging ? 'dragging' : ''}`}
+                      ref={iocTabsRef}
+                      onMouseDown={handleIOCTabsMouseDown}
+                      onMouseUp={handleIOCTabsMouseUp}
+                      onMouseMove={handleIOCTabsMouseMove}
+                      onMouseLeave={handleIOCTabsMouseLeave}
+                    >
+                      {uniqueIOCs.map((iocValue) => (
+                        <button
+                          key={iocValue}
+                          className={`ioc-tab ${currentActiveIOC === iocValue ? 'active' : ''}`}
+                          onClick={() => !isIOCTabsDragging && setActiveIOCTab(iocValue)}
+                          title={iocValue}
+                        >
+                          {truncateIOC(iocValue)}
+                        </button>
+                      ))}
                     </div>
+                  ) : null;
+
+                  const resultElements = filteredResults.map((result, index) => {
+                    if (result.source === 'VirusTotal') {
+                      return <VirusTotalResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'OTX AlienVault') {
+                      return <OTXResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'AbuseIPDB') {
+                      return <AbuseIPDBResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'MalwareBazaar') {
+                      return <MalwareBazaarResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'ARIN') {
+                      return <ARINResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'Shodan') {
+                      return <ShodanResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'GreyNoise') {
+                      return <GreyNoiseResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'URLhaus') {
+                      return <URLhausResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'Pulsedive') {
+                      return <PulsediveResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'Scamalytics') {
+                      return <ScamalyticsResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    return (
+                      <div key={`${result.ioc.value}-${index}`} className="result-card">
+                        <div className="result-header">
+                          {getStatusIcon(result.status)}
+                          <div className="result-info">
+                            <div className="result-value">{result.ioc.value}</div>
+                            <div className="result-meta">
+                              <span className="result-type">
+                                {getIOCTypeLabel(result.ioc.type)}
+                              </span>
+                              <span className="result-source">{result.source}</span>
+                            </div>
+                          </div>
+                          <div className={`result-status ${result.status}`}>
+                            {getStatusLabel(result.status)}
+                          </div>
+                        </div>
+                        {result.unsupportedReason && result.supportedTypes && (
+                          <div className="result-unsupported">
+                            <div className="unsupported-message">
+                              <AlertTriangle size={16} />
+                              <span>{result.unsupportedReason}</span>
+                            </div>
+                            <div className="supported-types">
+                              <span className="supported-types-label">Supported IOC types:</span>
+                              <div className="supported-types-badges">
+                                {result.supportedTypes.map((type, idx) => (
+                                  <span key={idx} className="ioc-type-badge">
+                                    {getIOCTypeLabel(type)}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {result.details && (
+                          <div className="result-details">
+                            {result.details.message || JSON.stringify(result.details)}
+                          </div>
+                        )}
+                        {result.error && !result.unsupportedReason && (
+                          <div className="result-error">{result.error}</div>
+                        )}
+                      </div>
+                    );
+                  });
+
+                  // Add pending rate limit confirmation cards ONLY if no active provider tab
+                  // (When a specific provider tab is active, the confirmation is shown above)
+                  const pendingCards: JSX.Element[] = [];
+
+                  if (!activeProviderTab) {
+                    const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
+
+                    if (pendingRateLimitProviders.has('greynoise') && ipv4Count > 0) {
+                      pendingCards.push(
+                        <RateLimitConfirmCard
+                          key="greynoise-pending"
+                          provider="greynoise"
+                          iocCount={ipv4Count}
+                          onConfirm={() => handleRateLimitConfirm('greynoise')}
+                          logoSrc="/provider-icons/greynoise-logo.png"
+                          providerName="GreyNoise"
+                          subtitle={t('providers.greynoise.subtitle')}
+                        />
+                      );
+                    }
+
+                    if (pendingRateLimitProviders.has('shodan') && ipv4Count > 0) {
+                      pendingCards.push(
+                        <RateLimitConfirmCard
+                          key="shodan-pending"
+                          provider="shodan"
+                          iocCount={ipv4Count}
+                          onConfirm={() => handleRateLimitConfirm('shodan')}
+                          logoSrc="/provider-icons/shodan-logo.png"
+                          providerName="Shodan"
+                          subtitle={t('providers.shodan.subtitle')}
+                        />
+                      );
+                    }
+
+                  }
+
+                  return (
+                    <>
+                      {iocTabs}
+                      {resultElements}
+                      {pendingCards}
+                    </>
                   );
-                });
-
-                // Add pending rate limit confirmation cards ONLY if no active provider tab
-                // (When a specific provider tab is active, the confirmation is shown above)
-                const pendingCards: JSX.Element[] = [];
-
-                if (!activeProviderTab) {
-                  const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
-
-                  if (pendingRateLimitProviders.has('greynoise') && ipv4Count > 0) {
-                    pendingCards.push(
-                      <RateLimitConfirmCard
-                        key="greynoise-pending"
-                        provider="greynoise"
-                        iocCount={ipv4Count}
-                        onConfirm={() => handleRateLimitConfirm('greynoise')}
-                        logoSrc="/provider-icons/greynoise-logo.png"
-                        providerName="GreyNoise"
-                        subtitle={t('providers.greynoise.subtitle')}
-                      />
-                    );
-                  }
-
-                  if (pendingRateLimitProviders.has('shodan') && ipv4Count > 0) {
-                    pendingCards.push(
-                      <RateLimitConfirmCard
-                        key="shodan-pending"
-                        provider="shodan"
-                        iocCount={ipv4Count}
-                        onConfirm={() => handleRateLimitConfirm('shodan')}
-                        logoSrc="/provider-icons/shodan-logo.png"
-                        providerName="Shodan"
-                        subtitle={t('providers.shodan.subtitle')}
-                      />
-                    );
-                  }
-
-                }
-
-                return (
-                  <>
-                    {iocTabs}
-                    {resultElements}
-                    {pendingCards}
-                  </>
-                );
-              })()}
-            </div>
+                })()}
+              </div>
+            )}
           </div>
         )}
 

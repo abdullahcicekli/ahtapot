@@ -1,4 +1,5 @@
 {
+  "loading": "Yükleniyor...",
   "buttons": {
     "save": "Kaydet",
     "saveChanges": "Değişiklikleri Kaydet",

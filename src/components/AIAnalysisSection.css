@@ -1,0 +1,238 @@
+/* AI Analysis Section Styles */
+
+.ai-section {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ai-section-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ai-section-empty {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.ai-empty-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ai-empty-icon {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ai-empty-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-configure-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #a78bfa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-configure-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+/* Header */
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ai-icon {
+  color: #a78bfa;
+}
+
+.ai-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Controls */
+.ai-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Provider Selection */
+.ai-providers {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ai-provider-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.ai-provider-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.ai-provider-btn.selected {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+}
+
+.ai-provider-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-provider-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+.ai-provider-btn.selected .ai-provider-name {
+  color: #a78bfa;
+}
+
+/* Actions Row */
+.ai-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Mode Select */
+.ai-mode-select-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.ai-mode-select {
+  width: 100%;
+  padding: 10px 32px 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ai-mode-select:hover:not(:disabled) {
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.ai-mode-select:focus {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
+}
+
+.ai-mode-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-mode-select option {
+  background: #1a1a1f;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ai-select-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+
+/* Start Button */
+.ai-start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.ai-start-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.ai-start-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ai-start-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(139, 92, 246, 0.3);
+}
+
+.ai-start-btn .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
