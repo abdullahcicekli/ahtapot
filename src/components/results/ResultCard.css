@@ -1,17 +1,15 @@
 /* Common Result Card Styles */
 .result-card {
-  background: linear-gradient(145deg, rgba(25, 25, 40, 0.95) 0%, rgba(30, 30, 50, 0.9) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #222228;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
 }
 
 .result-card:hover {
-  border-color: rgba(74, 158, 255, 0.3);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 247, 112, 0.2);
 }
 
 .result-card-header {
@@ -20,7 +18,7 @@
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .result-card-title {
@@ -60,16 +58,16 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(74, 158, 255, 0.1);
-  border: 1px solid rgba(74, 158, 255, 0.2);
+  background: rgba(255, 247, 112, 0.1);
+  border: 1px solid rgba(255, 247, 112, 0.2);
   border-radius: 6px;
-  color: #4a9eff;
+  color: #FFF770;
   transition: all 0.2s;
 }
 
 .external-link:hover {
-  background: rgba(74, 158, 255, 0.2);
-  border-color: #4a9eff;
+  background: rgba(255, 247, 112, 0.2);
+  border-color: #FFF770;
   transform: translateY(-1px);
 }
 
@@ -86,7 +84,7 @@
   padding: 12px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
-  border-left: 3px solid rgba(74, 158, 255, 0.5);
+  border-left: 3px solid rgba(255, 247, 112, 0.5);
 }
 
 .info-row {
@@ -138,7 +136,7 @@
   content: '';
   width: 3px;
   height: 14px;
-  background: #4a9eff;
+  background: #FFF770;
   border-radius: 2px;
 }
 
@@ -152,8 +150,8 @@
   display: inline-flex;
   align-items: center;
   padding: 5px 10px;
-  background: rgba(74, 158, 255, 0.1);
-  border: 1px solid rgba(74, 158, 255, 0.2);
+  background: rgba(255, 247, 112, 0.1);
+  border: 1px solid rgba(255, 247, 112, 0.2);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -162,8 +160,8 @@
 }
 
 .tag:hover {
-  background: rgba(74, 158, 255, 0.15);
-  border-color: rgba(74, 158, 255, 0.3);
+  background: rgba(255, 247, 112, 0.15);
+  border-color: rgba(255, 247, 112, 0.3);
 }
 
 .tag.threat {

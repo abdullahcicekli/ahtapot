@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-primary: #1A1A1F;
+  --bg-secondary: #222228;
+  --accent: #FFF770;
+  --accent-dim: rgba(255, 247, 112, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
 body {
   width: 300px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,7 +19,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #1e1e2e;
+  background: var(--bg-primary);
 }
 
 .popup-container {
@@ -26,14 +34,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 0;
+  padding: 8px 0;
 }
 
 .popup-logo {
-  height: 24px;
+  height: 28px;
   width: auto;
   object-fit: contain;
-  opacity: 0.9;
 }
 
 .popup-menu {
@@ -46,18 +53,23 @@ body {
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 10px 12px;
   background: transparent;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
   text-align: left;
 }
 
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-secondary);
+}
+
+.menu-item:hover .menu-item-icon {
+  background: var(--accent);
+  color: var(--bg-primary);
 }
 
 .menu-item:active {
@@ -66,19 +78,20 @@ body {
 
 .menu-item-icon {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(100, 150, 255, 0.12);
-  border-radius: 6px;
-  color: #6496ff;
+  background: var(--accent-dim);
+  border-radius: 8px;
+  color: var(--accent);
+  transition: all 0.15s ease;
 }
 
 .menu-item-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .menu-item-content {
@@ -97,18 +110,18 @@ body {
 
 .menu-item-description {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.4);
   line-height: 1.3;
 }
 
 .popup-footer {
-  padding: 6px 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 8px 0 0;
+  border-top: 1px solid var(--border);
 }
 
 .popup-footer-text {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
   text-align: center;
   line-height: 1.4;
 }

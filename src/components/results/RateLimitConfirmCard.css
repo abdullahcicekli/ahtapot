@@ -1,10 +1,9 @@
 .rate-limit-confirm-card {
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.08) 0%, rgba(255, 152, 0, 0.12) 100%);
+  background: #222228;
   border: 1px solid rgba(255, 152, 0, 0.3);
   border-radius: 8px;
   padding: 0;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
@@ -32,7 +31,6 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .rate-limit-logo img {
@@ -150,26 +148,23 @@
 .rate-limit-confirm-btn {
   width: 100%;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-  color: white;
+  background: #FFF770;
+  color: #1A1A1F;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
 }
 
 .rate-limit-confirm-btn:hover {
-  background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
-  box-shadow: 0 3px 6px rgba(255, 152, 0, 0.4);
+  filter: brightness(1.1);
   transform: translateY(-1px);
 }
 
 .rate-limit-confirm-btn:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(255, 152, 0, 0.3);
 }
 
 .rate-limit-skip-hint {
