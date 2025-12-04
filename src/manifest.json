@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Ahtapot - IOC Analysis Tool",
+  "name": "__MSG_extName__",
   "version": "3.0.0",
-  "description": "Fast and secure IOC analysis with multiple threat intelligence providers. Tab-based results, cache management, API validation.",
+  "description": "__MSG_extDescription__",
   "homepage_url": "https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg",
   "default_locale": "en",
   "icons": {
@@ -22,9 +22,15 @@
     "https://otx.alienvault.com/*",
     "https://api.abuseipdb.com/*",
     "https://bazaar.abuse.ch/*",
+    "https://urlhaus-api.abuse.ch/*",
     "https://whois.arin.net/*",
     "https://api.shodan.io/*",
-    "https://api.greynoise.io/*"
+    "https://api.greynoise.io/*",
+    "https://pulsedive.com/*",
+    "https://api12.scamalytics.com/*",
+    "https://api.anthropic.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.openai.com/*"
   ],
   "web_accessible_resources": [
     {

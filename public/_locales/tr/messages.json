@@ -1,10 +1,10 @@
 {
   "extName": {
-    "message": "Ahtapot - IOC Analiz Aracı",
+    "message": "Ahtapot - Yapay Zeka Destekli IOC Tehdit İstihbaratı",
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Birden fazla tehdit istihbarat sağlayıcısı ile hızlı ve güvenli IOC analizi",
+    "message": "Claude, Gemini ve GPT-4o ile yapay zeka destekli tehdit analizi. VirusTotal, Shodan, AbuseIPDB dahil 10 istihbarat kaynağı.",
     "description": "Extension description"
   }
 }
