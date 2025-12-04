@@ -45,7 +45,7 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
   const getScoreColor = () => {
     if (communityScore === 0) return '#4ADE80'; // success green
     if (communityScore <= 5) return '#FBBF24'; // warning amber
-    return '#F87171'; // danger coral
+    return '#E63946'; // danger
   };
 
   // Get status icon and color

@@ -128,7 +128,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
   // Color palette harmonized with accent (#C7F54D)
   const getVerdictConfig = (verdict: string) => {
     const configs: Record<string, { color: string; bg: string; icon: React.ReactNode }> = {
-      malicious: { color: '#F87171', bg: 'rgba(248, 113, 113, 0.12)', icon: <XCircle size={16} /> },
+      malicious: { color: '#E63946', bg: 'rgba(230, 57, 70, 0.12)', icon: <XCircle size={16} /> },
       suspicious: { color: '#FBBF24', bg: 'rgba(251, 191, 36, 0.12)', icon: <AlertTriangle size={16} /> },
       likely_benign: { color: '#4ADE80', bg: 'rgba(74, 222, 128, 0.12)', icon: <Shield size={16} /> },
       clean: { color: '#4ADE80', bg: 'rgba(74, 222, 128, 0.12)', icon: <CheckCircle size={16} /> },
@@ -139,7 +139,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
 
   const getRiskConfig = (risk: string) => {
     const configs: Record<string, { color: string; bg: string }> = {
-      critical: { color: '#F87171', bg: 'rgba(248, 113, 113, 0.15)' },
+      critical: { color: '#E63946', bg: 'rgba(230, 57, 70, 0.15)' },
       high: { color: '#FB923C', bg: 'rgba(251, 146, 60, 0.12)' },
       medium: { color: '#FBBF24', bg: 'rgba(251, 191, 36, 0.12)' },
       low: { color: '#38BDF8', bg: 'rgba(56, 189, 248, 0.12)' },

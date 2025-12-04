@@ -99,7 +99,7 @@ export const OTXResultCard: React.FC<OTXResultCardProps> = ({ result }) => {
   // Get threat score color - pulses indicate threats
   const getScoreColor = () => {
     if (pulseCount === 0) return '#4ADE80'; // success - no pulses = clean
-    if (severityLevel >= 3 || maliciousCount > 0) return '#F87171'; // danger - high severity
+    if (severityLevel >= 3 || maliciousCount > 0) return '#E63946'; // danger - high severity
     if (severityLevel >= 2 || suspiciousCount > 0 || pulseCount > 3) return '#FBBF24'; // warning - medium severity
     return '#f97316'; // orange - any pulses are at least low severity threats
   };

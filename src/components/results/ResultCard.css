@@ -17,10 +17,10 @@
   --success-bg: rgba(74, 222, 128, 0.12);
   --success-border: rgba(74, 222, 128, 0.25);
   
-  /* Danger - Soft Coral */
-  --danger: #F87171;
-  --danger-bg: rgba(248, 113, 113, 0.12);
-  --danger-border: rgba(248, 113, 113, 0.25);
+  /* Danger - Coral Red */
+  --danger: #E63946;
+  --danger-bg: rgba(230, 57, 70, 0.12);
+  --danger-border: rgba(230, 57, 70, 0.25);
   
   /* Warning - Warm Amber */
   --warning: #FBBF24;

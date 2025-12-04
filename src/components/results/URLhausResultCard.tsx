@@ -51,7 +51,7 @@ export const URLhausResultCard: React.FC<URLhausResultCardProps> = ({ result }) 
     (details.blacklists.spamhaus_dbl !== 'not listed' || details.blacklists.surbl !== 'not listed');
 
   const getStatusColor = () => {
-    if (onlineCount > 0) return '#F87171';
+    if (onlineCount > 0) return '#E63946';
     if (urlCount > 0) return '#FBBF24';
     return '#4ADE80';
   };
