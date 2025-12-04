@@ -92,13 +92,13 @@
 /* Active state - highlighted with yellow border */
 .provider-slide-item.active {
   background: rgba(255, 247, 112, 0.08);
-  border-color: #FFF770;
+  border-color: #C7F54D;
   box-shadow: 0 0 0 1px rgba(255, 247, 112, 0.2);
 }
 
 .provider-slide-item.active:hover {
   background: rgba(255, 247, 112, 0.12);
-  border-color: #FFF770;
+  border-color: #C7F54D;
 }
 
 /* Disabled state */
@@ -152,7 +152,7 @@
   transform: translateY(-50%);
   width: 36px;
   height: 36px;
-  background: #FFF770;
+  background: #C7F54D;
   border: none;
   border-radius: 10px;
   color: #1A1A1F;

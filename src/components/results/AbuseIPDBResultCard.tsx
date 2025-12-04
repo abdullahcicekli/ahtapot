@@ -47,10 +47,10 @@ export const AbuseIPDBResultCard: React.FC<AbuseIPDBResultCardProps> = ({ result
 
   // Get score color based on abuse confidence
   const getScoreColor = () => {
-    if (isWhitelisted) return '#22c55e'; // green
-    if (abuseScore >= 76) return '#ef4444'; // red
-    if (abuseScore >= 26) return '#eab308'; // yellow
-    return '#22c55e'; // green
+    if (isWhitelisted) return '#4ADE80'; // success
+    if (abuseScore >= 76) return '#F87171'; // danger
+    if (abuseScore >= 26) return '#FBBF24'; // warning
+    return '#4ADE80'; // success
   };
 
   // Get status info

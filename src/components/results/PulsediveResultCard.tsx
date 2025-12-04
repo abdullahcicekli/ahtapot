@@ -32,10 +32,10 @@ export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result
   const getRiskColor = (risk: string) => {
     const riskLower = risk.toLowerCase();
     if (riskLower === 'critical') return '#dc2626';
-    if (riskLower === 'high') return '#ef4444';
+    if (riskLower === 'high') return '#F87171';
     if (riskLower === 'medium') return '#f97316';
     if (riskLower === 'low') return '#3b82f6';
-    if (riskLower === 'none') return '#22c55e';
+    if (riskLower === 'none') return '#4ADE80';
     return '#6b7280';
   };
 

@@ -41,11 +41,11 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
   const suspiciousCount = details?.suspicious || 0;
   const communityScore = maliciousCount + suspiciousCount;
 
-  // Get community score color
+  // Get community score color - harmonized with accent
   const getScoreColor = () => {
-    if (communityScore === 0) return '#22c55e'; // green
-    if (communityScore <= 5) return '#eab308'; // yellow
-    return '#ef4444'; // red
+    if (communityScore === 0) return '#4ADE80'; // success green
+    if (communityScore <= 5) return '#FBBF24'; // warning amber
+    return '#F87171'; // danger coral
   };
 
   // Get status icon and color

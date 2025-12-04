@@ -34,10 +34,10 @@ export const ScamalyticsResultCard: React.FC<ScamalyticsResultCardProps> = ({ re
   const getRiskColor = (risk: string) => {
     const riskLower = risk?.toLowerCase() || '';
     if (riskLower === 'very high') return '#dc2626';
-    if (riskLower === 'high') return '#ef4444';
-    if (riskLower === 'medium') return '#f59e0b';
+    if (riskLower === 'high') return '#F87171';
+    if (riskLower === 'medium') return '#FBBF24';
     if (riskLower === 'low') return '#3b82f6';
-    if (riskLower === 'very low') return '#22c55e';
+    if (riskLower === 'very low') return '#4ADE80';
     return '#6b7280';
   };
 

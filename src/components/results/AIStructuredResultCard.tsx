@@ -125,24 +125,25 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
     return label && !label.startsWith('ai.confidenceLevels.') ? label : confidence;
   };
 
+  // Color palette harmonized with accent (#C7F54D)
   const getVerdictConfig = (verdict: string) => {
     const configs: Record<string, { color: string; bg: string; icon: React.ReactNode }> = {
-      malicious: { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.15)', icon: <XCircle size={16} /> },
-      suspicious: { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)', icon: <AlertTriangle size={16} /> },
-      likely_benign: { color: '#22c55e', bg: 'rgba(34, 197, 94, 0.15)', icon: <Shield size={16} /> },
-      clean: { color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)', icon: <CheckCircle size={16} /> },
-      unknown: { color: '#6b7280', bg: 'rgba(107, 114, 128, 0.15)', icon: <AlertCircle size={16} /> },
+      malicious: { color: '#F87171', bg: 'rgba(248, 113, 113, 0.12)', icon: <XCircle size={16} /> },
+      suspicious: { color: '#FBBF24', bg: 'rgba(251, 191, 36, 0.12)', icon: <AlertTriangle size={16} /> },
+      likely_benign: { color: '#4ADE80', bg: 'rgba(74, 222, 128, 0.12)', icon: <Shield size={16} /> },
+      clean: { color: '#4ADE80', bg: 'rgba(74, 222, 128, 0.12)', icon: <CheckCircle size={16} /> },
+      unknown: { color: '#94A3B8', bg: 'rgba(148, 163, 184, 0.12)', icon: <AlertCircle size={16} /> },
     };
     return configs[verdict] || configs.unknown;
   };
 
   const getRiskConfig = (risk: string) => {
     const configs: Record<string, { color: string; bg: string }> = {
-      critical: { color: '#dc2626', bg: 'rgba(220, 38, 38, 0.15)' },
-      high: { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.15)' },
-      medium: { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)' },
-      low: { color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)' },
-      info: { color: '#6b7280', bg: 'rgba(107, 114, 128, 0.15)' },
+      critical: { color: '#F87171', bg: 'rgba(248, 113, 113, 0.15)' },
+      high: { color: '#FB923C', bg: 'rgba(251, 146, 60, 0.12)' },
+      medium: { color: '#FBBF24', bg: 'rgba(251, 191, 36, 0.12)' },
+      low: { color: '#38BDF8', bg: 'rgba(56, 189, 248, 0.12)' },
+      info: { color: '#94A3B8', bg: 'rgba(148, 163, 184, 0.12)' },
     };
     return configs[risk] || configs.info;
   };
@@ -150,9 +151,9 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
   // Confidence colors - HIGH is good (green), LOW is uncertain (orange)
   const getConfidenceConfig = (confidence: string) => {
     const configs: Record<string, { color: string; bg: string }> = {
-      high: { color: '#22c55e', bg: 'rgba(34, 197, 94, 0.15)' },
-      medium: { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)' },
-      low: { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.15)' },
+      high: { color: '#4ADE80', bg: 'rgba(74, 222, 128, 0.12)' },
+      medium: { color: '#FBBF24', bg: 'rgba(251, 191, 36, 0.12)' },
+      low: { color: '#FB923C', bg: 'rgba(251, 146, 60, 0.12)' },
     };
     return configs[confidence] || configs.medium;
   };

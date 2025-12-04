@@ -7,9 +7,17 @@
 :root {
   --bg-primary: #1A1A1F;
   --bg-secondary: #222228;
-  --accent: #FFF770;
-  --accent-dim: rgba(255, 247, 112, 0.15);
   --border: rgba(255, 255, 255, 0.08);
+  
+  /* Accent - Lime Green */
+  --accent: #C7F54D;
+  --accent-dim: rgba(199, 245, 77, 0.15);
+  
+  /* Semantic Colors */
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --info: #38BDF8;
 }
 
 body {

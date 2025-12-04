@@ -9,9 +9,20 @@
   --bg-secondary: #222228;
   --bg-tertiary: #2A2A32;
   --border: rgba(255, 255, 255, 0.08);
-  --accent: #FFF770;
-  --accent-dim: rgba(255, 247, 112, 0.15);
-  --success-color: #10B981;
+  
+  /* Accent - Lime Green */
+  --accent: #C7F54D;
+  --accent-dim: rgba(199, 245, 77, 0.15);
+  
+  /* Semantic Colors - Harmonized with Accent */
+  --success: #4ADE80;
+  --success-bg: rgba(74, 222, 128, 0.12);
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --danger: #F87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --info: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.12);
 }
 
 body {
@@ -420,7 +431,7 @@ body {
   content: '✓';
   position: absolute;
   left: 8px;
-  color: #10b981;
+  color: var(--success);
   font-weight: bold;
 }
 
@@ -610,7 +621,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #10b981;
+  color: var(--success);
   font-size: 14px;
   font-weight: 500;
 }
@@ -691,7 +702,7 @@ body {
 }
 
 .validation-status.valid {
-  color: #10b981;
+  color: var(--success);
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
@@ -706,7 +717,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #10b981;
+  color: var(--success);
   font-size: 13px;
   font-weight: 500;
   animation: fadeIn 0.3s ease-in;
@@ -1212,7 +1223,7 @@ body {
 .modal-provider-number.locked-number {
   background: rgba(16, 185, 129, 0.2);
   border-color: rgba(16, 185, 129, 0.4);
-  color: #10b981;
+  color: var(--success);
 }
 
 .modal-provider-logo-wrapper {

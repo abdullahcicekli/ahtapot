@@ -112,9 +112,9 @@
 .ahtapot-floating-button button.expanded {
   gap: 8px;
   padding: 10px 16px;
-  background: #FFF770;
+  background: #C7F54D;
   color: #1A1A1F;
-  border-color: #FFF770;
+  border-color: #C7F54D;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }

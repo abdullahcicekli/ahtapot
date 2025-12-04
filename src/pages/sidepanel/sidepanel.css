@@ -12,11 +12,20 @@
   --border: rgba(255, 255, 255, 0.08);
   --text: rgba(255, 255, 255, 0.9);
   --text-secondary: rgba(255, 255, 255, 0.6);
-  --accent: #FFF770;
-  --accent-dim: rgba(255, 247, 112, 0.15);
-  --success: #22c55e;
-  --warning: #eab308;
-  --danger: #ef4444;
+  
+  /* Accent - Lime Green */
+  --accent: #C7F54D;
+  --accent-dim: rgba(199, 245, 77, 0.15);
+  
+  /* Semantic Colors - Harmonized with Accent */
+  --success: #4ADE80;
+  --success-bg: rgba(74, 222, 128, 0.12);
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --danger: #F87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --info: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.12);
 }
 
 body {
@@ -557,7 +566,7 @@ body {
 
 .result-status.safe {
   background: rgba(34, 197, 94, 0.15);
-  color: #22c55e;
+  color: var(--success);
 }
 
 .result-status.suspicious {

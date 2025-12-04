@@ -6,27 +6,31 @@
   --bg-header: #1A1A1F;
   --bg-section: #2A2A32;
   
-  /* Accent */
-  --accent: #FFF770;
-  --accent-bg: rgba(255, 247, 112, 0.1);
-  --accent-border: rgba(255, 247, 112, 0.3);
+  /* Accent - Lime Green */
+  --accent: #C7F54D;
+  --accent-dim: rgba(199, 245, 77, 0.15);
+  --accent-bg: rgba(199, 245, 77, 0.1);
+  --accent-border: rgba(199, 245, 77, 0.3);
   
-  /* Risk Colors */
-  --danger: #ef4444;
-  --danger-bg: rgba(239, 68, 68, 0.15);
-  --danger-border: rgba(239, 68, 68, 0.3);
+  /* Success - Emerald (harmonizes with lime) */
+  --success: #4ADE80;
+  --success-bg: rgba(74, 222, 128, 0.12);
+  --success-border: rgba(74, 222, 128, 0.25);
   
-  --warning: #f59e0b;
-  --warning-bg: rgba(245, 158, 11, 0.15);
-  --warning-border: rgba(245, 158, 11, 0.3);
+  /* Danger - Soft Coral */
+  --danger: #F87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --danger-border: rgba(248, 113, 113, 0.25);
   
-  --success: #22c55e;
-  --success-bg: rgba(34, 197, 94, 0.15);
-  --success-border: rgba(34, 197, 94, 0.3);
+  /* Warning - Warm Amber */
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --warning-border: rgba(251, 191, 36, 0.25);
   
-  --info: #60a5fa;
-  --info-bg: rgba(96, 165, 250, 0.15);
-  --info-border: rgba(96, 165, 250, 0.3);
+  /* Info - Sky Blue */
+  --info: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.12);
+  --info-border: rgba(56, 189, 248, 0.25);
   
   /* Text Colors */
   --text-primary: #FFFFFF;
