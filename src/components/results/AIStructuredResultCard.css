@@ -177,10 +177,41 @@
 .ai-priority-badge {
   font-size: 11px;
   font-weight: 700;
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.15);
   padding: 4px 10px;
   border-radius: 4px;
+  /* Default - will be overridden by data attribute */
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+/* P0 - Critical (Red) */
+.ai-priority-badge[data-priority="P0"] {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* P1 - High (Orange) */
+.ai-priority-badge[data-priority="P1"] {
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.15);
+}
+
+/* P2 - Moderate (Yellow) */
+.ai-priority-badge[data-priority="P2"] {
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.15);
+}
+
+/* P3 - Low (Blue) */
+.ai-priority-badge[data-priority="P3"] {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+/* P4 - Negligible (Gray) */
+.ai-priority-badge[data-priority="P4"] {
+  color: #6b7280;
+  background: rgba(107, 114, 128, 0.15);
 }
 
 .ai-escalation-badge {

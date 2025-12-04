@@ -42,6 +42,12 @@ export class AIService {
       // Call the appropriate AI provider
       const content = await this.callAI(system, user);
 
+      // Validate JSON response
+      const validation = this.validateJsonResponse(content);
+      if (!validation.valid) {
+        throw new Error(`INVALID_JSON: ${validation.error}`);
+      }
+
       return {
         provider: this.provider,
         mode,
@@ -57,6 +63,48 @@ export class AIService {
         timestamp: Date.now(),
         error: error instanceof Error ? error.message : 'Unknown error occurred',
       };
+    }
+  }
+
+  /**
+   * Validate JSON response from AI
+   * Checks if the response is valid JSON and has required fields
+   */
+  private validateJsonResponse(content: string): { valid: boolean; error?: string } {
+    try {
+      // Remove markdown code blocks if present
+      let jsonContent = content;
+      const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (jsonMatch) {
+        jsonContent = jsonMatch[1];
+      }
+      jsonContent = jsonContent.trim();
+
+      // Try to parse JSON
+      const parsed = JSON.parse(jsonContent);
+
+      // Check for required fields
+      if (!parsed.verdict) {
+        return { valid: false, error: 'Missing required field: verdict' };
+      }
+
+      if (!parsed.priority) {
+        return { valid: false, error: 'Missing required field: priority' };
+      }
+
+      return { valid: true };
+    } catch (e) {
+      // Check if JSON is incomplete (common issue with truncated responses)
+      const openBraces = (content.match(/{/g) || []).length;
+      const closeBraces = (content.match(/}/g) || []).length;
+      const openBrackets = (content.match(/\[/g) || []).length;
+      const closeBrackets = (content.match(/]/g) || []).length;
+
+      if (openBraces !== closeBraces || openBrackets !== closeBrackets) {
+        return { valid: false, error: 'Incomplete JSON response (truncated)' };
+      }
+
+      return { valid: false, error: 'Invalid JSON format' };
     }
   }
 

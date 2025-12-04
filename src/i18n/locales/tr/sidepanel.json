@@ -25,7 +25,7 @@
     "supportedBy": "Destekleyen sağlayıcılar:"
   },
   "results": {
-    "title": "Analiz Sonuçları"
+    "title": "Sağlayıcı Sonuçları"
   },
   "loading": {
     "analyzing": "Güvenlik göstergeleri analiz ediliyor..."
@@ -87,6 +87,10 @@
     "title": "AI Analizi",
     "noProviders": "AI destekli analiz için bir AI sağlayıcı yapılandırın",
     "configure": "Yapılandır",
+    "selectProvider": "Model Seç",
+    "noApiKey": "API anahtarı yapılandırılmamış",
+    "noKey": "Anahtar Yok",
+    "configureKeys": "API Anahtarlarını Yapılandır",
     "modes": {
       "summary": "Özet",
       "analysis": "Analiz",
@@ -99,6 +103,14 @@
       "detailed": "L2/L3 + IR ekipleri için tam araştırma"
     },
     "analyzing": "Analiz Ediliyor...",
+    "analyzingStates": {
+      "sending": "İstek gönderiliyor...",
+      "processing": "AI işliyor...",
+      "thinking": "Tehdit verileri analiz ediliyor...",
+      "generating": "Rapor oluşturuluyor...",
+      "almostDone": "Neredeyse bitti...",
+      "finalizing": "Analiz sonuçlandırılıyor..."
+    },
     "start": "Analiz Et",
     "copyResult": "Sonucu kopyala",
     "copyMarkdown": "Markdown Olarak Kopyala",
@@ -128,6 +140,8 @@
       "verdict": "Karar",
       "risk": "Risk",
       "confidence": "Güven",
+      "confidenceShort": "Güven:",
+      "sourceConfidence": "Kaynak güveni - Bu sağlayıcının verisi ne kadar güvenilir",
       "escalation": "Eskalasyon Gerekli",
       "priority": "Öncelik",
       "detection": "Tespit",
@@ -169,7 +183,10 @@
     },
     "errors": {
       "noApiKey": "Lütfen Ayarlar'dan bu AI sağlayıcı için bir API anahtarı yapılandırın",
-      "unknown": "AI analizi sırasında beklenmeyen bir hata oluştu"
+      "unknown": "AI analizi sırasında beklenmeyen bir hata oluştu",
+      "invalidJson": "AI yanıtı eksik veya geçersiz",
+      "retrying": "Yanıt eksik, tekrar deneniyor... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "{{maxAttempts}} denemeden sonra tam yanıt alınamadı. Lütfen tekrar deneyin."
     }
   }
 }

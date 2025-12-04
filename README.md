@@ -382,9 +382,40 @@ All modes use consistent verdict indicators:
 
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Build the extension: `npm run build`
-4. Load `dist` folder in Chrome
-5. Test on various websites
+3. (Optional) Copy `.env.example` to `.env` and add your API keys for development
+4. Build the extension: `npm run build`
+5. Load `dist` folder in Chrome
+6. Test on various websites
+
+### Development API Keys
+
+In development mode, API keys can be automatically loaded from a `.env` file:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit .env and add your keys
+```
+
+**Supported Environment Variables:**
+
+| Variable | Provider |
+|----------|----------|
+| `VITE_VIRUSTOTAL_API_KEY` | VirusTotal |
+| `VITE_URLHAUS_API_KEY` | URLhaus |
+| `VITE_PULSEDIVE_API_KEY` | Pulsedive |
+| `VITE_SCAMALYTICS_API_KEY` | Scamalytics |
+| `VITE_OTX_API_KEY` | AlienVault OTX |
+| `VITE_ABUSEIPDB_API_KEY` | AbuseIPDB |
+| `VITE_SHODAN_API_KEY` | Shodan |
+| `VITE_GREYNOISE_API_KEY` | GreyNoise |
+| `VITE_MALWAREBAZAAR_API_KEY` | MalwareBazaar |
+| `VITE_CLAUDE_API_KEY` | Claude (Anthropic) |
+| `VITE_GEMINI_API_KEY` | Gemini (Google) |
+| `VITE_OPENAI_API_KEY` | OpenAI |
+
+> **Note:** Environment keys are only loaded in development mode (`npm run dev`) and only if no key exists in storage.
 
 ---
 

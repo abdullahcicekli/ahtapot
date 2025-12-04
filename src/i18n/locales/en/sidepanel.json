@@ -25,7 +25,7 @@
     "supportedBy": "Supported by:"
   },
   "results": {
-    "title": "Analysis Results"
+    "title": "Provider Results"
   },
   "loading": {
     "analyzing": "Analyzing security indicators..."
@@ -87,6 +87,10 @@
     "title": "AI Analysis",
     "noProviders": "Configure an AI provider to enable AI-powered analysis",
     "configure": "Configure",
+    "selectProvider": "Select Model",
+    "noApiKey": "API key not configured",
+    "noKey": "No Key",
+    "configureKeys": "Configure API Keys",
     "modes": {
       "summary": "Summary",
       "analysis": "Analysis",
@@ -99,6 +103,14 @@
       "detailed": "Full investigation for L2/L3 + IR teams"
     },
     "analyzing": "Analyzing...",
+    "analyzingStates": {
+      "sending": "Sending request...",
+      "processing": "AI is processing...",
+      "thinking": "Analyzing threat data...",
+      "generating": "Generating report...",
+      "almostDone": "Almost done...",
+      "finalizing": "Finalizing analysis..."
+    },
     "start": "Analyze",
     "copyResult": "Copy result",
     "copyMarkdown": "Copy as Markdown",
@@ -128,6 +140,8 @@
       "verdict": "Verdict",
       "risk": "Risk",
       "confidence": "Confidence",
+      "confidenceShort": "Conf:",
+      "sourceConfidence": "Source confidence - How reliable is this provider's data",
       "escalation": "Escalation Required",
       "priority": "Priority",
       "detection": "Detection",
@@ -169,7 +183,10 @@
     },
     "errors": {
       "noApiKey": "Please configure an API key for this AI provider in Settings",
-      "unknown": "An unexpected error occurred during AI analysis"
+      "unknown": "An unexpected error occurred during AI analysis",
+      "invalidJson": "AI response was incomplete or invalid",
+      "retrying": "Response incomplete, retrying... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "Failed to get a complete response after {{maxAttempts}} attempts. Please try again."
     }
   }
 }

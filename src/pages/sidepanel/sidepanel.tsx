@@ -85,6 +85,7 @@ const SidePanel: React.FC = () => {
   const [isAiAnalyzing, setIsAiAnalyzing] = useState(false);
   const [isProviderResultsExpanded, setIsProviderResultsExpanded] = useState(true);
   const [isAiResultCached, setIsAiResultCached] = useState(false);
+  const [aiRetryInfo, setAiRetryInfo] = useState<{ attempt: number; maxAttempts: number } | null>(null);
   const [lastAiQuery, setLastAiQuery] = useState<{
     provider: AIProvider;
     mode: AIAnalysisMode;
@@ -261,21 +262,25 @@ const SidePanel: React.FC = () => {
       if (response && response.success) {
         const responseResults = response.results || [];
 
+        // Get fresh provider order from storage (state may not be updated yet)
+        const currentProviderOrder = await getProviderOrder();
+        setProviderOrder(currentProviderOrder);
+
         // Sort results by custom provider order
-        const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(responseResults, providerOrder);
+        const sortedResults = sortResultsByProviderOrder<IOCAnalysisResult>(responseResults, currentProviderOrder);
         setResults(sortedResults);
 
         // Get unique providers that have results
         const providersWithResults = Array.from(new Set(sortedResults.map(r => r.source)));
         
         // Find the first provider in user's order that has results
-        if (providersWithResults.length > 0 && providerOrder.length > 0) {
+        if (providersWithResults.length > 0 && currentProviderOrder.length > 0) {
           // Sort providers with results by user's custom order
           const sortedProviders = [...providersWithResults].sort((a, b) => {
-            const indexA = providerOrder.findIndex(p => 
+            const indexA = currentProviderOrder.findIndex(p => 
               PROVIDER_TO_SERVICE_NAME[p] === a
             );
-            const indexB = providerOrder.findIndex(p => 
+            const indexB = currentProviderOrder.findIndex(p => 
               PROVIDER_TO_SERVICE_NAME[p] === b
             );
             // If not found, put at end
@@ -345,6 +350,8 @@ const SidePanel: React.FC = () => {
   const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode, forceRefresh: boolean = false) => {
     if (results.length === 0) return;
 
+    const MAX_RETRIES = 3;
+
     // Get primary IOC value for cache key
     const primaryIOC = currentIOCs[0]?.value || '';
     
@@ -362,6 +369,7 @@ const SidePanel: React.FC = () => {
 
     setIsAiAnalyzing(true);
     setIsAiResultCached(false);
+    setAiRetryInfo(null);
 
     try {
       // Get the API key for the selected provider
@@ -382,22 +390,60 @@ const SidePanel: React.FC = () => {
       const aiService = createAIService(provider, apiKey);
       const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
 
-      const result = await aiService.analyze(mode, iocList, results, language);
+      let result: AIAnalysisResult | null = null;
+      let lastError: string | null = null;
 
-      setAiResult(result);
-      setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+      // Retry loop for invalid JSON responses
+      for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        result = await aiService.analyze(mode, iocList, results, language);
 
-      // Cache the result if successful
-      if (!result.error && primaryIOC) {
-        await cacheAIResult(provider, primaryIOC, mode, language, result);
+        // Check if the response has an INVALID_JSON error
+        if (result.error && result.error.includes('INVALID_JSON')) {
+          lastError = result.error;
+          
+          if (attempt < MAX_RETRIES) {
+            // Show retry info to user
+            setAiRetryInfo({ attempt, maxAttempts: MAX_RETRIES });
+            console.log(`[Sidepanel] AI response invalid, retrying (${attempt}/${MAX_RETRIES})...`);
+            // Small delay before retry
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            continue;
+          } else {
+            // Max retries reached
+            result = {
+              provider,
+              mode,
+              content: '',
+              timestamp: Date.now(),
+              error: t('ai.errors.maxRetriesReached', { maxAttempts: MAX_RETRIES }),
+            };
+            break;
+          }
+        }
+
+        // Success or other error - break the loop
+        break;
       }
 
-      // Collapse provider results when AI result comes in
-      if (!result.error) {
-        setIsProviderResultsExpanded(false);
+      setAiRetryInfo(null);
+      
+      if (result) {
+        setAiResult(result);
+        setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+
+        // Cache the result if successful
+        if (!result.error && primaryIOC) {
+          await cacheAIResult(provider, primaryIOC, mode, language, result);
+        }
+
+        // Collapse provider results when AI result comes in
+        if (!result.error) {
+          setIsProviderResultsExpanded(false);
+        }
       }
     } catch (error) {
       console.error('[Sidepanel] Error during AI analysis:', error);
+      setAiRetryInfo(null);
       setAiResult({
         provider,
         mode,
@@ -407,6 +453,7 @@ const SidePanel: React.FC = () => {
       });
     } finally {
       setIsAiAnalyzing(false);
+      setAiRetryInfo(null);
     }
   };
 
@@ -535,6 +582,7 @@ const SidePanel: React.FC = () => {
           isAnalyzing={isAiAnalyzing}
           hasResults={results.length > 0}
           disabled={loading}
+          retryInfo={aiRetryInfo}
         />
 
         {/* AI Result */}
@@ -546,31 +594,6 @@ const SidePanel: React.FC = () => {
             onRequery={handleAiRequery}
           />
         )}
-
-        <ProviderSlider
-          activeProvider={activeProviderTab}
-          onProviderClick={(providerName) => {
-            // Always switch to the clicked provider tab
-            // The UI will show either results or a "no results" message
-            setActiveProviderTab(providerName);
-            // Reset IOC tab when provider changes - first IOC will be auto-selected
-            setActiveIOCTab('');
-          }}
-          visibleProviders={results.length > 0 ? (() => {
-            // Get providers from results
-            const resultProviders = Array.from(new Set(results.map(r => r.source)));
-            
-            // Add pending rate-limited providers to visible list
-            if (pendingRateLimitProviders.has('greynoise')) {
-              resultProviders.push('GreyNoise');
-            }
-            if (pendingRateLimitProviders.has('shodan')) {
-              resultProviders.push('Shodan');
-            }
-            
-            return resultProviders;
-          })() : undefined}
-        />
 
          {loading && (
           <div className="loading-spinner-container">
@@ -628,6 +651,34 @@ const SidePanel: React.FC = () => {
                 </button>
               )}
             </div>
+
+            {/* Provider Slider - Inside results section */}
+            {isProviderResultsExpanded && (
+              <ProviderSlider
+                activeProvider={activeProviderTab}
+                onProviderClick={(providerName) => {
+                  // Always switch to the clicked provider tab
+                  // The UI will show either results or a "no results" message
+                  setActiveProviderTab(providerName);
+                  // Reset IOC tab when provider changes - first IOC will be auto-selected
+                  setActiveIOCTab('');
+                }}
+                visibleProviders={(() => {
+                  // Get providers from results
+                  const resultProviders = Array.from(new Set(results.map(r => r.source)));
+                  
+                  // Add pending rate-limited providers to visible list
+                  if (pendingRateLimitProviders.has('greynoise')) {
+                    resultProviders.push('GreyNoise');
+                  }
+                  if (pendingRateLimitProviders.has('shodan')) {
+                    resultProviders.push('Shodan');
+                  }
+                  
+                  return resultProviders;
+                })()}
+              />
+            )}
 
             {/* Active Provider Results - Collapsible when AI result exists */}
             {isProviderResultsExpanded && (

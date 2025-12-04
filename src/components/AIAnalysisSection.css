@@ -86,40 +86,35 @@
   gap: 12px;
 }
 
-/* Provider Selection */
-.ai-providers {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+/* Provider Dropdown */
+.ai-provider-dropdown {
+  position: relative;
 }
 
-.ai-provider-btn {
-  flex: 1;
-  min-width: 90px;
-  padding: 10px 14px;
+.ai-provider-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
   background: var(--bg-primary, #1A1A1F);
   border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  min-width: 140px;
 }
 
-.ai-provider-btn:hover:not(:disabled) {
+.ai-provider-trigger:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 247, 112, 0.3);
 }
 
-.ai-provider-btn.selected {
-  background: var(--accent-dim, rgba(255, 247, 112, 0.15));
-  border-color: rgba(255, 247, 112, 0.5);
-  box-shadow: 0 0 12px rgba(255, 247, 112, 0.15);
+.ai-provider-trigger.open {
+  border-color: var(--accent, #FFF770);
+  background: rgba(255, 247, 112, 0.1);
 }
 
-.ai-provider-btn:disabled {
+.ai-provider-trigger:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -131,19 +126,156 @@
   flex-shrink: 0;
 }
 
-.ai-provider-name {
-  font-size: 12px;
+.ai-provider-selected-name {
+  font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
 }
 
-.ai-provider-btn.selected .ai-provider-name {
+.ai-provider-placeholder {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  flex: 1;
+}
+
+.ai-dropdown-icon {
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.ai-dropdown-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Provider Menu */
+.ai-provider-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 220px;
+  background: var(--bg-primary, #1A1A1F);
+  border: 1px solid rgba(255, 247, 112, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  overflow: hidden;
+  animation: dropdownSlide 0.15s ease;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-provider-group {
+  padding: 4px;
+}
+
+.ai-provider-group.disabled {
+  opacity: 0.5;
+}
+
+.ai-provider-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.ai-provider-item:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ai-provider-item.selected {
+  background: var(--accent-dim, rgba(255, 247, 112, 0.12));
+}
+
+.ai-provider-item:disabled {
+  cursor: not-allowed;
+}
+
+.ai-provider-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-provider-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ai-provider-item.selected .ai-provider-item-name {
   color: var(--accent, #FFF770);
 }
 
-.ai-provider-btn:hover:not(:disabled) .ai-provider-name {
-  color: rgba(255, 255, 255, 0.9);
+.ai-provider-item.disabled .ai-provider-item-name {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ai-provider-item-model {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-provider-check {
+  color: var(--accent, #FFF770);
+  flex-shrink: 0;
+}
+
+.ai-provider-no-key {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.ai-provider-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 4px 0;
+}
+
+.ai-provider-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-provider-settings:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--accent, #FFF770);
 }
 
 /* Actions Row */

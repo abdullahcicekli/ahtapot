@@ -256,7 +256,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
         {isExpanded && (
           <div className="ai-structured-content" ref={contentRef}>
             <pre className="ai-structured-raw">{parsedResponse.error}</pre>
-            <div className="ai-structured-actions">
+            <div className="ai-structured-actions" data-html2canvas-ignore="true">
               <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
                 {copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}
@@ -315,17 +315,9 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
-                  {getRiskLabel(summaryData.risk_level)}
-                </span>
-                {(() => {
-                  const confConfig = getConfidenceConfig(summaryData.confidence);
-                  return (
-                    <span className="ai-confidence-badge" style={{ background: confConfig.bg, color: confConfig.color }}>
-                      {getConfidenceLabel(summaryData.confidence)} {t('ai.labels.confidence').toLowerCase()}
-                    </span>
-                  );
-                })()}
+                {summaryData.priority && (
+                  <span className="ai-priority-badge" data-priority={summaryData.priority}>{summaryData.priority}</span>
+                )}
               </div>
             </div>
 
@@ -367,7 +359,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
             </div>
 
             {/* Actions */}
-            <div className="ai-structured-actions">
+            <div className="ai-structured-actions" data-html2canvas-ignore="true">
               <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
                 {copied ? 'Copied' : t('ai.copyMarkdown')}
@@ -426,17 +418,9 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
-                  {getRiskLabel(analysisData.risk_level)}
-                </span>
-                {(() => {
-                  const confConfig = getConfidenceConfig(analysisData.confidence);
-                  return (
-                    <span className="ai-confidence-badge" style={{ background: confConfig.bg, color: confConfig.color }}>
-                      {getConfidenceLabel(analysisData.confidence)} {t('ai.labels.confidence').toLowerCase()}
-                    </span>
-                  );
-                })()}
+                {analysisData.priority && (
+                  <span className="ai-priority-badge" data-priority={analysisData.priority}>{analysisData.priority}</span>
+                )}
                 {analysisData.escalation_required && (
                   <span className="ai-escalation-badge">{t('ai.labels.escalation')}</span>
                 )}
@@ -588,7 +572,6 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                   <span>{t('ai.sections.analystNotes')}</span>
                 </div>
                 <div className="ai-notes-content">
-                  <p><strong>{t('ai.labels.confidenceFactors')}:</strong> {renderTextWithLinks(analysisData.analyst_notes.confidence_factors)}</p>
                   <p><strong>{t('ai.labels.limitations')}:</strong> {renderTextWithLinks(analysisData.analyst_notes.limitations)}</p>
                   <p><strong>{t('ai.labels.followUp')}:</strong> {renderTextWithLinks(analysisData.analyst_notes.follow_up)}</p>
                 </div>
@@ -596,7 +579,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
             )}
 
             {/* Actions */}
-            <div className="ai-structured-actions">
+            <div className="ai-structured-actions" data-html2canvas-ignore="true">
               <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
                 {copied ? 'Copied' : t('ai.copyMarkdown')}
@@ -654,19 +637,8 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
               </span>
             </div>
             <div className="ai-verdict-meta">
-              <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
-                {getRiskLabel(detailedData.risk_level)}
-              </span>
-              {(() => {
-                const confConfig = getConfidenceConfig(detailedData.confidence);
-                return (
-                  <span className="ai-confidence-badge" style={{ background: confConfig.bg, color: confConfig.color }}>
-                    {getConfidenceLabel(detailedData.confidence)} {t('ai.labels.confidence').toLowerCase()}
-                  </span>
-                );
-              })()}
               {detailedData.priority && (
-                <span className="ai-priority-badge">{detailedData.priority}</span>
+                <span className="ai-priority-badge" data-priority={detailedData.priority}>{detailedData.priority}</span>
               )}
               {detailedData.escalation_required && (
                 <span className="ai-escalation-badge">{t('ai.labels.escalation')}</span>
@@ -715,25 +687,15 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 <span>{t('ai.sections.providerAnalysis')}</span>
               </div>
               <div className="ai-provider-cards">
-                {detailedData.provider_analysis.map((p, i) => {
-                  const pConfConfig = getConfidenceConfig(p.confidence_level);
-                  return (
-                    <div key={i} className="ai-provider-card">
-                      <div className="ai-provider-card-header">
-                        <span className="ai-provider-name">{p.provider}</span>
-                        <span 
-                          className="ai-provider-confidence"
-                          style={{ background: pConfConfig.bg, color: pConfConfig.color }}
-                        >
-                          {getConfidenceLabel(p.confidence_level)}
-                        </span>
-                      </div>
-                      <p className="ai-provider-result">{renderTextWithLinks(p.result)}</p>
-                      <p className="ai-provider-evidence">{renderTextWithLinks(p.key_evidence)}</p>
-                      <span className="ai-provider-credibility">{t('ai.labels.source') || 'Source'}: {p.source_credibility}</span>
+                {detailedData.provider_analysis.map((p, i) => (
+                  <div key={i} className="ai-provider-card">
+                    <div className="ai-provider-card-header">
+                      <span className="ai-provider-name">{p.provider}</span>
                     </div>
-                  );
-                })}
+                    <p className="ai-provider-result">{renderTextWithLinks(p.result)}</p>
+                    <p className="ai-provider-evidence">{renderTextWithLinks(p.key_evidence)}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -872,7 +834,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
           )}
 
           {/* Actions */}
-          <div className="ai-structured-actions">
+          <div className="ai-structured-actions" data-html2canvas-ignore="true">
             <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
               {copied ? <Check size={14} /> : <Copy size={14} />}
               {copied ? 'Copied' : t('ai.copyMarkdown')}
