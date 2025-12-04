@@ -88,6 +88,7 @@
     "noProviders": "AI destekli analiz için bir AI sağlayıcı yapılandırın",
     "configure": "Yapılandır",
     "selectProvider": "Model Seç",
+    "selectIOC": "Analiz:",
     "noApiKey": "API anahtarı yapılandırılmamış",
     "noKey": "Anahtar Yok",
     "configureKeys": "API Anahtarlarını Yapılandır",

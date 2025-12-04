@@ -259,14 +259,14 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
           <div className="ai-structured-content" ref={contentRef}>
             <pre className="ai-structured-raw">{parsedResponse.error}</pre>
             <div className="ai-structured-actions" data-html2canvas-ignore="true">
-              <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
+              <button className="ai-structured-btn" onClick={handleCopyMarkdown} title={t('ai.copyMarkdown')}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
-                {copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}
+                <span className="btn-text">{copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}</span>
               </button>
               {onRequery && (
-                <button className="ai-structured-btn requery" onClick={onRequery}>
+                <button className="ai-structured-btn requery" onClick={onRequery} title={t('ai.reanalyze')}>
                   <RefreshCw size={14} />
-                  {t('ai.reanalyze')}
+                  <span className="btn-text">{t('ai.reanalyze')}</span>
                 </button>
               )}
             </div>
@@ -366,18 +366,18 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
 
             {/* Actions */}
             <div className="ai-structured-actions" data-html2canvas-ignore="true">
-              <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
+              <button className="ai-structured-btn" onClick={handleCopyMarkdown} title={t('ai.copyMarkdown')}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
-                {copied ? 'Copied' : t('ai.copyMarkdown')}
+                <span className="btn-text">{copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}</span>
               </button>
-              <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting}>
+              <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting} title={t('ai.exportImage')}>
                 <Image size={14} />
-                {exporting ? '...' : t('ai.exportImage')}
+                <span className="btn-text">{exporting ? '...' : t('ai.exportImage')}</span>
               </button>
               {onRequery && (
-                <button className="ai-structured-btn requery" onClick={onRequery}>
+                <button className="ai-structured-btn requery" onClick={onRequery} title={t('ai.reanalyze')}>
                   <RefreshCw size={14} />
-                  {t('ai.reanalyze')}
+                  <span className="btn-text">{t('ai.reanalyze')}</span>
                 </button>
               )}
             </div>
@@ -589,18 +589,18 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
 
             {/* Actions */}
             <div className="ai-structured-actions" data-html2canvas-ignore="true">
-              <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
+              <button className="ai-structured-btn" onClick={handleCopyMarkdown} title={t('ai.copyMarkdown')}>
                 {copied ? <Check size={14} /> : <Copy size={14} />}
-                {copied ? 'Copied' : t('ai.copyMarkdown')}
+                <span className="btn-text">{copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}</span>
               </button>
-              <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting}>
+              <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting} title={t('ai.exportImage')}>
                 <Image size={14} />
-                {exporting ? '...' : t('ai.exportImage')}
+                <span className="btn-text">{exporting ? '...' : t('ai.exportImage')}</span>
               </button>
               {onRequery && (
-                <button className="ai-structured-btn requery" onClick={onRequery}>
+                <button className="ai-structured-btn requery" onClick={onRequery} title={t('ai.reanalyze')}>
                   <RefreshCw size={14} />
-                  {t('ai.reanalyze')}
+                  <span className="btn-text">{t('ai.reanalyze')}</span>
                 </button>
               )}
             </div>
@@ -844,18 +844,18 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
 
           {/* Actions */}
           <div className="ai-structured-actions" data-html2canvas-ignore="true">
-            <button className="ai-structured-btn" onClick={handleCopyMarkdown}>
+            <button className="ai-structured-btn" onClick={handleCopyMarkdown} title={t('ai.copyMarkdown')}>
               {copied ? <Check size={14} /> : <Copy size={14} />}
-              {copied ? 'Copied' : t('ai.copyMarkdown')}
+              <span className="btn-text">{copied ? t('ai.copied') || 'Copied' : t('ai.copyMarkdown')}</span>
             </button>
-            <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting}>
+            <button className="ai-structured-btn" onClick={handleExportImage} disabled={exporting} title={t('ai.exportImage')}>
               <Image size={14} />
-              {exporting ? '...' : t('ai.exportImage')}
+              <span className="btn-text">{exporting ? '...' : t('ai.exportImage')}</span>
             </button>
             {onRequery && (
-              <button className="ai-structured-btn requery" onClick={onRequery}>
+              <button className="ai-structured-btn requery" onClick={onRequery} title={t('ai.reanalyze')}>
                 <RefreshCw size={14} />
-                {t('ai.reanalyze')}
+                <span className="btn-text">{t('ai.reanalyze')}</span>
               </button>
             )}
           </div>

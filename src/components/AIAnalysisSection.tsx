@@ -11,12 +11,18 @@ import { getAIPreferences, saveAIPreferences, getValidModelForProvider } from '@
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './AIAnalysisSection.css';
 
+interface IOCItem {
+  type: string;
+  value: string;
+}
+
 interface AIAnalysisSectionProps {
-  onStartAnalysis: (provider: AIProvider, mode: AIAnalysisMode, model: string) => void;
+  onStartAnalysis: (provider: AIProvider, mode: AIAnalysisMode, model: string, selectedIOC?: IOCItem) => void;
   isAnalyzing: boolean;
   hasResults: boolean;
   disabled?: boolean;
   retryInfo?: { attempt: number; maxAttempts: number } | null;
+  currentIOCs?: IOCItem[];
 }
 
 // All available providers for the dropdown
@@ -57,6 +63,7 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
   hasResults,
   disabled = false,
   retryInfo = null,
+  currentIOCs = [],
 }) => {
   const { t } = useTranslation('sidepanel');
   const [configuredProviders, setConfiguredProviders] = useState<AIProvider[]>([]);
@@ -67,9 +74,17 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
   const [showModeInfo, setShowModeInfo] = useState(false);
   const [showProviderMenu, setShowProviderMenu] = useState(false);
   const [analyzingStateIndex, setAnalyzingStateIndex] = useState(0);
+  const [selectedIOCIndex, setSelectedIOCIndex] = useState(0);
   
   const providerMenuRef = useRef<HTMLDivElement>(null);
   const modeInfoRef = useRef<HTMLDivElement>(null);
+  const iocSelectorRef = useRef<HTMLDivElement>(null);
+  const [showIOCSelector, setShowIOCSelector] = useState(false);
+
+  // Reset IOC selection when IOCs change
+  useEffect(() => {
+    setSelectedIOCIndex(0);
+  }, [currentIOCs.length]);
 
   // Rotate analyzing messages
   useEffect(() => {
@@ -137,6 +152,9 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
       if (modeInfoRef.current && !modeInfoRef.current.contains(event.target as Node)) {
         setShowModeInfo(false);
       }
+      if (iocSelectorRef.current && !iocSelectorRef.current.contains(event.target as Node)) {
+        setShowIOCSelector(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -171,7 +189,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
 
   const handleStartAnalysis = () => {
     if (selectedProvider && selectedModel && !isAnalyzing && !disabled) {
-      onStartAnalysis(selectedProvider, selectedMode, selectedModel);
+      const selectedIOC = currentIOCs.length > 0 ? currentIOCs[selectedIOCIndex] : undefined;
+      onStartAnalysis(selectedProvider, selectedMode, selectedModel, selectedIOC);
     }
   };
 
@@ -223,12 +242,54 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     );
   }
 
+  // Truncate IOC value for display
+  const truncateIOC = (value: string, maxLen: number = 32) => {
+    if (value.length <= maxLen) return value;
+    return value.substring(0, maxLen - 3) + '...';
+  };
+
   return (
     <div className="ai-section">
       <div className="ai-header">
         <Bot size={16} className="ai-icon" />
         <span className="ai-title">{t('ai.title')}</span>
       </div>
+
+      {/* IOC Selector - only show when multiple IOCs */}
+      {currentIOCs.length > 1 && (
+        <div className="ai-ioc-selector-wrapper" ref={iocSelectorRef}>
+          <button
+            className={`ai-ioc-trigger ${showIOCSelector ? 'open' : ''}`}
+            onClick={() => !isAnalyzing && !disabled && setShowIOCSelector(!showIOCSelector)}
+            disabled={isAnalyzing || disabled}
+            title={currentIOCs[selectedIOCIndex]?.value}
+          >
+            <span className="ai-ioc-type">{currentIOCs[selectedIOCIndex]?.type.toUpperCase()}</span>
+            <span className="ai-ioc-value">{truncateIOC(currentIOCs[selectedIOCIndex]?.value || '', 28)}</span>
+            <ChevronDown size={14} className={`ai-ioc-arrow ${showIOCSelector ? 'rotated' : ''}`} />
+          </button>
+
+          {showIOCSelector && (
+            <div className="ai-ioc-dropdown">
+              {currentIOCs.map((ioc, index) => (
+                <button
+                  key={index}
+                  className={`ai-ioc-option ${selectedIOCIndex === index ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSelectedIOCIndex(index);
+                    setShowIOCSelector(false);
+                  }}
+                  title={ioc.value}
+                >
+                  <span className="ai-ioc-type">{ioc.type.toUpperCase()}</span>
+                  <span className="ai-ioc-value">{truncateIOC(ioc.value, 32)}</span>
+                  {selectedIOCIndex === index && <Check size={12} className="ai-ioc-check" />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="ai-controls">
         <div className="ai-actions">
@@ -320,7 +381,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
               disabled={isAnalyzing || disabled}
               title={t('ai.modeInfo.title')}
             >
-              {t(`ai.modes.${selectedMode}`)}
+              <span>{t(`ai.modes.${selectedMode}`)}</span>
+              <ChevronDown size={12} className={`ai-mode-arrow ${showModeInfo ? 'rotated' : ''}`} />
             </button>
 
             {showModeInfo && (

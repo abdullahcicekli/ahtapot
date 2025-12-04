@@ -113,11 +113,22 @@ export class AIService {
 
   /**
    * Build analysis data from IOC results
+   * Only includes successful responses (filters out errors)
    */
   private buildAnalysisData(results: IOCAnalysisResult[]): Record<string, any> {
     const data: Record<string, any> = {};
 
     results.forEach((result) => {
+      // Skip results with errors or failed status
+      if (result.error || result.status === 'error') {
+        return;
+      }
+
+      // Skip results without meaningful details
+      if (!result.details || Object.keys(result.details).length === 0) {
+        return;
+      }
+
       const providerKey = result.source.toLowerCase().replace(/\s+/g, '_');
 
       if (!data[providerKey]) {
@@ -131,7 +142,6 @@ export class AIService {
         },
         status: result.status,
         details: result.details,
-        error: result.error,
       });
     });
 

@@ -667,9 +667,14 @@
   padding-top: 16px;
   margin-top: 16px;
   border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
 }
 
 .ai-structured-btn {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -682,6 +687,14 @@
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ai-structured-btn .btn-text {
+  display: inline;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ai-structured-btn:hover {
@@ -697,6 +710,17 @@
 
 .ai-structured-btn.requery:hover {
   background: rgba(255, 247, 112, 0.15);
+}
+
+/* Icon-only mode for small screens */
+@media (max-width: 480px) {
+  .ai-structured-btn {
+    padding: 8px 10px;
+  }
+  
+  .ai-structured-btn .btn-text {
+    display: none;
+  }
 }
 
 /* Error State */

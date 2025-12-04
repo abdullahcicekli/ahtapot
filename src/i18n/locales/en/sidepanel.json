@@ -88,6 +88,7 @@
     "noProviders": "Configure an AI provider to enable AI-powered analysis",
     "configure": "Configure",
     "selectProvider": "Select Model",
+    "selectIOC": "Analyze:",
     "noApiKey": "API key not configured",
     "noKey": "No Key",
     "configureKeys": "Configure API Keys",

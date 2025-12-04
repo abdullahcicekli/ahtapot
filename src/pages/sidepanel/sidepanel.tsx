@@ -348,21 +348,28 @@ const SidePanel: React.FC = () => {
   };
 
   // Handle AI Analysis with caching
-  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode, model: string, forceRefresh: boolean = false) => {
+  const handleAiAnalysis = async (
+    provider: AIProvider, 
+    mode: AIAnalysisMode, 
+    model: string, 
+    selectedIOC?: { type: string; value: string },
+    forceRefresh: boolean = false
+  ) => {
     if (results.length === 0) return;
 
     const MAX_RETRIES = 3;
 
-    // Get primary IOC value for cache key
-    const primaryIOC = currentIOCs[0]?.value || '';
+    // Get IOC value for cache key - use selected IOC or first available
+    const targetIOC = selectedIOC || currentIOCs[0];
+    const iocValue = targetIOC?.value || '';
     
     // Check cache first (unless force refresh)
-    if (!forceRefresh && primaryIOC) {
-      const cachedResult = await getCachedAIResult(provider, primaryIOC, mode, language);
+    if (!forceRefresh && iocValue) {
+      const cachedResult = await getCachedAIResult(provider, iocValue, mode, language);
       if (cachedResult) {
         setAiResult(cachedResult);
         setIsAiResultCached(true);
-        setLastAiQuery({ provider, mode, model, iocValue: primaryIOC });
+        setLastAiQuery({ provider, mode, model, iocValue });
         setIsProviderResultsExpanded(false);
         return;
       }
@@ -388,15 +395,20 @@ const SidePanel: React.FC = () => {
         return;
       }
 
+      // Filter results for the selected IOC only
+      const filteredResults = targetIOC 
+        ? results.filter(r => r.ioc.value === targetIOC.value)
+        : results;
+
       // Create AI service with selected model and analyze with current language
       const aiService = createAIService(provider, apiKey, model);
-      const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
+      const iocList = targetIOC ? [{ type: targetIOC.type, value: targetIOC.value }] : currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
 
       let result: AIAnalysisResult | null = null;
 
       // Retry loop for invalid JSON responses
       for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-        result = await aiService.analyze(mode, iocList, results, language);
+        result = await aiService.analyze(mode, iocList, filteredResults, language);
 
         // Check if the response has an INVALID_JSON error
         if (result.error && result.error.includes('INVALID_JSON')) {
@@ -428,11 +440,11 @@ const SidePanel: React.FC = () => {
       
       if (result) {
         setAiResult(result);
-        setLastAiQuery({ provider, mode, model, iocValue: primaryIOC });
+        setLastAiQuery({ provider, mode, model, iocValue });
 
         // Cache the result if successful
-        if (!result.error && primaryIOC) {
-          await cacheAIResult(provider, primaryIOC, mode, language, result);
+        if (!result.error && iocValue) {
+          await cacheAIResult(provider, iocValue, mode, language, result);
         }
 
         // Collapse provider results when AI result comes in
@@ -468,8 +480,11 @@ const SidePanel: React.FC = () => {
       language
     );
     
+    // Find the IOC from the last query
+    const targetIOC = currentIOCs.find(ioc => ioc.value === lastAiQuery.iocValue) || currentIOCs[0];
+    
     // Re-run analysis with force refresh
-    await handleAiAnalysis(lastAiQuery.provider, lastAiQuery.mode, lastAiQuery.model, true);
+    await handleAiAnalysis(lastAiQuery.provider, lastAiQuery.mode, lastAiQuery.model, targetIOC, true);
   };
 
   const getStatusIcon = (status: IOCAnalysisResult['status']) => {
@@ -582,6 +597,7 @@ const SidePanel: React.FC = () => {
           hasResults={results.length > 0}
           disabled={loading}
           retryInfo={aiRetryInfo}
+          currentIOCs={currentIOCs}
         />
 
         {/* AI Result */}
