@@ -56,14 +56,14 @@
   align-items: center;
   gap: 0;
   padding: 10px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: #1A1A1F;
   color: white;
-  border: 1px solid rgba(74, 158, 255, 0.3);
+  border: 1px solid rgba(255, 247, 112, 0.3);
   border-radius: 50px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(74, 158, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   white-space: nowrap;
@@ -75,7 +75,7 @@
   height: 24px;
   flex-shrink: 0;
   transition: all 0.3s ease;
-  color: white; /* SVG fill color */
+  color: white;
   display: block;
 }
 
@@ -96,7 +96,7 @@
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  background: rgba(74, 158, 255, 0.3);
+  background: rgba(255, 247, 112, 0.3);
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
@@ -112,10 +112,16 @@
 .ahtapot-floating-button button.expanded {
   gap: 8px;
   padding: 10px 16px;
-  background: linear-gradient(135deg, #4a9eff 0%, #667eea 100%);
-  border-color: rgba(74, 158, 255, 0.6);
+  background: #C7F54D;
+  color: #1A1A1F;
+  border-color: #C7F54D;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(74, 158, 255, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.ahtapot-floating-button button:hover .ahtapot-logo,
+.ahtapot-floating-button button.expanded .ahtapot-logo {
+  color: #1A1A1F;
 }
 
 .ahtapot-floating-button button:hover .button-text,
@@ -130,6 +136,8 @@
   max-width: 40px;
   opacity: 1;
   margin-left: 4px;
+  background: rgba(26, 26, 31, 0.3);
+  color: #1A1A1F;
 }
 
 /* Active state */
@@ -147,10 +155,10 @@
 /* Pulse animation for attention */
 @keyframes ahtapot-pulse {
   0%, 100% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(74, 158, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   50% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 30px rgba(74, 158, 255, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 247, 112, 0.3);
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { APIProvider } from '@/types/ioc';
 import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
+import { getProviderOrder } from '@/utils/providerOrderStorage';
 import './ProviderStatusBadges.css';
 
 interface ProviderStatus {
@@ -28,7 +29,6 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.SHODAN]: 'Shodan',
   [APIProvider.GREYNOISE]: 'GreyNoise',
   [APIProvider.URLHAUS]: 'URLhaus',
-  [APIProvider.XFORCE]: 'X-Force',
   [APIProvider.PULSEDIVE]: 'Pulsedive',
   [APIProvider.SCAMALYTICS]: 'Scamalytics',
 };
@@ -43,7 +43,6 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
   [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
   [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
-  [APIProvider.XFORCE]: '/provider-icons/xforce-logo.png',
   [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
   [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
 };
@@ -58,7 +57,6 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.SHODAN]: 'shodan',
   [APIProvider.GREYNOISE]: 'greynoise',
   [APIProvider.URLHAUS]: 'urlhaus',
-  [APIProvider.XFORCE]: 'xforce',
   [APIProvider.PULSEDIVE]: 'pulsedive',
   [APIProvider.SCAMALYTICS]: 'scamalytics',
 };
@@ -80,39 +78,34 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
   // OPTIMIZED: Memoize loadAndSortProviders to prevent recreation on every render
   const loadAndSortProviders = useCallback(async () => {
     try {
-      // Get configured providers with timestamps
-      const configuredProviders = await getConfiguredProvidersSorted();
+      // Get configured providers and custom order
+      const [configuredProviders, customOrder] = await Promise.all([
+        getConfiguredProvidersSorted(),
+        getProviderOrder()
+      ]);
+      
       const configuredSet = new Set(configuredProviders.map((p) => p.provider));
 
-      // Create provider status list
+      // Create provider status list sorted by custom order
       const providers: ProviderStatus[] = [];
 
-      // Add enabled providers first (sorted by addedAt)
-      configuredProviders.forEach(({ provider, addedAt }) => {
+      // Sort all providers by custom order
+      customOrder.forEach((provider) => {
+        const isEnabled = configuredSet.has(provider);
+        const configuredProvider = configuredProviders.find(p => p.provider === provider);
+        
         providers.push({
           provider,
           label: PROVIDER_LABELS[provider],
-          enabled: true,
-          addedAt,
-        });
-      });
-
-      // Add disabled providers after (alphabetical order)
-      const disabledProviders = Object.values(APIProvider)
-        .filter((provider) => !configuredSet.has(provider))
-        .sort((a, b) => PROVIDER_LABELS[a].localeCompare(PROVIDER_LABELS[b]));
-
-      disabledProviders.forEach((provider) => {
-        providers.push({
-          provider,
-          label: PROVIDER_LABELS[provider],
-          enabled: false,
+          enabled: isEnabled,
+          addedAt: configuredProvider?.addedAt,
         });
       });
 
       setAllProviders(providers);
     } catch (error) {
       // Failed to load providers
+      console.error('Failed to load providers:', error);
     }
   }, []);
 
@@ -121,11 +114,11 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
     loadAndSortProviders();
   }, [analyzingProviders, completedProviders, loadAndSortProviders]);
 
-  // Listen for API key changes in storage
+  // Listen for API key and provider order changes in storage
   useEffect(() => {
     const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes.apiKeys) {
-        // API keys changed, reload providers
+      if (changes.apiKeys || changes.providerOrder) {
+        // API keys or provider order changed, reload providers
         loadAndSortProviders();
       }
     };
@@ -152,7 +145,7 @@ export const ProviderStatusBadges: React.FC<ProviderStatusBadgesProps> = memo(({
 
   // Filter providers based on visibleProviders prop
   // If undefined, show nothing (before search)
-  // If array, only show providers in the array
+  // If array, only show providers in the array (maintaining custom order from allProviders)
   const displayedProviders = visibleProviders === undefined
     ? []
     : allProviders.filter((provider) => visibleProviders.includes(provider.label));

@@ -18,6 +18,7 @@
     "cache": {
       "title": "Cache Settings",
       "description": "Configure cache behavior for IOC analysis results",
+      "infoTitle": "Information about cache",
       "enabled": "Enable cache",
       "enabledDescription": "Store analysis results to avoid repeated API calls",
       "retentionDays": "Retention period (days)",
@@ -30,7 +31,31 @@
       "clearCache": "Clear all cache",
       "clearConfirm": "Are you sure you want to clear all cached data?",
       "clearSuccess": "Cache cleared successfully",
-      "clearError": "Failed to clear cache"
+      "clearError": "Failed to clear cache",
+      "info": {
+        "whyTitle": "Why Does Cache Exist?",
+        "whyDescription": "The cache system stores the results of previously analyzed IOCs on your device. This way, when you query the same IOC again, you get instant results without making an API call.",
+        "benefitsTitle": "Benefits",
+        "benefit1": "⚡ Fast Results: Repeated queries respond instantly",
+        "benefit2": "📊 API Quota Protection: Preserves your daily/monthly API limits",
+        "benefit3": "🔒 Privacy: Data is stored only on your device",
+        "benefit4": "💾 Offline Access: Access previous results without internet",
+        "howTitle": "How Does It Work?",
+        "howDescription": "Every successful analysis result is automatically cached. Old entries are automatically deleted after the period you specify. You can manually clear all cache at any time."
+      }
+    },
+    "providerOrder": {
+      "title": "Provider Display Order",
+      "description": "Customize the order in which providers appear in analysis results. Drag and drop to reorder.",
+      "customizeButton": "Customize Order",
+      "modalDescription": "Drag providers to reorder them. Changes are saved automatically.",
+      "lockedProviders": "Always Available (No API Key Required)",
+      "dragHint": "Drag to reorder",
+      "resetOrder": "Reset to Default",
+      "doneButton": "Done",
+      "resetConfirm": "Are you sure you want to reset the provider order to default?",
+      "orderSaved": "Provider order saved successfully",
+      "orderSaveError": "Failed to save provider order"
     }
   },
   "privacyNote": {
@@ -67,7 +92,7 @@
     },
     "malwarebazaar": {
       "label": "MalwareBazaar",
-      "description": "Malware hash analysis and sample information",
+      "description": "Malware hash analysis and sample information (by abuse.ch)",
       "placeholder": "Your MalwareBazaar API key"
     },
     "shodan": {
@@ -82,13 +107,8 @@
     },
     "urlhaus": {
       "label": "URLhaus",
-      "description": "Malicious URL and malware distribution site database",
+      "description": "Malicious URL and malware distribution database (by abuse.ch)",
       "placeholder": "Your URLhaus API key"
-    },
-    "xforce": {
-      "label": "IBM X-Force Exchange",
-      "description": "Threat intelligence and vulnerability data",
-      "placeholder": "APIKey:Password format"
     },
     "pulsedive": {
       "label": "Pulsedive",
@@ -98,8 +118,16 @@
     "scamalytics": {
       "label": "Scamalytics",
       "description": "IP fraud score and scam detection",
-      "placeholder": "Your Scamalytics API key"
+      "placeholder": "username:apikey (e.g. myuser:abc123...)"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IP address registration and network information",
+      "placeholder": "No API key required"
     }
+  },
+  "lockedProvider": {
+    "message": "✓ This provider is always available and doesn't require an API key"
   },
   "info": {
     "limitsTitle": "Free Plan Limits",
@@ -116,7 +144,8 @@
     }
   },
   "notes": {
-    "malwarebazaar": "Auth Key is shown only once after generation. If you need to change it, you must generate a new key. Once generated, it cannot be viewed again, so save it to the extension immediately."
+    "malwarebazaar": "Auth Key is shown only once after generation. If you need to change it, you must generate a new key. Once generated, it cannot be viewed again, so save it to the extension immediately.",
+    "scamalytics": "Manual review is required for registration. After approval, you'll receive a private link (expires in 30 days) containing your API credentials. Free plan includes 5,000 credits/month with ESSENTIAL fields. PREMIUM fields are available for a 15-day trial."
   },
   "tooltips": {
     "virustotal": "Add API key",
@@ -126,7 +155,6 @@
     "shodan": "Add API key",
     "greynoise": "Add API key",
     "urlhaus": "Add API key",
-    "xforce": "Add API key",
     "pulsedive": "Add API key",
     "scamalytics": "Add API key"
   },
@@ -173,12 +201,6 @@
       "feature3": "URL status monitoring (online/offline)",
       "feature4": "Malware distribution tracking"
     },
-    "xforce": {
-      "feature1": "IP/URL/Domain reputation scoring",
-      "feature2": "Malware family identification",
-      "feature3": "Historical threat data",
-      "feature4": "Category classification"
-    },
     "pulsedive": {
       "feature1": "Risk level assessment",
       "feature2": "Threat and feed tracking",
@@ -186,10 +208,10 @@
       "feature4": "Community-driven intelligence"
     },
     "scamalytics": {
-      "feature1": "IP fraud score (0-100)",
-      "feature2": "Scam and fraud detection",
-      "feature3": "Risk level classification",
-      "feature4": "Fraud indicator tracking"
+      "feature1": "IP fraud risk score (0-100)",
+      "feature2": "Datacenter & VPN detection",
+      "feature3": "TOR exit node detection",
+      "feature4": "External blacklist checks"
     }
   },
   "limits": {
@@ -221,17 +243,13 @@
       "free": "Unlimited (free account)",
       "rate": "No specified limit"
     },
-    "xforce": {
-      "free": "5,000 requests/month (free)",
-      "rate": "Reasonable use"
-    },
     "pulsedive": {
       "free": "250 requests/day (free account)",
       "rate": "2,500 requests/month"
     },
     "scamalytics": {
-      "free": "5,000 requests/month (free)",
-      "rate": "No specified limit"
+      "free": "5,000 credits/month",
+      "rate": "15-day PREMIUM trial"
     }
   },
   "actions": {
@@ -243,7 +261,44 @@
     "saveSuccess": "Saved successfully",
     "saveError": "Failed to save"
   },
+  "ai": {
+    "sectionTitle": "AI Providers",
+    "sectionDescription": "Configure AI providers for intelligent IOC analysis. AI can provide summaries, detailed analysis, and recommendations.",
+    "providers": {
+      "claude": {
+        "description": "Anthropic's Claude - Advanced reasoning and analysis",
+        "placeholder": "Enter your Claude API key (sk-ant-...)",
+        "step2": "Add payment method (required for API access)"
+      },
+      "gemini": {
+        "description": "Google's Gemini - Fast and efficient analysis",
+        "placeholder": "Enter your Gemini API key",
+        "step2": "Enable the Gemini API in your Google Cloud Console"
+      },
+      "openai": {
+        "description": "OpenAI's GPT - Versatile language understanding",
+        "placeholder": "Enter your OpenAI API key (sk-...)",
+        "step2": "Add payment method and purchase credits"
+      }
+    },
+    "pricing": {
+      "title": "Pricing",
+      "input": "Input",
+      "output": "Output",
+      "rate": "Rate",
+      "viewMore": "View full pricing"
+    },
+    "howTo": {
+      "title": "How to Get an API Key",
+      "signup": "Create an account",
+      "getKey": "Get your API key",
+      "paste": "Paste the key below"
+    },
+    "models": {
+      "title": "Available Models"
+    }
+  },
   "footer": {
-    "text": "Ahtapot v2.4.0 • Cybersecurity Indicator Analysis Tool"
+    "text": "Ahtapot v{{version}} • Cybersecurity Indicator Analysis Tool"
   }
 }

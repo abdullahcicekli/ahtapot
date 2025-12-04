@@ -12,7 +12,6 @@ import { saveAPIKey, hasAPIKey } from '@/utils/apiKeyStorage';
 const ENV_KEY_MAPPING: Record<string, APIProvider> = {
   VITE_VIRUSTOTAL_API_KEY: APIProvider.VIRUSTOTAL,
   VITE_URLHAUS_API_KEY: APIProvider.URLHAUS,
-  VITE_XFORCE_API_KEY: APIProvider.XFORCE,
   VITE_PULSEDIVE_API_KEY: APIProvider.PULSEDIVE,
   VITE_SCAMALYTICS_API_KEY: APIProvider.SCAMALYTICS,
   VITE_OTX_API_KEY: APIProvider.OTX,

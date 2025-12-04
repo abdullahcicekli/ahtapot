@@ -1,105 +1,99 @@
-/* Shodan Result Card Styles */
+/* Shodan Result Card */
 
 .shodan-result-card {
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(71, 85, 105, 0.3);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
+  position: relative;
+  background: var(--bg-card, #222228);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .shodan-result-card:hover {
-  border-color: rgba(71, 85, 105, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-color: var(--border-hover, rgba(255, 247, 112, 0.3));
 }
 
 /* Header */
 .shodan-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  gap: var(--space-lg, 16px);
+  padding: var(--space-xl, 20px);
+  padding-right: 50px;
+  background: var(--bg-header, #1A1A1F);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
-  gap: 16px;
 }
 
 .shodan-header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-md, 12px);
 }
 
 .shodan-logo {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  background: #dc2626;
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-section, #2A2A32);
   flex-shrink: 0;
   overflow: hidden;
 }
 
 .shodan-logo img {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
 .shodan-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .shodan-title {
-  font-size: 14px;
+  font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: rgba(203, 213, 225, 0.9);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .shodan-subtitle {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(148, 163, 184, 0.8);
+  font-size: var(--text-base, 12px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .shodan-header-right {
   flex: 1;
-  display: flex;
-  justify-content: center;
+  min-width: 0;
 }
 
 .shodan-ioc-info {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .shodan-ioc-value {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 16px;
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-lg, 14px);
   font-weight: 600;
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--text-primary, #FFFFFF);
   word-break: break-all;
 }
 
 .shodan-ioc-type {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(148, 163, 184, 0.8);
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 4px;
 }
 
 .shodan-header-actions {
   display: flex;
-  gap: 8px;
-  align-items: center;
+  gap: var(--space-sm, 8px);
 }
 
 /* Status Badge */
@@ -107,121 +101,62 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-base, 12px);
   font-weight: 600;
-  white-space: nowrap;
 }
 
 .shodan-status-badge.safe {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
 }
 
 .shodan-status-badge.suspicious {
-  background: rgba(251, 146, 60, 0.15);
-  color: #fb923c;
-  border: 1px solid rgba(251, 146, 60, 0.3);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
 }
 
 .shodan-status-badge.malicious {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
 }
 
 .shodan-status-badge.unknown {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
 }
 
 .shodan-status-badge.error {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  flex: 1;
-  min-width: 0;
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  max-width: 200px;
   white-space: normal;
   word-break: break-word;
 }
 
-/* Error Message */
-.shodan-error {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 8px;
-  margin-bottom: 16px;
-}
-
-.shodan-error-message {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #dc2626;
-  font-weight: 600;
-}
-
-/* Not Found Message */
-.shodan-not-found {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background-color: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 8px;
-  margin-bottom: 16px;
-}
-
-.shodan-not-found-message {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #d97706;
-  font-weight: 600;
-}
-
-.shodan-not-found-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 13px;
-  color: #92400e;
-  padding-left: 24px;
-}
-
-.shodan-not-found-note svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-/* Unsupported IOC Type */
+/* Unsupported */
 .shodan-unsupported {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 12px;
-  background-color: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 8px;
-  margin-bottom: 16px;
+  gap: var(--space-md, 12px);
+  padding: var(--space-md, 12px) var(--space-xl, 20px);
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  border-left: 3px solid var(--warning, #f59e0b);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .shodan-unsupported-message {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #d97706;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
+  color: var(--warning, #f59e0b);
   font-weight: 600;
 }
 
@@ -232,9 +167,8 @@
 }
 
 .shodan-supported-label {
-  font-size: 12px;
-  color: #6b7280;
-  font-weight: 500;
+  font-size: var(--text-base, 12px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .shodan-supported-badges {
@@ -244,59 +178,50 @@
 }
 
 .shodan-ioc-badge {
-  font-size: 11px;
+  font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: #dc2626;
-  background-color: rgba(220, 38, 38, 0.1);
+  color: var(--accent, #FFF770);
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
   padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  white-space: nowrap;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
 }
 
 /* Summary */
 .shodan-summary {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  background: rgba(220, 38, 38, 0.1);
-  color: rgba(220, 38, 38, 0.9);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  margin-bottom: 16px;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 12px) var(--space-xl, 20px);
+  font-size: var(--text-md, 13px);
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  border-left: 3px solid var(--accent, #FFF770);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+.shodan-summary svg {
+  color: var(--accent, #FFF770);
 }
 
 /* Content */
 .shodan-content {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  padding: var(--space-xl, 20px);
 }
 
 /* Overview Grid */
 .shodan-overview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-lg, 16px);
 }
 
 .shodan-metric-card {
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(71, 85, 105, 0.3);
-  border-radius: 8px;
-  padding: 16px;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-lg, 16px);
 }
 
 .shodan-metric-card.full-width {
@@ -306,160 +231,137 @@
 .shodan-metric-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
-  font-size: 14px;
+  gap: var(--space-sm, 8px);
+  margin-bottom: var(--space-md, 12px);
+  padding-bottom: var(--space-sm, 8px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: rgba(203, 213, 225, 0.9);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.shodan-metric-header svg {
+  color: var(--accent, #FFF770);
+  width: 16px;
+  height: 16px;
 }
 
 .shodan-metric-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-sm, 8px);
 }
 
 .shodan-metric-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  padding: 4px 0;
-  gap: 16px;
+  font-size: var(--text-base, 12px);
+  gap: var(--space-md, 12px);
 }
 
 .shodan-metric-label {
-  color: rgba(148, 163, 184, 0.8);
-  font-weight: 500;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   flex-shrink: 0;
 }
 
 .shodan-metric-value {
-  color: rgba(226, 232, 240, 0.95);
-  font-weight: 600;
+  color: var(--text-primary, #FFFFFF);
+  font-weight: 500;
   text-align: right;
   word-break: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
 }
 
 .shodan-metric-value.monospace {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 12px;
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-sm, 11px);
+}
+
+/* Ports */
+.shodan-ports-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.shodan-port-badge {
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-sm, 11px);
+  font-weight: 600;
+  color: var(--accent, #FFF770);
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  padding: 4px 10px;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
 }
 
 /* Vulnerabilities */
 .shodan-vulnerabilities {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
+  gap: var(--space-sm, 8px);
 }
 
 .shodan-vulnerability {
-  padding: 12px;
-  background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid #ef4444;
-  border-radius: 4px;
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(252, 165, 165, 0.95);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  background: var(--danger-bg, rgba(239, 68, 68, 0.1));
+  border-left: 3px solid var(--danger, #ef4444);
+  border-radius: var(--radius-sm, 4px);
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-sm, 11px);
+  color: #fca5a5;
   font-weight: 600;
 }
 
 /* Services */
 .shodan-services {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 12px;
-  margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md, 12px);
 }
 
 .shodan-service {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(71, 85, 105, 0.3);
-  border-radius: 8px;
-  padding: 12px;
+  background: var(--bg-header, #1A1A1F);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
+  padding: var(--space-md, 12px);
 }
 
 .shodan-service-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm, 8px);
 }
 
 .shodan-service-port {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 14px;
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-md, 13px);
   font-weight: 700;
-  color: rgba(96, 165, 250, 0.95);
+  color: var(--accent, #FFF770);
 }
 
 .shodan-service-protocol {
-  display: inline-block;
-  padding: 4px 8px;
-  background: rgba(59, 130, 246, 0.15);
-  color: rgba(96, 165, 250, 0.9);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 4px;
-  font-size: 10px;
+  padding: 2px 8px;
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  color: var(--accent, #FFF770);
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border-radius: var(--radius-sm, 4px);
+  font-size: var(--text-xs, 10px);
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .shodan-service-product {
-  font-size: 13px;
-  color: rgba(203, 213, 225, 0.9);
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-size: var(--text-base, 12px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  font-weight: 500;
 }
 
 .shodan-service-version {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 11px;
-  color: rgba(148, 163, 184, 0.8);
-}
-
-/* Ports Badge */
-.shodan-ports-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.shodan-port-badge {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(96, 165, 250, 0.95);
-  background: rgba(59, 130, 246, 0.1);
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-/* Tags */
-.shodan-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.shodan-tag {
-  display: inline-block;
-  padding: 6px 12px;
-  background: rgba(220, 38, 38, 0.1);
-  color: rgba(220, 38, 38, 0.9);
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 /* Hostnames */
@@ -467,73 +369,56 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: 8px;
 }
 
 .shodan-hostname {
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 12px;
-  color: rgba(203, 213, 225, 0.9);
-  padding: 8px 12px;
-  background: rgba(15, 23, 42, 0.5);
-  border-radius: 4px;
+  font-family: var(--font-mono, 'Monaco', monospace);
+  font-size: var(--text-base, 12px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  background: var(--bg-header, #1A1A1F);
+  border-radius: var(--radius-sm, 4px);
   word-break: break-all;
 }
 
-/* External Link */
-.shodan-external-link {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(71, 85, 105, 0.2);
+/* Tags */
+.shodan-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 8px);
 }
 
-.shodan-link-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: rgba(220, 38, 38, 0.2);
-  color: rgba(220, 38, 38, 0.95);
+.shodan-tag {
+  padding: 5px 10px;
+  background: var(--danger-bg, rgba(220, 38, 38, 0.1));
+  color: rgba(220, 38, 38, 0.9);
   border: 1px solid rgba(220, 38, 38, 0.3);
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-sm, 11px);
   font-weight: 600;
-  transition: all 0.2s;
 }
 
-.shodan-link-button:hover {
-  background: rgba(220, 38, 38, 0.3);
-  border-color: rgba(220, 38, 38, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .shodan-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .shodan-header-right {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
+  
   .shodan-overview-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .shodan-metric-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
   }
-
+  
   .shodan-metric-value {
     text-align: left;
   }
-
+  
   .shodan-services {
     grid-template-columns: 1fr;
   }

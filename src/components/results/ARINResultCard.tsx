@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -9,8 +9,10 @@ import {
   Building2,
   Hash,
   FileText,
+  ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatARINResults } from './ResultCopyButtons';
 import './ARINResultCard.css';
 
 interface ARINResultCardProps {
@@ -19,6 +21,7 @@ interface ARINResultCardProps {
 
 export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
+  const cardRef = useRef<HTMLDivElement>(null);
   const { details } = result;
 
   const networkName = details?.networkName || 'Unknown';
@@ -28,7 +31,17 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
   const ipVersion = details?.ipVersion || 4;
 
   return (
-    <div className="arin-result-card">
+    <div className="arin-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={`https://whois.arin.net/rest/ip/${result.ioc.value}.html`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on ARIN"
+      >
+        <ExternalLink size={16} />
+      </a>
       {/* Header */}
       <div className="arin-header">
         <div className="arin-header-left">
@@ -263,19 +276,15 @@ export const ARINResultCard: React.FC<ARINResultCardProps> = ({ result }) => {
                 )}
               </div>
 
-              {/* View on ARIN Link */}
-              <div className="arin-external-link">
-                <a
-                  href={`https://whois.arin.net/rest/ip/${result.ioc.value}.html`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="arin-link-button"
-                >
-                  {t('arin.viewFullWhois')}
-                </a>
-              </div>
             </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatARINResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

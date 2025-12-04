@@ -7,11 +7,11 @@ import { ARINService } from './tools/ARINService';
 import { ShodanService } from './tools/ShodanService';
 import { GreyNoiseService } from './tools/GreyNoiseService';
 import { URLhausService } from './tools/URLhausService';
-import { XForceService } from './tools/XForceService';
 import { PulsediveService } from './tools/PulsediveService';
 import { ScamalyticsService } from './tools/ScamalyticsService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
+import { isProviderEnabled } from '@/config/providerDisplay';
 
 /**
  * Service Registry
@@ -166,17 +166,6 @@ export class ServiceRegistry {
         console.log('[ServiceRegistry] URLhaus service initialized');
         break;
 
-      case APIProvider.XFORCE:
-        this.services.set(
-          provider,
-          new XForceService({
-            apiKey,
-            timeout: 30000,
-          })
-        );
-        console.log('[ServiceRegistry] X-Force service initialized');
-        break;
-
       case APIProvider.PULSEDIVE:
         this.services.set(
           provider,
@@ -207,8 +196,15 @@ export class ServiceRegistry {
   /**
    * Get a service instance
    * OPTIMIZED: Lazy initialization - creates service only when first requested
+   * Returns undefined for disabled providers
    */
   getService(provider: APIProvider): IToolService | undefined {
+    // Check if provider is enabled in config
+    if (!isProviderEnabled(provider)) {
+      console.log(`[ServiceRegistry] Provider ${provider} is disabled in config`);
+      return undefined;
+    }
+    
     // Lazy initialization: only create service if not already cached
     if (!this.services.has(provider)) {
       this.initializeService(provider);

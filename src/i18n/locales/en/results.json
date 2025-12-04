@@ -335,28 +335,75 @@
     "title": "URLhaus",
     "urlStatus": "URL Status",
     "threat": "Threat",
+    "threats": "Threats",
     "urlCount": "URL Count",
-    "onlineCount": "Online URLs",
-    "tags": "Tags"
-  },
-  "xforce": {
-    "title": "X-Force Exchange",
-    "riskScore": "Risk Score",
-    "location": "Location",
-    "categories": "Categories",
-    "reason": "Reason"
+    "onlineCount": "Active URLs",
+    "offlineCount": "Offline URLs",
+    "online": "Active",
+    "offline": "Offline",
+    "firstSeen": "First Seen:",
+    "blacklists": "Blacklists",
+    "blacklistStatus": "Blacklist Status",
+    "tags": "Tags",
+    "sampleUrls": "Sample URLs",
+    "details": "Details",
+    "reporter": "Reporter:",
+    "status": {
+      "malicious": "Malicious",
+      "suspicious": "Suspicious",
+      "clean": "Clean"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} active malicious URL(s) detected on this host",
+      "suspicious": "{{count}} malicious URL(s) found but currently offline",
+      "clean": "No malicious URLs found for this indicator"
+    },
+    "viewFullReport": "View Full Report on URLhaus →"
   },
   "pulsedive": {
     "title": "Pulsedive",
     "risk": "Risk Level",
+    "location": "Location",
+    "country": "Country:",
+    "region": "Region:",
+    "org": "Organization",
+    "orgName": "Name:",
+    "netname": "Network:",
+    "timestamps": "Timestamps",
+    "firstSeen": "First Seen:",
+    "lastUpdated": "Last Updated:",
+    "lastSeen": "Last Seen:",
     "threats": "Threats",
     "riskFactors": "Risk Factors",
-    "feeds": "Threat Feeds"
+    "feeds": "Threat Feeds",
+    "status": {
+      "critical": "Critical",
+      "high": "High Risk",
+      "medium": "Medium Risk",
+      "low": "Low Risk",
+      "clean": "Clean",
+      "unknown": "Unknown"
+    },
+    "viewFullReport": "View Full Report on Pulsedive →"
   },
   "scamalytics": {
     "title": "Scamalytics",
     "fraudScore": "Fraud Score",
-    "indicators": "Fraud Indicators"
+    "riskLevel": "Risk Level",
+    "ispScore": "ISP Score",
+    "blacklisted": "Blacklisted",
+    "indicators": "Fraud Indicators",
+    "proxyDetection": "Proxy Detection",
+    "noDescription": "No additional risk information available",
+    "status": {
+      "veryHigh": "Very High Risk",
+      "high": "High Risk",
+      "medium": "Medium Risk",
+      "low": "Low Risk",
+      "veryLow": "Very Low Risk",
+      "unknown": "Unknown"
+    },
+    "viewFullReport": "View Full Report on Scamalytics →"
   },
   "generic": {
     "source": "Source",
@@ -365,5 +412,31 @@
     "status": "Status",
     "details": "Details",
     "error": "Error"
+  },
+  "error": {
+    "status": "Error",
+    "unknown": "An unknown error occurred",
+    "types": {
+      "apiError": "API Error",
+      "authError": "Authentication Error",
+      "notFound": "Not Found",
+      "rateLimit": "Rate Limited",
+      "serverError": "Server Error",
+      "clientError": "Request Error"
+    },
+    "possibleCauses": "Possible causes:",
+    "tips": {
+      "invalidApiKey": "Invalid or missing API key",
+      "expiredApiKey": "API key may have expired",
+      "checkSettings": "Check your API configuration in Settings",
+      "rateLimitExceeded": "API rate limit exceeded for this provider",
+      "waitAndRetry": "Wait a few minutes and try again",
+      "upgradePlan": "Consider upgrading your API plan for higher limits",
+      "serverIssue": "The provider service is temporarily unavailable",
+      "tryAgainLater": "Try again in a few minutes",
+      "checkStatus": "Check the provider's status page",
+      "checkApiKey": "Verify your API key is correct",
+      "networkIssue": "Network connection issue"
+    }
   }
 }

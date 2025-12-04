@@ -5,6 +5,263 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-12-04
+
+### 🎉 Major Release - AI-Powered Threat Intelligence
+
+This major release introduces **AI-powered IOC analysis**, **4 new threat intelligence providers**, a **complete UI overhaul**, and significant performance improvements.
+
+### Highlights Since 2.3.2
+
+#### 🤖 AI Integration (New!)
+- **3 AI Providers** - Claude (Anthropic), Gemini (Google), GPT-4o (OpenAI)
+- **3 Analysis Modes** - Summary (L1 triage), Analysis (L1/L2 handoff), Detailed (IR investigation)
+- **Structured JSON Responses** - Consistent output format with verdict, risk level, confidence scores
+- **AI Result Caching** - Language-aware caching with 24-hour expiry
+- **Copy as Markdown** - One-click export for documentation
+- **Export as Image** - PNG export with html2canvas
+- **Smart Retry System** - Automatic JSON validation with 3 retries
+
+#### 🔌 New Threat Intelligence Providers
+- **URLhaus** (abuse.ch) - Malicious URL database, unlimited free API
+- **Pulsedive** - Threat intelligence with risk scoring (250 req/day free)
+- **Scamalytics** - IP fraud detection with API v3 (5,000 credits/month free)
+
+#### 🎨 Complete UI Overhaul
+- **New Color Palette** - Fresh lime green accent (#C7F54D), coral red danger (#E63946)
+- **Responsive Action Buttons** - Icons only on mobile, full text on desktop
+- **Provider Slider Redesign** - Compact icons (48px) with hover tooltips
+- **IOC Selector Redesign** - Single clickable badge with popup
+- **Recommended Model Indicators** - ThumbsUp icons for suggested AI models
+
+#### ⚙️ Configuration & Customization
+- **Drag-and-Drop Provider Order** - Customize provider display order in settings
+- **Provider Enable/Disable System** - Centralized provider availability control
+- **Persistent Settings** - All customizations sync across components
+
+#### 🚀 Performance & Architecture
+- **Parallel IOC Processing** - All IOCs analyzed simultaneously
+- **Optimized Cache Lookups** - Batch storage calls instead of sequential
+- **Lazy Service Initialization** - Services created only when needed
+- **Enhanced Error Handling** - Better user feedback for all error states
+
+#### 📦 Provider Enhancements
+- **Enhanced Result Cards** - Modern UI for Pulsedive, URLhaus, Scamalytics
+- **VirusTotal Icons** - Lucide ThumbsUp/ThumbsDown instead of emojis
+- **Full Localization** - Complete Turkish and English support
+
+### Breaking Changes
+- Minimum Chrome version updated for Manifest V3 features
+- AI analysis requires separate API keys from threat intel providers
+
+---
+
+## [2.8.1] - 2025-12-04
+
+### Added
+- **Recommended Model Indicators** - ThumbsUp icons next to recommended AI models in dropdown
+- **Provider Slider Tooltips** - Hover tooltips for provider icons (names hidden by default)
+- **Conditional Analyze Button** - Button only activates when input has text
+- **ChevronDown Indicators** - Visual cues for clickable dropdowns (IOC selector, analysis mode)
+
+### Changed
+- **New Color Palette** - Complete visual refresh with new accent colors
+  - Accent color: #FFF770 → #C7F54D (lime green)
+  - Danger color: #ef4444 → #E63946 (coral red)
+  - Success color: #22c55e → #4ADE80
+  - Warning color: #f59e0b → #FBBF24
+- **Responsive Action Buttons** - Copy/Export/Re-analyze buttons show only icons on small screens
+  - Tooltip appears on hover for accessibility
+  - Full text visible on wider screens
+- **IOC Selector Redesign** - Changed from dropdown to single clickable badge with popup
+- **Provider Icons** - Smaller icons (48px) without text labels
+- **External Link Buttons** - Minimal grey styling without background
+- **VirusTotal Icons** - Community score now uses ThumbsUp/ThumbsDown Lucide icons instead of emojis
+- **Hint Icons** - Replaced 💡 emoji with Lucide Lightbulb icon
+- **Landing Page (ahtapot.me)** - Updated with new color palette
+
+### Fixed
+- Analyze button appearing active when input is empty after results displayed
+- Provider slider tooltip visibility issues
+- AI mode dropdown positioning and overflow issues
+- Analysis mode badge not indicating clickability
+
+### Technical
+- Replaced hardcoded colors with CSS variables across all components
+- Improved responsive design with better media queries
+- Enhanced tooltip positioning using React state management
+
+## [2.8.0] - 2025-12-03
+
+### Added
+- **Structured AI JSON Responses** - AI now returns structured JSON with fixed schemas for each analysis mode
+  - Summary mode: Verdict, risk level, confidence, key signals, recommended action
+  - Analysis mode: Provider analysis table, consensus, MITRE ATT&CK mapping, actionable recommendations
+  - Detailed mode: Full investigation report with threat intel, infrastructure, false positive analysis
+- **AI Result Caching System** - Intelligent caching to avoid duplicate queries
+  - Cache key format: `{provider}-{ioc}-{mode}-{language}`
+  - Language-aware caching (TR results cached separately from EN)
+  - 24-hour cache expiry with automatic cleanup
+  - "Re-analyze" button to force fresh analysis
+- **Enhanced AI Result UI** - Completely redesigned AI result cards
+  - Localized verdict labels (Malicious → Kötü Amaçlı)
+  - Localized risk levels (Critical → Kritik, High → Yüksek)
+  - Localized confidence levels (High → Yüksek güven)
+  - Color-coded confidence badges (green=high, yellow=medium, red=low)
+- **Copy as Markdown** - AI responses include hidden `copy_markdown` field
+  - Beautiful markdown export for documentation
+  - One-click copy to clipboard
+- **Export as Image** - Export AI analysis as PNG image
+  - html2canvas integration
+  - Full card capture with styling
+- **Clickable Links in AI Results** - URLs are truncated and clickable
+  - Max 50 characters with ellipsis
+  - Opens in new tab
+- **Suggestive Tone** - AI recommendations now use suggestive language
+  - "You should consider..." instead of "Do this immediately"
+  - More professional and advisory tone
+
+### Changed
+- **Full Localization** - All AI UI elements now properly localized
+  - Verdict labels (Malicious, Suspicious, Likely Benign, Clean, Unknown)
+  - Risk levels (Critical, High, Medium, Low, Info)
+  - Confidence levels (High, Medium, Low)
+  - Section headers (Summary, Key Signals, Assessment, etc.)
+  - Button labels (Copy as Markdown, Re-analyze, Export as Image)
+- **Confidence Badge Colors** - Fixed color logic
+  - HIGH confidence = Green (reliable result)
+  - MEDIUM confidence = Yellow/Orange (moderate reliability)
+  - LOW confidence = Red (uncertain result)
+- **Provider Analysis Cards** - Improved styling with inline confidence colors
+- **Turkish Translations** - Full Turkish character support (Ö, Ü, İ, Ş, Ç, Ğ)
+
+### Fixed
+- "high güven" → "Yüksek güven" - Proper Turkish localization
+- Mixed language labels in AI results
+- Inverted confidence badge colors in provider analysis
+- Long URLs causing layout overflow
+
+### Technical
+- New `AIStructuredResultCard` component with JSON parsing
+- `aiResultCache.ts` utility for cache management
+- Updated `aiResponse.ts` types with `copy_markdown` field
+- Enhanced prompt templates with JSON schema requirements
+- Added `getConfidenceConfig()`, `getRiskLabel()`, `getConfidenceLabel()` helpers
+
+## [2.7.0] - 2025-12-03
+
+### Added
+- **Provider Enable/Disable Configuration System** - Centralized control for provider availability
+  - New `PROVIDER_ENABLED_STATUS` config in `providerDisplay.ts`
+  - `isProviderEnabled()`, `getEnabledProviders()`, `getDisabledProviders()` utility functions
+  - Easy toggle to enable/disable providers without code changes across multiple files
+- **Dynamic Provider Filtering** - All UI components now respect provider enabled status
+  - ServiceRegistry skips disabled providers
+  - Options page hides disabled providers from API key settings
+  - ProviderSlider and sidepanel filter out disabled providers
+  - Provider order storage filters disabled providers
+
+### Changed
+- **Scamalytics Integration Temporarily Disabled** - Pending API activation confirmation
+  - Scamalytics hidden from all UI components
+  - No API calls made to Scamalytics service
+  - Will be re-enabled once API access is confirmed
+- Updated ahtapot.me website to reflect 9 active providers
+- Provider count updated from 10 to 9 across all documentation and UI text
+
+### Technical
+- Enhanced `providerDisplay.ts` with provider enable/disable configuration
+- Updated `ServiceRegistry.ts` to check `isProviderEnabled()` before service initialization
+- Modified `providerOrderStorage.ts` to filter disabled providers from order lists
+- Updated `options.tsx` to only show enabled providers in API key settings
+
+## [2.6.0] - 2025-12-02
+
+### Added
+- **Enhanced Provider Result Cards** - Completely redesigned Pulsedive, URLhaus, and Scamalytics result cards
+  - Modern UI matching VirusTotal/ARIN/OTX design language
+  - Rich data display with all API response fields
+  - Stats grids, threat indicators, and detailed sections
+- **Scamalytics API v3 Integration** - Full implementation with correct endpoint format
+  - Support for single API key and username:key formats
+  - Fraud score, risk level, ISP score display
+  - Proxy detection (VPN, Datacenter, Tor, iCloud Private Relay)
+  - External blacklist status
+- **Rate-Limited Provider Badges** - Shodan and GreyNoise now visible in provider badges when pending confirmation
+- **URL-based Tab Management** - Settings page tabs now controllable via URL parameter (?tab=apiKeys)
+- **Environment Variables Example** - Added `.env.example` file for development setup
+
+### Changed
+- **Pulsedive Result Card** - Complete redesign with:
+  - Risk indicator with color-coded circle
+  - Location, organization, and timestamp sections
+  - Threats, risk factors, and feeds display
+  - Consistent styling with other provider cards
+- **URLhaus Result Card** - Complete redesign with:
+  - URL count stats circle with active/offline breakdown
+  - Stats grid (URL Count, Active, Offline, Blacklists)
+  - Threat tags and sample URLs with status indicators
+  - Blacklist status display (Spamhaus DBL, SURBL)
+- **Scamalytics Result Card** - Complete redesign with:
+  - Fraud score circle with risk color
+  - Stats grid (Score, Risk Level, ISP Score, Blacklisted)
+  - Fraud indicators section
+  - Proxy detection details
+- Updated Scamalytics info notes with accurate registration process
+- Improved Turkish and English translations for all new features
+
+### Fixed
+- Scamalytics API endpoint format (now supports multiple authentication methods)
+- Provider status badges now show pending rate-limited providers
+- Result card theme compatibility issues
+
+### Removed
+- **IBM X-Force Exchange Integration** - Temporarily removed due to API key creation issues (will be re-added when clarified)
+
+### Technical
+- Added dedicated CSS files for Pulsedive, URLhaus, and Scamalytics result cards
+- Enhanced ScamalyticsService with auto-detection of API key format
+- Updated type definitions for Scamalytics API v3 response
+- Centralized version display from manifest.json
+
+## [2.5.0] - 2025-11-13
+
+### Added
+- **Customizable Provider Display Order** - New drag-and-drop interface in General Settings
+  - Reorder providers according to personal preference
+  - Visual drag handles with smooth animations
+  - Real-time order preview with numbered indicators
+  - One-click reset to default alphabetical order
+- **Persistent Provider Ordering** - Custom order saved to Chrome storage
+  - Automatic synchronization across extension components
+  - Results display respects custom provider order
+  - Default alphabetical sorting for new installations
+- **Provider Order Storage System** - New utility module for order management
+  - `providerOrderStorage.ts` with complete CRUD operations
+  - Automatic handling of new providers added in future updates
+  - Smart sorting algorithm for results based on custom order
+- **Enhanced General Settings UI** - New section with modern design
+  - Drag-and-drop provider list with visual feedback
+  - Hover effects and drag-over animations
+  - Color-coded numbering system
+  - Responsive layout optimized for settings page
+
+### Changed
+- Results in sidepanel now appear in user-defined provider order
+- Provider tabs maintain custom ordering for better UX consistency
+- Complete i18n support for English and Turkish
+  - General Settings > Provider Display Order section
+  - Drag hints, reset confirmation, and success messages
+- Version bumped to 2.5.0 (MINOR update - new feature)
+  - Updated in package.json, manifest.json, and i18n footer
+
+### Technical
+- Added `src/utils/providerOrderStorage.ts` utility module
+- Enhanced options page with drag-and-drop event handlers
+- Implemented `sortResultsByProviderOrder()` helper function
+- Added CSS animations for drag states (dragging, drag-over)
+- Provider order state management in both options and sidepanel components
+
 ## [2.4.0] - 2025-11-13
 
 ### Added
@@ -183,6 +440,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
+- **3.0.x** - 🎉 AI-powered analysis (Claude/Gemini/GPT-4o), new providers (URLhaus, Pulsedive, Scamalytics), complete UI overhaul, performance optimizations
+- **2.8.x** - AI structured JSON responses, caching, full localization, export features, new color palette
+- **2.7.x** - Provider enable/disable config system, Scamalytics re-enabled
+- **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
+- **2.5.x** - Customizable provider display order, drag-and-drop reordering
+- **2.4.x** - URLhaus, Pulsedive, Scamalytics integrations
 - **2.3.x** - UX enhancements, rate limit protection, GreyNoise integration
 - **2.2.x** - Shodan and ARIN WHOIS integrations, enhanced network analysis
 - **2.1.x** - AbuseIPDB and MalwareBazaar integrations
@@ -192,6 +455,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Upgrade Notes
+
+### Upgrading to 3.0.0
+- **Major Update**: This is a significant upgrade with new AI features
+- AI providers require separate API keys (Claude, Gemini, OpenAI)
+- All existing settings and API keys are preserved
+- New providers (URLhaus, Pulsedive, Scamalytics) available for configuration
+- Provider display order customization available in Settings → General
+- Review the new color scheme and UI improvements
 
 ### Upgrading to 2.3.x
 - No breaking changes

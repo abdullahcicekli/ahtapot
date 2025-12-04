@@ -4,6 +4,7 @@ import { APIService } from '@/services/api-service';
 import { getAPIKeys } from '@/utils/apiKeyStorage';
 import { findProviderByServiceName } from '@/utils/providerMappings';
 import { initializeDevelopmentAPIKeys } from '@/utils/devApiKeys';
+import { initializeDevelopmentAIKeys } from '@/utils/devAIKeys';
 
 /**
  * Background Service Worker
@@ -23,6 +24,9 @@ chrome.runtime.onInstalled.addListener(async () => {
 
   // Initialize development API keys from .env (only in dev mode)
   await initializeDevelopmentAPIKeys();
+
+  // Initialize development AI API keys from .env (only in dev mode)
+  await initializeDevelopmentAIKeys();
 });
 
 // Context menu tıklaması

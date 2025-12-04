@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
 import { getIOCTypeLabel } from '@/utils/ioc-detector';
 import {
@@ -9,9 +9,13 @@ import {
   Info,
   Globe,
   Server,
-  Shield
+  Shield,
+  ExternalLink,
+  ThumbsUp,
+  ThumbsDown
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { ResultCopyButtons, formatVirusTotalResults } from './ResultCopyButtons';
 import './VirusTotalResultCard.css';
 
 interface VirusTotalResultCardProps {
@@ -27,6 +31,7 @@ interface VendorResult {
 export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
   const [activeTab, setActiveTab] = useState<'detection' | 'details'>('detection');
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { details } = result;
 
@@ -36,11 +41,11 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
   const suspiciousCount = details?.suspicious || 0;
   const communityScore = maliciousCount + suspiciousCount;
 
-  // Get community score color
+  // Get community score color - harmonized with accent
   const getScoreColor = () => {
-    if (communityScore === 0) return '#22c55e'; // green
-    if (communityScore <= 5) return '#eab308'; // yellow
-    return '#ef4444'; // red
+    if (communityScore === 0) return '#4ADE80'; // success green
+    if (communityScore <= 5) return '#FBBF24'; // warning amber
+    return '#E63946'; // danger
   };
 
   // Get status icon and color
@@ -124,7 +129,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
   };
 
   return (
-    <div className="vt-result-card">
+    <div className="vt-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={getVirusTotalUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on VirusTotal"
+      >
+        <ExternalLink size={16} />
+      </a>
+
       {/* Header */}
       <div className="vt-header">
         <div className="vt-header-left">
@@ -140,11 +156,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           </div>
           <div className="vt-score-label">
             {t('virustotal.communityScore')}
-            <span className="vt-score-votes">
-              {details?.total_votes ?
-                `${details.total_votes.harmless || 0} 👍 ${details.total_votes.malicious || 0} 👎`
-                : ''}
-            </span>
+            {details?.total_votes && (
+              <span className="vt-score-votes">
+                <span className="vt-vote-item vt-vote-up">
+                  {details.total_votes.harmless || 0}
+                  <ThumbsUp size={12} />
+                </span>
+                <span className="vt-vote-item vt-vote-down">
+                  {details.total_votes.malicious || 0}
+                  <ThumbsDown size={12} />
+                </span>
+              </span>
+            )}
           </div>
         </div>
 
@@ -158,22 +181,6 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           </div>
         </div>
 
-        <div className="vt-header-actions">
-          <div className={`vt-status-badge ${statusInfo.className}`}>
-            {statusInfo.icon}
-            <span>{statusInfo.label}</span>
-          </div>
-          {details?.last_analysis_date && (
-            <div className="vt-analysis-date">
-              <Info size={14} />
-              {new Date(details.last_analysis_date).toLocaleDateString('tr-TR', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Status Description */}
@@ -375,19 +382,15 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
             )}
           </div>
 
-          {/* View on VirusTotal Link */}
-          <div className="vt-external-link">
-            <a
-              href={getVirusTotalUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="vt-link-button"
-            >
-              {t('virustotal.viewFullReport')}
-            </a>
-          </div>
         </div>
       )}
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatVirusTotalResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

@@ -18,6 +18,7 @@
     "cache": {
       "title": "Önbellek Ayarları",
       "description": "IOC analiz sonuçları için önbellek davranışını yapılandırın",
+      "infoTitle": "Önbellek hakkında bilgi",
       "enabled": "Önbelleği etkinleştir",
       "enabledDescription": "Tekrarlayan API çağrılarını önlemek için analiz sonuçlarını saklayın",
       "retentionDays": "Saklama süresi (gün)",
@@ -30,7 +31,31 @@
       "clearCache": "Tüm önbelleği temizle",
       "clearConfirm": "Tüm önbelleğe alınmış verileri silmek istediğinizden emin misiniz?",
       "clearSuccess": "Önbellek başarıyla temizlendi",
-      "clearError": "Önbellek temizlenemedi"
+      "clearError": "Önbellek temizlenemedi",
+      "info": {
+        "whyTitle": "Önbellek Neden Var?",
+        "whyDescription": "Önbellek sistemi, daha önce analiz ettiğiniz IOC'lerin sonuçlarını cihazınızda saklar. Bu sayede aynı IOC'yi tekrar sorguladığınızda API çağrısı yapmadan anında sonuç alırsınız.",
+        "benefitsTitle": "Faydaları",
+        "benefit1": "⚡ Hızlı Sonuçlar: Tekrar edilen sorgular anlık yanıt verir",
+        "benefit2": "📊 API Kotası Koruması: Günlük/aylık API limitinizi korur",
+        "benefit3": "🔒 Gizlilik: Veriler sadece cihazınızda saklanır",
+        "benefit4": "💾 Çevrimdışı Erişim: İnternet olmadan önceki sonuçlara ulaşın",
+        "howTitle": "Nasıl Çalışır?",
+        "howDescription": "Her başarılı analiz sonucu otomatik olarak önbelleğe alınır. Belirlediğiniz süre sonunda eski kayıtlar otomatik silinir. İstediğiniz zaman tüm önbelleği manuel olarak temizleyebilirsiniz."
+      }
+    },
+    "providerOrder": {
+      "title": "Sağlayıcı Gösterim Sırası",
+      "description": "Sağlayıcıların analiz sonuçlarında görünme sırasını özelleştirin. Sıralamak için sürükleyin ve bırakın.",
+      "customizeButton": "Sıralamayı Özelleştir",
+      "modalDescription": "Sıralamak için sağlayıcıları sürükleyin. Değişiklikler otomatik olarak kaydedilir.",
+      "lockedProviders": "Her Zaman Kullanılabilir (API Anahtarı Gerektirmez)",
+      "dragHint": "Sıralamak için sürükleyin",
+      "resetOrder": "Varsayılana Sıfırla",
+      "doneButton": "Tamam",
+      "resetConfirm": "Sağlayıcı sırasını varsayılana sıfırlamak istediğinizden emin misiniz?",
+      "orderSaved": "Sağlayıcı sırası başarıyla kaydedildi",
+      "orderSaveError": "Sağlayıcı sırası kaydedilemedi"
     }
   },
   "privacyNote": {
@@ -67,7 +92,7 @@
     },
     "malwarebazaar": {
       "label": "MalwareBazaar",
-      "description": "Zararlı yazılım hash analizi ve örnek bilgisi",
+      "description": "Zararlı yazılım hash analizi ve örnek bilgisi (abuse.ch)",
       "placeholder": "MalwareBazaar API anahtarınız"
     },
     "shodan": {
@@ -82,13 +107,8 @@
     },
     "urlhaus": {
       "label": "URLhaus",
-      "description": "Kötü amaçlı URL ve kötü yazılım dağıtım sitesi veritabanı",
+      "description": "Kötü amaçlı URL ve kötü yazılım dağıtım veritabanı (abuse.ch)",
       "placeholder": "URLhaus API anahtarınız"
-    },
-    "xforce": {
-      "label": "IBM X-Force Exchange",
-      "description": "Tehdit istihbaratı ve güvenlik açığı verileri",
-      "placeholder": "APIKey:Password formatı"
     },
     "pulsedive": {
       "label": "Pulsedive",
@@ -98,8 +118,16 @@
     "scamalytics": {
       "label": "Scamalytics",
       "description": "IP dolandırıcılık puanı ve dolandırıcılık tespiti",
-      "placeholder": "Scamalytics API anahtarınız"
+      "placeholder": "kullanici:apikey (örn: myuser:abc123...)"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IP adresi kayıt ve ağ bilgileri",
+      "placeholder": "API anahtarı gerektirmez"
     }
+  },
+  "lockedProvider": {
+    "message": "✓ Bu sağlayıcı her zaman kullanılabilirdir ve API anahtarı gerektirmez"
   },
   "info": {
     "limitsTitle": "Ücretsiz Plan Limitleri",
@@ -116,7 +144,8 @@
     }
   },
   "notes": {
-    "malwarebazaar": "Auth Key oluşturulduktan sonra sadece bir kez gösterilir. Değiştirmeniz gerekirse yeni bir anahtar oluşturmalısınız. Bir kez oluşturulduktan sonra tekrar görüntülenemez, bu yüzden hemen extension'a kaydedin."
+    "malwarebazaar": "Auth Key oluşturulduktan sonra sadece bir kez gösterilir. Değiştirmeniz gerekirse yeni bir anahtar oluşturmalısınız. Bir kez oluşturulduktan sonra tekrar görüntülenemez, bu yüzden hemen extension'a kaydedin.",
+    "scamalytics": "Kayıt için manuel inceleme gereklidir. Onay sonrası API bilgilerinizi içeren özel bir link (30 gün geçerli) alacaksınız. Ücretsiz plan aylık 5.000 kredi ve ESSENTIAL alanları içerir. PREMIUM alanlar 15 günlük deneme süresince kullanılabilir."
   },
   "tooltips": {
     "virustotal": "API anahtarı ekle",
@@ -126,7 +155,6 @@
     "shodan": "API anahtarı ekle",
     "greynoise": "API anahtarı ekle",
     "urlhaus": "API anahtarı ekle",
-    "xforce": "API anahtarı ekle",
     "pulsedive": "API anahtarı ekle",
     "scamalytics": "API anahtarı ekle"
   },
@@ -173,12 +201,6 @@
       "feature3": "URL durum izleme (çevrimiçi/çevrimdışı)",
       "feature4": "Kötü yazılım dağıtım takibi"
     },
-    "xforce": {
-      "feature1": "IP/URL/Domain itibar puanlaması",
-      "feature2": "Kötü yazılım ailesi tanımlama",
-      "feature3": "Geçmiş tehdit verileri",
-      "feature4": "Kategori sınıflandırması"
-    },
     "pulsedive": {
       "feature1": "Risk seviyesi değerlendirmesi",
       "feature2": "Tehdit ve feed takibi",
@@ -186,10 +208,10 @@
       "feature4": "Topluluk odaklı istihbarat"
     },
     "scamalytics": {
-      "feature1": "IP dolandırıcılık puanı (0-100)",
-      "feature2": "Dolandırıcılık ve sahtecilik tespiti",
-      "feature3": "Risk seviyesi sınıflandırması",
-      "feature4": "Dolandırıcılık göstergesi takibi"
+      "feature1": "IP dolandırıcılık risk puanı (0-100)",
+      "feature2": "Datacenter & VPN tespiti",
+      "feature3": "TOR çıkış düğümü tespiti",
+      "feature4": "Harici kara liste kontrolleri"
     }
   },
   "limits": {
@@ -221,17 +243,13 @@
       "free": "Sınırsız (ücretsiz hesap)",
       "rate": "Belirtilen limit yok"
     },
-    "xforce": {
-      "free": "5.000 istek/ay (ücretsiz)",
-      "rate": "Makul kullanım"
-    },
     "pulsedive": {
       "free": "250 istek/gün (ücretsiz hesap)",
       "rate": "2.500 istek/ay"
     },
     "scamalytics": {
-      "free": "5.000 istek/ay (ücretsiz)",
-      "rate": "Belirtilen limit yok"
+      "free": "5.000 kredi/ay",
+      "rate": "15 gün PREMIUM deneme"
     }
   },
   "actions": {
@@ -243,7 +261,44 @@
     "saveSuccess": "Başarıyla kaydedildi",
     "saveError": "Kaydetme başarısız"
   },
+  "ai": {
+    "sectionTitle": "AI Sağlayıcıları",
+    "sectionDescription": "Akıllı IOC analizi için AI sağlayıcılarını yapılandırın. AI, özetler, detaylı analizler ve öneriler sunabilir.",
+    "providers": {
+      "claude": {
+        "description": "Anthropic'in Claude'u - Gelişmiş muhakeme ve analiz",
+        "placeholder": "Claude API anahtarınızı girin (sk-ant-...)",
+        "step2": "Ödeme yöntemi ekleyin (API erişimi için gerekli)"
+      },
+      "gemini": {
+        "description": "Google'ın Gemini'si - Hızlı ve verimli analiz",
+        "placeholder": "Gemini API anahtarınızı girin",
+        "step2": "Google Cloud Console'da Gemini API'yi etkinleştirin"
+      },
+      "openai": {
+        "description": "OpenAI'nin GPT'si - Çok yönlü dil anlama",
+        "placeholder": "OpenAI API anahtarınızı girin (sk-...)",
+        "step2": "Ödeme yöntemi ekleyin ve kredi satın alın"
+      }
+    },
+    "pricing": {
+      "title": "Fiyatlandırma",
+      "input": "Girdi",
+      "output": "Çıktı",
+      "rate": "Ücret",
+      "viewMore": "Tam fiyatlandırmayı görüntüle"
+    },
+    "howTo": {
+      "title": "API Anahtarı Nasıl Alınır",
+      "signup": "Hesap oluşturun",
+      "getKey": "API anahtarınızı alın",
+      "paste": "Anahtarı aşağıya yapıştırın"
+    },
+    "models": {
+      "title": "Kullanılabilir Modeller"
+    }
+  },
   "footer": {
-    "text": "Ahtapot v2.4.0 • Siber Güvenlik Gösterge Analiz Aracı"
+    "text": "Ahtapot v{{version}} • Siber Güvenlik Gösterge Analiz Aracı"
   }
 }

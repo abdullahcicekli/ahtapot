@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
 import { CacheManager, CacheSettings } from '@/utils/cacheManager';
 import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
+import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils/providerOrderStorage';
+import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
+import { isProviderEnabled } from '@/config/providerDisplay';
+import { AIProviderSettings } from '@/components/AIProviderSettings';
 import '@/i18n/config';
+import '@/components/AIProviderSettings.css';
 import './options.css';
 
 type TabType = 'general' | 'apiKeys';
@@ -17,6 +22,7 @@ interface APIKeyConfig {
   label: string;
   link: string;
   signupLink: string;
+  requiresApiKey?: boolean; // Optional, defaults to true
 }
 
 interface APIKeyState {
@@ -73,12 +79,6 @@ const API_CONFIGS: APIKeyConfig[] = [
     signupLink: 'https://auth.abuse.ch/signup',
   },
   {
-    provider: APIProvider.XFORCE,
-    label: 'IBM X-Force Exchange',
-    link: 'https://exchange.xforce.ibmcloud.com/settings/api',
-    signupLink: 'https://exchange.xforce.ibmcloud.com/',
-  },
-  {
     provider: APIProvider.PULSEDIVE,
     label: 'Pulsedive',
     link: 'https://pulsedive.com/account/',
@@ -90,15 +90,34 @@ const API_CONFIGS: APIKeyConfig[] = [
     link: 'https://scamalytics.com/ip/api',
     signupLink: 'https://scamalytics.com/ip/api/pricing',
   },
+  {
+    provider: APIProvider.ARIN,
+    label: 'ARIN WHOIS',
+    link: 'https://www.arin.net/resources/registry/whois/',
+    signupLink: 'https://www.arin.net/resources/registry/whois/',
+    requiresApiKey: false,
+  },
 ];
 
 const OptionsPage: React.FC = () => {
   const { t, i18n } = useTranslation(['options', 'common']);
-  const [activeTab, setActiveTab] = useState<TabType>('general');
+  
+  // Get initial tab from URL
+  const getInitialTab = (): TabType => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab') as TabType | null;
+    if (tab && (tab === 'general' || tab === 'apiKeys')) {
+      return tab;
+    }
+    return 'general';
+  };
+  
+  const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
   const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(i18n.language as SupportedLanguage || 'en');
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
+  const [showCacheInfo, setShowCacheInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Cache settings state
@@ -114,24 +133,40 @@ const OptionsPage: React.FC = () => {
   });
   const [isClearingCache, setIsClearingCache] = useState(false);
 
+  // Provider order modal state
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  // Memoize locked providers to avoid repeated filtering
+  const lockedProviders = useMemo(() =>
+    API_CONFIGS
+      .filter(config => config.requiresApiKey === false)
+      .map(config => config.provider),
+    []
+  );
+
+  // Memoize locked configs for modal rendering
+  const lockedConfigs = useMemo(() =>
+    API_CONFIGS.filter(config => config.requiresApiKey === false),
+    []
+  );
+
   // Load settings
   useEffect(() => {
     loadSettings();
     loadCacheSettings();
+    loadProviderOrder();
 
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const provider = urlParams.get('provider');
-    const tab = urlParams.get('tab') as TabType | null;
-
-    // Set tab from URL if provided
-    if (tab && (tab === 'general' || tab === 'apiKeys')) {
-      setActiveTab(tab);
-    }
 
     if (provider) {
       // Switch to API Keys tab if provider is specified
       setActiveTab('apiKeys');
+      updateURL('apiKeys');
 
       // Scroll to the provider card after a short delay
       setTimeout(() => {
@@ -157,6 +192,23 @@ const OptionsPage: React.FC = () => {
       chrome.runtime.onMessage.removeListener(messageListener);
     };
   }, []);
+
+  // Update URL when tab changes
+  const updateURL = useCallback((tab: TabType) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    // Remove provider param when switching tabs (unless it's apiKeys)
+    if (tab !== 'apiKeys') {
+      url.searchParams.delete('provider');
+    }
+    window.history.replaceState({}, '', url.toString());
+  }, []);
+
+  // Handle tab change with URL update
+  const handleTabChange = useCallback((tab: TabType) => {
+    setActiveTab(tab);
+    updateURL(tab);
+  }, [updateURL]);
 
   // Scroll to specific provider card and highlight it
   const scrollToProvider = (provider: APIProvider) => {
@@ -236,6 +288,14 @@ const OptionsPage: React.FC = () => {
       setCurrentLanguage(lang);
       await i18n.changeLanguage(lang);
       await chrome.storage.local.set({ language: lang });
+      
+      // Notify sidepanel to reload for language change
+      try {
+        await chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', payload: { language: lang } });
+      } catch {
+        // Sidepanel might not be open, ignore error
+      }
+      
       setError(null);
     } catch (err) {
       setError(t('actions.errorMessage', { ns: 'options' }));
@@ -243,24 +303,46 @@ const OptionsPage: React.FC = () => {
     }
   };
 
-  // Handle API key change
-  const handleKeyChange = (provider: APIProvider, value: string) => {
+  // Handle API key change with sanitization
+  const handleKeyChange = useCallback((provider: APIProvider, value: string) => {
+    // Sanitize input: trim whitespace and remove any potential XSS characters
+    const sanitizedValue = value.trim();
+
+    // Validate length (reasonable API key length: 10-200 characters)
+    if (sanitizedValue.length > 200) {
+      console.warn('API key too long, truncating to 200 characters');
+      return;
+    }
+
     setApiKeyStates((prev) => ({
       ...prev,
       [provider]: {
         ...prev[provider],
-        value,
-        hasChanges: value !== (prev[provider]?.value || ''),
+        value: sanitizedValue,
+        hasChanges: sanitizedValue !== (prev[provider]?.value || ''),
         validationResult: null,
         saveSuccess: false,
       },
     }));
-  };
+  }, []);
 
   // Validate API key
-  const handleValidateKey = async (provider: APIProvider) => {
+  const handleValidateKey = useCallback(async (provider: APIProvider) => {
     const state = apiKeyStates[provider];
     if (!state || !state.value) return;
+
+    // Additional validation: check for minimum length
+    if (state.value.length < 8) {
+      setApiKeyStates((prev) => ({
+        ...prev,
+        [provider]: {
+          ...prev[provider],
+          validationResult: 'invalid',
+          validationError: 'API key too short (minimum 8 characters)',
+        },
+      }));
+      return;
+    }
 
     setApiKeyStates((prev) => ({
       ...prev,
@@ -295,12 +377,18 @@ const OptionsPage: React.FC = () => {
         },
       }));
     }
-  };
+  }, [apiKeyStates, t]);
 
   // Save individual API key
-  const handleSaveIndividualKey = async (provider: APIProvider) => {
+  const handleSaveIndividualKey = useCallback(async (provider: APIProvider) => {
     const state = apiKeyStates[provider];
-    if (!state) return;
+    if (!state || !state.value) return;
+
+    // Prevent saving empty or too short keys
+    if (state.value.length < 8) {
+      setError('API key is too short');
+      return;
+    }
 
     setApiKeyStates((prev) => ({
       ...prev,
@@ -346,10 +434,10 @@ const OptionsPage: React.FC = () => {
       setError(t('actions.errorMessage', { ns: 'options' }));
       console.error('Error saving API key:', err);
     }
-  };
+  }, [apiKeyStates, t]);
 
   // Toggle visibility
-  const toggleVisibility = (provider: string) => {
+  const toggleVisibility = useCallback((provider: string) => {
     setVisibleKeys((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
@@ -359,10 +447,10 @@ const OptionsPage: React.FC = () => {
       }
       return newSet;
     });
-  };
+  }, []);
 
   // Toggle info
-  const toggleInfo = (provider: string) => {
+  const toggleInfo = useCallback((provider: string) => {
     setExpandedInfo((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
@@ -372,10 +460,10 @@ const OptionsPage: React.FC = () => {
       }
       return newSet;
     });
-  };
+  }, []);
 
   // Handle cache settings change
-  const handleCacheSettingsChange = async (updates: Partial<CacheSettings>) => {
+  const handleCacheSettingsChange = useCallback(async (updates: Partial<CacheSettings>) => {
     try {
       const newSettings = { ...cacheSettings, ...updates };
       setCacheSettings(newSettings);
@@ -388,10 +476,10 @@ const OptionsPage: React.FC = () => {
       setError(t('general.cache.clearError', { ns: 'options' }));
       console.error('Error updating cache settings:', err);
     }
-  };
+  }, [cacheSettings, t]);
 
   // Clear cache
-  const handleClearCache = async () => {
+  const handleClearCache = useCallback(async () => {
     if (!confirm(t('general.cache.clearConfirm', { ns: 'options' }))) {
       return;
     }
@@ -411,25 +499,202 @@ const OptionsPage: React.FC = () => {
     } finally {
       setIsClearingCache(false);
     }
-  };
+  }, [t]);
 
   // Format bytes to human readable
-  const formatBytes = (bytes: number): string => {
+  const formatBytes = useCallback((bytes: number): string => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
-  };
+  }, []);
 
   // Format date
-  const formatDate = (dateStr: string | null): string => {
+  const formatDate = useCallback((dateStr: string | null): string => {
     if (!dateStr) return '-';
     const year = dateStr.substring(0, 4);
     const month = dateStr.substring(4, 6);
     const day = dateStr.substring(6, 8);
     return `${day}/${month}/${year}`;
+  }, []);
+
+  // Load provider order
+  const loadProviderOrder = useCallback(async () => {
+    try {
+      const order = await getProviderOrder();
+      // Filter out locked providers using memoized list
+      const unlockedOrder = order.filter(provider => !lockedProviders.includes(provider));
+      setProviderOrder(unlockedOrder);
+    } catch (err) {
+      console.error('Error loading provider order:', err);
+    }
+  }, [lockedProviders]);
+
+  // Handle drag start
+  const handleDragStart = useCallback((e: React.DragEvent, index: number) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', index.toString());
+  }, []);
+
+  // Handle drag enter (more stable than dragOver)
+  const handleDragEnter = useCallback((e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  }, [draggedIndex]);
+
+  // Handle drag over (needed for drop to work)
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  // Handle drag end
+  const handleDragEnd = useCallback(async () => {
+    if (draggedIndex === null || dragOverIndex === null || draggedIndex === dragOverIndex) {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+
+    // Reorder array
+    const newOrder = [...providerOrder];
+    const [draggedItem] = newOrder.splice(draggedIndex, 1);
+    newOrder.splice(dragOverIndex, 0, draggedItem);
+
+    setProviderOrder(newOrder);
+
+    // Save to storage
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
+      console.error('Error saving provider order:', err);
+    } finally {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+    }
+  }, [draggedIndex, dragOverIndex, providerOrder, t]);
+
+  // Reset provider order
+  const handleResetProviderOrder = useCallback(async () => {
+    if (!confirm(t('general.providerOrder.resetConfirm', { ns: 'options' }))) {
+      return;
+    }
+
+    try {
+      await resetProviderOrder();
+      await loadProviderOrder();
+    } catch (err) {
+      setError(t('general.providerOrder.orderSaveError', { ns: 'options' }));
+      console.error('Error resetting provider order:', err);
+    }
+  }, [t, loadProviderOrder]);
+
+  // Open modal
+  const handleOpenOrderModal = useCallback(() => {
+    setIsOrderModalOpen(true);
+    // Reset drag state
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }, []);
+
+  // Close modal
+  const handleCloseOrderModal = useCallback(() => {
+    setIsOrderModalOpen(false);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }, []);
+
+  // Handle ESC key for modal
+  useEffect(() => {
+    if (!isOrderModalOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseOrderModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOrderModalOpen, handleCloseOrderModal]);
+
+  // Move provider up in the list
+  const handleMoveUp = useCallback(async (index: number) => {
+    if (index === 0) return;
+
+    const newOrder = [...providerOrder];
+    [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
+    setProviderOrder(newOrder);
+
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      console.error('Error saving provider order:', err);
+    }
+  }, [providerOrder]);
+
+  // Move provider down in the list
+  const handleMoveDown = useCallback(async (index: number) => {
+    if (index === providerOrder.length - 1) return;
+
+    const newOrder = [...providerOrder];
+    [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
+    setProviderOrder(newOrder);
+
+    try {
+      await saveProviderOrder(newOrder);
+    } catch (err) {
+      console.error('Error saving provider order:', err);
+    }
+  }, [providerOrder]);
+
+  // Provider logo mapping
+  const PROVIDER_LOGOS: Record<APIProvider, string> = {
+    [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
+    [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
+    [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
+    [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
+    [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
+    [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
+    [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
+    [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
+    [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
+    [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
   };
+
+  // Sort API configs by provider order, with locked providers at the end
+  const sortedApiConfigs = React.useMemo(() => {
+    if (providerOrder.length === 0) {
+      return API_CONFIGS;
+    }
+
+    // Filter out disabled providers first
+    const enabledConfigs = API_CONFIGS.filter(config => isProviderEnabled(config.provider));
+    
+    // Separate locked and unlocked providers
+    const lockedConfigs = enabledConfigs.filter(config => config.requiresApiKey === false);
+    const unlockedConfigs = enabledConfigs.filter(config => config.requiresApiKey !== false);
+
+    // Create a map of provider to its order index
+    const orderMap = new Map<APIProvider, number>();
+    providerOrder.forEach((provider, index) => {
+      orderMap.set(provider, index);
+    });
+
+    // Sort unlocked configs based on provider order
+    const sortedUnlocked = [...unlockedConfigs].sort((a, b) => {
+      const orderA = orderMap.get(a.provider) ?? 999;
+      const orderB = orderMap.get(b.provider) ?? 999;
+      return orderA - orderB;
+    });
+
+    // Return unlocked configs followed by locked configs
+    return [...sortedUnlocked, ...lockedConfigs];
+  }, [providerOrder]);
 
   return (
     <div className="options-container">
@@ -451,14 +716,14 @@ const OptionsPage: React.FC = () => {
       <div className="tabs-container">
         <button
           className={`tab ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => setActiveTab('general')}
+          onClick={() => handleTabChange('general')}
         >
           <Settings size={18} />
           {t('tabs.general', { ns: 'options' })}
         </button>
         <button
           className={`tab ${activeTab === 'apiKeys' ? 'active' : ''}`}
-          onClick={() => setActiveTab('apiKeys')}
+          onClick={() => handleTabChange('apiKeys')}
         >
           <Key size={18} />
           {t('tabs.apiKeys', { ns: 'options' })}
@@ -509,7 +774,38 @@ const OptionsPage: React.FC = () => {
                     {t('general.cache.description', { ns: 'options' })}
                   </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCacheInfo(!showCacheInfo)}
+                  className={`info-btn ${showCacheInfo ? 'active' : ''}`}
+                  aria-label="Cache information"
+                  title={t('general.cache.infoTitle', { ns: 'options' })}
+                >
+                  <Info size={18} />
+                </button>
               </div>
+
+              {showCacheInfo && (
+                <div className="cache-info-box">
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.whyTitle', { ns: 'options' })}</h4>
+                    <p>{t('general.cache.info.whyDescription', { ns: 'options' })}</p>
+                  </div>
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.benefitsTitle', { ns: 'options' })}</h4>
+                    <ul className="cache-info-list">
+                      <li>{t('general.cache.info.benefit1', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit2', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit3', { ns: 'options' })}</li>
+                      <li>{t('general.cache.info.benefit4', { ns: 'options' })}</li>
+                    </ul>
+                  </div>
+                  <div className="cache-info-section">
+                    <h4>{t('general.cache.info.howTitle', { ns: 'options' })}</h4>
+                    <p>{t('general.cache.info.howDescription', { ns: 'options' })}</p>
+                  </div>
+                </div>
+              )}
 
               <div className="cache-settings">
                 {/* Enable/Disable Cache */}
@@ -589,6 +885,7 @@ const OptionsPage: React.FC = () => {
                 </button>
               </div>
             </div>
+
           </div>
         )}
 
@@ -603,21 +900,40 @@ const OptionsPage: React.FC = () => {
               </div>
             </div>
 
+            {/* AI Provider Settings - At the top */}
+            <AIProviderSettings />
+
             <div className="api-keys-section">
-              <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
-              <p className="section-description">
-                {t('apiKeys.sectionDescription', { ns: 'options' })}
-              </p>
+              <div className="api-keys-header">
+                <div className="api-keys-title">
+                  <Key size={22} className="api-keys-icon" />
+                  <div>
+                    <h2>{t('apiKeys.sectionTitle', { ns: 'options' })}</h2>
+                    <p className="section-description">
+                      {t('apiKeys.sectionDescription', { ns: 'options' })}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleOpenOrderModal}
+                  className="customize-order-btn"
+                  title={t('general.providerOrder.title', { ns: 'options' })}
+                >
+                  <ArrowUpDown size={18} />
+                  {t('general.providerOrder.customizeButton', { ns: 'options' })}
+                </button>
+              </div>
 
               <div className="api-keys-list">
-                {API_CONFIGS.map((config) => {
+                {sortedApiConfigs.map((config) => {
                   const providerKey = config.provider.toLowerCase();
                   const state = apiKeyStates[config.provider];
+                  const isLocked = config.requiresApiKey === false;
 
                   return (
                     <div
                       key={config.provider}
-                      className="api-key-card"
+                      className={`api-key-card ${isLocked ? 'locked-provider' : ''}`}
                       data-provider={config.provider}
                     >
                       <div className="api-key-header">
@@ -628,19 +944,28 @@ const OptionsPage: React.FC = () => {
                               {t(`providers.${providerKey}.description`, { ns: 'options' })}
                             </p>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => toggleInfo(config.provider)}
-                            className="info-btn"
-                            aria-label="API information"
-                            title="API limits and features"
-                          >
-                            <Info size={18} />
-                          </button>
+                          {!isLocked && (
+                            <button
+                              type="button"
+                              onClick={() => toggleInfo(config.provider)}
+                              className="info-btn"
+                              aria-label="API information"
+                              title="API limits and features"
+                            >
+                              <Info size={18} />
+                            </button>
+                          )}
                         </div>
                       </div>
 
-                      {expandedInfo.has(config.provider) && (
+                      {isLocked ? (
+                        <div className="locked-provider-info">
+                          <CheckCircle size={18} className="locked-icon" />
+                          <p>{t('lockedProvider.message', { ns: 'options' })}</p>
+                        </div>
+                      ) : (
+                        <>
+                          {expandedInfo.has(config.provider) && (
                         <div className="api-info-box">
                           <div className="api-info-section">
                             <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
@@ -707,38 +1032,51 @@ const OptionsPage: React.FC = () => {
                               </p>
                             </div>
                           )}
+
+                          {/* Special note for Scamalytics */}
+                          {config.provider === APIProvider.SCAMALYTICS && (
+                            <div className="api-info-section api-warning-section">
+                              <h4>
+                                <AlertCircle size={16} />
+                                {t('info.importantNote', { ns: 'options' })}
+                              </h4>
+                              <p className="api-warning-text">
+                                {t(`notes.${providerKey}`, { ns: 'options' })}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
 
-                      <div className="api-key-input-wrapper">
-                        <input
-                          type={visibleKeys.has(config.provider) ? 'text' : 'password'}
-                          placeholder={t(`providers.${providerKey}.placeholder`, { ns: 'options' })}
-                          value={state?.value || ''}
-                          onChange={(e) => handleKeyChange(config.provider, e.target.value)}
-                          className={`api-key-input ${state?.validationResult === 'invalid' ? 'invalid' : ''}`}
-                          aria-label={`${config.label} API key`}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => toggleVisibility(config.provider)}
-                          className="toggle-visibility-btn"
-                          aria-label={
-                            visibleKeys.has(config.provider)
-                              ? t('apiKeys.hideKey', { ns: 'options' })
-                              : t('apiKeys.showKey', { ns: 'options' })
-                          }
-                        >
-                          {visibleKeys.has(config.provider) ? (
-                            <EyeOff size={18} />
-                          ) : (
-                            <Eye size={18} />
-                          )}
-                        </button>
-                      </div>
+                          <div className="api-key-input-wrapper">
+                            <input
+                              type={visibleKeys.has(config.provider) ? 'text' : 'password'}
+                              placeholder={t(`providers.${providerKey}.placeholder`, { ns: 'options' })}
+                              value={state?.value || ''}
+                              onChange={(e) => handleKeyChange(config.provider, e.target.value)}
+                              className={`api-key-input ${state?.validationResult === 'invalid' ? 'invalid' : ''}`}
+                              aria-label={`${config.label} API key`}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => toggleVisibility(config.provider)}
+                              className="toggle-visibility-btn"
+                              aria-label={
+                                visibleKeys.has(config.provider)
+                                  ? t('apiKeys.hideKey', { ns: 'options' })
+                                  : t('apiKeys.showKey', { ns: 'options' })
+                              }
+                            >
+                              {visibleKeys.has(config.provider) ? (
+                                <EyeOff size={18} />
+                              ) : (
+                                <Eye size={18} />
+                              )}
+                            </button>
+                          </div>
 
-                      {/* Validation and Save Buttons */}
-                      <div className="api-key-actions">
+                          {/* Validation and Save Buttons */}
+                          <div className="api-key-actions">
                         <button
                           onClick={() => handleValidateKey(config.provider)}
                           className="validate-btn"
@@ -794,7 +1132,9 @@ const OptionsPage: React.FC = () => {
                             {t('actions.saveSuccess', { ns: 'options' })}
                           </span>
                         )}
-                      </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   );
                 })}
@@ -812,8 +1152,145 @@ const OptionsPage: React.FC = () => {
       </main>
 
       <footer className="options-footer">
-        <p>{t('footer.text', { ns: 'options' })}</p>
+        <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
       </footer>
+
+      {/* Provider Order Modal */}
+      {isOrderModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseOrderModal}>
+          <div className="modal-container provider-order-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="modal-header-content">
+                <div className="modal-header-icon">
+                  <Sparkles size={24} />
+                </div>
+                <div>
+                  <h2>{t('general.providerOrder.title', { ns: 'options' })}</h2>
+                  <p className="modal-header-subtitle">{t('general.providerOrder.modalDescription', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleCloseOrderModal}
+                className="modal-close-btn"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="modal-drag-hint">
+              <Move size={16} />
+              <span>{t('general.providerOrder.dragHint', { ns: 'options' })}</span>
+            </div>
+
+            <div className="modal-provider-list">
+              {providerOrder.map((provider, index) => {
+                const serviceName = PROVIDER_TO_SERVICE_NAME[provider];
+                const isDragging = draggedIndex === index;
+                const isDropTarget = dragOverIndex === index && draggedIndex !== index;
+                const isFirst = index === 0;
+                const isLast = index === providerOrder.length - 1;
+
+                return (
+                  <div
+                    key={provider}
+                    className={`modal-provider-item ${isDragging ? 'dragging' : ''} ${isDropTarget ? 'drop-target' : ''}`}
+                    draggable={true}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragEnter(e, index)}
+                    onDragOver={handleDragOver}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <div className="modal-drag-handle-wrapper">
+                      <GripVertical size={18} className="modal-drag-handle" />
+                    </div>
+                    <span className="modal-provider-number">{index + 1}</span>
+                    <div className="modal-provider-logo-wrapper">
+                      <img
+                        src={PROVIDER_LOGOS[provider]}
+                        alt={serviceName}
+                        className="modal-provider-logo"
+                      />
+                    </div>
+                    <span className="modal-provider-name">{serviceName}</span>
+                    <div className="modal-provider-actions">
+                      <button
+                        className={`modal-move-btn ${isFirst ? 'disabled' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMoveUp(index);
+                        }}
+                        disabled={isFirst}
+                        title="Move up"
+                      >
+                        <ChevronUp size={16} />
+                      </button>
+                      <button
+                        className={`modal-move-btn ${isLast ? 'disabled' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMoveDown(index);
+                        }}
+                        disabled={isLast}
+                        title="Move down"
+                      >
+                        <ChevronDown size={16} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Locked providers section */}
+              {lockedConfigs.length > 0 && (
+                <>
+                  <div className="modal-divider">
+                    <span>{t('general.providerOrder.lockedProviders', { ns: 'options' })}</span>
+                  </div>
+                  {lockedConfigs.map((config) => {
+                    const serviceName = PROVIDER_TO_SERVICE_NAME[config.provider];
+                    return (
+                      <div key={config.provider} className="modal-provider-item locked">
+                        <div className="modal-locked-icon-wrapper">
+                          <CheckCircle size={18} className="modal-locked-icon" />
+                        </div>
+                        <span className="modal-provider-number locked-number">
+                          {providerOrder.length + 1}
+                        </span>
+                        <div className="modal-provider-logo-wrapper">
+                          <img
+                            src={PROVIDER_LOGOS[config.provider]}
+                            alt={serviceName}
+                            className="modal-provider-logo"
+                          />
+                        </div>
+                        <span className="modal-provider-name">{serviceName}</span>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </div>
+
+            <div className="modal-actions">
+              <button
+                onClick={handleResetProviderOrder}
+                className="modal-reset-btn"
+              >
+                <RotateCcw size={16} />
+                {t('general.providerOrder.resetOrder', { ns: 'options' })}
+              </button>
+              <button
+                onClick={handleCloseOrderModal}
+                className="modal-done-btn"
+              >
+                <CheckCircle size={16} />
+                {t('general.providerOrder.doneButton', { ns: 'options' })}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

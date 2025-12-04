@@ -13,65 +13,84 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.1-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-3.0.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-[🌐 Website](https://ahtapot.me) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Privacy](#-privacy) • [Development](#-development) • [API Keys](#-api-keys) • [Versioning](#-versioning)
+[Website](https://ahtapot.me) | [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Privacy](#privacy) | [Development](#development) | [API Keys](#api-keys) | [Versioning](#versioning)
 
 </div>
 
 ---
 
-## 🆕 What's New in v2.3.2
+## 🎉 What's New in v3.0.0
 
-### Latest Release (October 25, 2025)
-- 🎨 **Custom Loading Animation** - Branded Ahtapot logo spinner with smooth vertical rotation
-- 🎯 **Enhanced No-Results UX** - Color-coded cards showing searched IOCs and supported types
-- 📊 **Improved AbuseIPDB Layout** - Abuse Categories now appear before Location & Network
-- 🔽 **Collapsible OTX Section** - Threat summary section now collapsible (default closed)
-- 🌍 **Better i18n Coverage** - Enhanced translations for empty states and loading messages
+### Major Release - AI-Powered Threat Intelligence (December 4, 2025)
 
-### Active Threat Intelligence Providers
-- ✅ **VirusTotal** • **OTX AlienVault** • **AbuseIPDB** • **MalwareBazaar** • **ARIN** • **Shodan** • **GreyNoise**
-- 🎯 **Smart API Usage** - Only queries providers supporting the IOC type
-- ⚠️ **Rate Limit Protection** - Confirmation system for GreyNoise and Shodan
-- 🆓 **No API Key Required** - ARIN WHOIS (always available)
+This is a **major release** bringing AI-powered analysis, new threat intelligence providers, and a complete UI overhaul.
 
-📜 **[View Complete Changelog](CHANGELOG.md)** - Full version history and detailed release notes
+#### 🤖 AI Integration
+- **3 AI Providers** - Claude (Anthropic), Gemini (Google), GPT-4o (OpenAI)
+- **3 Analysis Modes** - Summary (quick triage), Analysis (escalation), Detailed (investigation)
+- **Structured Responses** - Consistent JSON output with verdict, risk level, confidence scores
+- **Smart Caching** - Language-aware AI result caching with 24-hour expiry
+- **Export Options** - Copy as Markdown, Export as PNG image
+
+#### 🔌 New Providers (Since 2.3.2)
+- **URLhaus** - Malicious URL database by abuse.ch (unlimited free)
+- **Pulsedive** - Threat intelligence with risk scoring (250 req/day free)
+- **Scamalytics** - IP fraud detection (5,000 credits/month free)
+
+#### 🎨 Complete UI Overhaul
+- **Fresh Color Palette** - Lime green accent (#C7F54D), coral red danger (#E63946)
+- **Responsive Design** - Mobile-optimized action buttons and layouts
+- **Drag-and-Drop Provider Order** - Customize how providers appear
+- **Modern Result Cards** - Enhanced UI for all providers
+
+### AI Providers (3 Providers)
+**Claude** (Sonnet 4) | **Gemini** (2.0 Flash) | **GPT-4o** (Mini)
+
+### Active Threat Intelligence Providers (10 Providers)
+**VirusTotal** | **OTX AlienVault** | **AbuseIPDB** | **MalwareBazaar** | **ARIN** | **Shodan** | **GreyNoise** | **URLhaus** | **Pulsedive** | **Scamalytics**
+
+- **Smart API Usage** - Only queries providers supporting the IOC type
+- **Rate Limit Protection** - Confirmation system for GreyNoise and Shodan
+- **No API Key Required** - ARIN WHOIS & URLhaus (always available)
+
+**[View Complete Changelog](CHANGELOG.md)** - Full version history and detailed release notes
 
 ---
 
-## 🎯 Features
+## Features
 
-### 🔍 **Intelligent IOC Detection**
+### Intelligent IOC Detection
 Automatically detects and analyzes various types of security indicators:
 
 <table>
   <tr>
-    <td><strong>🌐 Network</strong></td>
+    <td><strong>Network</strong></td>
     <td>IPv4/IPv6 addresses, Domains, URLs</td>
   </tr>
   <tr>
-    <td><strong>🔐 Hashes</strong></td>
+    <td><strong>Hashes</strong></td>
     <td>MD5, SHA1, SHA256 file hashes</td>
   </tr>
   <tr>
-    <td><strong>📧 Identity</strong></td>
+    <td><strong>Identity</strong></td>
     <td>Email addresses, CVE numbers</td>
   </tr>
   <tr>
-    <td><strong>💰 Crypto</strong></td>
+    <td><strong>Crypto</strong></td>
     <td>Bitcoin, Ethereum addresses</td>
   </tr>
 </table>
 
-### ⚡ **Lightning Fast Workflow**
+### Lightning Fast Workflow
 1. Select any text on any webpage
 2. Floating button appears instantly
 3. One-click analysis
 4. Results in beautiful side panel
 
-### 🛡️ **Multiple Threat Intelligence Sources**
+### Multiple Threat Intelligence Sources
 
 | Service | Purpose | Rate Limit |
 |---------|---------|------------|
@@ -80,18 +99,21 @@ Automatically detects and analyzes various types of security indicators:
 | **AbuseIPDB** | IP reputation & abuse reports | 1,000 req/day (free) |
 | **MalwareBazaar** | Malware hash database & sample repository | No strict limit (free) |
 | **ARIN** | IP WHOIS & network registration | 15 req/min (no key required) |
-| **Shodan** | Device search & vulnerability scanning | 100 results/month (free) ⚠️ |
-| **GreyNoise** | Internet noise detection & classification | 50 searches/week (free) ⚠️ |
+| **Shodan** | Device search & vulnerability scanning | 100 results/month (free) * |
+| **GreyNoise** | Internet noise detection & classification | 50 searches/week (free) * |
+| **URLhaus** | Malicious URL & malware distribution database | Unlimited (free) |
+| **Pulsedive** | Threat intelligence with IOC enrichment | 250 req/day (free) |
+| **Scamalytics** | IP fraud score & scam detection | 5,000 credits/month (free) |
 
-**⚠️** = Rate-limited providers with confirmation system to protect your quota
+Note: Rate-limited providers include confirmation system to protect your quota
 
-### 🎯 **Smart Provider Matching**
+### Smart Provider Matching
 - **Real-time Support Detection** - Each IOC shows compatible providers via badges
 - **Optimized API Calls** - Only queries providers that support the IOC type
 - **No Wasted Requests** - Saves API rate limits by skipping unsupported types
 - **Clear Messaging** - Informative explanations when providers don't support an IOC type
 
-### 🎨 **Modern & Intuitive Interface**
+### Modern & Intuitive Interface
 - Google Translate-style floating button
 - **Tab-based provider results** - Switch between all providers seamlessly (VirusTotal, OTX, AbuseIPDB, MalwareBazaar, ARIN, Shodan, GreyNoise)
 - **Provider support badges** - See which providers support each IOC at a glance
@@ -101,20 +123,20 @@ Automatically detects and analyzes various types of security indicators:
 - Smooth animations
 - Non-intrusive UX
 
-### 🔒 **Privacy First**
-- ✅ All API keys stored locally on your device
-- ✅ No data collection or tracking
-- ✅ Secure HTTPS connections only
-- ✅ Optional caching with configurable retention
-- ✅ Open source and transparent
-- ✅ Content Security Policy compliant
-- ✅ Read our [Privacy Policy](docs/PRIVACY.md) | [Gizlilik Politikası (TR)](docs/PRIVACY_TR.md)
+### Privacy First
+- All API keys stored locally on your device
+- No data collection or tracking
+- Secure HTTPS connections only
+- Optional caching with configurable retention
+- Open source and transparent
+- Content Security Policy compliant
+- Read our [Privacy Policy](docs/PRIVACY.md) | [Gizlilik Politikasi (TR)](docs/PRIVACY_TR.md)
 
 ---
 
-## 📦 Installation
+## Installation
 
-> 🌐 **Visit our website:** [ahtapot.me](https://ahtapot.me) for detailed installation guides and documentation
+> **Visit our website:** [ahtapot.me](https://ahtapot.me) for detailed installation guides and documentation
 
 ### From Chrome Web Store (Recommended)
 
@@ -148,21 +170,21 @@ npm run build
 
 ---
 
-## 🔒 Privacy
+## Privacy
 
 We take your privacy seriously. Here's what you need to know:
 
 ### What We Store (Locally Only)
-- ✅ **API Keys**: Stored securely on your device using Chrome's encrypted storage
-- ✅ **Cached Results**: Previously analyzed IOCs (optional, user-configurable retention period)
-- ✅ **User Preferences**: Language selection and settings
+- **API Keys**: Stored securely on your device using Chrome's encrypted storage
+- **Cached Results**: Previously analyzed IOCs (optional, user-configurable retention period)
+- **User Preferences**: Language selection and settings
 
 ### What We DON'T Do
-- ❌ **No Tracking**: Zero analytics or telemetry
-- ❌ **No Servers**: We don't operate any servers
-- ❌ **No Data Transmission**: Nothing leaves your device except API calls to security services
-- ❌ **No Sale of Data**: Your data is yours, period
-- ❌ **No Third-Party Sharing**: Only you and the security APIs you configure
+- **No Tracking**: Zero analytics or telemetry
+- **No Servers**: We don't operate any servers
+- **No Data Transmission**: Nothing leaves your device except API calls to security services
+- **No Sale of Data**: Your data is yours, period
+- **No Third-Party Sharing**: Only you and the security APIs you configure
 
 ### Cache Management
 - Configure how long analyzed IOCs are kept (1-30 days, default: 7 days)
@@ -171,17 +193,17 @@ We take your privacy seriously. Here's what you need to know:
 - All cached data stored locally only
 
 ### Full Privacy Policy
-📄 **Read the complete privacy policy:**
+**Read the complete privacy policy:**
 - [English Version](docs/PRIVACY.md)
 - [Türkçe Versiyon](docs/PRIVACY_TR.md)
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Quick Start Guide
 
-#### 1️⃣ Configure Settings
+#### 1. Configure Settings
 - Click the Ahtapot extension icon → Settings
 - **General Settings Tab:**
   - Choose your language (English/Türkçe)
@@ -190,7 +212,7 @@ We take your privacy seriously. Here's what you need to know:
   - Add your API keys for enhanced analysis
   - See [API Keys section](#-api-keys) for how to obtain them
 
-#### 2️⃣ Analyze IOCs
+#### 2. Analyze IOCs
 Choose your preferred method:
 
 **Method A: Text Selection**
@@ -215,18 +237,126 @@ Choose your preferred method:
 3. Click "Detect IOCs" → "Analyze"
 ```
 
-#### 3️⃣ Interpret Results
+#### 3. Interpret Results
 
 Results are color-coded for quick threat assessment:
 
-- 🟢 **Safe** - No threats detected
-- 🟡 **Suspicious** - Potential threat, investigate further
-- 🔴 **Malicious** - Confirmed threat, take action
-- ⚪ **Unknown** - Insufficient data for assessment
+- **Safe** - No threats detected (green)
+- **Suspicious** - Potential threat, investigate further (yellow)
+- **Malicious** - Confirmed threat, take action (red)
+- **Unknown** - Insufficient data for assessment (gray)
 
 ---
 
-## 🔍 Supported IOC Types
+## AI-Powered Analysis
+
+Ahtapot integrates with leading AI providers to deliver intelligent IOC analysis. Get instant verdicts, risk assessments, and actionable recommendations.
+
+### Supported AI Providers
+
+| Provider | Model | Best For |
+|----------|-------|----------|
+| **Claude** | Claude Sonnet 4 | Advanced reasoning, detailed analysis |
+| **Gemini** | Gemini 2.0 Flash | Fast analysis, free tier available |
+| **GPT-4o** | GPT-4o Mini | Balanced performance, cost-effective |
+
+### AI Analysis Modes
+
+IOC analysis results can be presented in 3 different modes. Each mode is optimized for different use cases and SOC levels.
+
+| Feature | Summary | Analysis | Detailed |
+|---------|---------|----------|----------|
+| **Target Audience** | L1 Triage | L1/L2 Handoff | L2/L3 + IR Team |
+| **Word Count** | ~200 | 400-600 | 800-1200 |
+| **Read Time** | 10 sec | 1-2 min | 3-5 min |
+| **Use Case** | Quick triage decision | Escalation decision | Full investigation |
+| **MITRE ATT&CK** | - | Basic | Detailed + Evidence |
+| **IR Guidance** | Single action | 2-3 actions | Full playbook |
+| **Detection Rules** | - | - | Sigma + Hunting queries |
+| **Threat Attribution** | - | If available | Full analysis |
+
+#### Summary Mode
+Designed for rapid triage decisions. Readable within 10 seconds with immediate actionable output.
+
+**Best for:** Alert queue management, initial triage, high-volume environments
+
+**Output includes:**
+- Verdict with color-coded indicator
+- Risk and confidence levels
+- TL;DR (1-2 sentences)
+- Key signals (detection, reputation, associations)
+- Single recommended action
+
+#### Analysis Mode
+Provides sufficient context for escalation decisions. Used during L1 to L2 handoff process.
+
+**Best for:** Escalation decisions, L1/L2 handoff documentation, alert validation
+
+**Output includes:**
+- Everything in Summary, plus:
+- Provider-by-provider breakdown table
+- Consensus and conflict analysis
+- False positive indicators
+- Basic MITRE ATT&CK mapping
+- Multiple prioritized actions
+- Analyst notes and limitations
+
+#### Detailed Mode
+Provides full investigation support. IR workflow-compatible structure with evidence-based analysis.
+
+**Best for:** Full incident investigation, IR team handoff, threat hunting, post-incident documentation
+
+**Output includes:**
+- Everything in Analysis, plus:
+- Deep dive per IOC
+- Threat actor/campaign attribution
+- Kill chain phase assessment
+- CIA impact analysis
+- Full IR playbook (Containment → Eradication → Recovery)
+- Sigma rule suggestions
+- SIEM/EDR hunting queries
+- External intelligence references
+- Related IOCs for pivoting
+
+### Verdict Indicators
+
+All modes use consistent verdict indicators:
+
+| Color | Verdict | Meaning |
+|-------|---------|---------|
+| Red | MALICIOUS | Confirmed threat, immediate action required |
+| Orange | SUSPICIOUS | Likely threat, investigation recommended |
+| Yellow | LIKELY BENIGN | Probably safe, verify if needed |
+| Green | CLEAN | No threats detected |
+| Gray | UNKNOWN | Insufficient data for assessment |
+
+### Selecting the Right Mode
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Which mode to use?                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Need quick triage decision?                                │
+│  └─► Summary                                                │
+│                                                             │
+│  Need to decide on escalation?                              │
+│  └─► Analysis                                               │
+│                                                             │
+│  Investigating confirmed incident?                          │
+│  └─► Detailed                                               │
+│                                                             │
+│  Writing IR report or hunting threats?                      │
+│  └─► Detailed                                               │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+> **Note:** AI analysis requires API keys from the respective providers. Configure them in Settings → API Keys → AI Providers.
+
+---
+
+## Supported IOC Types
 
 | Type | Example | Pattern |
 |------|---------|---------|
@@ -244,7 +374,7 @@ Results are color-coded for quick threat assessment:
 
 ---
 
-## 🛠️ Development
+## Development
 
 ### Prerequisites
 
@@ -265,13 +395,44 @@ Results are color-coded for quick threat assessment:
 
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Build the extension: `npm run build`
-4. Load `dist` folder in Chrome
-5. Test on various websites
+3. (Optional) Copy `.env.example` to `.env` and add your API keys for development
+4. Build the extension: `npm run build`
+5. Load `dist` folder in Chrome
+6. Test on various websites
+
+### Development API Keys
+
+In development mode, API keys can be automatically loaded from a `.env` file:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit .env and add your keys
+```
+
+**Supported Environment Variables:**
+
+| Variable | Provider |
+|----------|----------|
+| `VITE_VIRUSTOTAL_API_KEY` | VirusTotal |
+| `VITE_URLHAUS_API_KEY` | URLhaus |
+| `VITE_PULSEDIVE_API_KEY` | Pulsedive |
+| `VITE_SCAMALYTICS_API_KEY` | Scamalytics |
+| `VITE_OTX_API_KEY` | AlienVault OTX |
+| `VITE_ABUSEIPDB_API_KEY` | AbuseIPDB |
+| `VITE_SHODAN_API_KEY` | Shodan |
+| `VITE_GREYNOISE_API_KEY` | GreyNoise |
+| `VITE_MALWAREBAZAAR_API_KEY` | MalwareBazaar |
+| `VITE_CLAUDE_API_KEY` | Claude (Anthropic) |
+| `VITE_GEMINI_API_KEY` | Gemini (Google) |
+| `VITE_OPENAI_API_KEY` | OpenAI |
+
+> **Note:** Environment keys are only loaded in development mode (`npm run dev`) and only if no key exists in storage.
 
 ---
 
-## 🔑 API Keys
+## API Keys
 
 Get free API keys to unlock full analysis capabilities:
 
@@ -309,11 +470,12 @@ Get free API keys to unlock full analysis capabilities:
   - ISP and usage type detection
   - Community-reported abuse data
 
-### MalwareBazaar
+### MalwareBazaar (abuse.ch)
 - **Purpose:** Malware sample database and hash reputation lookup
 - **Free Tier:** No API key required, no strict rate limits
 - **Supported IOCs:** File Hashes (MD5, SHA1, SHA256) only
 - **Documentation:** [bazaar.abuse.ch/api](https://bazaar.abuse.ch/api/)
+- **Note:** Part of the [abuse.ch](https://abuse.ch) project (same organization as URLhaus)
 - **Features:**
   - Malware sample information and metadata
   - File type and signature detection
@@ -338,7 +500,7 @@ Get free API keys to unlock full analysis capabilities:
 
 ### Shodan
 - **Purpose:** Internet-connected device search and vulnerability analysis
-- **Free Tier:** 100 results per month (⚠️ rate-limited with confirmation)
+- **Free Tier:** 100 results per month (rate-limited with confirmation)
 - **Supported IOCs:** IPv4, IPv6, Domain
 - **Get Key:** Visit [developer.shodan.io/api](https://developer.shodan.io/api) → Click "Show API Key" (top right)
 - **Features:**
@@ -352,7 +514,7 @@ Get free API keys to unlock full analysis capabilities:
 
 ### GreyNoise
 - **Purpose:** Internet-wide noise detection and threat classification
-- **Free Tier:** 50 searches per week (⚠️ rate-limited with confirmation, combined with Visualizer usage)
+- **Free Tier:** 50 searches per week (rate-limited with confirmation, combined with Visualizer usage)
 - **Supported IOCs:** IPv4 only
 - **Get Key:** [viz.greynoise.io/account/details](https://viz.greynoise.io/account/details)
 - **Features:**
@@ -362,6 +524,44 @@ Get free API keys to unlock full analysis capabilities:
   - Actor information and tags
   - Last seen timestamps
   - Metadata about scanning activity
+
+### URLhaus (abuse.ch)
+- **Purpose:** Malicious URL and malware distribution database
+- **Free Tier:** Unlimited (free account)
+- **Supported IOCs:** URL, Domain, IPv4, IPv6, MD5, SHA256
+- **Documentation:** [urlhaus.abuse.ch/api](https://urlhaus.abuse.ch/api/)
+- **Note:** Part of the [abuse.ch](https://abuse.ch) project (same organization as MalwareBazaar)
+- **Features:**
+  - Malicious URL database
+  - Payload and threat classification
+  - URL status monitoring (online/offline)
+  - Malware distribution tracking
+  - Blacklist status (Spamhaus DBL, SURBL)
+
+### Pulsedive
+- **Purpose:** Threat intelligence platform with IOC enrichment
+- **Free Tier:** 250 requests/day (2,500/month)
+- **Supported IOCs:** IPv4, IPv6, Domain, URL, MD5, SHA1, SHA256
+- **Get Key:** [pulsedive.com/account](https://pulsedive.com/account/)
+- **Features:**
+  - Risk level assessment (none/low/medium/high/critical)
+  - Threat feed tracking
+  - Risk factor analysis
+  - Geographic and organization data
+  - Community-driven intelligence
+
+### Scamalytics
+- **Purpose:** IP fraud score and scam detection
+- **Free Tier:** 5,000 credits/month (15-day PREMIUM trial)
+- **Supported IOCs:** IPv4, IPv6 only
+- **Get Key:** [scamalytics.com/ip/api](https://scamalytics.com/ip/api) (requires manual approval)
+- **Note:** Registration requires manual review. You'll receive API credentials via email within 24 hours.
+- **Features:**
+  - IP fraud risk score (0-100)
+  - Datacenter & VPN detection
+  - TOR exit node detection
+  - External blacklist checks
+  - Proxy detection (iCloud Private Relay, AWS, Google)
 
 > **Privacy Note:** All API keys are stored locally in Chrome's secure storage. They never leave your device except when making API calls to the respective services.
 >
@@ -383,7 +583,7 @@ Get free API keys to unlock full analysis capabilities:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! This project is actively maintained.
 
@@ -406,13 +606,13 @@ Contributions are welcome! This project is actively maintained.
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📞 Support
+## Support
 
 - **Website:** [ahtapot.me](https://ahtapot.me)
 - **Chrome Web Store:** [Install Extension](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
@@ -423,7 +623,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📋 Versioning
+## Versioning
 
 This project follows [Semantic Versioning 2.0.0](https://semver.org/) (SemVer).
 
@@ -435,19 +635,17 @@ This project follows [Semantic Versioning 2.0.0](https://semver.org/) (SemVer).
 
 For detailed information:
 
-📚 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
-📜 **[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
+**[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
+**[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
 
-**Current Version:** 2.3.1
+**Current Version:** 3.0.0
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the cybersecurity community**
+**Built for the cybersecurity community**
 
-⭐ Star this repo if you find it useful!
-
-[🌐 Website](https://ahtapot.me) • [Chrome Web Store](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg) • [Report Bug](https://github.com/abdullahcicekli/ahtapot/issues) • [Request Feature](https://github.com/abdullahcicekli/ahtapot/issues)
+[Website](https://ahtapot.me) | [Chrome Web Store](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg) | [Report Bug](https://github.com/abdullahcicekli/ahtapot/issues) | [Request Feature](https://github.com/abdullahcicekli/ahtapot/issues)
 
 </div>

@@ -1,0 +1,223 @@
+.provider-slider-container {
+  position: relative;
+  margin-bottom: 12px;
+  padding: 0 4px;
+  overflow: visible;
+}
+
+.provider-slider {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px;
+  cursor: grab;
+  user-select: none;
+  
+  /* Hide scrollbar but keep functionality */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.provider-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.provider-slider.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.provider-slider:not(.dragging) {
+  scroll-behavior: smooth;
+}
+
+.provider-slide-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  background: #222228;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Fixed position tooltip */
+.provider-tooltip {
+  position: fixed;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  background: rgba(26, 26, 31, 0.98);
+  border: 1px solid rgba(255, 247, 112, 0.4);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  animation: tooltipFadeIn 0.15s ease;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Enabled state */
+.provider-slide-item.enabled {
+  background: #2A2A32;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.provider-slide-item.enabled:hover {
+  background: #32323C;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Active state - highlighted with yellow border */
+.provider-slide-item.active {
+  background: rgba(255, 247, 112, 0.08);
+  border-color: #C7F54D;
+  box-shadow: 0 0 0 1px rgba(255, 247, 112, 0.2);
+}
+
+.provider-slide-item.active:hover {
+  background: rgba(255, 247, 112, 0.12);
+  border-color: #C7F54D;
+}
+
+/* Disabled state */
+.provider-slide-item.disabled {
+  background: #1E1E24;
+  border-color: rgba(255, 255, 255, 0.04);
+  opacity: 0.6;
+}
+
+.provider-slide-item.disabled:hover {
+  background: #222228;
+  border-color: rgba(255, 247, 112, 0.1);
+  opacity: 0.8;
+}
+
+/* Logo container */
+.provider-slide-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.provider-slide-logo img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: all 0.2s ease;
+}
+
+/* Enabled logo - colorful */
+.provider-slide-item.enabled .provider-slide-logo img {
+  filter: brightness(1.1);
+}
+
+/* Disabled logo - grayscale */
+.provider-slide-item.disabled .provider-slide-logo img {
+  filter: grayscale(100%) opacity(0.4);
+}
+
+.provider-slide-item.disabled:hover .provider-slide-logo img {
+  filter: grayscale(60%) opacity(0.6);
+}
+
+/* Scroll button */
+.slider-scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: #C7F54D;
+  border: none;
+  border-radius: 10px;
+  color: #1A1A1F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: -8px 0 16px 8px #1A1A1F;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.slider-scroll-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+  filter: brightness(1.1);
+}
+
+.slider-scroll-btn:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .provider-slider {
+    gap: 8px;
+  }
+
+  .provider-slide-item {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+  }
+
+  .provider-slide-logo img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .slider-scroll-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 380px) {
+  .provider-slider {
+    gap: 6px;
+  }
+
+  .provider-slide-item {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+    border-radius: 8px;
+  }
+
+  .provider-slide-logo img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .slider-scroll-btn {
+    width: 28px;
+    height: 28px;
+  }
+}

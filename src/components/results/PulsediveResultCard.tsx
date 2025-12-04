@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IOCAnalysisResult } from '@/types/ioc';
-import { AlertCircle, AlertTriangle, CheckCircle, ExternalLink, Shield, TrendingUp } from 'lucide-react';
+import { 
+  AlertCircle, 
+  AlertTriangle, 
+  CheckCircle, 
+  ExternalLink, 
+  Shield, 
+  Building, 
+  Clock, 
+  Globe, 
+  HelpCircle,
+  Info,
+  Tag,
+  Activity
+} from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
-import './ResultCard.css';
+import { ResultCopyButtons, formatPulsediveResults } from './ResultCopyButtons';
+import './PulsediveResultCard.css';
 
 interface PulsediveResultCardProps {
   result: IOCAnalysisResult;
@@ -10,92 +24,266 @@ interface PulsediveResultCardProps {
 
 export const PulsediveResultCard: React.FC<PulsediveResultCardProps> = ({ result }) => {
   const { t } = useTranslation('results');
-  const { details, status } = result;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { details } = result;
 
-  const getStatusIcon = () => {
-    if (status === 'malicious') return <AlertCircle className="status-icon malicious" />;
-    if (status === 'suspicious') return <AlertTriangle className="status-icon suspicious" />;
-    return <CheckCircle className="status-icon safe" />;
+  const risk = details?.risk || details?.risk_recommended || 'unknown';
+  
+  const getRiskColor = (risk: string) => {
+    const riskLower = risk.toLowerCase();
+    if (riskLower === 'critical') return '#dc2626';
+    if (riskLower === 'high') return '#E63946';
+    if (riskLower === 'medium') return '#f97316';
+    if (riskLower === 'low') return '#3b82f6';
+    if (riskLower === 'none') return '#4ADE80';
+    return '#6b7280';
   };
 
-  const risk = details?.risk || 'unknown';
-  const getRiskColor = (risk: string) => {
-    if (risk === 'critical' || risk === 'high') return '#ef4444';
-    if (risk === 'medium') return '#eab308';
-    if (risk === 'low') return '#3b82f6';
-    return '#22c55e';
+  const getRiskIcon = () => {
+    const riskLower = risk.toLowerCase();
+    if (riskLower === 'critical' || riskLower === 'high') return <AlertCircle size={28} />;
+    if (riskLower === 'medium') return <AlertTriangle size={28} />;
+    if (riskLower === 'low' || riskLower === 'none') return <Shield size={28} />;
+    return <HelpCircle size={28} />;
+  };
+
+  const getStatusBadge = () => {
+    const riskLower = risk.toLowerCase();
+    if (riskLower === 'critical') return { label: t('pulsedive.status.critical'), className: 'critical', icon: <AlertCircle size={16} /> };
+    if (riskLower === 'high') return { label: t('pulsedive.status.high'), className: 'high', icon: <AlertCircle size={16} /> };
+    if (riskLower === 'medium') return { label: t('pulsedive.status.medium'), className: 'medium', icon: <AlertTriangle size={16} /> };
+    if (riskLower === 'low') return { label: t('pulsedive.status.low'), className: 'low', icon: <Shield size={16} /> };
+    if (riskLower === 'none') return { label: t('pulsedive.status.clean'), className: 'clean', icon: <CheckCircle size={16} /> };
+    return { label: t('pulsedive.status.unknown'), className: 'unknown', icon: <HelpCircle size={16} /> };
   };
 
   const iid = details?.iid;
+  const geo = details?.properties?.geo;
+  const whois = details?.properties?.whois;
+  const statusBadge = getStatusBadge();
+  const riskColor = getRiskColor(risk);
+
+  // Pulsedive expects base64 encoded IOC value in the URL
+  // Example: 144.172.104.117 -> MTQ0LjE3Mi4xMDQuMTE3
+  const getPulsediveUrl = () => {
+    if (iid) {
+      return `https://pulsedive.com/indicator/?iid=${iid}`;
+    }
+    // Base64 encode the IOC value
+    const base64Value = window.btoa(result.ioc.value);
+    return `https://pulsedive.com/indicator/?ioc=${base64Value}`;
+  };
 
   return (
-    <div className="result-card">
-      <div className="result-card-header">
-        <div className="result-card-title">
-          {getStatusIcon()}
-          <span>{t('pulsedive.title')}</span>
-        </div>
-        {iid && (
-          <a
-            href={`https://pulsedive.com/indicator/?iid=${iid}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="external-link"
+    <div className="pulsedive-result-card" ref={cardRef}>
+      {/* External Link - Top Right */}
+      <a
+        href={getPulsediveUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-external-link"
+        title="View on Pulsedive"
+      >
+        <ExternalLink size={16} />
+      </a>
+      {/* Header */}
+      <div className="pulsedive-header">
+        <div className="pulsedive-header-left">
+          <div 
+            className="pulsedive-risk-circle"
+            style={{ '--risk-color': riskColor } as React.CSSProperties}
           >
-            <ExternalLink size={16} />
-          </a>
-        )}
+            <div className="pulsedive-risk-icon">
+              {getRiskIcon()}
+            </div>
+            <div className="pulsedive-risk-label-small">Risk</div>
+          </div>
+          <div className="pulsedive-risk-info">
+            <div className="pulsedive-risk-title">{t('pulsedive.title')}</div>
+            <div className="pulsedive-risk-value" style={{ color: riskColor }}>
+              {risk.charAt(0).toUpperCase() + risk.slice(1)}
+            </div>
+          </div>
+        </div>
+
+        <div className="pulsedive-header-right">
+          <div className="pulsedive-ioc-info">
+            <div className="pulsedive-ioc-value">{result.ioc.value}</div>
+            <div className="pulsedive-ioc-type">{result.ioc.type.toUpperCase()}</div>
+          </div>
+        </div>
+
+        <div className="pulsedive-header-actions">
+          <div className={`pulsedive-status-badge ${statusBadge.className}`}>
+            {statusBadge.icon}
+            <span>{statusBadge.label}</span>
+          </div>
+        </div>
       </div>
 
-      <div className="result-card-body">
+      {/* Content */}
+      <div className="pulsedive-content">
         {details?.message ? (
-          <p className="info-message">{details.message}</p>
+          <div className="pulsedive-info-message">
+            <Info size={18} />
+            <span>{details.message}</span>
+          </div>
         ) : (
-          <>
-            <div className="info-row">
-              <Shield size={16} />
-              <span>
-                <strong>{t('pulsedive.risk')}:</strong>{' '}
-                <span style={{ color: getRiskColor(risk), fontWeight: 'bold', textTransform: 'capitalize' }}>
-                  {risk}
-                </span>
-              </span>
-            </div>
+          <div className="pulsedive-overview-grid">
+            {/* Location Information */}
+            {(geo || whois) && (
+              <div className="pulsedive-metric-card">
+                <div className="pulsedive-metric-header">
+                  <Globe size={18} />
+                  <span>{t('pulsedive.location')}</span>
+                </div>
+                <div className="pulsedive-metric-body">
+                  {geo?.country && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.country')}</span>
+                      <span className="pulsedive-metric-value">
+                        {geo.city ? `${geo.city}, ` : ''}{geo.country}
+                        {geo.countrycode ? ` (${geo.countrycode})` : ''}
+                      </span>
+                    </div>
+                  )}
+                  {geo?.region && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.region')}</span>
+                      <span className="pulsedive-metric-value">{geo.region}</span>
+                    </div>
+                  )}
+                  {geo?.asn && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">ASN</span>
+                      <span className="pulsedive-metric-value monospace">{geo.asn}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
+            {/* Organization Information */}
+            {(geo?.org || whois?.['org-name']) && (
+              <div className="pulsedive-metric-card">
+                <div className="pulsedive-metric-header">
+                  <Building size={18} />
+                  <span>{t('pulsedive.org')}</span>
+                </div>
+                <div className="pulsedive-metric-body">
+                  <div className="pulsedive-metric-item">
+                    <span className="pulsedive-metric-label">{t('pulsedive.orgName')}</span>
+                    <span className="pulsedive-metric-value">
+                      {Array.isArray(geo?.org) ? geo.org[0] : (geo?.org || whois?.['org-name'])}
+                    </span>
+                  </div>
+                  {whois?.netname && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.netname')}</span>
+                      <span className="pulsedive-metric-value">{whois.netname}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Timestamps */}
+            {(details?.stamp_added || details?.stamp_updated || details?.stamp_seen) && (
+              <div className="pulsedive-metric-card">
+                <div className="pulsedive-metric-header">
+                  <Clock size={18} />
+                  <span>{t('pulsedive.timestamps')}</span>
+                </div>
+                <div className="pulsedive-metric-body">
+                  {details?.stamp_added && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.firstSeen')}</span>
+                      <span className="pulsedive-metric-value">{details.stamp_added.split(' ')[0]}</span>
+                    </div>
+                  )}
+                  {details?.stamp_updated && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.lastUpdated')}</span>
+                      <span className="pulsedive-metric-value">{details.stamp_updated.split(' ')[0]}</span>
+                    </div>
+                  )}
+                  {details?.stamp_seen && (
+                    <div className="pulsedive-metric-item">
+                      <span className="pulsedive-metric-label">{t('pulsedive.lastSeen')}</span>
+                      <span className="pulsedive-metric-value">{details.stamp_seen.split(' ')[0]}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Threats */}
             {details?.threats && details.threats.length > 0 && (
-              <div className="info-section">
-                <div className="section-title">{t('pulsedive.threats')}</div>
-                <div className="threat-list">
+              <div className="pulsedive-metric-card full-width">
+                <div className="pulsedive-metric-header">
+                  <AlertTriangle size={18} />
+                  <span>{t('pulsedive.threats')}</span>
+                </div>
+                <div className="pulsedive-threat-list">
                   {details.threats.slice(0, 5).map((threat: any, index: number) => (
-                    <div key={index} className="threat-item">
-                      <span className="threat-name">{threat.name}</span>
-                      <span className="threat-category">{threat.category}</span>
+                    <div key={index} className="pulsedive-threat-item">
+                      <span className="pulsedive-threat-name">{threat.name}</span>
+                      {threat.category && (
+                        <span className="pulsedive-threat-category">{threat.category}</span>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
+            {/* Risk Factors */}
             {details?.riskfactors && details.riskfactors.length > 0 && (
-              <div className="info-section">
-                <div className="section-title">{t('pulsedive.riskFactors')}</div>
-                {details.riskfactors.slice(0, 3).map((factor: any, index: number) => (
-                  <div key={index} className="info-row">
-                    <TrendingUp size={14} />
-                    <span>{factor.description}</span>
-                  </div>
-                ))}
+              <div className="pulsedive-metric-card full-width">
+                <div className="pulsedive-metric-header">
+                  <Activity size={18} />
+                  <span>{t('pulsedive.riskFactors')}</span>
+                </div>
+                <div className="pulsedive-tags">
+                  {details.riskfactors.slice(0, 8).map((factor: any, index: number) => (
+                    <span key={index} className="pulsedive-tag threat">
+                      {factor.description || factor.risk || factor}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
+            {/* Feeds */}
             {details?.feeds && details.feeds.length > 0 && (
-              <div className="info-row">
-                <span><strong>{t('pulsedive.feeds')}:</strong> {details.feeds.length}</span>
+              <div className="pulsedive-metric-card full-width">
+                <div className="pulsedive-metric-header">
+                  <Tag size={18} />
+                  <span>{t('pulsedive.feeds')}</span>
+                </div>
+                <div className="pulsedive-tags">
+                  {details.feeds.slice(0, 8).map((feed: any, index: number) => (
+                    <span key={index} className="pulsedive-tag feed">
+                      {feed.name || feed}
+                    </span>
+                  ))}
+                  {details.feeds.length > 8 && (
+                    <span className="pulsedive-tag">+{details.feeds.length - 8}</span>
+                  )}
+                </div>
               </div>
             )}
-          </>
+          </div>
         )}
+
       </div>
+
+      {/* Copy Buttons */}
+      <ResultCopyButtons
+        result={result}
+        formattedResults={formatPulsediveResults(result)}
+        cardRef={cardRef}
+      />
     </div>
   );
 };

@@ -1,0 +1,369 @@
+/* Scamalytics Result Card */
+
+.scamalytics-result-card {
+  position: relative;
+  background: var(--bg-card, #222228);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-xl, 10px);
+  overflow: hidden;
+}
+
+/* Header */
+.scamalytics-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg, 16px);
+  padding: var(--space-xl, 20px);
+  padding-right: 50px;
+  background: var(--bg-header, #1A1A1F);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  flex-wrap: wrap;
+}
+
+.scamalytics-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 12px);
+}
+
+/* Score Circle */
+.scamalytics-score-circle {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-section, #2A2A32);
+  border: 3px solid var(--score-color, var(--warning, #f59e0b));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scamalytics-score-value {
+  font-size: var(--text-xl, 16px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.scamalytics-score-label-small {
+  font-size: var(--text-xs, 10px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin-top: 2px;
+}
+
+.scamalytics-score-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scamalytics-score-title {
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.scamalytics-risk-value {
+  font-size: var(--text-base, 12px);
+  font-weight: 600;
+}
+
+.scamalytics-header-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.scamalytics-ioc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scamalytics-ioc-value {
+  font-size: var(--text-lg, 14px);
+  font-weight: 600;
+  color: var(--text-primary, #FFFFFF);
+  font-family: var(--font-mono, 'Monaco', monospace);
+  word-break: break-all;
+}
+
+.scamalytics-ioc-type {
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  text-transform: uppercase;
+}
+
+.scamalytics-header-actions {
+  display: flex;
+  gap: var(--space-sm, 8px);
+  align-items: center;
+}
+
+/* Status Badge */
+.scamalytics-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-base, 12px);
+  font-weight: 600;
+}
+
+.scamalytics-status-badge.very-high,
+.scamalytics-status-badge.high {
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+}
+
+.scamalytics-status-badge.medium {
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+}
+
+.scamalytics-status-badge.low {
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+}
+
+.scamalytics-status-badge.very-low {
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+}
+
+.scamalytics-status-badge.unknown {
+  background: var(--bg-section, #2A2A32);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+/* External Link in header */
+.scamalytics-external-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  text-decoration: none;
+}
+
+.scamalytics-external-link:hover {
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border-color: var(--accent-border, rgba(255, 247, 112, 0.3));
+  color: var(--accent, #FFF770);
+}
+
+/* Status Description */
+.scamalytics-status-description {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 12px) var(--space-xl, 20px);
+  font-size: var(--text-md, 13px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  background: var(--bg-section, #2A2A32);
+}
+
+.scamalytics-status-description.malicious {
+  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
+  color: var(--danger, #ef4444);
+  border-left: 3px solid var(--danger, #ef4444);
+}
+
+.scamalytics-status-description.suspicious {
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border-left: 3px solid var(--warning, #f59e0b);
+}
+
+.scamalytics-status-description.clean {
+  background: var(--success-bg, rgba(34, 197, 94, 0.15));
+  color: var(--success, #22c55e);
+  border-left: 3px solid var(--success, #22c55e);
+}
+
+/* Content */
+.scamalytics-content {
+  padding: var(--space-xl, 20px);
+}
+
+/* Info Message */
+.scamalytics-info-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  padding: var(--space-lg, 16px);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
+  border-radius: var(--radius-lg, 8px);
+  color: var(--info, #60a5fa);
+  font-size: var(--text-md, 13px);
+}
+
+/* Stats Grid */
+.scamalytics-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md, 12px);
+  margin-bottom: var(--space-lg, 16px);
+}
+
+.scamalytics-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-md, 12px);
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 6px);
+  text-align: center;
+}
+
+.scamalytics-stat-label {
+  font-size: var(--text-sm, 11px);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+}
+
+.scamalytics-stat-value {
+  font-size: var(--text-lg, 14px);
+  font-weight: 600;
+  color: var(--text-primary, #FFFFFF);
+}
+
+.scamalytics-stat-value.danger {
+  color: var(--danger, #ef4444);
+}
+
+.scamalytics-stat-value.success {
+  color: var(--success, #22c55e);
+}
+
+/* Indicators Section */
+.scamalytics-indicators-section {
+  margin-bottom: var(--space-lg, 16px);
+}
+
+.scamalytics-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  margin-bottom: var(--space-md, 12px);
+}
+
+.scamalytics-section-title svg {
+  color: var(--accent, #FFF770);
+}
+
+.scamalytics-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 8px);
+}
+
+.scamalytics-tag {
+  padding: 5px 10px;
+  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border-radius: var(--radius-md, 6px);
+  font-size: var(--text-sm, 11px);
+  color: var(--accent, #FFF770);
+}
+
+.scamalytics-tag.warning {
+  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
+  color: var(--warning, #f59e0b);
+  border-color: var(--warning-border, rgba(245, 158, 11, 0.3));
+}
+
+/* Overview Grid */
+.scamalytics-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-lg, 16px);
+}
+
+.scamalytics-metric-card {
+  background: var(--bg-section, #2A2A32);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-lg, 16px);
+}
+
+.scamalytics-metric-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.scamalytics-metric-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  font-size: var(--text-md, 13px);
+  font-weight: 600;
+  color: var(--accent, #FFF770);
+  margin-bottom: var(--space-md, 12px);
+  padding-bottom: var(--space-sm, 8px);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+.scamalytics-metric-header svg {
+  color: var(--accent, #FFF770);
+}
+
+.scamalytics-metric-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 8px);
+}
+
+.scamalytics-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-base, 12px);
+}
+
+.scamalytics-metric-label {
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+}
+
+.scamalytics-metric-value {
+  color: var(--text-primary, #FFFFFF);
+  font-weight: 500;
+}
+
+.scamalytics-metric-value.warning {
+  color: var(--warning, #f59e0b);
+}
+
+.scamalytics-metric-value.danger {
+  color: var(--danger, #ef4444);
+}
+
+@media (max-width: 768px) {
+  .scamalytics-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .scamalytics-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .scamalytics-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}

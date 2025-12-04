@@ -1,0 +1,218 @@
+/* Error Result Card */
+.error-result-card {
+  background: var(--bg-secondary, #1E1E24);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header */
+.error-result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(239, 68, 68, 0.08);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.error-result-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.error-icon {
+  flex-shrink: 0;
+  color: #ef4444;
+}
+
+.error-icon.auth {
+  color: #f59e0b;
+}
+
+.error-icon.rate-limit {
+  color: #8b5cf6;
+}
+
+.error-result-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.error-result-source {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.error-result-type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.error-result-header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.error-result-ioc-info {
+  text-align: right;
+}
+
+.error-result-ioc-value {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  word-break: break-all;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.error-result-ioc-type {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.error-result-status {
+  flex-shrink: 0;
+}
+
+.error-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Error Content */
+.error-result-content {
+  padding: 16px;
+}
+
+.error-result-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.error-result-message svg {
+  flex-shrink: 0;
+  color: #ef4444;
+  margin-top: 2px;
+}
+
+.error-message-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.error-code {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  background: rgba(239, 68, 68, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.error-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Troubleshooting Tips */
+.error-result-tips {
+  background: var(--bg-tertiary, #15151A);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.error-tips-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.error-tips-list {
+  margin: 0;
+  padding: 0 0 0 20px;
+  list-style: disc;
+}
+
+.error-tips-list li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.error-tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .error-result-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .error-result-header-right {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+
+  .error-result-ioc-info {
+    text-align: left;
+  }
+
+  .error-result-ioc-value {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .error-result-status {
+    flex: 1 1 100%;
+  }
+
+  .error-status-badge {
+    justify-content: center;
+    width: 100%;
+  }
+}
+

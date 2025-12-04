@@ -152,3 +152,25 @@
     font-size: 9px;
   }
 }
+
+@media (max-width: 420px) {
+  .provider-badge {
+    min-width: 65px;
+    padding: 5px 8px;
+    gap: 4px;
+  }
+
+  .provider-logo-wrapper {
+    width: 24px;
+    height: 24px;
+  }
+
+  .provider-logo {
+    width: 18px;
+    height: 18px;
+  }
+
+  .provider-name {
+    font-size: 8px;
+  }
+}

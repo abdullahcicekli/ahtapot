@@ -1,0 +1,275 @@
+/* AI Result Card Styles */
+
+.ai-result-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.ai-result-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.ai-result-error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.08) 100%);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Header */
+.ai-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ai-result-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ai-result-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-result-icon {
+  color: #a78bfa;
+}
+
+.ai-result-error-icon {
+  color: #ef4444;
+}
+
+.ai-result-provider {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ai-result-mode-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ai-result-mode-badge.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.ai-result-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-result-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ai-result-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-result-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Content */
+.ai-result-content {
+  padding: 0 16px 16px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-result-content-error {
+  color: #ef4444;
+  font-size: 14px;
+}
+
+/* Markdown Rendering */
+.ai-result-markdown {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ai-result-markdown h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 20px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-result-markdown h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 18px 0 10px;
+}
+
+.ai-result-markdown h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 16px 0 8px;
+}
+
+.ai-result-markdown p {
+  margin: 10px 0;
+}
+
+.ai-result-markdown strong {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.ai-result-markdown em {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ai-result-markdown code {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #a78bfa;
+}
+
+.ai-result-markdown pre {
+  margin: 12px 0;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.ai-result-markdown pre code {
+  background: transparent;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ai-result-markdown ul,
+.ai-result-markdown ol {
+  margin: 10px 0;
+  padding-left: 24px;
+}
+
+.ai-result-markdown li {
+  margin: 6px 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ai-result-markdown li::marker {
+  color: #a78bfa;
+}
+
+.ai-result-markdown hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-result-markdown a {
+  color: #60a5fa;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ai-result-markdown a:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+.ai-result-markdown table {
+  width: 100%;
+  margin: 12px 0;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ai-result-markdown tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ai-result-markdown td {
+  padding: 10px 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ai-result-markdown tr:first-child td {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Blockquotes */
+.ai-result-markdown blockquote {
+  margin: 12px 0;
+  padding: 12px 16px;
+  background: rgba(139, 92, 246, 0.05);
+  border-left: 3px solid #a78bfa;
+  border-radius: 0 8px 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Scrollbar for code blocks */
+.ai-result-markdown pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.ai-result-markdown pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-result-markdown pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.ai-result-markdown pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
