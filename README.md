@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.8.1-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-3.0.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [Website](https://ahtapot.me) | [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Privacy](#privacy) | [Development](#development) | [API Keys](#api-keys) | [Versioning](#versioning)
@@ -22,16 +22,29 @@
 
 ---
 
-## What's New in v2.8.1
+## 🎉 What's New in v3.0.0
 
-### Latest Release (December 4, 2025)
-- **New Color Palette** - Fresh visual identity with lime green accent (#C7F54D)
-- **Responsive UI** - Action buttons adapt to screen size (icons on mobile)
-- **Recommended Models** - ThumbsUp indicators for suggested AI models
-- **Provider Tooltips** - Cleaner slider with hover tooltips instead of labels
-- **Smart Analyze Button** - Only activates when input has text
-- **Improved Dropdowns** - ChevronDown indicators for clickable elements
-- **Landing Page Update** - ahtapot.me updated with new color scheme
+### Major Release - AI-Powered Threat Intelligence (December 4, 2025)
+
+This is a **major release** bringing AI-powered analysis, new threat intelligence providers, and a complete UI overhaul.
+
+#### 🤖 AI Integration
+- **3 AI Providers** - Claude (Anthropic), Gemini (Google), GPT-4o (OpenAI)
+- **3 Analysis Modes** - Summary (quick triage), Analysis (escalation), Detailed (investigation)
+- **Structured Responses** - Consistent JSON output with verdict, risk level, confidence scores
+- **Smart Caching** - Language-aware AI result caching with 24-hour expiry
+- **Export Options** - Copy as Markdown, Export as PNG image
+
+#### 🔌 New Providers (Since 2.3.2)
+- **URLhaus** - Malicious URL database by abuse.ch (unlimited free)
+- **Pulsedive** - Threat intelligence with risk scoring (250 req/day free)
+- **Scamalytics** - IP fraud detection (5,000 credits/month free)
+
+#### 🎨 Complete UI Overhaul
+- **Fresh Color Palette** - Lime green accent (#C7F54D), coral red danger (#E63946)
+- **Responsive Design** - Mobile-optimized action buttons and layouts
+- **Drag-and-Drop Provider Order** - Customize how providers appear
+- **Modern Result Cards** - Enhanced UI for all providers
 
 ### AI Providers (3 Providers)
 **Claude** (Sonnet 4) | **Gemini** (2.0 Flash) | **GPT-4o** (Mini)
@@ -625,7 +638,7 @@ For detailed information:
 **[VERSIONING.md](docs/VERSIONING.md)** - Complete versioning strategy and contributor guidelines
 **[CHANGELOG.md](CHANGELOG.md)** - Full version history and release notes
 
-**Current Version:** 2.8.1
+**Current Version:** 3.0.0
 
 ---
 

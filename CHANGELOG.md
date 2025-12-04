@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-12-04
+
+### 🎉 Major Release - AI-Powered Threat Intelligence
+
+This major release introduces **AI-powered IOC analysis**, **4 new threat intelligence providers**, a **complete UI overhaul**, and significant performance improvements.
+
+### Highlights Since 2.3.2
+
+#### 🤖 AI Integration (New!)
+- **3 AI Providers** - Claude (Anthropic), Gemini (Google), GPT-4o (OpenAI)
+- **3 Analysis Modes** - Summary (L1 triage), Analysis (L1/L2 handoff), Detailed (IR investigation)
+- **Structured JSON Responses** - Consistent output format with verdict, risk level, confidence scores
+- **AI Result Caching** - Language-aware caching with 24-hour expiry
+- **Copy as Markdown** - One-click export for documentation
+- **Export as Image** - PNG export with html2canvas
+- **Smart Retry System** - Automatic JSON validation with 3 retries
+
+#### 🔌 New Threat Intelligence Providers
+- **URLhaus** (abuse.ch) - Malicious URL database, unlimited free API
+- **Pulsedive** - Threat intelligence with risk scoring (250 req/day free)
+- **Scamalytics** - IP fraud detection with API v3 (5,000 credits/month free)
+
+#### 🎨 Complete UI Overhaul
+- **New Color Palette** - Fresh lime green accent (#C7F54D), coral red danger (#E63946)
+- **Responsive Action Buttons** - Icons only on mobile, full text on desktop
+- **Provider Slider Redesign** - Compact icons (48px) with hover tooltips
+- **IOC Selector Redesign** - Single clickable badge with popup
+- **Recommended Model Indicators** - ThumbsUp icons for suggested AI models
+
+#### ⚙️ Configuration & Customization
+- **Drag-and-Drop Provider Order** - Customize provider display order in settings
+- **Provider Enable/Disable System** - Centralized provider availability control
+- **Persistent Settings** - All customizations sync across components
+
+#### 🚀 Performance & Architecture
+- **Parallel IOC Processing** - All IOCs analyzed simultaneously
+- **Optimized Cache Lookups** - Batch storage calls instead of sequential
+- **Lazy Service Initialization** - Services created only when needed
+- **Enhanced Error Handling** - Better user feedback for all error states
+
+#### 📦 Provider Enhancements
+- **Enhanced Result Cards** - Modern UI for Pulsedive, URLhaus, Scamalytics
+- **VirusTotal Icons** - Lucide ThumbsUp/ThumbsDown instead of emojis
+- **Full Localization** - Complete Turkish and English support
+
+### Breaking Changes
+- Minimum Chrome version updated for Manifest V3 features
+- AI analysis requires separate API keys from threat intel providers
+
+---
+
 ## [2.8.1] - 2025-12-04
 
 ### Added
@@ -389,6 +440,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
+- **3.0.x** - 🎉 AI-powered analysis (Claude/Gemini/GPT-4o), new providers (URLhaus, Pulsedive, Scamalytics), complete UI overhaul, performance optimizations
 - **2.8.x** - AI structured JSON responses, caching, full localization, export features, new color palette
 - **2.7.x** - Provider enable/disable config system, Scamalytics re-enabled
 - **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
@@ -403,6 +455,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Upgrade Notes
+
+### Upgrading to 3.0.0
+- **Major Update**: This is a significant upgrade with new AI features
+- AI providers require separate API keys (Claude, Gemini, OpenAI)
+- All existing settings and API keys are preserved
+- New providers (URLhaus, Pulsedive, Scamalytics) available for configuration
+- Provider display order customization available in Settings → General
+- Review the new color scheme and UI improvements
 
 ### Upgrading to 2.3.x
 - No breaking changes
