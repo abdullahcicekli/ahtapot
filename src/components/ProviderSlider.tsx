@@ -5,6 +5,14 @@ import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
 import { getProviderOrder } from '@/utils/providerOrderStorage';
 import './ProviderSlider.css';
 
+// Tooltip state
+interface TooltipState {
+  visible: boolean;
+  text: string;
+  x: number;
+  y: number;
+}
+
 interface ProviderItem {
   provider: APIProvider;
   label: string;
@@ -52,6 +60,9 @@ export const ProviderSlider: React.FC<ProviderSliderProps> = ({
   const [allProviders, setAllProviders] = useState<ProviderItem[]>([]);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  
+  // Tooltip state
+  const [tooltip, setTooltip] = useState<TooltipState>({ visible: false, text: '', x: 0, y: 0 });
   
   // Drag to scroll state
   const [isDragging, setIsDragging] = useState(false);
@@ -162,6 +173,21 @@ export const ProviderSlider: React.FC<ProviderSliderProps> = ({
     }
   };
 
+  // Tooltip handlers
+  const showTooltip = (e: React.MouseEvent, text: string) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setTooltip({
+      visible: true,
+      text,
+      x: rect.left + rect.width / 2,
+      y: rect.bottom + 8
+    });
+  };
+
+  const hideTooltip = () => {
+    setTooltip(prev => ({ ...prev, visible: false }));
+  };
+
   // Filter providers based on visibleProviders
   const displayedProviders = visibleProviders === undefined
     ? []
@@ -179,7 +205,7 @@ export const ProviderSlider: React.FC<ProviderSliderProps> = ({
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={() => { handleMouseLeave(); hideTooltip(); }}
       >
         {displayedProviders.map((provider) => {
           const isActive = activeProvider === provider.label;
@@ -189,6 +215,8 @@ export const ProviderSlider: React.FC<ProviderSliderProps> = ({
               key={provider.provider}
               className={`provider-slide-item ${provider.enabled ? 'enabled' : 'disabled'} ${isActive ? 'active' : ''}`}
               onClick={() => handleProviderClick(provider)}
+              onMouseEnter={(e) => showTooltip(e, provider.label)}
+              onMouseLeave={hideTooltip}
             >
               <div className="provider-slide-logo">
                 <img
@@ -197,11 +225,23 @@ export const ProviderSlider: React.FC<ProviderSliderProps> = ({
                   draggable={false}
                 />
               </div>
-              <span className="provider-slide-name">{provider.label}</span>
             </div>
           );
         })}
       </div>
+      
+      {/* Fixed position tooltip */}
+      {tooltip.visible && (
+        <div 
+          className="provider-tooltip"
+          style={{ 
+            left: tooltip.x, 
+            top: tooltip.y 
+          }}
+        >
+          {tooltip.text}
+        </div>
+      )}
       
       {showScrollIndicator && (
         <button className="slider-scroll-btn" onClick={scrollRight}>

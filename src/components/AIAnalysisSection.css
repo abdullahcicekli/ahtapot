@@ -714,13 +714,27 @@
   }
   
   .ai-start-btn {
-    width: 100%;
+    width: auto;
     min-width: unset;
     justify-content: center;
+    flex-shrink: 0;
   }
   
   .ai-mode-info-popup {
     width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hide analyze button text on narrower screens */
+  .ai-start-btn {
+    min-width: 40px;
+    width: 40px;
+    padding: 6px;
+  }
+  
+  .ai-start-btn .ai-start-btn-text {
+    display: none;
   }
 }
 

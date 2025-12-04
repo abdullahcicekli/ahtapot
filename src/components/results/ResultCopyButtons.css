@@ -56,24 +56,23 @@
   position: absolute;
   top: var(--space-lg, 16px);
   right: var(--space-lg, 16px);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent, #FFF770);
+  background: transparent;
   border: none;
   border-radius: var(--radius-md, 6px);
-  color: var(--bg-header, #1A1A1F);
+  color: rgba(255, 255, 255, 0.35);
   cursor: pointer;
   z-index: 10;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .card-external-link:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .card-external-link svg {

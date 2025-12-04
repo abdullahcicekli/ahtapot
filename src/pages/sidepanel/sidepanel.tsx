@@ -12,6 +12,7 @@ import {
   TrendingUp,
   ChevronDown,
   ChevronUp,
+  Lightbulb,
 } from 'lucide-react';
 import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
 import { AIProvider, AIAnalysisMode, AIAnalysisResult } from '@/types/ai';
@@ -571,7 +572,7 @@ const SidePanel: React.FC = () => {
             />
             <button
               onClick={() => handleAnalyze()}
-              className="analyze-btn-compact"
+              className={`analyze-btn-compact ${inputText.trim() ? 'has-input' : ''}`}
               disabled={detectedIOCs.length === 0 || loading || hasApiKeys === false}
               title={t('input.analyzeButton')}
             >
@@ -583,7 +584,7 @@ const SidePanel: React.FC = () => {
             </button>
           </div>
           <div className="search-hint">
-            <span>💡 {t('input.multipleHint')}</span>
+            <span><Lightbulb size={14} /> {t('input.multipleHint')}</span>
             {detectedIOCs.length > 0 && (
               <span className="detected-count">{t('input.detectedCount', { count: detectedIOCs.length })}</span>
             )}
@@ -667,27 +668,104 @@ const SidePanel: React.FC = () => {
               )}
             </div>
 
-            {/* Provider Slider - Inside results section */}
+            {/* IOC Tabs - Above provider slider */}
+            {isProviderResultsExpanded && (() => {
+              const allUniqueIOCs = Array.from(new Set(results.map(r => r.ioc.value)));
+              const hasMultipleIOCs = allUniqueIOCs.length > 1;
+              
+              // Set default active IOC if not set
+              const currentActiveIOC = activeIOCTab && allUniqueIOCs.includes(activeIOCTab)
+                ? activeIOCTab
+                : allUniqueIOCs[0] || '';
+              
+              // Auto-set active IOC tab if needed
+              if (!activeIOCTab && allUniqueIOCs.length > 0) {
+                setTimeout(() => setActiveIOCTab(allUniqueIOCs[0]), 0);
+              }
+
+              const handleIOCTabsMouseDown = (e: React.MouseEvent) => {
+                if (!iocTabsRef.current) return;
+                setIsIOCTabsDragging(true);
+                setIOCTabsStartX(e.pageX - iocTabsRef.current.offsetLeft);
+                setIOCTabsScrollLeft(iocTabsRef.current.scrollLeft);
+              };
+
+              const handleIOCTabsMouseUp = () => {
+                setIsIOCTabsDragging(false);
+              };
+
+              const handleIOCTabsMouseMove = (e: React.MouseEvent) => {
+                if (!isIOCTabsDragging || !iocTabsRef.current) return;
+                e.preventDefault();
+                const x = e.pageX - iocTabsRef.current.offsetLeft;
+                const walk = (x - iocTabsStartX) * 1.5;
+                iocTabsRef.current.scrollLeft = iocTabsScrollLeft - walk;
+              };
+
+              const handleIOCTabsMouseLeave = () => {
+                setIsIOCTabsDragging(false);
+              };
+
+              if (!hasMultipleIOCs) return null;
+
+              return (
+                <div 
+                  className={`ioc-tabs-container global-ioc-tabs ${isIOCTabsDragging ? 'dragging' : ''}`}
+                  ref={iocTabsRef}
+                  onMouseDown={handleIOCTabsMouseDown}
+                  onMouseUp={handleIOCTabsMouseUp}
+                  onMouseMove={handleIOCTabsMouseMove}
+                  onMouseLeave={handleIOCTabsMouseLeave}
+                >
+                  {allUniqueIOCs.map((iocValue) => (
+                    <button
+                      key={iocValue}
+                      className={`ioc-tab ${currentActiveIOC === iocValue ? 'active' : ''}`}
+                      onClick={() => {
+                        if (!isIOCTabsDragging) {
+                          setActiveIOCTab(iocValue);
+                          // Reset provider tab when IOC changes
+                          setActiveProviderTab('');
+                        }
+                      }}
+                      title={iocValue}
+                    >
+                      {truncateIOC(iocValue)}
+                    </button>
+                  ))}
+                </div>
+              );
+            })()}
+
+            {/* Provider Slider - Inside results section, filtered by active IOC */}
             {isProviderResultsExpanded && (
               <ProviderSlider
                 activeProvider={activeProviderTab}
                 onProviderClick={(providerName) => {
-                  // Always switch to the clicked provider tab
-                  // The UI will show either results or a "no results" message
                   setActiveProviderTab(providerName);
-                  // Reset IOC tab when provider changes - first IOC will be auto-selected
-                  setActiveIOCTab('');
                 }}
                 visibleProviders={(() => {
-                  // Get providers from results
-                  const resultProviders = Array.from(new Set(results.map(r => r.source)));
+                  // Get unique IOCs
+                  const allUniqueIOCs = Array.from(new Set(results.map(r => r.ioc.value)));
+                  const currentActiveIOC = activeIOCTab && allUniqueIOCs.includes(activeIOCTab)
+                    ? activeIOCTab
+                    : allUniqueIOCs[0] || '';
                   
-                  // Add pending rate-limited providers to visible list
-                  if (pendingRateLimitProviders.has('greynoise')) {
-                    resultProviders.push('GreyNoise');
-                  }
-                  if (pendingRateLimitProviders.has('shodan')) {
-                    resultProviders.push('Shodan');
+                  // Filter results by active IOC
+                  const iocResults = results.filter(r => r.ioc.value === currentActiveIOC);
+                  
+                  // Get providers from filtered results
+                  const resultProviders = Array.from(new Set(iocResults.map(r => r.source)));
+                  
+                  // Add pending rate-limited providers to visible list (only for IPv4)
+                  const activeIOCType = currentIOCs.find(ioc => ioc.value === currentActiveIOC)?.type;
+                  if (activeIOCType === IOCType.IPV4) {
+                    if (pendingRateLimitProviders.has('greynoise') && !resultProviders.includes('GreyNoise')) {
+                      resultProviders.push('GreyNoise');
+                    }
+                    if (pendingRateLimitProviders.has('shodan') && !resultProviders.includes('Shodan')) {
+                      resultProviders.push('Shodan');
+                    }
                   }
                   
                   return resultProviders;
@@ -699,35 +777,32 @@ const SidePanel: React.FC = () => {
             {isProviderResultsExpanded && (
               <div className="results-list">
                 {(() => {
-                  const providerResults = results.filter((result) => result.source === activeProviderTab);
+                  // Get unique IOCs globally
+                  const allUniqueIOCs = Array.from(new Set(results.map(r => r.ioc.value)));
+                  const currentActiveIOC = activeIOCTab && allUniqueIOCs.includes(activeIOCTab)
+                    ? activeIOCTab
+                    : allUniqueIOCs[0] || '';
                   
-                  // Get unique IOCs for this provider
-                  const uniqueIOCs = Array.from(new Set(providerResults.map(r => r.ioc.value)));
-                  const hasMultipleIOCs = uniqueIOCs.length > 1;
-                  
-                  // Set default active IOC if not set or invalid
-                  const currentActiveIOC = activeIOCTab && uniqueIOCs.includes(activeIOCTab) 
-                    ? activeIOCTab 
-                    : uniqueIOCs[0] || '';
-                  
-                  // Filter results by active IOC
-                  const filteredResults = hasMultipleIOCs 
-                    ? providerResults.filter(r => r.ioc.value === currentActiveIOC)
-                    : providerResults;
+                  // Filter results by active IOC first, then by provider
+                  const iocResults = results.filter(r => r.ioc.value === currentActiveIOC);
+                  const filteredResults = activeProviderTab
+                    ? iocResults.filter(r => r.source === activeProviderTab)
+                    : iocResults;
 
-                  // If no results for active provider
+                  // If no results for active provider (rate limit pending check)
                   if (filteredResults.length === 0 && activeProviderTab) {
                     // Check if this is a pending rate-limited provider
                     const isPendingGreyNoise = activeProviderTab === 'GreyNoise' && pendingRateLimitProviders.has('greynoise');
                     const isPendingShodan = activeProviderTab === 'Shodan' && pendingRateLimitProviders.has('shodan');
-                    const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
+                    const activeIOCData = currentIOCs.find(ioc => ioc.value === currentActiveIOC);
+                    const isIPv4 = activeIOCData?.type === IOCType.IPV4;
 
-                    if ((isPendingGreyNoise || isPendingShodan) && ipv4Count > 0) {
+                    if ((isPendingGreyNoise || isPendingShodan) && isIPv4) {
                       // Show confirmation card for pending provider
                       return (
                         <RateLimitConfirmCard
                           provider={isPendingGreyNoise ? 'greynoise' : 'shodan'}
-                          iocCount={ipv4Count}
+                          iocCount={1}
                           onConfirm={() => handleRateLimitConfirm(isPendingGreyNoise ? 'greynoise' : 'shodan')}
                           logoSrc={isPendingGreyNoise ? '/provider-icons/greynoise-logo.png' : '/provider-icons/shodan-logo.png'}
                           providerName={activeProviderTab}
@@ -738,7 +813,8 @@ const SidePanel: React.FC = () => {
 
                     // Show informative empty state for other providers
                     const supportedTypes = PROVIDER_SUPPORT[activeProviderTab] || [];
-                    const unsupportedIOCs = currentIOCs.filter(ioc => !supportedTypes.includes(ioc.type));
+                    const activeIOC = currentIOCs.find(ioc => ioc.value === currentActiveIOC);
+                    const isUnsupported = activeIOC && !supportedTypes.includes(activeIOC.type);
 
                     return (
                       <div className="provider-no-results-card">
@@ -747,18 +823,16 @@ const SidePanel: React.FC = () => {
                           <h3>{t('providerNoResults.title', { provider: activeProviderTab })}</h3>
                         </div>
 
-                        {unsupportedIOCs.length > 0 && (
+                        {isUnsupported && activeIOC && (
                           <div className="searched-iocs-section">
                             <p className="searched-iocs-label">
-                              {t('providerNoResults.searchedFor', { count: unsupportedIOCs.length })}
+                              {t('providerNoResults.searchedFor', { count: 1 })}
                             </p>
                             <div className="searched-iocs-list">
-                              {unsupportedIOCs.map((ioc, idx) => (
-                                <div key={idx} className="searched-ioc-item">
-                                  <span className="searched-ioc-type">{getIOCTypeLabel(ioc.type)}</span>
-                                  <span className="searched-ioc-value">{ioc.value}</span>
-                                </div>
-                              ))}
+                              <div className="searched-ioc-item">
+                                <span className="searched-ioc-type">{getIOCTypeLabel(activeIOC.type)}</span>
+                                <span className="searched-ioc-value">{activeIOC.value}</span>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -782,52 +856,6 @@ const SidePanel: React.FC = () => {
                       </div>
                     );
                   }
-
-                  // IOC Tabs for multiple IOCs
-                  const handleIOCTabsMouseDown = (e: React.MouseEvent) => {
-                    if (!iocTabsRef.current) return;
-                    setIsIOCTabsDragging(true);
-                    setIOCTabsStartX(e.pageX - iocTabsRef.current.offsetLeft);
-                    setIOCTabsScrollLeft(iocTabsRef.current.scrollLeft);
-                  };
-
-                  const handleIOCTabsMouseUp = () => {
-                    setIsIOCTabsDragging(false);
-                  };
-
-                  const handleIOCTabsMouseMove = (e: React.MouseEvent) => {
-                    if (!isIOCTabsDragging || !iocTabsRef.current) return;
-                    e.preventDefault();
-                    const x = e.pageX - iocTabsRef.current.offsetLeft;
-                    const walk = (x - iocTabsStartX) * 1.5;
-                    iocTabsRef.current.scrollLeft = iocTabsScrollLeft - walk;
-                  };
-
-                  const handleIOCTabsMouseLeave = () => {
-                    setIsIOCTabsDragging(false);
-                  };
-
-                  const iocTabs = hasMultipleIOCs ? (
-                    <div 
-                      className={`ioc-tabs-container ${isIOCTabsDragging ? 'dragging' : ''}`}
-                      ref={iocTabsRef}
-                      onMouseDown={handleIOCTabsMouseDown}
-                      onMouseUp={handleIOCTabsMouseUp}
-                      onMouseMove={handleIOCTabsMouseMove}
-                      onMouseLeave={handleIOCTabsMouseLeave}
-                    >
-                      {uniqueIOCs.map((iocValue) => (
-                        <button
-                          key={iocValue}
-                          className={`ioc-tab ${currentActiveIOC === iocValue ? 'active' : ''}`}
-                          onClick={() => !isIOCTabsDragging && setActiveIOCTab(iocValue)}
-                          title={iocValue}
-                        >
-                          {truncateIOC(iocValue)}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null;
 
                   const resultElements = filteredResults.map((result, index) => {
                     // Check for error status first - show error card for all providers
@@ -922,50 +950,7 @@ const SidePanel: React.FC = () => {
                     );
                   });
 
-                  // Add pending rate limit confirmation cards ONLY if no active provider tab
-                  // (When a specific provider tab is active, the confirmation is shown above)
-                  const pendingCards: JSX.Element[] = [];
-
-                  if (!activeProviderTab) {
-                    const ipv4Count = currentIOCs.filter(ioc => ioc.type === IOCType.IPV4).length;
-
-                    if (pendingRateLimitProviders.has('greynoise') && ipv4Count > 0) {
-                      pendingCards.push(
-                        <RateLimitConfirmCard
-                          key="greynoise-pending"
-                          provider="greynoise"
-                          iocCount={ipv4Count}
-                          onConfirm={() => handleRateLimitConfirm('greynoise')}
-                          logoSrc="/provider-icons/greynoise-logo.png"
-                          providerName="GreyNoise"
-                          subtitle={t('providers.greynoise.subtitle')}
-                        />
-                      );
-                    }
-
-                    if (pendingRateLimitProviders.has('shodan') && ipv4Count > 0) {
-                      pendingCards.push(
-                        <RateLimitConfirmCard
-                          key="shodan-pending"
-                          provider="shodan"
-                          iocCount={ipv4Count}
-                          onConfirm={() => handleRateLimitConfirm('shodan')}
-                          logoSrc="/provider-icons/shodan-logo.png"
-                          providerName="Shodan"
-                          subtitle={t('providers.shodan.subtitle')}
-                        />
-                      );
-                    }
-
-                  }
-
-                  return (
-                    <>
-                      {iocTabs}
-                      {resultElements}
-                      {pendingCards}
-                    </>
-                  );
+                  return resultElements;
                 })()}
               </div>
             )}

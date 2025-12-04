@@ -231,28 +231,35 @@ body {
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: var(--accent);
-  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: #1A1A1F;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
-.analyze-btn-compact:hover:not(:disabled) {
+.analyze-btn-compact.has-input {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1A1A1F;
+}
+
+.analyze-btn-compact.has-input:hover:not(:disabled) {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
 
-.analyze-btn-compact:active:not(:disabled) {
+.analyze-btn-compact.has-input:active:not(:disabled) {
   transform: scale(0.98);
 }
 
 .analyze-btn-compact:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: transparent;
 }
 
 .spinner {
@@ -417,6 +424,14 @@ body {
   user-select: none;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Global IOC Tabs - Above provider slider */
+.ioc-tabs-container.global-ioc-tabs {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+  padding: 6px;
 }
 
 .ioc-tabs-container::-webkit-scrollbar {

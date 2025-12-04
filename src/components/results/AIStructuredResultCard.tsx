@@ -318,12 +318,16 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
-                  {getRiskLabel(summaryData.risk_level)}
-                </span>
-                <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
-                  {getConfidenceLabel(summaryData.confidence)} {t('ai.labels.confidence').toLowerCase()}
-                </span>
+                {summaryData.risk_level && (
+                  <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
+                    {getRiskLabel(summaryData.risk_level)}
+                  </span>
+                )}
+                {summaryData.confidence && (
+                  <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
+                    {getConfidenceLabel(summaryData.confidence)} {t('ai.labels.confidence').toLowerCase()}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -424,12 +428,16 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
-                  {getRiskLabel(analysisData.risk_level)}
-                </span>
-                <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
-                  {getConfidenceLabel(analysisData.confidence)} {t('ai.labels.confidence').toLowerCase()}
-                </span>
+                {analysisData.risk_level && (
+                  <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
+                    {getRiskLabel(analysisData.risk_level)}
+                  </span>
+                )}
+                {analysisData.confidence && (
+                  <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
+                    {getConfidenceLabel(analysisData.confidence)} {t('ai.labels.confidence').toLowerCase()}
+                  </span>
+                )}
                 {analysisData.escalation_required && (
                   <span className="ai-escalation-badge">{t('ai.labels.escalation')}</span>
                 )}

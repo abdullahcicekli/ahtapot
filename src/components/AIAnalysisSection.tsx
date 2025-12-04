@@ -428,11 +428,12 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
             className="ai-start-btn"
             onClick={handleStartAnalysis}
             disabled={!selectedProvider || !selectedModel || isAnalyzing || disabled}
+            title={t('ai.start')}
           >
             {isAnalyzing ? (
               <>
                 <Loader size={16} className="spinner" />
-                <span>
+                <span className="ai-start-btn-text">
                   {retryInfo 
                     ? t('ai.errors.retrying', { attempt: retryInfo.attempt, maxAttempts: retryInfo.maxAttempts })
                     : t(`ai.analyzingStates.${ANALYZING_STATES[analyzingStateIndex]}`)
@@ -442,7 +443,7 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
             ) : (
               <>
                 <Play size={16} />
-                <span>{t('ai.start')}</span>
+                <span className="ai-start-btn-text">{t('ai.start')}</span>
               </>
             )}
           </button>
