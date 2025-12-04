@@ -28,6 +28,7 @@ export interface AIModelConfig {
   id: string;
   name: string;
   displayName: string;
+  recommended?: boolean;
 }
 
 /**
@@ -104,7 +105,7 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     },
     models: [
       { id: 'claude-sonnet-4-20250514', name: 'sonnet-4', displayName: 'Claude Sonnet 4' },
-      { id: 'claude-3-5-sonnet-20241022', name: 'sonnet-3.5', displayName: 'Claude 3.5 Sonnet' },
+      { id: 'claude-3-5-sonnet-20241022', name: 'sonnet-3.5', displayName: 'Claude 3.5 Sonnet', recommended: true },
       { id: 'claude-3-5-haiku-20241022', name: 'haiku-3.5', displayName: 'Claude 3.5 Haiku' },
       { id: 'claude-3-opus-20240229', name: 'opus-3', displayName: 'Claude 3 Opus' },
     ],
@@ -124,7 +125,7 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       note: 'Free tier: 15 RPM, 1M TPM, 1500 RPD',
     },
     models: [
-      { id: 'gemini-2.5-flash', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash' },
+      { id: 'gemini-2.5-flash', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash', recommended: true },
       { id: 'gemini-2.5-pro', name: 'gemini-2.5-pro', displayName: 'Gemini 2.5 Pro' },
       { id: 'gemini-2.0-flash', name: 'gemini-2.0-flash', displayName: 'Gemini 2.0 Flash' },
       { id: 'gemini-2.0-flash-lite', name: 'gemini-2.0-flash-lite', displayName: 'Gemini 2.0 Flash Lite' },
@@ -148,7 +149,7 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     },
     models: [
       { id: 'gpt-4o', name: 'gpt-4o', displayName: 'GPT-4o' },
-      { id: 'gpt-4o-mini', name: 'gpt-4o-mini', displayName: 'GPT-4o Mini' },
+      { id: 'gpt-4o-mini', name: 'gpt-4o-mini', displayName: 'GPT-4o Mini', recommended: true },
       { id: 'gpt-4-turbo', name: 'gpt-4-turbo', displayName: 'GPT-4 Turbo' },
       { id: 'o1', name: 'o1', displayName: 'o1 (Reasoning)' },
       { id: 'o1-mini', name: 'o1-mini', displayName: 'o1 Mini' },

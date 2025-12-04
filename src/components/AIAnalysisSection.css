@@ -276,7 +276,7 @@
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  min-width: 180px;
+  min-width: 220px;
   background: var(--bg-primary, #1A1A1F);
   border: 1px solid rgba(255, 247, 112, 0.2);
   border-radius: 8px;
@@ -361,6 +361,20 @@
 .ai-model-check {
   color: var(--accent, #FFF770);
   flex-shrink: 0;
+}
+
+.ai-model-recommended {
+  color: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ai-model-flat-item:hover .ai-model-recommended {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-model-flat-item.selected .ai-model-recommended {
+  color: rgba(255, 247, 112, 0.6);
 }
 
 .ai-model-no-key {

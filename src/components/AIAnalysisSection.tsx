@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Bot, ChevronDown, Play, Loader, Settings, X, Check } from 'lucide-react';
+import { Bot, ChevronDown, Play, Loader, Settings, X, Check, ThumbsUp } from 'lucide-react';
 import { AIProvider, AIAnalysisMode, AI_PROVIDER_CONFIGS } from '@/types/ai';
 import { getConfiguredAIProviders } from '@/utils/aiKeyStorage';
 import { getAIPreferences, saveAIPreferences, getValidModelForProvider } from '@/utils/aiPreferences';
@@ -328,11 +328,12 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
                       return (
                         <button
                           key={`${provider}-${model.id}`}
-                          className={`ai-model-flat-item ${isSelected ? 'selected' : ''}`}
+                          className={`ai-model-flat-item ${isSelected ? 'selected' : ''} ${model.recommended ? 'recommended' : ''}`}
                           onClick={() => handleModelSelect(provider, model.id)}
                         >
                           <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
                           <span className="ai-model-name">{model.displayName}</span>
+                          {model.recommended && <ThumbsUp size={12} className="ai-model-recommended" />}
                           {isSelected && <Check size={14} className="ai-model-check" />}
                         </button>
                       );
@@ -350,12 +351,13 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
                         return config.models.map((model) => (
                           <button
                             key={`${provider}-${model.id}`}
-                            className="ai-model-flat-item disabled"
+                            className={`ai-model-flat-item disabled ${model.recommended ? 'recommended' : ''}`}
                             disabled
                             title={t('ai.noApiKey')}
                           >
                             <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
                             <span className="ai-model-name">{model.displayName}</span>
+                            {model.recommended && <ThumbsUp size={12} className="ai-model-recommended" />}
                             <span className="ai-model-no-key">{t('ai.noKey')}</span>
                           </button>
                         ));

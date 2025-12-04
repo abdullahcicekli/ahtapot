@@ -10,7 +10,9 @@ import {
   Globe,
   Server,
   Shield,
-  ExternalLink
+  ExternalLink,
+  ThumbsUp,
+  ThumbsDown
 } from 'lucide-react';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import { ResultCopyButtons, formatVirusTotalResults } from './ResultCopyButtons';
@@ -154,11 +156,18 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           </div>
           <div className="vt-score-label">
             {t('virustotal.communityScore')}
-            <span className="vt-score-votes">
-              {details?.total_votes ?
-                `${details.total_votes.harmless || 0} 👍 ${details.total_votes.malicious || 0} 👎`
-                : ''}
-            </span>
+            {details?.total_votes && (
+              <span className="vt-score-votes">
+                <span className="vt-vote-item vt-vote-up">
+                  {details.total_votes.harmless || 0}
+                  <ThumbsUp size={12} />
+                </span>
+                <span className="vt-vote-item vt-vote-down">
+                  {details.total_votes.malicious || 0}
+                  <ThumbsDown size={12} />
+                </span>
+              </span>
+            )}
           </div>
         </div>
 
