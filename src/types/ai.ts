@@ -103,8 +103,10 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       note: 'Pay as you go - No free tier for API',
     },
     models: [
-      { id: 'claude-sonnet-4-20250514', name: 'sonnet-4.5', displayName: 'Sonnet 4.5' },
-      { id: 'claude-3-5-haiku-20241022', name: 'haiku-3.5', displayName: 'Haiku 3.5' },
+      { id: 'claude-sonnet-4-20250514', name: 'sonnet-4', displayName: 'Claude Sonnet 4' },
+      { id: 'claude-3-5-sonnet-20241022', name: 'sonnet-3.5', displayName: 'Claude 3.5 Sonnet' },
+      { id: 'claude-3-5-haiku-20241022', name: 'haiku-3.5', displayName: 'Claude 3.5 Haiku' },
+      { id: 'claude-3-opus-20240229', name: 'opus-3', displayName: 'Claude 3 Opus' },
     ],
   },
   [AIProvider.GEMINI]: {
@@ -122,8 +124,12 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       note: 'Free tier: 15 RPM, 1M TPM, 1500 RPD',
     },
     models: [
-      { id: 'gemini-2.5-pro-preview-05-06', name: 'gemini-2.5-pro', displayName: 'Gemini 2.5 Pro' },
-      { id: 'gemini-2.5-flash-preview-05-20', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash' },
+      { id: 'gemini-2.5-flash', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash' },
+      { id: 'gemini-2.5-pro', name: 'gemini-2.5-pro', displayName: 'Gemini 2.5 Pro' },
+      { id: 'gemini-2.0-flash', name: 'gemini-2.0-flash', displayName: 'Gemini 2.0 Flash' },
+      { id: 'gemini-2.0-flash-lite', name: 'gemini-2.0-flash-lite', displayName: 'Gemini 2.0 Flash Lite' },
+      { id: 'gemini-1.5-pro', name: 'gemini-1.5-pro', displayName: 'Gemini 1.5 Pro' },
+      { id: 'gemini-1.5-flash', name: 'gemini-1.5-flash', displayName: 'Gemini 1.5 Flash' },
     ],
   },
   [AIProvider.OPENAI]: {
@@ -143,6 +149,10 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     models: [
       { id: 'gpt-4o', name: 'gpt-4o', displayName: 'GPT-4o' },
       { id: 'gpt-4o-mini', name: 'gpt-4o-mini', displayName: 'GPT-4o Mini' },
+      { id: 'gpt-4-turbo', name: 'gpt-4-turbo', displayName: 'GPT-4 Turbo' },
+      { id: 'o1', name: 'o1', displayName: 'o1 (Reasoning)' },
+      { id: 'o1-mini', name: 'o1-mini', displayName: 'o1 Mini' },
+      { id: 'o3-mini', name: 'o3-mini', displayName: 'o3 Mini' },
     ],
   },
 };

@@ -207,3 +207,35 @@
     height: 32px;
   }
 }
+
+@media (max-width: 380px) {
+  .provider-slider {
+    gap: 8px;
+  }
+
+  .provider-slide-item {
+    min-width: 60px;
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .provider-slide-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .provider-slide-logo img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .provider-slide-name {
+    font-size: 9px;
+    max-width: 60px;
+  }
+
+  .slider-scroll-btn {
+    width: 28px;
+    height: 28px;
+  }
+}

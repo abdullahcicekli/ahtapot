@@ -371,6 +371,7 @@ const SidePanel: React.FC = () => {
     setIsAiAnalyzing(true);
     setIsAiResultCached(false);
     setAiRetryInfo(null);
+    setAiResult(null); // Clear previous result/error when starting new analysis
 
     try {
       // Get the API key for the selected provider
@@ -392,7 +393,6 @@ const SidePanel: React.FC = () => {
       const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
 
       let result: AIAnalysisResult | null = null;
-      let lastError: string | null = null;
 
       // Retry loop for invalid JSON responses
       for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -400,8 +400,6 @@ const SidePanel: React.FC = () => {
 
         // Check if the response has an INVALID_JSON error
         if (result.error && result.error.includes('INVALID_JSON')) {
-          lastError = result.error;
-          
           if (attempt < MAX_RETRIES) {
             // Show retry info to user
             setAiRetryInfo({ attempt, maxAttempts: MAX_RETRIES });

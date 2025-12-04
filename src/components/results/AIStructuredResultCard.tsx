@@ -115,12 +115,14 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
 
   // Localized risk level label
   const getRiskLabel = (risk: string) => {
-    return t(`ai.riskLevels.${risk}`) || risk;
+    const label = t(`ai.riskLevels.${risk}`);
+    return label && !label.startsWith('ai.riskLevels.') ? label : risk;
   };
 
   // Localized confidence label
   const getConfidenceLabel = (confidence: string) => {
-    return t(`ai.confidenceLevels.${confidence}`) || confidence;
+    const label = t(`ai.confidenceLevels.${confidence}`);
+    return label && !label.startsWith('ai.confidenceLevels.') ? label : confidence;
   };
 
   const getVerdictConfig = (verdict: string) => {
@@ -277,6 +279,7 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
   const data = parsedResponse.data;
   const verdictConfig = getVerdictConfig(data.verdict);
   const riskConfig = getRiskConfig(data.risk_level);
+  const confidenceConfig = getConfidenceConfig(data.confidence);
 
   // Render Summary Mode
   if (result.mode === AIAnalysisMode.SUMMARY) {
@@ -315,9 +318,12 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                {summaryData.priority && (
-                  <span className="ai-priority-badge" data-priority={summaryData.priority}>{summaryData.priority}</span>
-                )}
+                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
+                  {getRiskLabel(summaryData.risk_level)}
+                </span>
+                <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
+                  {getConfidenceLabel(summaryData.confidence)} {t('ai.labels.confidence').toLowerCase()}
+                </span>
               </div>
             </div>
 
@@ -418,9 +424,12 @@ export const AIStructuredResultCard: React.FC<AIStructuredResultCardProps> = ({
                 </span>
               </div>
               <div className="ai-verdict-meta">
-                {analysisData.priority && (
-                  <span className="ai-priority-badge" data-priority={analysisData.priority}>{analysisData.priority}</span>
-                )}
+                <span className="ai-risk-badge" style={{ background: riskConfig.bg, color: riskConfig.color }}>
+                  {getRiskLabel(analysisData.risk_level)}
+                </span>
+                <span className="ai-confidence-badge" style={{ background: confidenceConfig.bg, color: confidenceConfig.color }}>
+                  {getConfidenceLabel(analysisData.confidence)} {t('ai.labels.confidence').toLowerCase()}
+                </span>
                 {analysisData.escalation_required && (
                   <span className="ai-escalation-badge">{t('ai.labels.escalation')}</span>
                 )}

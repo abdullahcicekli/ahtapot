@@ -31,7 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  min-width: 605px;
+  width: 100%;
   background: var(--bg-primary);
 }
 
@@ -901,4 +901,99 @@ body {
 
 .sidepanel-main::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive for smaller widths */
+@media (max-width: 550px) {
+  .sidepanel-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .header-logo {
+    height: 24px;
+  }
+  
+  .header-title h1 {
+    font-size: 14px;
+  }
+  
+  .header-actions {
+    gap: 6px;
+  }
+  
+  .header-btn {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+  
+  .header-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .search-container {
+    padding: 12px 16px;
+  }
+  
+  .search-input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .results-container {
+    padding: 12px;
+  }
+  
+  .provider-slider {
+    gap: 6px;
+    padding: 0 12px;
+  }
+  
+  .provider-slider-btn {
+    min-width: 70px;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .provider-slider-btn img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sidepanel-header {
+    padding: 10px 12px;
+  }
+  
+  .header-title h1 {
+    font-size: 12px;
+  }
+  
+  .header-btn {
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+  }
+  
+  .search-container {
+    padding: 10px 12px;
+  }
+  
+  .results-container {
+    padding: 8px;
+  }
+  
+  .provider-slider-btn {
+    min-width: 60px;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .provider-slider-btn span {
+    display: none;
+  }
 }
