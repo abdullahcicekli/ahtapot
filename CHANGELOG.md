@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.1] - 2025-12-04
+
+### Added
+- **Recommended Model Indicators** - ThumbsUp icons next to recommended AI models in dropdown
+- **Provider Slider Tooltips** - Hover tooltips for provider icons (names hidden by default)
+- **Conditional Analyze Button** - Button only activates when input has text
+- **ChevronDown Indicators** - Visual cues for clickable dropdowns (IOC selector, analysis mode)
+
+### Changed
+- **New Color Palette** - Complete visual refresh with new accent colors
+  - Accent color: #FFF770 → #C7F54D (lime green)
+  - Danger color: #ef4444 → #E63946 (coral red)
+  - Success color: #22c55e → #4ADE80
+  - Warning color: #f59e0b → #FBBF24
+- **Responsive Action Buttons** - Copy/Export/Re-analyze buttons show only icons on small screens
+  - Tooltip appears on hover for accessibility
+  - Full text visible on wider screens
+- **IOC Selector Redesign** - Changed from dropdown to single clickable badge with popup
+- **Provider Icons** - Smaller icons (48px) without text labels
+- **External Link Buttons** - Minimal grey styling without background
+- **VirusTotal Icons** - Community score now uses ThumbsUp/ThumbsDown Lucide icons instead of emojis
+- **Hint Icons** - Replaced 💡 emoji with Lucide Lightbulb icon
+- **Landing Page (ahtapot.me)** - Updated with new color palette
+
+### Fixed
+- Analyze button appearing active when input is empty after results displayed
+- Provider slider tooltip visibility issues
+- AI mode dropdown positioning and overflow issues
+- Analysis mode badge not indicating clickability
+
+### Technical
+- Replaced hardcoded colors with CSS variables across all components
+- Improved responsive design with better media queries
+- Enhanced tooltip positioning using React state management
+
 ## [2.8.0] - 2025-12-03
 
 ### Added
@@ -354,7 +389,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History Summary
 
-- **2.8.x** - AI structured JSON responses, caching, full localization, export features
+- **2.8.x** - AI structured JSON responses, caching, full localization, export features, new color palette
 - **2.7.x** - Provider enable/disable config system, Scamalytics re-enabled
 - **2.6.x** - Enhanced provider cards (Pulsedive, URLhaus, Scamalytics), X-Force removal, UI improvements
 - **2.5.x** - Customizable provider display order, drag-and-drop reordering
