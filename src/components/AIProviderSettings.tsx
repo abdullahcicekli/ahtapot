@@ -210,21 +210,25 @@ export const AIProviderSettings: React.FC = () => {
 
               {expandedInfo.has(provider) && (
                 <div className="ai-info-box">
-                  {/* Pricing Info */}
-                  <div className="ai-info-section ai-pricing-section">
+                  {/* Models & Pricing */}
+                  <div className="ai-info-section ai-models-section">
                     <h4>
                       <DollarSign size={16} />
-                      {t('ai.pricing.title', { ns: 'options' })}
+                      {t('ai.models.title', { ns: 'options' })}
                     </h4>
-                    <div className="ai-pricing-grid">
-                      <div className="ai-pricing-item">
-                        <span className="ai-pricing-label">{t('ai.pricing.input', { ns: 'options' })}</span>
-                        <span className="ai-pricing-value">{config.pricingInfo.input}</span>
-                      </div>
-                      <div className="ai-pricing-item">
-                        <span className="ai-pricing-label">{t('ai.pricing.output', { ns: 'options' })}</span>
-                        <span className="ai-pricing-value">{config.pricingInfo.output}</span>
-                      </div>
+                    <div className="ai-models-list">
+                      {config.models.map((model) => (
+                        <div key={model.id} className="ai-model-item">
+                          <span className="ai-model-display-name">{model.displayName}</span>
+                          <code className="ai-model-id">{model.id}</code>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="ai-pricing-summary">
+                      <span className="ai-pricing-label">{t('ai.pricing.rate', { ns: 'options' })}</span>
+                      <span className="ai-pricing-value">
+                        {config.pricingInfo.input} → {config.pricingInfo.output}
+                      </span>
                     </div>
                     {config.pricingInfo.note && (
                       <p className="ai-pricing-note">
@@ -262,14 +266,6 @@ export const AIProviderSettings: React.FC = () => {
                       </li>
                       <li>{t('ai.howTo.paste', { ns: 'options' })}</li>
                     </ol>
-                  </div>
-
-                  {/* Model Info */}
-                  <div className="ai-info-section">
-                    <h4>{t('ai.model.title', { ns: 'options' })}</h4>
-                    <p className="ai-model-name">
-                      <code>{config.modelName}</code>
-                    </p>
                   </div>
                 </div>
               )}

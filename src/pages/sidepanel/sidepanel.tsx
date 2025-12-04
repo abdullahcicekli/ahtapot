@@ -89,6 +89,7 @@ const SidePanel: React.FC = () => {
   const [lastAiQuery, setLastAiQuery] = useState<{
     provider: AIProvider;
     mode: AIAnalysisMode;
+    model: string;
     iocValue: string;
   } | null>(null);
 
@@ -347,7 +348,7 @@ const SidePanel: React.FC = () => {
   };
 
   // Handle AI Analysis with caching
-  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode, forceRefresh: boolean = false) => {
+  const handleAiAnalysis = async (provider: AIProvider, mode: AIAnalysisMode, model: string, forceRefresh: boolean = false) => {
     if (results.length === 0) return;
 
     const MAX_RETRIES = 3;
@@ -361,7 +362,7 @@ const SidePanel: React.FC = () => {
       if (cachedResult) {
         setAiResult(cachedResult);
         setIsAiResultCached(true);
-        setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+        setLastAiQuery({ provider, mode, model, iocValue: primaryIOC });
         setIsProviderResultsExpanded(false);
         return;
       }
@@ -386,8 +387,8 @@ const SidePanel: React.FC = () => {
         return;
       }
 
-      // Create AI service and analyze with current language
-      const aiService = createAIService(provider, apiKey);
+      // Create AI service with selected model and analyze with current language
+      const aiService = createAIService(provider, apiKey, model);
       const iocList = currentIOCs.map(ioc => ({ type: ioc.type, value: ioc.value }));
 
       let result: AIAnalysisResult | null = null;
@@ -429,7 +430,7 @@ const SidePanel: React.FC = () => {
       
       if (result) {
         setAiResult(result);
-        setLastAiQuery({ provider, mode, iocValue: primaryIOC });
+        setLastAiQuery({ provider, mode, model, iocValue: primaryIOC });
 
         // Cache the result if successful
         if (!result.error && primaryIOC) {
@@ -470,7 +471,7 @@ const SidePanel: React.FC = () => {
     );
     
     // Re-run analysis with force refresh
-    await handleAiAnalysis(lastAiQuery.provider, lastAiQuery.mode, true);
+    await handleAiAnalysis(lastAiQuery.provider, lastAiQuery.mode, lastAiQuery.model, true);
   };
 
   const getStatusIcon = (status: IOCAnalysisResult['status']) => {

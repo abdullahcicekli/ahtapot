@@ -13,10 +13,13 @@ import { buildPromptForMode } from './prompts';
 export class AIService {
   private apiKey: string;
   private provider: AIProvider;
+  private model: string;
 
-  constructor(provider: AIProvider, apiKey: string) {
+  constructor(provider: AIProvider, apiKey: string, model?: string) {
     this.provider = provider;
     this.apiKey = apiKey;
+    // Use provided model or default from config
+    this.model = model || AI_PROVIDER_CONFIGS[provider].models[0]?.id || AI_PROVIDER_CONFIGS[provider].modelName;
   }
 
   /**
@@ -155,8 +158,6 @@ export class AIService {
    * Call Claude API (Anthropic)
    */
   private async callClaude(systemPrompt: string, userPrompt: string): Promise<string> {
-    const config = AI_PROVIDER_CONFIGS[AIProvider.CLAUDE];
-
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -166,7 +167,7 @@ export class AIService {
         'anthropic-dangerous-direct-browser-access': 'true',
       },
       body: JSON.stringify({
-        model: config.modelName,
+        model: this.model,
         max_tokens: 4096,
         system: systemPrompt,
         messages: [
@@ -191,10 +192,8 @@ export class AIService {
    * Call Gemini API (Google)
    */
   private async callGemini(systemPrompt: string, userPrompt: string): Promise<string> {
-    const config = AI_PROVIDER_CONFIGS[AIProvider.GEMINI];
-
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${config.modelName}:generateContent?key=${this.apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`,
       {
         method: 'POST',
         headers: {
@@ -230,8 +229,6 @@ export class AIService {
    * Call OpenAI API
    */
   private async callOpenAI(systemPrompt: string, userPrompt: string): Promise<string> {
-    const config = AI_PROVIDER_CONFIGS[AIProvider.OPENAI];
-
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -239,7 +236,7 @@ export class AIService {
         Authorization: `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: config.modelName,
+        model: this.model,
         max_tokens: 4096,
         messages: [
           {
@@ -267,7 +264,7 @@ export class AIService {
 /**
  * Create AI service instance
  */
-export function createAIService(provider: AIProvider, apiKey: string): AIService {
-  return new AIService(provider, apiKey);
+export function createAIService(provider: AIProvider, apiKey: string, model?: string): AIService {
+  return new AIService(provider, apiKey, model);
 }
 

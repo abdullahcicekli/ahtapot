@@ -172,22 +172,6 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
           </div>
         </div>
 
-        <div className="vt-header-actions">
-          <div className={`vt-status-badge ${statusInfo.className}`}>
-            {statusInfo.icon}
-            <span>{statusInfo.label}</span>
-          </div>
-          {details?.last_analysis_date && (
-            <div className="vt-analysis-date">
-              <Info size={14} />
-              {new Date(details.last_analysis_date).toLocaleDateString('tr-TR', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Status Description */}

@@ -22,6 +22,15 @@ export enum AIAnalysisMode {
 }
 
 /**
+ * Model Configuration
+ */
+export interface AIModelConfig {
+  id: string;
+  name: string;
+  displayName: string;
+}
+
+/**
  * AI Provider Configuration
  */
 export interface AIProviderConfig {
@@ -38,6 +47,7 @@ export interface AIProviderConfig {
     output: string;
     note?: string;
   };
+  models: AIModelConfig[];
 }
 
 /**
@@ -92,6 +102,10 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       output: '$15 / MTok',
       note: 'Pay as you go - No free tier for API',
     },
+    models: [
+      { id: 'claude-sonnet-4-20250514', name: 'sonnet-4.5', displayName: 'Sonnet 4.5' },
+      { id: 'claude-3-5-haiku-20241022', name: 'haiku-3.5', displayName: 'Haiku 3.5' },
+    ],
   },
   [AIProvider.GEMINI]: {
     provider: AIProvider.GEMINI,
@@ -107,12 +121,16 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       output: '$0.40 / MTok',
       note: 'Free tier: 15 RPM, 1M TPM, 1500 RPD',
     },
+    models: [
+      { id: 'gemini-2.5-pro-preview-05-06', name: 'gemini-2.5-pro', displayName: 'Gemini 2.5 Pro' },
+      { id: 'gemini-2.5-flash-preview-05-20', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash' },
+    ],
   },
   [AIProvider.OPENAI]: {
     provider: AIProvider.OPENAI,
     modelName: 'gpt-4o-mini',
     displayName: 'GPT-4o Mini',
-    shortName: 'GPT-4o',
+    shortName: 'OpenAI',
     logo: '/provider-icons/openai-logo.svg',
     apiKeyUrl: 'https://platform.openai.com/api-keys',
     signupUrl: 'https://platform.openai.com/signup',
@@ -122,6 +140,10 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
       output: '$0.60 / MTok',
       note: 'Pay as you go - Credit purchase required',
     },
+    models: [
+      { id: 'gpt-4o', name: 'gpt-4o', displayName: 'GPT-4o' },
+      { id: 'gpt-4o-mini', name: 'gpt-4o-mini', displayName: 'GPT-4o Mini' },
+    ],
   },
 };
 

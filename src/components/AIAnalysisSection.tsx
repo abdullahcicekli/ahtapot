@@ -1,17 +1,18 @@
 /**
  * AI Analysis Section Component
- * Provides UI for selecting AI provider and analysis mode
+ * Provides UI for selecting AI provider, model and analysis mode
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Bot, ChevronDown, Play, Loader, Settings, Info, X, Check } from 'lucide-react';
+import { Bot, ChevronDown, Play, Loader, Settings, X, Check } from 'lucide-react';
 import { AIProvider, AIAnalysisMode, AI_PROVIDER_CONFIGS } from '@/types/ai';
 import { getConfiguredAIProviders } from '@/utils/aiKeyStorage';
+import { getAIPreferences, saveAIPreferences, getValidModelForProvider } from '@/utils/aiPreferences';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './AIAnalysisSection.css';
 
 interface AIAnalysisSectionProps {
-  onStartAnalysis: (provider: AIProvider, mode: AIAnalysisMode) => void;
+  onStartAnalysis: (provider: AIProvider, mode: AIAnalysisMode, model: string) => void;
   isAnalyzing: boolean;
   hasResults: boolean;
   disabled?: boolean;
@@ -60,12 +61,15 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
   const { t } = useTranslation('sidepanel');
   const [configuredProviders, setConfiguredProviders] = useState<AIProvider[]>([]);
   const [selectedProvider, setSelectedProvider] = useState<AIProvider | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>('');
   const [selectedMode, setSelectedMode] = useState<AIAnalysisMode>(AIAnalysisMode.SUMMARY);
   const [isLoading, setIsLoading] = useState(true);
   const [showModeInfo, setShowModeInfo] = useState(false);
   const [showProviderMenu, setShowProviderMenu] = useState(false);
   const [analyzingStateIndex, setAnalyzingStateIndex] = useState(0);
+  
   const providerMenuRef = useRef<HTMLDivElement>(null);
+  const modeInfoRef = useRef<HTMLDivElement>(null);
 
   // Rotate analyzing messages
   useEffect(() => {
@@ -76,19 +80,33 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
 
     const interval = setInterval(() => {
       setAnalyzingStateIndex((prev) => (prev + 1) % ANALYZING_STATES.length);
-    }, 3000); // Change message every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [isAnalyzing, retryInfo]);
 
-  // Load configured AI providers
+  // Load configured AI providers and preferences
   useEffect(() => {
-    async function loadProviders() {
+    async function loadProvidersAndPreferences() {
       try {
-        const providers = await getConfiguredAIProviders();
+        const [providers, preferences] = await Promise.all([
+          getConfiguredAIProviders(),
+          getAIPreferences(),
+        ]);
+        
         setConfiguredProviders(providers);
-        if (providers.length > 0 && !selectedProvider) {
-          setSelectedProvider(providers[0]);
+        setSelectedMode(preferences.mode);
+        
+        // Set provider and model from preferences if available
+        if (providers.includes(preferences.provider)) {
+          setSelectedProvider(preferences.provider);
+          setSelectedModel(getValidModelForProvider(preferences.provider, preferences.model));
+        } else if (providers.length > 0) {
+          // Fallback to first configured provider
+          const defaultProvider = providers[0];
+          const defaultModel = AI_PROVIDER_CONFIGS[defaultProvider].models[0]?.id || '';
+          setSelectedProvider(defaultProvider);
+          setSelectedModel(defaultModel);
         }
       } catch (error) {
         console.error('Error loading AI providers:', error);
@@ -97,12 +115,12 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
       }
     }
 
-    loadProviders();
+    loadProvidersAndPreferences();
 
     // Listen for storage changes
-    const handleStorageChange = (changes: any) => {
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
       if (changes.aiApiKeys) {
-        loadProviders();
+        loadProvidersAndPreferences();
       }
     };
 
@@ -110,11 +128,14 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
-  // Close provider menu when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (providerMenuRef.current && !providerMenuRef.current.contains(event.target as Node)) {
         setShowProviderMenu(false);
+      }
+      if (modeInfoRef.current && !modeInfoRef.current.contains(event.target as Node)) {
+        setShowModeInfo(false);
       }
     };
 
@@ -122,11 +143,16 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleProviderSelect = (provider: AIProvider) => {
-    if (configuredProviders.includes(provider)) {
-      setSelectedProvider(provider);
-      setShowProviderMenu(false);
-    }
+  // Save preferences when selection changes
+  const savePreferences = async (provider: AIProvider, model: string, mode: AIAnalysisMode) => {
+    await saveAIPreferences({ provider, model, mode });
+  };
+
+  const handleModelSelect = (provider: AIProvider, modelId: string) => {
+    setSelectedProvider(provider);
+    setSelectedModel(modelId);
+    setShowProviderMenu(false);
+    savePreferences(provider, modelId, selectedMode);
   };
 
   const toggleProviderMenu = () => {
@@ -135,13 +161,17 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     }
   };
 
-  const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMode(event.target.value as AIAnalysisMode);
+  const handleModeChange = (mode: AIAnalysisMode) => {
+    setSelectedMode(mode);
+    setShowModeInfo(false);
+    if (selectedProvider && selectedModel) {
+      savePreferences(selectedProvider, selectedModel, mode);
+    }
   };
 
   const handleStartAnalysis = () => {
-    if (selectedProvider && !isAnalyzing && !disabled) {
-      onStartAnalysis(selectedProvider, selectedMode);
+    if (selectedProvider && selectedModel && !isAnalyzing && !disabled) {
+      onStartAnalysis(selectedProvider, selectedMode, selectedModel);
     }
   };
 
@@ -151,8 +181,17 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     });
   };
 
-  const toggleModeInfo = () => {
+  const toggleModeInfo = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setShowModeInfo(!showModeInfo);
+  };
+
+  // Get current model display name
+  const getCurrentModelDisplay = () => {
+    if (!selectedProvider || !selectedModel) return '';
+    const config = AI_PROVIDER_CONFIGS[selectedProvider];
+    const model = config.models.find(m => m.id === selectedModel);
+    return model?.displayName || selectedModel;
   };
 
   // Don't show if no results yet
@@ -192,9 +231,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
       </div>
 
       <div className="ai-controls">
-        {/* Actions Row with Provider Dropdown */}
         <div className="ai-actions">
-          {/* Provider Dropdown */}
+          {/* Provider & Model Dropdown */}
           <div className="ai-provider-dropdown" ref={providerMenuRef}>
             <button
               className={`ai-provider-trigger ${showProviderMenu ? 'open' : ''}`}
@@ -208,8 +246,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
                     alt={AI_PROVIDER_CONFIGS[selectedProvider].shortName}
                     className="ai-provider-logo"
                   />
-                  <span className="ai-provider-selected-name">
-                    {AI_PROVIDER_CONFIGS[selectedProvider].shortName}
+                  <span className="ai-provider-selected-model">
+                    {getCurrentModelDisplay()}
                   </span>
                 </>
               ) : (
@@ -220,58 +258,51 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
 
             {showProviderMenu && (
               <div className="ai-provider-menu">
-                {/* Configured Providers (Available) */}
-                {configuredProviders.length > 0 && (
-                  <div className="ai-provider-group">
-                    {configuredProviders.map((provider) => {
-                      const config = AI_PROVIDER_CONFIGS[provider];
-                      const isSelected = selectedProvider === provider;
+                {/* All models from configured providers - flat list */}
+                <div className="ai-model-list-flat">
+                  {configuredProviders.flatMap((provider) => {
+                    const config = AI_PROVIDER_CONFIGS[provider];
+                    return config.models.map((model) => {
+                      const isSelected = selectedProvider === provider && selectedModel === model.id;
                       return (
                         <button
-                          key={provider}
-                          className={`ai-provider-item ${isSelected ? 'selected' : ''}`}
-                          onClick={() => handleProviderSelect(provider)}
+                          key={`${provider}-${model.id}`}
+                          className={`ai-model-flat-item ${isSelected ? 'selected' : ''}`}
+                          onClick={() => handleModelSelect(provider, model.id)}
                         >
-                          <img src={config.logo} alt={config.shortName} className="ai-provider-logo" />
-                          <div className="ai-provider-item-info">
-                            <span className="ai-provider-item-name">{config.shortName}</span>
-                            <span className="ai-provider-item-model">{config.modelName}</span>
-                          </div>
-                          {isSelected && <Check size={14} className="ai-provider-check" />}
+                          <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
+                          <span className="ai-model-name">{model.displayName}</span>
+                          {isSelected && <Check size={14} className="ai-model-check" />}
                         </button>
                       );
-                    })}
-                  </div>
-                )}
+                    });
+                  })}
+                </div>
 
-                {/* Unconfigured Providers (Disabled) */}
+                {/* Unconfigured Providers - show their models as disabled */}
                 {ALL_PROVIDERS.filter(p => !configuredProviders.includes(p)).length > 0 && (
                   <>
-                    {configuredProviders.length > 0 && <div className="ai-provider-divider" />}
-                    <div className="ai-provider-group disabled">
-                      {ALL_PROVIDERS.filter(p => !configuredProviders.includes(p)).map((provider) => {
+                    <div className="ai-provider-divider" />
+                    <div className="ai-model-list-flat disabled">
+                      {ALL_PROVIDERS.filter(p => !configuredProviders.includes(p)).flatMap((provider) => {
                         const config = AI_PROVIDER_CONFIGS[provider];
-                        return (
+                        return config.models.map((model) => (
                           <button
-                            key={provider}
-                            className="ai-provider-item disabled"
+                            key={`${provider}-${model.id}`}
+                            className="ai-model-flat-item disabled"
                             disabled
                             title={t('ai.noApiKey')}
                           >
-                            <img src={config.logo} alt={config.shortName} className="ai-provider-logo" />
-                            <div className="ai-provider-item-info">
-                              <span className="ai-provider-item-name">{config.shortName}</span>
-                              <span className="ai-provider-item-model">{config.modelName}</span>
-                            </div>
-                            <span className="ai-provider-no-key">{t('ai.noKey')}</span>
+                            <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
+                            <span className="ai-model-name">{model.displayName}</span>
+                            <span className="ai-model-no-key">{t('ai.noKey')}</span>
                           </button>
-                        );
+                        ));
                       })}
                     </div>
                   </>
                 )}
 
-                {/* Settings Link */}
                 <div className="ai-provider-divider" />
                 <button className="ai-provider-settings" onClick={openSettings}>
                   <Settings size={14} />
@@ -281,34 +312,58 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
             )}
           </div>
 
-          {/* Mode Selection */}
-          <div className="ai-mode-container">
-            <div className="ai-mode-select-wrapper">
-              <select
-                className="ai-mode-select"
-                value={selectedMode}
-                onChange={handleModeChange}
-                disabled={isAnalyzing || disabled}
-              >
-                <option value={AIAnalysisMode.SUMMARY}>{t('ai.modes.summary')}</option>
-                <option value={AIAnalysisMode.ANALYSIS}>{t('ai.modes.analysis')}</option>
-                <option value={AIAnalysisMode.DETAILED}>{t('ai.modes.detailed')}</option>
-              </select>
-              <ChevronDown size={14} className="ai-select-icon" />
-            </div>
+          {/* Mode Badge */}
+          <div className="ai-mode-badge-wrapper" ref={modeInfoRef}>
             <button 
-              className="ai-mode-info-btn"
+              className={`ai-mode-badge ${selectedMode}`}
               onClick={toggleModeInfo}
+              disabled={isAnalyzing || disabled}
               title={t('ai.modeInfo.title')}
             >
-              <Info size={14} />
+              {t(`ai.modes.${selectedMode}`)}
             </button>
+
+            {showModeInfo && (
+              <div className="ai-mode-info-popup">
+                <div className="ai-mode-info-header">
+                  <span>{t('ai.modeInfo.title')}</span>
+                  <button className="ai-mode-info-close" onClick={toggleModeInfo}>
+                    <X size={14} />
+                  </button>
+                </div>
+                <div className="ai-mode-info-content">
+                  {Object.entries(MODE_INFO).map(([mode, info]) => (
+                    <div 
+                      key={mode} 
+                      className={`ai-mode-info-item ${selectedMode === mode ? 'selected' : ''}`}
+                      onClick={() => handleModeChange(mode as AIAnalysisMode)}
+                    >
+                      <div className="ai-mode-info-name">
+                        {t(`ai.modes.${mode}`)}
+                      </div>
+                      <div className="ai-mode-info-meta">
+                        <span className="ai-mode-info-words">{info.words}</span>
+                        <span className="ai-mode-info-separator">•</span>
+                        <span className="ai-mode-info-time">{info.readTime}</span>
+                      </div>
+                      <div className="ai-mode-info-desc">
+                        {t(`ai.modeInfo.${mode}`)}
+                      </div>
+                      <div className="ai-mode-info-audience">
+                        {info.audience}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
+          {/* Start Button */}
           <button
             className="ai-start-btn"
             onClick={handleStartAnalysis}
-            disabled={!selectedProvider || isAnalyzing || disabled}
+            disabled={!selectedProvider || !selectedModel || isAnalyzing || disabled}
           >
             {isAnalyzing ? (
               <>
@@ -328,45 +383,6 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
             )}
           </button>
         </div>
-
-        {/* Mode Info Popup */}
-        {showModeInfo && (
-          <div className="ai-mode-info-popup">
-            <div className="ai-mode-info-header">
-              <span>{t('ai.modeInfo.title')}</span>
-              <button className="ai-mode-info-close" onClick={toggleModeInfo}>
-                <X size={14} />
-              </button>
-            </div>
-            <div className="ai-mode-info-content">
-              {Object.entries(MODE_INFO).map(([mode, info]) => (
-                <div 
-                  key={mode} 
-                  className={`ai-mode-info-item ${selectedMode === mode ? 'selected' : ''}`}
-                  onClick={() => {
-                    setSelectedMode(mode as AIAnalysisMode);
-                    setShowModeInfo(false);
-                  }}
-                >
-                  <div className="ai-mode-info-name">
-                    {t(`ai.modes.${mode}`)}
-                  </div>
-                  <div className="ai-mode-info-meta">
-                    <span className="ai-mode-info-words">{info.words} words</span>
-                    <span className="ai-mode-info-separator">|</span>
-                    <span className="ai-mode-info-time">{info.readTime}</span>
-                  </div>
-                  <div className="ai-mode-info-desc">
-                    {t(`ai.modeInfo.${mode}`)}
-                  </div>
-                  <div className="ai-mode-info-audience">
-                    {info.audience}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

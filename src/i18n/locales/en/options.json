@@ -285,6 +285,7 @@
       "title": "Pricing",
       "input": "Input",
       "output": "Output",
+      "rate": "Rate",
       "viewMore": "View full pricing"
     },
     "howTo": {
@@ -293,8 +294,8 @@
       "getKey": "Get your API key",
       "paste": "Paste the key below"
     },
-    "model": {
-      "title": "Model Used"
+    "models": {
+      "title": "Available Models"
     }
   },
   "footer": {

@@ -150,6 +150,50 @@
   margin: -4px -4px 16px;
 }
 
+/* Models List */
+.ai-models-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ai-model-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--bg-secondary, #222228);
+  border-radius: 6px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+}
+
+.ai-model-display-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ai-model-id {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  background: rgba(255, 247, 112, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--accent, #FFF770);
+}
+
+.ai-pricing-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--bg-secondary, #222228);
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
 .ai-pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

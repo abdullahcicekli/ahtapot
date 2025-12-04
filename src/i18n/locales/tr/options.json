@@ -285,6 +285,7 @@
       "title": "Fiyatlandırma",
       "input": "Girdi",
       "output": "Çıktı",
+      "rate": "Ücret",
       "viewMore": "Tam fiyatlandırmayı görüntüle"
     },
     "howTo": {
@@ -293,8 +294,8 @@
       "getKey": "API anahtarınızı alın",
       "paste": "Anahtarı aşağıya yapıştırın"
     },
-    "model": {
-      "title": "Kullanılan Model"
+    "models": {
+      "title": "Kullanılabilir Modeller"
     }
   },
   "footer": {
