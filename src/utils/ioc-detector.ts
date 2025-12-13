@@ -1,4 +1,6 @@
 import { IOCType, DetectedIOC } from '@/types/ioc';
+import { isDefinitelyNotTLD } from './file-extensions';
+import { validateDomain, extractContext, needsExtraValidation } from './domain-validator';
 
 /**
  * IOC tespit etmek için regex pattern'leri
@@ -129,7 +131,12 @@ export function detectIOCs(text: string): DetectedIOC[] {
         continue;
       }
 
-      if (isValidIOC(type, value)) {
+      // Extract context for domain validation (helps detect file paths)
+      const context = type === IOCType.DOMAIN
+        ? extractContext(text, position)
+        : undefined;
+
+      if (isValidIOC(type, value, context)) {
         detected.push({
           type: type,
           value,
@@ -227,8 +234,15 @@ function insertPositionSorted(position: { start: number; end: number }, ranges: 
 
 /**
  * IOC'nin geçerli olup olmadığını kontrol eder (ek validasyon)
+ * @param type IOC tipi
+ * @param value IOC değeri
+ * @param context Opsiyonel bağlam bilgisi (domain validasyonu için)
  */
-function isValidIOC(type: IOCType, value: string): boolean {
+function isValidIOC(
+  type: IOCType,
+  value: string,
+  context?: { before: string; after: string }
+): boolean {
   switch (type) {
     case IOCType.IPV4:
       // Private IP aralıklarını filtrele (opsiyonel)
@@ -236,9 +250,7 @@ function isValidIOC(type: IOCType, value: string): boolean {
       return true;
 
     case IOCType.DOMAIN:
-      // Çok yaygın dosya uzantılarını filtrele
-      const fileExtensions = ['.jpg', '.png', '.gif', '.pdf', '.doc', '.txt'];
-      return !fileExtensions.some((ext) => value.toLowerCase().endsWith(ext));
+      return validateDomainIOC(value, context);
 
     case IOCType.BITCOIN:
       // Bitcoin adres uzunluğu kontrolü
@@ -251,6 +263,39 @@ function isValidIOC(type: IOCType, value: string): boolean {
     default:
       return true;
   }
+}
+
+/**
+ * Domain IOC validasyonu
+ * False positive'leri minimize etmek için kapsamlı kontrol yapar
+ */
+function validateDomainIOC(
+  value: string,
+  context?: { before: string; after: string }
+): boolean {
+  const domain = value.toLowerCase();
+
+  // 1. Extract TLD
+  const parts = domain.split('.');
+  if (parts.length < 2) {
+    return false;
+  }
+
+  const tld = parts[parts.length - 1];
+
+  // 2. Quick check: Is TLD definitely NOT a valid TLD?
+  if (isDefinitelyNotTLD(tld)) {
+    return false;
+  }
+
+  // 3. Does this domain need extra validation?
+  if (needsExtraValidation(domain)) {
+    const validationResult = validateDomain(domain, context);
+    return validationResult.isValid;
+  }
+
+  // 4. Basic validation passed
+  return true;
 }
 
 /**
