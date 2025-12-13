@@ -1,6 +1,8 @@
 {
   "header": {
     "logoAlt": "Ahtapot Logo",
+    "detectTitle": "Sayfadaki IOC'leri tespit et",
+    "detectLabel": "Mevcut sayfayı IOC'ler için tara",
     "settingsTitle": "Ayarlar",
     "settingsLabel": "Ayarları aç"
   },

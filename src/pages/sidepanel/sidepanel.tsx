@@ -13,6 +13,7 @@ import {
   ChevronDown,
   ChevronUp,
   Lightbulb,
+  Crosshair,
 } from 'lucide-react';
 import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/ioc';
 import { AIProvider, AIAnalysisMode, AIAnalysisResult } from '@/types/ai';
@@ -94,6 +95,9 @@ const SidePanel: React.FC = () => {
     iocValue: string;
   } | null>(null);
 
+  // IOC Detection Overlay state
+  const [isDetectOverlayActive, setIsDetectOverlayActive] = useState(false);
+
   // IOC tabs drag-to-scroll
   const iocTabsRef = useRef<HTMLDivElement>(null);
   const [isIOCTabsDragging, setIsIOCTabsDragging] = useState(false);
@@ -152,7 +156,12 @@ const SidePanel: React.FC = () => {
           handleAnalyze(text);
         }
       }
-      
+
+      // Listen for highlight state changes from content script
+      if (message.type === 'IOC_HIGHLIGHT_STATE_CHANGED') {
+        setIsDetectOverlayActive(message.payload.isActive);
+      }
+
       // Reload sidepanel when language changes
       if (message.type === 'LANGUAGE_CHANGED') {
         window.location.reload();
@@ -518,6 +527,28 @@ const SidePanel: React.FC = () => {
           />
         </div>
         <div className="header-actions">
+          <button
+            onClick={() => {
+              chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (tabs[0]?.id) {
+                  chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { type: MessageType.DETECT_IOCS_ON_PAGE },
+                    (response) => {
+                      if (response) {
+                        setIsDetectOverlayActive(response.isActive);
+                      }
+                    }
+                  );
+                }
+              });
+            }}
+            className={`detect-btn ${isDetectOverlayActive ? 'active' : ''}`}
+            title={t('header.detectTitle')}
+            aria-label={t('header.detectLabel')}
+          >
+            <Crosshair size={20} />
+          </button>
           <button
             onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
             className="settings-btn"

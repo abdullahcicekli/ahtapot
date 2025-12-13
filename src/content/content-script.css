@@ -19,7 +19,7 @@
   position: absolute;
   pointer-events: auto !important;
   animation: ahtapot-fade-in 0.2s ease-out;
-  z-index: 2147483647;
+  z-index: 9999999;
 }
 
 /* Fade in animasyonu */

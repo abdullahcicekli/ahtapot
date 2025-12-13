@@ -1,6 +1,8 @@
 {
   "header": {
     "logoAlt": "Ahtapot Logo",
+    "detectTitle": "Detect IOCs on page",
+    "detectLabel": "Scan current page for IOCs",
     "settingsTitle": "Settings",
     "settingsLabel": "Open settings"
   },
