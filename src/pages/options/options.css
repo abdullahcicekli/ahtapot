@@ -1362,8 +1362,8 @@ body {
 
 /* Locked Provider Styles */
 .api-key-card.locked-provider {
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -1375,7 +1375,7 @@ body {
   left: 0;
   width: 4px;
   height: 100%;
-  background: var(--success-color);
+  background: #3b82f6;
 }
 
 .locked-provider-info {
@@ -1383,10 +1383,10 @@ body {
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 8px;
-  color: var(--success-color);
+  color: #60a5fa;
   font-size: 14px;
   font-weight: 500;
 }
@@ -1446,4 +1446,228 @@ body {
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* ==================== How to Use Section ==================== */
+
+.how-to-use-section {
+  padding: 24px;
+}
+
+.how-to-use-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.section-intro {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.how-to-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.how-to-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.how-to-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  border-radius: 12px;
+  color: var(--accent);
+}
+
+.how-to-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.how-to-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.how-to-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.how-to-step {
+  display: flex;
+  align-items: flex-start;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.5;
+}
+
+.how-to-step p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.keyboard-shortcut-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  flex-wrap: wrap;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.keyboard-shortcut-box kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.shortcut-or {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 8px;
+}
+
+.ioc-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.ioc-type-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.ioc-type-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ioc-type-example {
+  font-size: 11px;
+  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+  color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.how-to-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--info-bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--info);
+}
+
+.how-to-note svg {
+  flex-shrink: 0;
+  color: var(--info);
+  margin-top: 2px;
+}
+
+.how-to-note p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.inline-tab-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.15s ease;
+}
+
+.inline-tab-link:hover {
+  opacity: 0.8;
+}
+
+.ai-providers-list {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.ai-provider-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  flex: 1;
+  min-width: 120px;
+}
+
+.ai-provider-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ai-provider-company {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
 }

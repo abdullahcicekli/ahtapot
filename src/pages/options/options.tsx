@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
-import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move } from 'lucide-react';
+import { useTranslation, Trans } from 'react-i18next';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move, HelpCircle, MousePointer, Keyboard, Zap, Search } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
@@ -15,7 +15,7 @@ import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
 
-type TabType = 'general' | 'apiKeys';
+type TabType = 'general' | 'apiKeys' | 'howToUse';
 
 interface APIKeyConfig {
   provider: APIProvider;
@@ -106,7 +106,7 @@ const OptionsPage: React.FC = () => {
   const getInitialTab = (): TabType => {
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get('tab') as TabType | null;
-    if (tab && (tab === 'general' || tab === 'apiKeys')) {
+    if (tab && (tab === 'general' || tab === 'apiKeys' || tab === 'howToUse')) {
       return tab;
     }
     return 'general';
@@ -728,6 +728,13 @@ const OptionsPage: React.FC = () => {
           <Key size={18} />
           {t('tabs.apiKeys', { ns: 'options' })}
         </button>
+        <button
+          className={`tab ${activeTab === 'howToUse' ? 'active' : ''}`}
+          onClick={() => handleTabChange('howToUse')}
+        >
+          <HelpCircle size={18} />
+          {t('tabs.howToUse', { ns: 'options' })}
+        </button>
       </div>
 
       <main className="options-main">
@@ -1148,6 +1155,231 @@ const OptionsPage: React.FC = () => {
               </div>
             )}
           </>
+        )}
+
+        {/* How to Use Tab */}
+        {activeTab === 'howToUse' && (
+          <div className="settings-section how-to-use-section">
+            <h2>{t('howToUse.title', { ns: 'options' })}</h2>
+            <p className="section-intro">{t('howToUse.intro', { ns: 'options' })}</p>
+
+            {/* API Keys Info - First */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <Key size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.apiKeys.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.apiKeys.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-steps">
+                <div className="how-to-step">
+                  <span className="step-number">1</span>
+                  <p>
+                    <Trans
+                      i18nKey="howToUse.apiKeys.step1"
+                      ns="options"
+                      components={[
+                        <button className="inline-tab-link" onClick={() => setActiveTab('apiKeys')} />
+                      ]}
+                    />
+                  </p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">2</span>
+                  <p>{t('howToUse.apiKeys.step2', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">3</span>
+                  <p>{t('howToUse.apiKeys.step3', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-note">
+                <AlertCircle size={16} />
+                <p>{t('howToUse.apiKeys.note', { ns: 'options' })}</p>
+              </div>
+            </div>
+
+            {/* AI Integration */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <Sparkles size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.ai.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.ai.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-steps">
+                <div className="how-to-step">
+                  <span className="step-number">1</span>
+                  <p>{t('howToUse.ai.step1', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">2</span>
+                  <p>
+                    <Trans
+                      i18nKey="howToUse.ai.step2"
+                      ns="options"
+                      components={[
+                        <button className="inline-tab-link" onClick={() => setActiveTab('apiKeys')} />
+                      ]}
+                    />
+                  </p>
+                </div>
+              </div>
+              <div className="ai-providers-list">
+                <div className="ai-provider-item">
+                  <span className="ai-provider-name">Claude</span>
+                  <span className="ai-provider-company">Anthropic</span>
+                </div>
+                <div className="ai-provider-item">
+                  <span className="ai-provider-name">Gemini</span>
+                  <span className="ai-provider-company">Google</span>
+                </div>
+                <div className="ai-provider-item">
+                  <span className="ai-provider-name">GPT</span>
+                  <span className="ai-provider-company">OpenAI</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Method 1: Text Selection */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <MousePointer size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.textSelection.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.textSelection.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-steps">
+                <div className="how-to-step">
+                  <span className="step-number">1</span>
+                  <p>{t('howToUse.textSelection.step1', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">2</span>
+                  <p>{t('howToUse.textSelection.step2', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">3</span>
+                  <p>{t('howToUse.textSelection.step3', { ns: 'options' })}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Method 2: Side Panel */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <Search size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.sidePanel.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.sidePanel.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-steps">
+                <div className="how-to-step">
+                  <span className="step-number">1</span>
+                  <p>{t('howToUse.sidePanel.step1', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">2</span>
+                  <p>{t('howToUse.sidePanel.step2', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">3</span>
+                  <p>{t('howToUse.sidePanel.step3', { ns: 'options' })}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Method 3: Keyboard Shortcut */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <Keyboard size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.keyboard.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.keyboard.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="how-to-steps">
+                <div className="how-to-step">
+                  <span className="step-number">1</span>
+                  <p>{t('howToUse.keyboard.step1', { ns: 'options' })}</p>
+                </div>
+                <div className="how-to-step">
+                  <span className="step-number">2</span>
+                  <p>{t('howToUse.keyboard.step2', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="keyboard-shortcut-box">
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>
+                <span className="shortcut-or">{t('howToUse.keyboard.or', { ns: 'options' })}</span>
+                <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>
+              </div>
+            </div>
+
+            {/* Supported IOC Types */}
+            <div className="how-to-card">
+              <div className="how-to-header">
+                <div className="how-to-icon">
+                  <Zap size={24} />
+                </div>
+                <div>
+                  <h3>{t('howToUse.iocTypes.title', { ns: 'options' })}</h3>
+                  <p className="how-to-subtitle">{t('howToUse.iocTypes.subtitle', { ns: 'options' })}</p>
+                </div>
+              </div>
+              <div className="ioc-types-grid">
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">IPv4</span>
+                  <span className="ioc-type-example">192.168.1.1</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">IPv6</span>
+                  <span className="ioc-type-example">2001:0db8::8a2e:0370</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">Domain</span>
+                  <span className="ioc-type-example">example.com</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">URL</span>
+                  <span className="ioc-type-example">https://example.com/path</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">MD5</span>
+                  <span className="ioc-type-example">d41d8cd98f00b204...</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">SHA1</span>
+                  <span className="ioc-type-example">da39a3ee5e6b4b0d...</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">SHA256</span>
+                  <span className="ioc-type-example">e3b0c44298fc1c14...</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">Email</span>
+                  <span className="ioc-type-example">user@example.com</span>
+                </div>
+                <div className="ioc-type-item">
+                  <span className="ioc-type-name">CVE</span>
+                  <span className="ioc-type-example">CVE-2021-44228</span>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </main>
 

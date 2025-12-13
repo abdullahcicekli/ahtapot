@@ -11,9 +11,9 @@
       "title": "API Settings",
       "description": "Manage API keys"
     },
-    "about": {
-      "title": "About",
-      "description": "Ahtapot Extension"
+    "howToUse": {
+      "title": "How to Use",
+      "description": "Learn how to use Ahtapot"
     },
     "feedback": {
       "title": "Feedback",
@@ -25,6 +25,7 @@
     }
   },
   "footer": {
-    "text": "Select text or search in side panel to analyze IOC"
+    "about": "About",
+    "privacy": "Privacy Policy"
   }
 }

@@ -6,7 +6,8 @@
   },
   "tabs": {
     "general": "General Settings",
-    "apiKeys": "API Keys"
+    "apiKeys": "API Keys",
+    "howToUse": "How to Use"
   },
   "general": {
     "title": "General Settings",
@@ -300,5 +301,48 @@
   },
   "footer": {
     "text": "Ahtapot v{{version}} • Cybersecurity Indicator Analysis Tool"
+  },
+  "howToUse": {
+    "title": "How to Use Ahtapot",
+    "intro": "Ahtapot makes it easy to analyze IOCs (Indicators of Compromise) from any webpage. There are multiple ways to start an analysis.",
+    "textSelection": {
+      "title": "Text Selection",
+      "subtitle": "The quickest way to analyze IOCs",
+      "step1": "Select any text containing IOCs on a webpage (IP addresses, domains, hashes, etc.)",
+      "step2": "Click the \"Analyze\" button that appears near your selection",
+      "step3": "View the analysis results in the side panel"
+    },
+    "sidePanel": {
+      "title": "Side Panel Search",
+      "subtitle": "Manual search and analysis",
+      "step1": "Click the Ahtapot icon in your browser toolbar",
+      "step2": "Select \"IOC Analysis\" to open the side panel",
+      "step3": "Enter any IOC in the search box and press Enter"
+    },
+    "keyboard": {
+      "title": "Keyboard Shortcut",
+      "subtitle": "Highlight all IOCs on the page",
+      "step1": "Navigate to any webpage containing IOCs",
+      "step2": "Press the keyboard shortcut to highlight all detected IOCs on the page",
+      "or": "or"
+    },
+    "apiKeys": {
+      "title": "API Keys Setup",
+      "subtitle": "Required for threat intelligence queries",
+      "step1": "Go to the <0>API Keys</0> tab in this settings page",
+      "step2": "Click the info icon (ⓘ) next to each provider to see how to obtain an API key",
+      "step3": "Enter your API keys and click Save - keys are stored only in your browser",
+      "note": "Your API keys are stored securely in your browser only and are never sent to any external server except the respective provider APIs."
+    },
+    "ai": {
+      "title": "AI Analysis (Optional)",
+      "subtitle": "Get intelligent summaries and recommendations",
+      "step1": "Choose one of the supported AI providers below",
+      "step2": "Get an API key from the provider and enter it in the <0>API Keys</0> tab"
+    },
+    "iocTypes": {
+      "title": "Supported IOC Types",
+      "subtitle": "Ahtapot automatically detects and analyzes these indicator types"
+    }
   }
 }

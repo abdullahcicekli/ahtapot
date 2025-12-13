@@ -11,9 +11,9 @@
       "title": "API Ayarları",
       "description": "API anahtarlarını yönet"
     },
-    "about": {
-      "title": "Hakkında",
-      "description": "Ahtapot Extension"
+    "howToUse": {
+      "title": "Nasıl Kullanılır",
+      "description": "Ahtapot'u nasıl kullanacağınızı öğrenin"
     },
     "feedback": {
       "title": "Geri Bildirim",
@@ -25,6 +25,7 @@
     }
   },
   "footer": {
-    "text": "Metin seçerek veya yan panelde arama yaparak IOC analizi yapabilirsiniz"
+    "about": "Hakkında",
+    "privacy": "Gizlilik Politikası"
   }
 }

@@ -127,9 +127,33 @@ body {
   border-top: 1px solid var(--border);
 }
 
-.popup-footer-text {
+.popup-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-size: 10px;
   color: rgba(255, 255, 255, 0.3);
-  text-align: center;
-  line-height: 1.4;
+}
+
+.popup-footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.15s ease;
+}
+
+.popup-footer-link:hover {
+  color: var(--accent);
+}
+
+.popup-footer-separator {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.popup-footer-version {
+  color: rgba(255, 255, 255, 0.3);
 }

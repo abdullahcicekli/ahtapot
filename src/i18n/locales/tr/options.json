@@ -6,7 +6,8 @@
   },
   "tabs": {
     "general": "Genel Ayarlar",
-    "apiKeys": "API Anahtarları"
+    "apiKeys": "API Anahtarları",
+    "howToUse": "Nasıl Kullanılır"
   },
   "general": {
     "title": "Genel Ayarlar",
@@ -300,5 +301,48 @@
   },
   "footer": {
     "text": "Ahtapot v{{version}} • Siber Güvenlik Gösterge Analiz Aracı"
+  },
+  "howToUse": {
+    "title": "Ahtapot Nasıl Kullanılır",
+    "intro": "Ahtapot, herhangi bir web sayfasından IOC'leri (Güvenlik Göstergeleri) kolayca analiz etmenizi sağlar. Analiz başlatmanın birçok yolu vardır.",
+    "textSelection": {
+      "title": "Metin Seçimi",
+      "subtitle": "IOC analizi için en hızlı yöntem",
+      "step1": "Bir web sayfasında IOC içeren herhangi bir metni seçin (IP adresleri, domainler, hash'ler vb.)",
+      "step2": "Seçiminizin yanında beliren \"Analiz Et\" butonuna tıklayın",
+      "step3": "Analiz sonuçlarını yan panelde görüntüleyin"
+    },
+    "sidePanel": {
+      "title": "Yan Panel Araması",
+      "subtitle": "Manuel arama ve analiz",
+      "step1": "Tarayıcı araç çubuğunuzdaki Ahtapot simgesine tıklayın",
+      "step2": "Yan paneli açmak için \"IOC Analizi\"ni seçin",
+      "step3": "Arama kutusuna herhangi bir IOC girin ve Enter'a basın"
+    },
+    "keyboard": {
+      "title": "Klavye Kısayolu",
+      "subtitle": "Sayfadaki tüm IOC'leri vurgulayın",
+      "step1": "IOC içeren herhangi bir web sayfasına gidin",
+      "step2": "Sayfadaki tüm tespit edilen IOC'leri vurgulamak için klavye kısayoluna basın",
+      "or": "veya"
+    },
+    "apiKeys": {
+      "title": "API Anahtarları Kurulumu",
+      "subtitle": "Tehdit istihbaratı sorguları için gereklidir",
+      "step1": "Bu ayarlar sayfasındaki <0>API Anahtarları</0> sekmesine gidin",
+      "step2": "API anahtarını nasıl alacağınızı görmek için her sağlayıcının yanındaki bilgi simgesine (ⓘ) tıklayın",
+      "step3": "API anahtarlarınızı girin ve Kaydet'e tıklayın - anahtarlar yalnızca tarayıcınızda saklanır",
+      "note": "API anahtarlarınız yalnızca tarayıcınızda güvenli bir şekilde saklanır ve ilgili sağlayıcı API'leri dışında hiçbir harici sunucuya gönderilmez."
+    },
+    "ai": {
+      "title": "AI Analizi (Opsiyonel)",
+      "subtitle": "Akıllı özetler ve öneriler alın",
+      "step1": "Aşağıdaki desteklenen AI sağlayıcılarından birini seçin",
+      "step2": "Sağlayıcıdan bir API anahtarı alın ve <0>API Anahtarları</0> sekmesine girin"
+    },
+    "iocTypes": {
+      "title": "Desteklenen IOC Türleri",
+      "subtitle": "Ahtapot bu gösterge türlerini otomatik olarak algılar ve analiz eder"
+    }
   }
 }

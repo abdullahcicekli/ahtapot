@@ -1,5 +1,5 @@
 import React, { useEffect, memo, useCallback, useMemo, useState } from 'react';
-import { Settings, Search, Info, MessageSquare, Star } from 'lucide-react';
+import { Settings, Search, HelpCircle, MessageSquare, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/config';
 
@@ -7,11 +7,13 @@ import '@/i18n/config';
 const Popup: React.FC = memo(() => {
   const { t, i18n } = useTranslation(['popup']);
   const [version, setVersion] = useState<string>('');
+  const [currentLanguage, setCurrentLanguage] = useState<string>('en');
 
   useEffect(() => {
     chrome.storage.local.get('language').then((result) => {
       if (result.language) {
         i18n.changeLanguage(result.language);
+        setCurrentLanguage(result.language);
       }
     });
 
@@ -34,9 +36,21 @@ const Popup: React.FC = memo(() => {
     }
   }, []);
 
+  const handleOpenHowToUse = useCallback(() => {
+    chrome.tabs.create({
+      url: chrome.runtime.getURL('src/pages/options/index.html?tab=howToUse')
+    });
+    window.close();
+  }, []);
+
   const handleOpenAbout = useCallback(() => {
     chrome.tabs.create({ url: 'https://ahtapot.me' });
   }, []);
+
+  const handleOpenPrivacyPolicy = useCallback(() => {
+    const lang = currentLanguage === 'tr' ? 'tr' : 'en';
+    chrome.tabs.create({ url: `https://ahtapot.me/${lang}/privacy/` });
+  }, [currentLanguage]);
 
   const handleOpenFeedback = useCallback(() => {
     chrome.tabs.create({ url: 'https://ahtapot.me/#feedback' });
@@ -60,10 +74,10 @@ const Popup: React.FC = memo(() => {
       onClick: handleOpenOptions,
     },
     {
-      icon: <Info className="w-5 h-5" />,
-      title: t('menu.about.title', { ns: 'popup' }),
-      description: `${t('menu.about.description', { ns: 'popup' })} ${version ? `v${version}` : ''}`,
-      onClick: handleOpenAbout,
+      icon: <HelpCircle className="w-5 h-5" />,
+      title: t('menu.howToUse.title', { ns: 'popup' }),
+      description: t('menu.howToUse.description', { ns: 'popup' }),
+      onClick: handleOpenHowToUse,
     },
     {
       icon: <MessageSquare className="w-5 h-5" />,
@@ -77,7 +91,7 @@ const Popup: React.FC = memo(() => {
       description: t('menu.rateUs.description', { ns: 'popup' }),
       onClick: handleOpenChromeStore,
     },
-  ], [t, version, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback, handleOpenChromeStore]);
+  ], [t, handleOpenSidePanel, handleOpenOptions, handleOpenHowToUse, handleOpenFeedback, handleOpenChromeStore]);
 
   return (
     <div className="popup-container">
@@ -106,9 +120,21 @@ const Popup: React.FC = memo(() => {
       </div>
 
       <div className="popup-footer">
-        <p className="popup-footer-text">
-          {t('footer.text', { ns: 'popup' })} {version && `v${version}`}
-        </p>
+        <div className="popup-footer-links">
+          <button onClick={handleOpenAbout} className="popup-footer-link">
+            {t('footer.about', { ns: 'popup' })}
+          </button>
+          <span className="popup-footer-separator">•</span>
+          <button onClick={handleOpenPrivacyPolicy} className="popup-footer-link">
+            {t('footer.privacy', { ns: 'popup' })}
+          </button>
+          {version && (
+            <>
+              <span className="popup-footer-separator">•</span>
+              <span className="popup-footer-version">v{version}</span>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
