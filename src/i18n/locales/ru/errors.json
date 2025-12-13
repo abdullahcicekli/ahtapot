@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "Требуется API-ключ",
+    "keyInvalid": "Недействительный API-ключ",
+    "requestFailed": "Запрос не выполнен",
+    "rateLimitExceeded": "Превышен лимит запросов",
+    "networkError": "Ошибка сети",
+    "timeout": "Тайм-аут запроса"
+  },
+  "analysis": {
+    "noIocs": "Индикаторы не обнаружены",
+    "analysisError": "Ошибка анализа",
+    "noResults": "Нет результатов"
+  },
+  "storage": {
+    "saveFailed": "Не удалось сохранить настройки",
+    "loadFailed": "Не удалось загрузить настройки"
+  },
+  "provider": {
+    "notConfigured": "API не настроен",
+    "unavailable": "Сервис недоступен"
+  }
+}

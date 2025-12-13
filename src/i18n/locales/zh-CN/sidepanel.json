@@ -1,0 +1,195 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot 标志",
+    "detectTitle": "检测页面上的IOC",
+    "detectLabel": "扫描当前页面的IOC",
+    "settingsTitle": "设置",
+    "settingsLabel": "打开设置"
+  },
+  "apiWarning": {
+    "title": "需要配置API",
+    "description": "要分析安全指标，您需要配置至少一个API密钥。",
+    "configureButton": "配置API密钥"
+  },
+  "input": {
+    "label": "输入安全指标",
+    "placeholder": "在此粘贴IP地址、域名、哈希值、URL或其他安全指标...",
+    "detectButton": "扫描指标",
+    "analyzeButton": "分析威胁",
+    "analyzingButton": "分析中...",
+    "multipleHint": "对于多个IOC，使用逗号（,）分隔或使用Shift+Enter换行",
+    "detectedCount": "检测到 {{count}} 个IOC"
+  },
+  "detected": {
+    "title": "检测到的指标",
+    "count_one": "找到 {{count}} 个指标",
+    "count_other": "找到 {{count}} 个指标",
+    "supportedBy": "支持提供商："
+  },
+  "results": {
+    "title": "提供商结果"
+  },
+  "loading": {
+    "analyzing": "正在分析安全指标..."
+  },
+  "providerNoResults": {
+    "title": "{{provider}} 无结果",
+    "searchedFor": "您搜索了：",
+    "description": "此提供商不支持这些指标类型。",
+    "supportedLabel": "{{provider}} 支持："
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "未检测到指标",
+      "description": "在提供的文本中未发现安全指标（IOC）。"
+    },
+    "welcome": {
+      "title": "欢迎使用 Ahtapot Security",
+      "description": "快速分析网络安全指标（IOC）。在上方字段中粘贴IP地址、域名、哈希值或其他指标。",
+      "supportedTitle": "支持的指标类型：",
+      "types": {
+        "ipAddresses": "IP地址 (IPv4/IPv6)",
+        "domains": "域名和URL",
+        "hashes": "文件哈希 (MD5, SHA1, SHA256)",
+        "emails": "电子邮件地址",
+        "cve": "CVE编号",
+        "crypto": "加密货币地址"
+      }
+    }
+  },
+  "rateLimitConfirm": {
+    "title": "限速提供商",
+    "pendingStatus": "等待确认",
+    "greynoise": {
+      "limit": "每周50次搜索",
+      "message": "GreyNoise社区版每周限制50次搜索（与Visualizer使用合并计算）。",
+      "question": "是否要使用GreyNoise分析 {{count}} 个指标？",
+      "warning": "这将使用您每周配额的 {{count}} 次。"
+    },
+    "shodan": {
+      "limit": "每月100次结果",
+      "message": "Shodan免费版每月限制100次结果。",
+      "question": "是否要使用Shodan分析 {{count}} 个指标？",
+      "warning": "这将使用您每月配额的 {{count}} 次。"
+    },
+    "iocCount": "正在分析 {{count}} 个指标",
+    "confirm": "是的，分析",
+    "cancel": "跳过",
+    "skipHint": "如果未确认，分析将跳过此提供商"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "互联网噪音情报"
+    },
+    "shodan": {
+      "subtitle": "全网端口扫描器"
+    }
+  },
+  "ai": {
+    "title": "AI分析",
+    "noProviders": "配置AI提供商以启用AI驱动的分析",
+    "configure": "配置",
+    "selectProvider": "选择模型",
+    "selectIOC": "分析：",
+    "noApiKey": "未配置API密钥",
+    "noKey": "无密钥",
+    "configureKeys": "配置API密钥",
+    "modes": {
+      "summary": "摘要",
+      "analysis": "分析",
+      "detailed": "详细"
+    },
+    "modeInfo": {
+      "title": "分析模式",
+      "summary": "L1分析师快速分类决策",
+      "analysis": "L1/L2交接升级决策",
+      "detailed": "L2/L3 + IR团队完整调查"
+    },
+    "analyzing": "分析中...",
+    "analyzingStates": {
+      "sending": "发送请求...",
+      "processing": "AI正在处理...",
+      "thinking": "分析威胁数据...",
+      "generating": "生成报告...",
+      "almostDone": "即将完成...",
+      "finalizing": "完成分析..."
+    },
+    "start": "分析",
+    "copyResult": "复制结果",
+    "copyMarkdown": "复制为Markdown",
+    "reanalyze": "重新分析",
+    "exportImage": "导出为图片",
+    "cached": "已缓存",
+    "sections": {
+      "summary": "摘要",
+      "keySignals": "关键信号",
+      "assessment": "评估",
+      "providerAnalysis": "提供商分析",
+      "consensus": "共识",
+      "threatIntel": "威胁情报",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "建议操作",
+      "analystNotes": "分析师备注",
+      "executiveSummary": "执行摘要",
+      "iocAnalysis": "IOC分析",
+      "crossReference": "交叉参考分析",
+      "infrastructure": "基础设施",
+      "falsePositive": "误报分析",
+      "responseActions": "响应操作",
+      "detectionEngineering": "检测工程",
+      "references": "参考资料"
+    },
+    "labels": {
+      "verdict": "判定",
+      "risk": "风险",
+      "confidence": "置信度",
+      "confidenceShort": "置信：",
+      "sourceConfidence": "来源可信度 - 此提供商数据的可靠性",
+      "escalation": "需要升级",
+      "priority": "优先级",
+      "detection": "检测",
+      "reputation": "信誉",
+      "associations": "关联",
+      "agreement": "一致",
+      "conflicts": "冲突",
+      "dataGaps": "数据缺口",
+      "knownAssociations": "已知关联",
+      "historicalActivity": "历史活动",
+      "infrastructureInfo": "基础设施",
+      "immediate": "立即",
+      "shortTerm": "短期",
+      "longTerm": "长期",
+      "investigation": "调查",
+      "confidenceFactors": "置信因素",
+      "limitations": "限制",
+      "followUp": "后续",
+      "source": "来源"
+    },
+    "verdicts": {
+      "malicious": "恶意",
+      "suspicious": "可疑",
+      "likely_benign": "可能良性",
+      "clean": "干净",
+      "unknown": "未知"
+    },
+    "riskLevels": {
+      "critical": "严重",
+      "high": "高",
+      "medium": "中",
+      "low": "低",
+      "info": "信息"
+    },
+    "confidenceLevels": {
+      "high": "高",
+      "medium": "中",
+      "low": "低"
+    },
+    "errors": {
+      "noApiKey": "请在设置中为此AI提供商配置API密钥",
+      "unknown": "AI分析期间发生意外错误",
+      "invalidJson": "AI响应不完整或无效",
+      "retrying": "响应不完整，正在重试... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "在 {{maxAttempts}} 次尝试后无法获得完整响应。请重试。"
+    }
+  }
+}

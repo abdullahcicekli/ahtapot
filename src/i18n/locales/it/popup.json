@@ -1,0 +1,31 @@
+{
+  "header": {
+    "logoAlt": "Logo Ahtapot"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "Analisi IOC",
+      "description": "Apri pannello laterale e analizza IOC"
+    },
+    "apiSettings": {
+      "title": "Impostazioni API",
+      "description": "Gestisci chiavi API"
+    },
+    "howToUse": {
+      "title": "Come usare",
+      "description": "Scopri come utilizzare Ahtapot"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "description": "Condividi i tuoi pensieri e suggerimenti"
+    },
+    "rateUs": {
+      "title": "Valutaci",
+      "description": "Lascia una recensione su Chrome Web Store"
+    }
+  },
+  "footer": {
+    "about": "Informazioni",
+    "privacy": "Privacy Policy"
+  }
+}

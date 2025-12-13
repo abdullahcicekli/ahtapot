@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4アドレス",
+    "ipv6": "IPv6アドレス",
+    "domain": "ドメイン",
+    "url": "URL",
+    "md5": "MD5ハッシュ",
+    "sha1": "SHA1ハッシュ",
+    "sha256": "SHA256ハッシュ",
+    "email": "メールアドレス",
+    "cve": "CVE番号",
+    "bitcoin": "ビットコインアドレス",
+    "ethereum": "イーサリアムアドレス"
+  },
+  "categories": {
+    "network": "ネットワークインジケーター",
+    "file": "ファイルインジケーター",
+    "email": "メールインジケーター",
+    "vulnerability": "脆弱性インジケーター",
+    "cryptocurrency": "暗号通貨インジケーター"
+  },
+  "labels": {
+    "detected": "{{count}}個のインジケーターを検出",
+    "detected_plural": "{{count}}個のインジケーターを検出",
+    "analyzing": "インジケーターを分析中...",
+    "analyzing_plural": "インジケーターを分析中..."
+  }
+}

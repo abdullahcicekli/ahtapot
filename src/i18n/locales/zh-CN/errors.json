@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "需要API密钥",
+    "keyInvalid": "API密钥无效",
+    "requestFailed": "请求失败",
+    "rateLimitExceeded": "超出速率限制",
+    "networkError": "网络错误",
+    "timeout": "请求超时"
+  },
+  "analysis": {
+    "noIocs": "未检测到指标",
+    "analysisError": "分析错误",
+    "noResults": "无可用结果"
+  },
+  "storage": {
+    "saveFailed": "保存设置失败",
+    "loadFailed": "加载设置失败"
+  },
+  "provider": {
+    "notConfigured": "API未配置",
+    "unavailable": "服务不可用"
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "virustotal": {
+    "communityScore": "コミュニティスコア",
+    "votes": {
+      "harmless": "無害",
+      "malicious": "悪意のある"
+    },
+    "status": {
+      "malicious": "悪意のある",
+      "suspicious": "疑わしい",
+      "clean": "クリーン"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} のセキュリティベンダーがこれを悪意のあるものとしてフラグ",
+      "suspicious": "{{count}} / {{total}} のセキュリティベンダーがこれを疑わしいものとしてフラグ",
+      "clean": "セキュリティベンダーはこれを悪意のあるものとしてフラグしていません"
+    },
+    "tabs": {
+      "detection": "検出",
+      "details": "詳細"
+    },
+    "detection": {
+      "noDetections": "セキュリティベンダーはこれを悪意のあるものとしてフラグしていません",
+      "vendorCategory": {
+        "malicious": "悪意のある",
+        "suspicious": "疑わしい"
+      }
+    },
+    "pagination": {
+      "previous": "前へ",
+      "next": "次へ",
+      "page": "ページ {{current}} / {{total}}"
+    },
+    "details": {
+      "location": "場所",
+      "network": "ネットワーク",
+      "reputation": "評価",
+      "tags": "タグ",
+      "country": "国:",
+      "continent": "大陸:",
+      "networkRange": "ネットワーク:",
+      "asn": "ASN:",
+      "owner": "所有者:",
+      "rir": "RIR:",
+      "score": "スコア:"
+    },
+    "analysisDate": "最終分析",
+    "viewFullReport": "VirusTotalで完全なレポートを見る →",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "otx": {
+    "threatIntelligence": "脅威インテリジェンス",
+    "malicious": "悪意のある",
+    "suspicious": "疑わしい",
+    "pulses": "パルス",
+    "status": {
+      "clean": "クリーン",
+      "malicious": "悪意のある",
+      "suspicious": "疑わしい",
+      "flagged": "フラグ付き"
+    },
+    "statusDescription": {
+      "clean": "このインジケーターの脅威インテリジェンスパルスは見つかりませんでした",
+      "malicious": "脅威を検出: {{reasons}}",
+      "suspicious": "潜在的な脅威: {{reasons}}",
+      "flagged": "{{count}}個の脅威インテリジェンスパルスで発見 - 調査が必要"
+    },
+    "threatSummary": {
+      "title": "なぜフラグが付けられているのか？",
+      "description": "このインジケーターはAlienVault OTXコミュニティからの<1>{{count}}個の脅威インテリジェンスパルス</1>に表示されます。OTXパルスには、脅威、キャンペーン、または悪意のあるインフラストラクチャを構成する侵害の痕跡（IOC）が含まれています。",
+      "highSeverity": "<1>{{count}}</1>個のパルスに高重大度の脅威が含まれています（マルウェア、ランサムウェア、APT、フィッシングなど）",
+      "mediumSeverity": "<1>{{count}}</1>個のパルスが疑わしい活動または潜在的な脅威を示しています",
+      "recommendation": "<1>推奨事項:</1> このIOCをさらに調査する必要があります。このインジケーターに関連する特定の脅威を理解するために、以下のパルスの詳細を確認してください。"
+    },
+    "tabs": {
+      "pulses": "パルス",
+      "details": "詳細"
+    },
+    "pulse": {
+      "highSeverity": "高重大度",
+      "mediumSeverity": "中重大度",
+      "threatIndicator": "脅威インジケーター",
+      "malwareFamilies": "マルウェアファミリー:",
+      "targetedCountries": "標的国:",
+      "viewOnOTX": "OTXで見る →",
+      "moreCount": "+{{count}}件以上"
+    },
+    "details": {
+      "statistics": "統計",
+      "totalPulses": "合計パルス:",
+      "malicious": "悪意のある:",
+      "suspicious": "疑わしい:",
+      "harmless": "無害:",
+      "reputation": "評価",
+      "score": "スコア:",
+      "relatedAdversaries": "関連する攻撃者",
+      "malwareFamilies": "マルウェアファミリー",
+      "targetedIndustries": "標的業界"
+    },
+    "noPulses": "このインジケーターの脅威インテリジェンスパルスは見つかりませんでした",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "インターネットデバイス検索",
+    "status": {
+      "safe": "安全",
+      "suspicious": "疑わしい",
+      "malicious": "悪意のある",
+      "error": "エラー",
+      "unknown": "不明"
+    },
+    "hostInformation": "ホスト情報",
+    "ipAddress": "IPアドレス:",
+    "operatingSystem": "オペレーティングシステム:",
+    "lastScan": "最終スキャン:",
+    "organization": "組織",
+    "organizationLabel": "組織:",
+    "isp": "ISP:",
+    "asn": "ASN:",
+    "location": "場所",
+    "country": "国:",
+    "city": "都市:",
+    "coordinates": "座標:",
+    "ports": "ポート ({{count}})",
+    "moreCount": "+{{count}}件以上",
+    "vulnerabilities": "脆弱性 ({{count}})",
+    "moreVulnerabilities": "+{{count}}件以上の脆弱性",
+    "detectedServices": "検出されたサービス ({{count}})",
+    "port": "ポート {{port}}",
+    "hostnames": "ホスト名 ({{count}})",
+    "tags": "タグ",
+    "viewFullReport": "Shodanで完全なレポートを見る →",
+    "domainInformation": "ドメイン情報",
+    "domain": "ドメイン:",
+    "subdomains": "サブドメイン:",
+    "subdomainsCount": "サブドメイン ({{count}})",
+    "moreSubdomains": "+{{count}}件以上のサブドメイン",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "abuseipdb": {
+    "abuseConfidence": "悪用信頼度",
+    "score": "スコア",
+    "reports": "{{count}}件のレポート",
+    "users": "{{count}}人のユーザー",
+    "status": {
+      "whitelisted": "ホワイトリスト",
+      "malicious": "悪意のある",
+      "suspicious": "疑わしい",
+      "clean": "クリーン"
+    },
+    "statusDescription": {
+      "whitelisted": "このIPはAbuseIPDBのホワイトリストにあり、安全と見なされています",
+      "malicious": "高い悪用信頼スコア ({{score}}%)。このIPには重大な悪用レポートがあります。",
+      "suspicious": "中程度の悪用信頼スコア ({{score}}%)。このIPには注意が必要です。",
+      "clean": "低い悪用信頼スコア ({{score}}%)。重大な悪用レポートは見つかりませんでした。"
+    },
+    "badges": {
+      "torExitNode": "Tor出口ノード",
+      "whitelisted": "ホワイトリスト"
+    },
+    "tabs": {
+      "overview": "概要",
+      "reports": "レポート",
+      "details": "詳細"
+    },
+    "overview": {
+      "abuseMetrics": "悪用メトリクス",
+      "confidenceScore": "信頼スコア:",
+      "totalReports": "合計レポート:",
+      "uniqueReporters": "ユニーク報告者:",
+      "lastReported": "最終報告:",
+      "locationNetwork": "場所とネットワーク",
+      "country": "国:",
+      "isp": "ISP:",
+      "domain": "ドメイン:",
+      "usageType": "使用タイプ:",
+      "abuseCategories": "悪用カテゴリ"
+    },
+    "reportsTab": {
+      "noReports": "このIPアドレスの悪用レポートは見つかりませんでした"
+    },
+    "details": {
+      "ipInformation": "IP情報",
+      "ipAddress": "IPアドレス:",
+      "ipVersion": "IPバージョン:",
+      "publicIp": "パブリックIP:",
+      "whitelisted": "ホワイトリスト:",
+      "torExitNode": "Tor出口ノード:",
+      "yes": "はい",
+      "no": "いいえ",
+      "hostnames": "ホスト名"
+    },
+    "viewFullReport": "AbuseIPDBで完全なレポートを見る →",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "インターネットノイズインテリジェンス",
+    "status": {
+      "benign": "良性",
+      "suspicious": "疑わしい",
+      "malicious": "悪意のある",
+      "error": "エラー",
+      "unknown": "不明"
+    },
+    "classification": "分類",
+    "classificationStatus": "ステータス:",
+    "seenByGreyNoise": "GreyNoiseで確認:",
+    "yes": "はい",
+    "no": "いいえ",
+    "actor": "アクター:",
+    "knownService": "既知のサービス:",
+    "locationOrganization": "場所と組織",
+    "country": "国:",
+    "city": "都市:",
+    "organization": "組織:",
+    "asn": "ASN:",
+    "reverseDns": "逆引きDNS:",
+    "activityTimeline": "活動タイムライン",
+    "firstSeen": "初回確認:",
+    "lastSeen": "最終確認:",
+    "behaviorTags": "行動タグ ({{count}})",
+    "securityIndicators": "セキュリティインジケーター",
+    "torExitNode": "TOR出口ノード",
+    "vpn": "VPN",
+    "proxy": "プロキシ",
+    "viewFullReport": "GreyNoise Visualizerで完全なレポートを見る →",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "malwarebazaar": {
+    "samples": "サンプル",
+    "malwareAnalysis": "マルウェア分析",
+    "signatures": "{{count}}個のシグネチャ",
+    "tags": "{{count}}個のタグ",
+    "status": {
+      "clean": "クリーン",
+      "malicious": "悪意のある",
+      "unknown": "不明"
+    },
+    "statusDescription": {
+      "clean": "MalwareBazaarデータベースでこのハッシュのマルウェアサンプルは見つかりませんでした",
+      "malicious": "MalwareBazaarデータベースでこのハッシュに一致する{{count}}個のマルウェアサンプルが見つかりました",
+      "unknown": "脅威ステータスを判定できません"
+    },
+    "tabs": {
+      "overview": "概要",
+      "samples": "サンプル",
+      "details": "詳細"
+    },
+    "overview": {
+      "threatMetrics": "脅威メトリクス",
+      "totalSamples": "合計サンプル:",
+      "uniqueSignatures": "ユニークシグネチャ:",
+      "firstSeen": "初回確認:",
+      "lastSeen": "最終確認:",
+      "intelligence": "インテリジェンス",
+      "totalDownloads": "合計ダウンロード:",
+      "totalUploads": "合計アップロード:",
+      "codeSigning": "コード署名:",
+      "present": "あり",
+      "none": "なし",
+      "fileTypes": "ファイルタイプ:",
+      "malwareSignatures": "マルウェアシグネチャ",
+      "malwareTags": "マルウェアタグ"
+    },
+    "sample": {
+      "type": "タイプ:",
+      "size": "サイズ:",
+      "reporter": "報告者:",
+      "delivery": "配信:",
+      "origin": "オリジン:",
+      "first": "初回:",
+      "last": "最終:",
+      "downloads": "{{count}}回ダウンロード",
+      "uploads": "{{count}}回アップロード",
+      "codeSignedBy": "{{name}}によるコード署名"
+    },
+    "details": {
+      "fileTypes": "ファイルタイプ",
+      "summary": "要約",
+      "totalSamples": "合計サンプル:",
+      "signatures": "シグネチャ:",
+      "tags": "タグ:",
+      "fileTypesCount": "ファイルタイプ:"
+    },
+    "noSamples": "サンプルの詳細はありません",
+    "viewFullReport": "MalwareBazaarで完全なレポートを見る →",
+    "checkOnMalwareBazaar": "MalwareBazaarで確認 →",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "arin": {
+    "header": {
+      "title": "WHOIS情報"
+    },
+    "status": {
+      "whoisInfo": "WHOIS情報"
+    },
+    "network": {
+      "title": "ネットワーク情報",
+      "networkName": "ネットワーク名:",
+      "handle": "ハンドル:",
+      "ipVersion": "IPバージョン:",
+      "cidr": "CIDR:"
+    },
+    "organization": {
+      "title": "組織",
+      "organization": "組織:",
+      "orgHandle": "組織ハンドル:",
+      "type": "タイプ:",
+      "customerAssignment": "顧客割り当て",
+      "parentNetwork": "親ネットワーク:"
+    },
+    "addressRange": {
+      "title": "IPアドレス範囲",
+      "startAddress": "開始アドレス:",
+      "endAddress": "終了アドレス:",
+      "range": "範囲:"
+    },
+    "registration": {
+      "title": "登録情報",
+      "registrationDate": "登録日:",
+      "lastUpdated": "最終更新:"
+    },
+    "comments": {
+      "title": "コメント"
+    },
+    "netBlocks": {
+      "title": "ネットブロック"
+    },
+    "viewFullWhois": "ARINで完全なWHOISを見る →",
+    "unsupportedType": "サポートされているIOCタイプ:"
+  },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "URLステータス",
+    "threat": "脅威",
+    "threats": "脅威",
+    "urlCount": "URL数",
+    "onlineCount": "アクティブURL",
+    "offlineCount": "オフラインURL",
+    "online": "アクティブ",
+    "offline": "オフライン",
+    "firstSeen": "初回確認:",
+    "blacklists": "ブラックリスト",
+    "blacklistStatus": "ブラックリストステータス",
+    "tags": "タグ",
+    "sampleUrls": "サンプルURL",
+    "details": "詳細",
+    "reporter": "報告者:",
+    "status": {
+      "malicious": "悪意のある",
+      "suspicious": "疑わしい",
+      "clean": "クリーン"
+    },
+    "statusDescription": {
+      "malicious": "このホストで{{count}}個のアクティブな悪意のあるURLを検出",
+      "suspicious": "{{count}}個の悪意のあるURLが見つかりましたが、現在オフラインです",
+      "clean": "このインジケーターの悪意のあるURLは見つかりませんでした"
+    },
+    "viewFullReport": "URLhausで完全なレポートを見る →"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "リスクレベル",
+    "location": "場所",
+    "country": "国:",
+    "region": "地域:",
+    "org": "組織",
+    "orgName": "名前:",
+    "netname": "ネットワーク:",
+    "timestamps": "タイムスタンプ",
+    "firstSeen": "初回確認:",
+    "lastUpdated": "最終更新:",
+    "lastSeen": "最終確認:",
+    "threats": "脅威",
+    "riskFactors": "リスク要因",
+    "feeds": "脅威フィード",
+    "status": {
+      "critical": "重大",
+      "high": "高リスク",
+      "medium": "中リスク",
+      "low": "低リスク",
+      "clean": "クリーン",
+      "unknown": "不明"
+    },
+    "viewFullReport": "Pulsediveで完全なレポートを見る →"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "詐欺スコア",
+    "riskLevel": "リスクレベル",
+    "ispScore": "ISPスコア",
+    "blacklisted": "ブラックリスト",
+    "indicators": "詐欺インジケーター",
+    "proxyDetection": "プロキシ検出",
+    "noDescription": "追加のリスク情報はありません",
+    "status": {
+      "veryHigh": "非常に高いリスク",
+      "high": "高リスク",
+      "medium": "中リスク",
+      "low": "低リスク",
+      "veryLow": "非常に低いリスク",
+      "unknown": "不明"
+    },
+    "viewFullReport": "Scamalyticsで完全なレポートを見る →"
+  },
+  "generic": {
+    "source": "ソース",
+    "type": "タイプ",
+    "value": "値",
+    "status": "ステータス",
+    "details": "詳細",
+    "error": "エラー"
+  },
+  "error": {
+    "status": "エラー",
+    "unknown": "不明なエラーが発生しました",
+    "types": {
+      "apiError": "APIエラー",
+      "authError": "認証エラー",
+      "notFound": "見つかりません",
+      "rateLimit": "レート制限",
+      "serverError": "サーバーエラー",
+      "clientError": "リクエストエラー"
+    },
+    "possibleCauses": "考えられる原因:",
+    "tips": {
+      "invalidApiKey": "無効または欠落しているAPIキー",
+      "expiredApiKey": "APIキーの有効期限が切れている可能性があります",
+      "checkSettings": "設定でAPI構成を確認してください",
+      "rateLimitExceeded": "このプロバイダーのAPIレート制限を超えました",
+      "waitAndRetry": "数分待ってから再試行してください",
+      "upgradePlan": "より高い制限のためにAPIプランのアップグレードを検討してください",
+      "serverIssue": "プロバイダーサービスが一時的に利用できません",
+      "tryAgainLater": "数分後に再試行してください",
+      "checkStatus": "プロバイダーのステータスページを確認してください",
+      "checkApiKey": "APIキーが正しいことを確認してください",
+      "networkIssue": "ネットワーク接続の問題"
+    }
+  }
+}

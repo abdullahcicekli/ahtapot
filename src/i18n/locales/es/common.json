@@ -1,0 +1,45 @@
+{
+  "loading": "Cargando...",
+  "buttons": {
+    "save": "Guardar",
+    "saveChanges": "Guardar Cambios",
+    "cancel": "Cancelar",
+    "analyze": "Analizar Amenazas",
+    "detect": "Buscar Indicadores",
+    "configure": "Configurar",
+    "configureApiKeys": "Configurar Claves API",
+    "close": "Cerrar",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "status": {
+    "safe": "Seguro",
+    "clean": "Limpio",
+    "suspicious": "Sospechoso",
+    "malicious": "Malicioso",
+    "unknown": "Desconocido",
+    "error": "Error",
+    "loading": "Cargando...",
+    "analyzing": "Analizando...",
+    "idle": "Inactivo",
+    "success": "Éxito"
+  },
+  "aria": {
+    "openSettings": "Abrir configuración",
+    "closeDialog": "Cerrar diálogo",
+    "showKey": "Mostrar clave",
+    "hideKey": "Ocultar clave",
+    "selectLanguage": "Seleccionar idioma"
+  },
+  "common": {
+    "logoAlt": "Logo de Ahtapot",
+    "externalLink": "Abre en nueva pestaña"
+  },
+  "providers": {
+    "configure": "Clic para configurar la clave API de {{provider}}",
+    "analyzing": "{{provider}} está analizando...",
+    "success": "Análisis de {{provider}} completado",
+    "error": "Análisis de {{provider}} falló",
+    "ready": "{{provider}} está listo"
+  }
+}

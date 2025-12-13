@@ -123,6 +123,11 @@ Note: Rate-limited providers include confirmation system to protect your quota
 - Smooth animations
 - Non-intrusive UX
 
+### Multi-Language Support
+Available in 10 languages:
+- 🇬🇧 English | 🇹🇷 Türkçe | 🇪🇸 Español | 🇨🇳 简体中文 | 🇮🇹 Italiano
+- 🇮🇳 हिन्दी | 🇯🇵 日本語 | 🇧🇷 Português | 🇷🇺 Русский | 🇫🇷 Français
+
 ### Privacy First
 - All API keys stored locally on your device
 - No data collection or tracking
@@ -206,7 +211,7 @@ We take your privacy seriously. Here's what you need to know:
 #### 1. Configure Settings
 - Click the Ahtapot extension icon → Settings
 - **General Settings Tab:**
-  - Choose your language (English/Türkçe)
+  - Choose your language (10 languages available)
   - Configure cache retention period (optional)
 - **API Keys Tab:**
   - Add your API keys for enhanced analysis

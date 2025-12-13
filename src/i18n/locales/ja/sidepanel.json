@@ -1,0 +1,195 @@
+{
+  "header": {
+    "logoAlt": "Ahtapotロゴ",
+    "detectTitle": "ページでIOCを検出",
+    "detectLabel": "現在のページをIOCスキャン",
+    "settingsTitle": "設定",
+    "settingsLabel": "設定を開く"
+  },
+  "apiWarning": {
+    "title": "API設定が必要です",
+    "description": "セキュリティインジケーターを分析するには、少なくとも1つのAPIキーを設定する必要があります。",
+    "configureButton": "APIキーを設定"
+  },
+  "input": {
+    "label": "セキュリティインジケーターを入力",
+    "placeholder": "IPアドレス、ドメイン、ハッシュ、URL、その他のセキュリティインジケーターをここに貼り付け...",
+    "detectButton": "インジケーターをスキャン",
+    "analyzeButton": "脅威を分析",
+    "analyzingButton": "分析中...",
+    "multipleHint": "複数のIOCの場合、カンマ(,)で区切るか、Shift+Enterで改行",
+    "detectedCount": "{{count}}個のIOCを検出"
+  },
+  "detected": {
+    "title": "検出されたインジケーター",
+    "count_one": "{{count}}個のインジケーターを検出",
+    "count_other": "{{count}}個のインジケーターを検出",
+    "supportedBy": "サポート:"
+  },
+  "results": {
+    "title": "プロバイダー結果"
+  },
+  "loading": {
+    "analyzing": "セキュリティインジケーターを分析中..."
+  },
+  "providerNoResults": {
+    "title": "{{provider}}からの結果なし",
+    "searchedFor": "検索内容:",
+    "description": "このプロバイダーはこれらのインジケータータイプをサポートしていません。",
+    "supportedLabel": "{{provider}}がサポート:"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "インジケーターが検出されませんでした",
+      "description": "提供されたテキストにセキュリティインジケーター(IOC)が見つかりませんでした。"
+    },
+    "welcome": {
+      "title": "Ahtapot Securityへようこそ",
+      "description": "サイバーセキュリティインジケーター(IOC)を素早く分析します。上のフィールドにIPアドレス、ドメイン、ハッシュ、その他のインジケーターを貼り付けてください。",
+      "supportedTitle": "サポートされているインジケータータイプ:",
+      "types": {
+        "ipAddresses": "IPアドレス (IPv4/IPv6)",
+        "domains": "ドメインとURL",
+        "hashes": "ファイルハッシュ (MD5, SHA1, SHA256)",
+        "emails": "メールアドレス",
+        "cve": "CVE番号",
+        "crypto": "暗号通貨アドレス"
+      }
+    }
+  },
+  "rateLimitConfirm": {
+    "title": "レート制限プロバイダー",
+    "pendingStatus": "確認待ち",
+    "greynoise": {
+      "limit": "週50検索",
+      "message": "GreyNoise Communityプランは週50検索の制限があります（Visualizer使用と合算）。",
+      "question": "GreyNoiseで{{count}}個のインジケーターを分析しますか？",
+      "warning": "これにより週間クォータから{{count}}を使用します。"
+    },
+    "shodan": {
+      "limit": "月100結果",
+      "message": "Shodan無料プランは月100結果の制限があります。",
+      "question": "Shodanで{{count}}個のインジケーターを分析しますか？",
+      "warning": "これにより月間クォータから{{count}}を使用します。"
+    },
+    "iocCount": "{{count}}個のインジケーターを分析",
+    "confirm": "はい、分析する",
+    "cancel": "スキップ",
+    "skipHint": "確認されない場合、分析はこのプロバイダーをスキップします"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "インターネットノイズインテリジェンス"
+    },
+    "shodan": {
+      "subtitle": "インターネット全体ポートスキャナー"
+    }
+  },
+  "ai": {
+    "title": "AI分析",
+    "noProviders": "AI駆動分析を有効にするにはAIプロバイダーを設定してください",
+    "configure": "設定",
+    "selectProvider": "モデルを選択",
+    "selectIOC": "分析:",
+    "noApiKey": "APIキーが設定されていません",
+    "noKey": "キーなし",
+    "configureKeys": "APIキーを設定",
+    "modes": {
+      "summary": "要約",
+      "analysis": "分析",
+      "detailed": "詳細"
+    },
+    "modeInfo": {
+      "title": "分析モード",
+      "summary": "L1アナリスト向けの迅速なトリアージ判断",
+      "analysis": "L1/L2ハンドオフ向けのエスカレーション判断",
+      "detailed": "L2/L3 + IRチーム向けの完全調査"
+    },
+    "analyzing": "分析中...",
+    "analyzingStates": {
+      "sending": "リクエストを送信中...",
+      "processing": "AIが処理中...",
+      "thinking": "脅威データを分析中...",
+      "generating": "レポートを生成中...",
+      "almostDone": "もう少しで完了...",
+      "finalizing": "分析を最終化中..."
+    },
+    "start": "分析",
+    "copyResult": "結果をコピー",
+    "copyMarkdown": "Markdownでコピー",
+    "reanalyze": "再分析",
+    "exportImage": "画像としてエクスポート",
+    "cached": "キャッシュ済み",
+    "sections": {
+      "summary": "要約",
+      "keySignals": "主要シグナル",
+      "assessment": "評価",
+      "providerAnalysis": "プロバイダー分析",
+      "consensus": "コンセンサス",
+      "threatIntel": "脅威インテリジェンス",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "推奨アクション",
+      "analystNotes": "アナリストノート",
+      "executiveSummary": "エグゼクティブサマリー",
+      "iocAnalysis": "IOC分析",
+      "crossReference": "クロスリファレンス分析",
+      "infrastructure": "インフラストラクチャ",
+      "falsePositive": "偽陽性分析",
+      "responseActions": "対応アクション",
+      "detectionEngineering": "検出エンジニアリング",
+      "references": "参照"
+    },
+    "labels": {
+      "verdict": "判定",
+      "risk": "リスク",
+      "confidence": "信頼度",
+      "confidenceShort": "信頼度:",
+      "sourceConfidence": "ソース信頼度 - このプロバイダーのデータの信頼性",
+      "escalation": "エスカレーション必要",
+      "priority": "優先度",
+      "detection": "検出",
+      "reputation": "評価",
+      "associations": "関連",
+      "agreement": "合意",
+      "conflicts": "競合",
+      "dataGaps": "データギャップ",
+      "knownAssociations": "既知の関連",
+      "historicalActivity": "過去の活動",
+      "infrastructureInfo": "インフラストラクチャ",
+      "immediate": "即時",
+      "shortTerm": "短期",
+      "longTerm": "長期",
+      "investigation": "調査",
+      "confidenceFactors": "信頼度要因",
+      "limitations": "制限",
+      "followUp": "フォローアップ",
+      "source": "ソース"
+    },
+    "verdicts": {
+      "malicious": "悪意のある",
+      "suspicious": "疑わしい",
+      "likely_benign": "おそらく安全",
+      "clean": "クリーン",
+      "unknown": "不明"
+    },
+    "riskLevels": {
+      "critical": "重大",
+      "high": "高",
+      "medium": "中",
+      "low": "低",
+      "info": "情報"
+    },
+    "confidenceLevels": {
+      "high": "高",
+      "medium": "中",
+      "low": "低"
+    },
+    "errors": {
+      "noApiKey": "設定でこのAIプロバイダーのAPIキーを設定してください",
+      "unknown": "AI分析中に予期しないエラーが発生しました",
+      "invalidJson": "AI応答が不完全または無効でした",
+      "retrying": "応答が不完全です。再試行中... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "{{maxAttempts}}回の試行後に完全な応答を取得できませんでした。再度お試しください。"
+    }
+  }
+}

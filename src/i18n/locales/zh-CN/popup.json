@@ -1,0 +1,31 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot 标志"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "IOC分析",
+      "description": "打开侧边栏并分析IOC"
+    },
+    "apiSettings": {
+      "title": "API设置",
+      "description": "管理API密钥"
+    },
+    "howToUse": {
+      "title": "使用方法",
+      "description": "了解如何使用Ahtapot"
+    },
+    "feedback": {
+      "title": "反馈",
+      "description": "分享您的想法和建议"
+    },
+    "rateUs": {
+      "title": "评分",
+      "description": "在Chrome Web Store上留下评价"
+    }
+  },
+  "footer": {
+    "about": "关于",
+    "privacy": "隐私政策"
+  }
+}

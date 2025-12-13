@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "Adresse IPv4",
+    "ipv6": "Adresse IPv6",
+    "domain": "Domaine",
+    "url": "URL",
+    "md5": "Hash MD5",
+    "sha1": "Hash SHA1",
+    "sha256": "Hash SHA256",
+    "email": "Adresse e-mail",
+    "cve": "Numéro CVE",
+    "bitcoin": "Adresse Bitcoin",
+    "ethereum": "Adresse Ethereum"
+  },
+  "categories": {
+    "network": "Indicateurs réseau",
+    "file": "Indicateurs de fichiers",
+    "email": "Indicateurs e-mail",
+    "vulnerability": "Indicateurs de vulnérabilité",
+    "cryptocurrency": "Indicateurs de cryptomonnaie"
+  },
+  "labels": {
+    "detected": "{{count}} indicateur détecté",
+    "detected_plural": "{{count}} indicateurs détectés",
+    "analyzing": "Analyse de l'indicateur...",
+    "analyzing_plural": "Analyse des indicateurs..."
+  }
+}

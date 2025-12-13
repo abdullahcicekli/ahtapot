@@ -1,0 +1,45 @@
+{
+  "loading": "加载中...",
+  "buttons": {
+    "save": "保存",
+    "saveChanges": "保存更改",
+    "cancel": "取消",
+    "analyze": "分析威胁",
+    "detect": "扫描指标",
+    "configure": "配置",
+    "configureApiKeys": "配置API密钥",
+    "close": "关闭",
+    "previous": "上一个",
+    "next": "下一个"
+  },
+  "status": {
+    "safe": "安全",
+    "clean": "干净",
+    "suspicious": "可疑",
+    "malicious": "恶意",
+    "unknown": "未知",
+    "error": "错误",
+    "loading": "加载中...",
+    "analyzing": "分析中...",
+    "idle": "空闲",
+    "success": "成功"
+  },
+  "aria": {
+    "openSettings": "打开设置",
+    "closeDialog": "关闭对话框",
+    "showKey": "显示密钥",
+    "hideKey": "隐藏密钥",
+    "selectLanguage": "选择语言"
+  },
+  "common": {
+    "logoAlt": "Ahtapot 标志",
+    "externalLink": "在新标签页中打开"
+  },
+  "providers": {
+    "configure": "点击配置 {{provider}} API密钥",
+    "analyzing": "{{provider}} 正在分析...",
+    "success": "{{provider}} 分析完成",
+    "error": "{{provider}} 分析失败",
+    "ready": "{{provider}} 已就绪"
+  }
+}

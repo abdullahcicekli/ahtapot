@@ -1,0 +1,31 @@
+{
+  "header": {
+    "logoAlt": "Логотип Ahtapot"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "Анализ IOC",
+      "description": "Открыть боковую панель и анализировать IOC"
+    },
+    "apiSettings": {
+      "title": "Настройки API",
+      "description": "Управление API-ключами"
+    },
+    "howToUse": {
+      "title": "Как использовать",
+      "description": "Узнайте, как использовать Ahtapot"
+    },
+    "feedback": {
+      "title": "Обратная связь",
+      "description": "Поделитесь своими мыслями и предложениями"
+    },
+    "rateUs": {
+      "title": "Оценить нас",
+      "description": "Оставьте отзыв в Chrome Web Store"
+    }
+  },
+  "footer": {
+    "about": "О программе",
+    "privacy": "Политика конфиденциальности"
+  }
+}

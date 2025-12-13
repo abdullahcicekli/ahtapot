@@ -1,0 +1,348 @@
+{
+  "header": {
+    "title": "Configurações",
+    "subtitle": "Configure as definições da sua extensão",
+    "logoAlt": "Logo Ahtapot"
+  },
+  "tabs": {
+    "general": "Configurações Gerais",
+    "apiKeys": "Chaves de API",
+    "howToUse": "Como Usar"
+  },
+  "general": {
+    "title": "Configurações Gerais",
+    "language": {
+      "label": "Idioma",
+      "description": "Selecione seu idioma preferido",
+      "select": "Selecionar idioma"
+    },
+    "cache": {
+      "title": "Configurações de Cache",
+      "description": "Configure o comportamento do cache para resultados de análise de IOC",
+      "infoTitle": "Informações sobre o cache",
+      "enabled": "Habilitar cache",
+      "enabledDescription": "Armazenar resultados de análise para evitar chamadas de API repetidas",
+      "retentionDays": "Período de retenção (dias)",
+      "retentionDescription": "Por quanto tempo manter os resultados em cache",
+      "statistics": "Estatísticas de cache",
+      "totalEntries": "Total de entradas",
+      "totalSize": "Tamanho total",
+      "oldestDate": "Entrada mais antiga",
+      "newestDate": "Entrada mais recente",
+      "clearCache": "Limpar todo o cache",
+      "clearConfirm": "Tem certeza de que deseja limpar todos os dados em cache?",
+      "clearSuccess": "Cache limpo com sucesso",
+      "clearError": "Falha ao limpar o cache",
+      "info": {
+        "whyTitle": "Por que o Cache Existe?",
+        "whyDescription": "O sistema de cache armazena os resultados de IOCs analisados anteriormente no seu dispositivo. Assim, quando você consulta o mesmo IOC novamente, obtém resultados instantâneos sem fazer uma chamada de API.",
+        "benefitsTitle": "Benefícios",
+        "benefit1": "⚡ Resultados Rápidos: Consultas repetidas respondem instantaneamente",
+        "benefit2": "📊 Proteção de Cota de API: Preserva seus limites de API diários/mensais",
+        "benefit3": "🔒 Privacidade: Os dados são armazenados apenas no seu dispositivo",
+        "benefit4": "💾 Acesso Offline: Acesse resultados anteriores sem internet",
+        "howTitle": "Como Funciona?",
+        "howDescription": "Todo resultado de análise bem-sucedida é automaticamente armazenado em cache. Entradas antigas são automaticamente excluídas após o período especificado. Você pode limpar manualmente todo o cache a qualquer momento."
+      }
+    },
+    "providerOrder": {
+      "title": "Ordem de Exibição dos Provedores",
+      "description": "Personalize a ordem em que os provedores aparecem nos resultados da análise. Arraste e solte para reordenar.",
+      "customizeButton": "Personalizar Ordem",
+      "modalDescription": "Arraste os provedores para reordená-los. As alterações são salvas automaticamente.",
+      "lockedProviders": "Sempre Disponíveis (Sem Necessidade de Chave de API)",
+      "dragHint": "Arraste para reordenar",
+      "resetOrder": "Restaurar Padrão",
+      "doneButton": "Concluído",
+      "resetConfirm": "Tem certeza de que deseja restaurar a ordem dos provedores para o padrão?",
+      "orderSaved": "Ordem dos provedores salva com sucesso",
+      "orderSaveError": "Falha ao salvar a ordem dos provedores"
+    }
+  },
+  "privacyNote": {
+    "title": "Aviso de Privacidade:",
+    "description": "Suas chaves de API são armazenadas com segurança apenas no seu dispositivo e nunca são enviadas para nenhum servidor externo."
+  },
+  "apiKeys": {
+    "sectionTitle": "Chaves de API",
+    "sectionDescription": "Insira sua chave de API para cada ferramenta de segurança. Você pode adicionar chaves apenas para as ferramentas que deseja usar.",
+    "placeholder": "Sua chave de API do {{provider}}",
+    "showKey": "Mostrar chave",
+    "hideKey": "Ocultar chave",
+    "validate": "Validar",
+    "validating": "Validando...",
+    "valid": "Válida",
+    "invalid": "Inválida",
+    "validationError": "Validação falhou"
+  },
+  "providers": {
+    "virustotal": {
+      "label": "VirusTotal",
+      "description": "Análise de arquivos, URLs e endereços IP",
+      "placeholder": "Sua chave de API do VirusTotal"
+    },
+    "otx": {
+      "label": "OTX AlienVault",
+      "description": "Inteligência de ameaças e análise de IOC",
+      "placeholder": "Sua chave de API do OTX AlienVault"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "Reputação de IP e relatórios de abuso",
+      "placeholder": "Sua chave de API do AbuseIPDB"
+    },
+    "malwarebazaar": {
+      "label": "MalwareBazaar",
+      "description": "Análise de hash de malware e informações de amostras (por abuse.ch)",
+      "placeholder": "Sua chave de API do MalwareBazaar"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "Pesquisa de dispositivos conectados à internet e análise de vulnerabilidades",
+      "placeholder": "Sua chave de API do Shodan"
+    },
+    "greynoise": {
+      "label": "GreyNoise",
+      "description": "Classificação de ruído de internet e inteligência de ameaças",
+      "placeholder": "Sua chave de API do GreyNoise"
+    },
+    "urlhaus": {
+      "label": "URLhaus",
+      "description": "Banco de dados de URLs maliciosas e distribuição de malware (por abuse.ch)",
+      "placeholder": "Sua chave de API do URLhaus"
+    },
+    "pulsedive": {
+      "label": "Pulsedive",
+      "description": "Plataforma de inteligência de ameaças com enriquecimento de IOC",
+      "placeholder": "Sua chave de API do Pulsedive"
+    },
+    "scamalytics": {
+      "label": "Scamalytics",
+      "description": "Pontuação de fraude de IP e detecção de golpes",
+      "placeholder": "username:apikey (ex: myuser:abc123...)"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "Registro de endereço IP e informações de rede",
+      "placeholder": "Nenhuma chave de API necessária"
+    }
+  },
+  "lockedProvider": {
+    "message": "✓ Este provedor está sempre disponível e não requer uma chave de API"
+  },
+  "info": {
+    "limitsTitle": "Limites do Plano Gratuito",
+    "dailyLimit": "Diário/Mensal:",
+    "rateLimit": "Limite de Taxa:",
+    "featuresTitle": "Recursos",
+    "howToTitle": "Como Obter uma Chave de API?",
+    "importantNote": "Nota Importante",
+    "steps": {
+      "signup": "Crie uma conta gratuita aqui",
+      "verify": "Verifique seu endereço de e-mail",
+      "getKey": "Obtenha sua chave de API",
+      "paste": "Cole a chave no campo abaixo"
+    }
+  },
+  "notes": {
+    "malwarebazaar": "A chave de autenticação é mostrada apenas uma vez após a geração. Se precisar alterá-la, você deve gerar uma nova chave. Uma vez gerada, não pode ser visualizada novamente, então salve-a na extensão imediatamente.",
+    "scamalytics": "É necessária revisão manual para registro. Após aprovação, você receberá um link privado (expira em 30 dias) contendo suas credenciais de API. O plano gratuito inclui 5.000 créditos/mês com campos ESSENTIAL. Campos PREMIUM estão disponíveis para um teste de 15 dias."
+  },
+  "tooltips": {
+    "virustotal": "Adicionar chave de API",
+    "otx": "Adicionar chave de API",
+    "abuseipdb": "Adicionar chave de API",
+    "malwarebazaar": "Adicionar chave de API",
+    "shodan": "Adicionar chave de API",
+    "greynoise": "Adicionar chave de API",
+    "urlhaus": "Adicionar chave de API",
+    "pulsedive": "Adicionar chave de API",
+    "scamalytics": "Adicionar chave de API"
+  },
+  "features": {
+    "virustotal": {
+      "feature1": "Análise de IP/Domínio",
+      "feature2": "Verificação de hash de arquivo",
+      "feature3": "Varredura de URL",
+      "feature4": "90+ motores de segurança"
+    },
+    "otx": {
+      "feature1": "Pulsos de inteligência de ameaças",
+      "feature2": "Detecção de famílias de malware",
+      "feature3": "Análise de vulnerabilidades CVE",
+      "feature4": "Dados de ameaças da comunidade"
+    },
+    "abuseipdb": {
+      "feature1": "Verificação de reputação de IP",
+      "feature2": "Relatórios de abuso de 90 dias",
+      "feature3": "Análise de pontuação de confiança",
+      "feature4": "Informações geográficas e de ISP"
+    },
+    "malwarebazaar": {
+      "feature1": "Pesquisa de malware baseada em hash",
+      "feature2": "Identificação de assinatura de malware",
+      "feature3": "Análise de tipo de arquivo e método de entrega",
+      "feature4": "Informações de assinatura de código"
+    },
+    "shodan": {
+      "feature1": "Pesquisas de IP e domínio",
+      "feature2": "Detecção de portas abertas e serviços",
+      "feature3": "Identificação de vulnerabilidades CVE",
+      "feature4": "Informações de dispositivo e banner"
+    },
+    "greynoise": {
+      "feature1": "Classificação de ruído de IP (benigno/malicioso/desconhecido)",
+      "feature2": "Identificação de ator e tags de comportamento",
+      "feature3": "Detecção de TOR/VPN/Proxy",
+      "feature4": "Flag RIOT para serviços benignos conhecidos"
+    },
+    "urlhaus": {
+      "feature1": "Banco de dados de URLs maliciosas",
+      "feature2": "Classificação de payload e ameaças",
+      "feature3": "Monitoramento de status de URL (online/offline)",
+      "feature4": "Rastreamento de distribuição de malware"
+    },
+    "pulsedive": {
+      "feature1": "Avaliação de nível de risco",
+      "feature2": "Rastreamento de ameaças e feeds",
+      "feature3": "Análise de fatores de risco",
+      "feature4": "Inteligência da comunidade"
+    },
+    "scamalytics": {
+      "feature1": "Pontuação de risco de fraude de IP (0-100)",
+      "feature2": "Detecção de Datacenter e VPN",
+      "feature3": "Detecção de nó de saída TOR",
+      "feature4": "Verificações de blacklist externas"
+    }
+  },
+  "limits": {
+    "virustotal": {
+      "free": "500 requisições/dia",
+      "rate": "4 requisições/minuto"
+    },
+    "otx": {
+      "free": "10.000 requisições/dia",
+      "rate": "10 requisições/segundo"
+    },
+    "abuseipdb": {
+      "free": "1.000 requisições/dia",
+      "rate": "1 requisição/segundo"
+    },
+    "malwarebazaar": {
+      "free": "Ilimitado (com conta)",
+      "rate": "Sem limite especificado"
+    },
+    "shodan": {
+      "free": "100 resultados/mês (gratuito)",
+      "rate": "1 requisição/segundo"
+    },
+    "greynoise": {
+      "free": "50 pesquisas/semana (Community)",
+      "rate": "Combinado com uso do Visualizer"
+    },
+    "urlhaus": {
+      "free": "Ilimitado (conta gratuita)",
+      "rate": "Sem limite especificado"
+    },
+    "pulsedive": {
+      "free": "250 requisições/dia (conta gratuita)",
+      "rate": "2.500 requisições/mês"
+    },
+    "scamalytics": {
+      "free": "5.000 créditos/mês",
+      "rate": "Teste PREMIUM de 15 dias"
+    }
+  },
+  "actions": {
+    "save": "Salvar Alterações",
+    "saveIndividual": "Salvar",
+    "successMessage": "Chaves de API salvas com sucesso",
+    "errorMessage": "Falha ao salvar chaves de API",
+    "errorLoading": "Falha ao carregar chaves de API",
+    "saveSuccess": "Salvo com sucesso",
+    "saveError": "Falha ao salvar"
+  },
+  "ai": {
+    "sectionTitle": "Provedores de IA",
+    "sectionDescription": "Configure provedores de IA para análise inteligente de IOC. A IA pode fornecer resumos, análises detalhadas e recomendações.",
+    "providers": {
+      "claude": {
+        "description": "Claude da Anthropic - Raciocínio e análise avançados",
+        "placeholder": "Digite sua chave de API do Claude (sk-ant-...)",
+        "step2": "Adicione método de pagamento (necessário para acesso à API)"
+      },
+      "gemini": {
+        "description": "Gemini do Google - Análise rápida e eficiente",
+        "placeholder": "Digite sua chave de API do Gemini",
+        "step2": "Ative a API Gemini no seu Google Cloud Console"
+      },
+      "openai": {
+        "description": "GPT da OpenAI - Compreensão de linguagem versátil",
+        "placeholder": "Digite sua chave de API da OpenAI (sk-...)",
+        "step2": "Adicione método de pagamento e compre créditos"
+      }
+    },
+    "pricing": {
+      "title": "Preços",
+      "input": "Entrada",
+      "output": "Saída",
+      "rate": "Taxa",
+      "viewMore": "Ver preços completos"
+    },
+    "howTo": {
+      "title": "Como Obter uma Chave de API",
+      "signup": "Crie uma conta",
+      "getKey": "Obtenha sua chave de API",
+      "paste": "Cole a chave abaixo"
+    },
+    "models": {
+      "title": "Modelos Disponíveis"
+    }
+  },
+  "footer": {
+    "text": "Ahtapot v{{version}} • Ferramenta de Análise de Indicadores de Segurança Cibernética"
+  },
+  "howToUse": {
+    "title": "Como Usar o Ahtapot",
+    "intro": "O Ahtapot facilita a análise de IOCs (Indicadores de Comprometimento) de qualquer página web. Existem várias maneiras de iniciar uma análise.",
+    "textSelection": {
+      "title": "Seleção de Texto",
+      "subtitle": "A maneira mais rápida de analisar IOCs",
+      "step1": "Selecione qualquer texto contendo IOCs em uma página web (endereços IP, domínios, hashes, etc.)",
+      "step2": "Clique no botão \"Analisar\" que aparece perto da sua seleção",
+      "step3": "Visualize os resultados da análise no painel lateral"
+    },
+    "sidePanel": {
+      "title": "Pesquisa no Painel Lateral",
+      "subtitle": "Pesquisa e análise manual",
+      "step1": "Clique no ícone do Ahtapot na barra de ferramentas do navegador",
+      "step2": "Selecione \"Análise de IOC\" para abrir o painel lateral",
+      "step3": "Digite qualquer IOC na caixa de pesquisa e pressione Enter"
+    },
+    "keyboard": {
+      "title": "Atalho de Teclado",
+      "subtitle": "Destaque todos os IOCs na página",
+      "step1": "Navegue até qualquer página web contendo IOCs",
+      "step2": "Pressione o atalho de teclado para destacar todos os IOCs detectados na página",
+      "or": "ou"
+    },
+    "apiKeys": {
+      "title": "Configuração de Chaves de API",
+      "subtitle": "Necessário para consultas de inteligência de ameaças",
+      "step1": "Vá para a aba <0>Chaves de API</0> nesta página de configurações",
+      "step2": "Clique no ícone de informação (ⓘ) ao lado de cada provedor para ver como obter uma chave de API",
+      "step3": "Digite suas chaves de API e clique em Salvar - as chaves são armazenadas apenas no seu navegador",
+      "note": "Suas chaves de API são armazenadas com segurança apenas no seu navegador e nunca são enviadas para nenhum servidor externo, exceto as respectivas APIs dos provedores."
+    },
+    "ai": {
+      "title": "Análise de IA (Opcional)",
+      "subtitle": "Obtenha resumos inteligentes e recomendações",
+      "step1": "Escolha um dos provedores de IA suportados abaixo",
+      "step2": "Obtenha uma chave de API do provedor e insira-a na aba <0>Chaves de API</0>"
+    },
+    "iocTypes": {
+      "title": "Tipos de IOC Suportados",
+      "subtitle": "O Ahtapot detecta e analisa automaticamente esses tipos de indicadores"
+    }
+  }
+}

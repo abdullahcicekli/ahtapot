@@ -1,0 +1,442 @@
+{
+  "virustotal": {
+    "communityScore": "社区评分",
+    "votes": {
+      "harmless": "无害",
+      "malicious": "恶意"
+    },
+    "status": {
+      "malicious": "恶意",
+      "suspicious": "可疑",
+      "clean": "干净"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} 个安全厂商将此标记为恶意",
+      "suspicious": "{{count}} / {{total}} 个安全厂商将此标记为可疑",
+      "clean": "没有安全厂商将此标记为恶意"
+    },
+    "tabs": {
+      "detection": "检测",
+      "details": "详情"
+    },
+    "detection": {
+      "noDetections": "没有安全厂商将此标记为恶意",
+      "vendorCategory": {
+        "malicious": "恶意",
+        "suspicious": "可疑"
+      }
+    },
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "page": "第 {{current}} 页，共 {{total}} 页"
+    },
+    "details": {
+      "location": "位置",
+      "network": "网络",
+      "reputation": "信誉",
+      "tags": "标签",
+      "country": "国家：",
+      "continent": "大洲：",
+      "networkRange": "网络：",
+      "asn": "ASN：",
+      "owner": "所有者：",
+      "rir": "RIR：",
+      "score": "评分："
+    },
+    "analysisDate": "上次分析",
+    "viewFullReport": "在VirusTotal上查看完整报告 →",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "otx": {
+    "threatIntelligence": "威胁情报",
+    "malicious": "恶意",
+    "suspicious": "可疑",
+    "pulses": "脉冲",
+    "status": {
+      "clean": "干净",
+      "malicious": "恶意",
+      "suspicious": "可疑",
+      "flagged": "已标记"
+    },
+    "statusDescription": {
+      "clean": "未找到此指标的威胁情报脉冲",
+      "malicious": "检测到威胁：{{reasons}}",
+      "suspicious": "潜在威胁：{{reasons}}",
+      "flagged": "在 {{count}} 个威胁情报脉冲中发现 - 需要调查"
+    },
+    "threatSummary": {
+      "title": "为什么被标记？",
+      "description": "此指标出现在AlienVault OTX社区的<1>{{count}}个威胁情报脉冲</1>中。OTX脉冲包含构成威胁、活动或恶意基础设施的入侵指标（IOC）。",
+      "highSeverity": "<1>{{count}}</1>个脉冲包含高严重性威胁（恶意软件、勒索软件、APT、钓鱼等）",
+      "mediumSeverity": "<1>{{count}}</1>个脉冲表明可疑活动或潜在威胁",
+      "recommendation": "<1>建议：</1>应进一步调查此IOC。查看下方脉冲详情以了解与此指标相关的具体威胁。"
+    },
+    "tabs": {
+      "pulses": "脉冲",
+      "details": "详情"
+    },
+    "pulse": {
+      "highSeverity": "高严重性",
+      "mediumSeverity": "中等严重性",
+      "threatIndicator": "威胁指标",
+      "malwareFamilies": "恶意软件家族：",
+      "targetedCountries": "目标国家：",
+      "viewOnOTX": "在OTX上查看 →",
+      "moreCount": "+{{count}} 更多"
+    },
+    "details": {
+      "statistics": "统计",
+      "totalPulses": "总脉冲数：",
+      "malicious": "恶意：",
+      "suspicious": "可疑：",
+      "harmless": "无害：",
+      "reputation": "信誉",
+      "score": "评分：",
+      "relatedAdversaries": "相关攻击者",
+      "malwareFamilies": "恶意软件家族",
+      "targetedIndustries": "目标行业"
+    },
+    "noPulses": "未找到此指标的威胁情报脉冲",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "互联网设备搜索",
+    "status": {
+      "safe": "安全",
+      "suspicious": "可疑",
+      "malicious": "恶意",
+      "error": "错误",
+      "unknown": "未知"
+    },
+    "hostInformation": "主机信息",
+    "ipAddress": "IP地址：",
+    "operatingSystem": "操作系统：",
+    "lastScan": "上次扫描：",
+    "organization": "组织",
+    "organizationLabel": "组织：",
+    "isp": "ISP：",
+    "asn": "ASN：",
+    "location": "位置",
+    "country": "国家：",
+    "city": "城市：",
+    "coordinates": "坐标：",
+    "ports": "端口 ({{count}})",
+    "moreCount": "+{{count}} 更多",
+    "vulnerabilities": "漏洞 ({{count}})",
+    "moreVulnerabilities": "+{{count}} 更多漏洞",
+    "detectedServices": "检测到的服务 ({{count}})",
+    "port": "端口 {{port}}",
+    "hostnames": "主机名 ({{count}})",
+    "tags": "标签",
+    "viewFullReport": "在Shodan上查看完整报告 →",
+    "domainInformation": "域名信息",
+    "domain": "域名：",
+    "subdomains": "子域名：",
+    "subdomainsCount": "子域名 ({{count}})",
+    "moreSubdomains": "+{{count}} 更多子域名",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "abuseipdb": {
+    "abuseConfidence": "滥用置信度",
+    "score": "评分",
+    "reports": "{{count}} 份报告",
+    "users": "{{count}} 位用户",
+    "status": {
+      "whitelisted": "白名单",
+      "malicious": "恶意",
+      "suspicious": "可疑",
+      "clean": "干净"
+    },
+    "statusDescription": {
+      "whitelisted": "此IP在AbuseIPDB白名单中，被认为是安全的",
+      "malicious": "高滥用置信度评分（{{score}}%）。此IP有大量滥用报告。",
+      "suspicious": "中等滥用置信度评分（{{score}}%）。对此IP请谨慎。",
+      "clean": "低滥用置信度评分（{{score}}%）。未发现重大滥用报告。"
+    },
+    "badges": {
+      "torExitNode": "Tor出口节点",
+      "whitelisted": "白名单"
+    },
+    "tabs": {
+      "overview": "概览",
+      "reports": "报告",
+      "details": "详情"
+    },
+    "overview": {
+      "abuseMetrics": "滥用指标",
+      "confidenceScore": "置信度评分：",
+      "totalReports": "总报告数：",
+      "uniqueReporters": "独立报告者：",
+      "lastReported": "最后报告：",
+      "locationNetwork": "位置与网络",
+      "country": "国家：",
+      "isp": "ISP：",
+      "domain": "域名：",
+      "usageType": "使用类型：",
+      "abuseCategories": "滥用类别"
+    },
+    "reportsTab": {
+      "noReports": "未找到此IP地址的滥用报告"
+    },
+    "details": {
+      "ipInformation": "IP信息",
+      "ipAddress": "IP地址：",
+      "ipVersion": "IP版本：",
+      "publicIp": "公网IP：",
+      "whitelisted": "白名单：",
+      "torExitNode": "Tor出口节点：",
+      "yes": "是",
+      "no": "否",
+      "hostnames": "主机名"
+    },
+    "viewFullReport": "在AbuseIPDB上查看完整报告 →",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "互联网噪音情报",
+    "status": {
+      "benign": "良性",
+      "suspicious": "可疑",
+      "malicious": "恶意",
+      "error": "错误",
+      "unknown": "未知"
+    },
+    "classification": "分类",
+    "classificationStatus": "状态：",
+    "seenByGreyNoise": "被GreyNoise观测到：",
+    "yes": "是",
+    "no": "否",
+    "actor": "攻击者：",
+    "knownService": "已知服务：",
+    "locationOrganization": "位置与组织",
+    "country": "国家：",
+    "city": "城市：",
+    "organization": "组织：",
+    "asn": "ASN：",
+    "reverseDns": "反向DNS：",
+    "activityTimeline": "活动时间线",
+    "firstSeen": "首次发现：",
+    "lastSeen": "最后发现：",
+    "behaviorTags": "行为标签 ({{count}})",
+    "securityIndicators": "安全指标",
+    "torExitNode": "TOR出口节点",
+    "vpn": "VPN",
+    "proxy": "代理",
+    "viewFullReport": "在GreyNoise Visualizer上查看完整报告 →",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "malwarebazaar": {
+    "samples": "样本",
+    "malwareAnalysis": "恶意软件分析",
+    "signatures": "{{count}} 个签名",
+    "tags": "{{count}} 个标签",
+    "status": {
+      "clean": "干净",
+      "malicious": "恶意",
+      "unknown": "未知"
+    },
+    "statusDescription": {
+      "clean": "在MalwareBazaar数据库中未找到此哈希的恶意软件样本",
+      "malicious": "在MalwareBazaar数据库中发现 {{count}} 个与此哈希匹配的恶意软件样本",
+      "unknown": "无法确定威胁状态"
+    },
+    "tabs": {
+      "overview": "概览",
+      "samples": "样本",
+      "details": "详情"
+    },
+    "overview": {
+      "threatMetrics": "威胁指标",
+      "totalSamples": "总样本数：",
+      "uniqueSignatures": "唯一签名：",
+      "firstSeen": "首次发现：",
+      "lastSeen": "最后发现：",
+      "intelligence": "情报",
+      "totalDownloads": "总下载次数：",
+      "totalUploads": "总上传次数：",
+      "codeSigning": "代码签名：",
+      "present": "存在",
+      "none": "无",
+      "fileTypes": "文件类型：",
+      "malwareSignatures": "恶意软件签名",
+      "malwareTags": "恶意软件标签"
+    },
+    "sample": {
+      "type": "类型：",
+      "size": "大小：",
+      "reporter": "报告者：",
+      "delivery": "传播方式：",
+      "origin": "来源：",
+      "first": "首次：",
+      "last": "最后：",
+      "downloads": "{{count}} 次下载",
+      "uploads": "{{count}} 次上传",
+      "codeSignedBy": "由 {{name}} 代码签名"
+    },
+    "details": {
+      "fileTypes": "文件类型",
+      "summary": "摘要",
+      "totalSamples": "总样本数：",
+      "signatures": "签名：",
+      "tags": "标签：",
+      "fileTypesCount": "文件类型："
+    },
+    "noSamples": "无可用样本详情",
+    "viewFullReport": "在MalwareBazaar上查看完整报告 →",
+    "checkOnMalwareBazaar": "在MalwareBazaar上检查 →",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "arin": {
+    "header": {
+      "title": "WHOIS信息"
+    },
+    "status": {
+      "whoisInfo": "WHOIS信息"
+    },
+    "network": {
+      "title": "网络信息",
+      "networkName": "网络名称：",
+      "handle": "句柄：",
+      "ipVersion": "IP版本：",
+      "cidr": "CIDR："
+    },
+    "organization": {
+      "title": "组织",
+      "organization": "组织：",
+      "orgHandle": "组织句柄：",
+      "type": "类型：",
+      "customerAssignment": "客户分配",
+      "parentNetwork": "父网络："
+    },
+    "addressRange": {
+      "title": "IP地址范围",
+      "startAddress": "起始地址：",
+      "endAddress": "结束地址：",
+      "range": "范围："
+    },
+    "registration": {
+      "title": "注册信息",
+      "registrationDate": "注册日期：",
+      "lastUpdated": "最后更新："
+    },
+    "comments": {
+      "title": "备注"
+    },
+    "netBlocks": {
+      "title": "网络块"
+    },
+    "viewFullWhois": "在ARIN上查看完整WHOIS →",
+    "unsupportedType": "支持的IOC类型："
+  },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "URL状态",
+    "threat": "威胁",
+    "threats": "威胁",
+    "urlCount": "URL数量",
+    "onlineCount": "活跃URL",
+    "offlineCount": "离线URL",
+    "online": "活跃",
+    "offline": "离线",
+    "firstSeen": "首次发现：",
+    "blacklists": "黑名单",
+    "blacklistStatus": "黑名单状态",
+    "tags": "标签",
+    "sampleUrls": "样本URL",
+    "details": "详情",
+    "reporter": "报告者：",
+    "status": {
+      "malicious": "恶意",
+      "suspicious": "可疑",
+      "clean": "干净"
+    },
+    "statusDescription": {
+      "malicious": "在此主机上检测到 {{count}} 个活跃恶意URL",
+      "suspicious": "发现 {{count}} 个恶意URL但当前离线",
+      "clean": "未找到此指标的恶意URL"
+    },
+    "viewFullReport": "在URLhaus上查看完整报告 →"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "风险等级",
+    "location": "位置",
+    "country": "国家：",
+    "region": "地区：",
+    "org": "组织",
+    "orgName": "名称：",
+    "netname": "网络：",
+    "timestamps": "时间戳",
+    "firstSeen": "首次发现：",
+    "lastUpdated": "最后更新：",
+    "lastSeen": "最后发现：",
+    "threats": "威胁",
+    "riskFactors": "风险因素",
+    "feeds": "威胁源",
+    "status": {
+      "critical": "严重",
+      "high": "高风险",
+      "medium": "中风险",
+      "low": "低风险",
+      "clean": "干净",
+      "unknown": "未知"
+    },
+    "viewFullReport": "在Pulsedive上查看完整报告 →"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "欺诈评分",
+    "riskLevel": "风险等级",
+    "ispScore": "ISP评分",
+    "blacklisted": "黑名单",
+    "indicators": "欺诈指标",
+    "proxyDetection": "代理检测",
+    "noDescription": "无额外风险信息",
+    "status": {
+      "veryHigh": "极高风险",
+      "high": "高风险",
+      "medium": "中风险",
+      "low": "低风险",
+      "veryLow": "极低风险",
+      "unknown": "未知"
+    },
+    "viewFullReport": "在Scamalytics上查看完整报告 →"
+  },
+  "generic": {
+    "source": "来源",
+    "type": "类型",
+    "value": "值",
+    "status": "状态",
+    "details": "详情",
+    "error": "错误"
+  },
+  "error": {
+    "status": "错误",
+    "unknown": "发生未知错误",
+    "types": {
+      "apiError": "API错误",
+      "authError": "认证错误",
+      "notFound": "未找到",
+      "rateLimit": "速率限制",
+      "serverError": "服务器错误",
+      "clientError": "请求错误"
+    },
+    "possibleCauses": "可能的原因：",
+    "tips": {
+      "invalidApiKey": "API密钥无效或缺失",
+      "expiredApiKey": "API密钥可能已过期",
+      "checkSettings": "请在设置中检查您的API配置",
+      "rateLimitExceeded": "此提供商的API速率限制已超出",
+      "waitAndRetry": "请等待几分钟后重试",
+      "upgradePlan": "考虑升级您的API计划以获得更高限制",
+      "serverIssue": "提供商服务暂时不可用",
+      "tryAgainLater": "请几分钟后重试",
+      "checkStatus": "检查提供商的状态页面",
+      "checkApiKey": "验证您的API密钥是否正确",
+      "networkIssue": "网络连接问题"
+    }
+  }
+}

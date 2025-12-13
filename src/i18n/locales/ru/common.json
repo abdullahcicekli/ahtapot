@@ -1,0 +1,45 @@
+{
+  "loading": "Загрузка...",
+  "buttons": {
+    "save": "Сохранить",
+    "saveChanges": "Сохранить изменения",
+    "cancel": "Отмена",
+    "analyze": "Анализировать угрозы",
+    "detect": "Сканировать индикаторы",
+    "configure": "Настроить",
+    "configureApiKeys": "Настроить API-ключи",
+    "close": "Закрыть",
+    "previous": "Назад",
+    "next": "Далее"
+  },
+  "status": {
+    "safe": "Безопасно",
+    "clean": "Чисто",
+    "suspicious": "Подозрительно",
+    "malicious": "Вредоносно",
+    "unknown": "Неизвестно",
+    "error": "Ошибка",
+    "loading": "Загрузка...",
+    "analyzing": "Анализ...",
+    "idle": "Ожидание",
+    "success": "Успешно"
+  },
+  "aria": {
+    "openSettings": "Открыть настройки",
+    "closeDialog": "Закрыть диалог",
+    "showKey": "Показать ключ",
+    "hideKey": "Скрыть ключ",
+    "selectLanguage": "Выбрать язык"
+  },
+  "common": {
+    "logoAlt": "Логотип Ahtapot",
+    "externalLink": "Открывается в новой вкладке"
+  },
+  "providers": {
+    "configure": "Нажмите для настройки API-ключа {{provider}}",
+    "analyzing": "{{provider}} анализирует...",
+    "success": "Анализ {{provider}} завершён",
+    "error": "Ошибка анализа {{provider}}",
+    "ready": "{{provider}} готов"
+  }
+}

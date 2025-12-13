@@ -1,0 +1,31 @@
+{
+  "header": {
+    "logoAlt": "Ahtapotロゴ"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "IOC分析",
+      "description": "サイドパネルを開いてIOCを分析"
+    },
+    "apiSettings": {
+      "title": "API設定",
+      "description": "APIキーを管理"
+    },
+    "howToUse": {
+      "title": "使い方",
+      "description": "Ahtapotの使い方を学ぶ"
+    },
+    "feedback": {
+      "title": "フィードバック",
+      "description": "ご意見・ご提案を共有"
+    },
+    "rateUs": {
+      "title": "評価する",
+      "description": "Chrome Web Storeでレビューを投稿"
+    }
+  },
+  "footer": {
+    "about": "概要",
+    "privacy": "プライバシーポリシー"
+  }
+}

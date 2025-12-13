@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "Clé API requise",
+    "keyInvalid": "Clé API invalide",
+    "requestFailed": "Échec de la requête",
+    "rateLimitExceeded": "Limite de requêtes dépassée",
+    "networkError": "Erreur réseau",
+    "timeout": "Délai d'attente dépassé"
+  },
+  "analysis": {
+    "noIocs": "Aucun indicateur détecté",
+    "analysisError": "Erreur d'analyse",
+    "noResults": "Aucun résultat disponible"
+  },
+  "storage": {
+    "saveFailed": "Échec de l'enregistrement des paramètres",
+    "loadFailed": "Échec du chargement des paramètres"
+  },
+  "provider": {
+    "notConfigured": "API non configurée",
+    "unavailable": "Service indisponible"
+  }
+}

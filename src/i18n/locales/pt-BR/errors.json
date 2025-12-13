@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "Chave de API necessária",
+    "keyInvalid": "Chave de API inválida",
+    "requestFailed": "Requisição falhou",
+    "rateLimitExceeded": "Limite de taxa excedido",
+    "networkError": "Erro de rede",
+    "timeout": "Tempo limite da requisição"
+  },
+  "analysis": {
+    "noIocs": "Nenhum indicador detectado",
+    "analysisError": "Erro de análise",
+    "noResults": "Nenhum resultado disponível"
+  },
+  "storage": {
+    "saveFailed": "Falha ao salvar configurações",
+    "loadFailed": "Falha ao carregar configurações"
+  },
+  "provider": {
+    "notConfigured": "API não configurada",
+    "unavailable": "Serviço indisponível"
+  }
+}

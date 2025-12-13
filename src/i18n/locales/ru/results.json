@@ -1,0 +1,442 @@
+{
+  "virustotal": {
+    "communityScore": "Оценка сообщества",
+    "votes": {
+      "harmless": "безопасных",
+      "malicious": "вредоносных"
+    },
+    "status": {
+      "malicious": "Вредоносный",
+      "suspicious": "Подозрительный",
+      "clean": "Чистый"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} поставщиков безопасности отметили как вредоносный",
+      "suspicious": "{{count}} / {{total}} поставщиков безопасности отметили как подозрительный",
+      "clean": "Ни один поставщик безопасности не отметил как вредоносный"
+    },
+    "tabs": {
+      "detection": "Обнаружение",
+      "details": "Детали"
+    },
+    "detection": {
+      "noDetections": "Ни один поставщик безопасности не отметил как вредоносный",
+      "vendorCategory": {
+        "malicious": "Вредоносный",
+        "suspicious": "Подозрительный"
+      }
+    },
+    "pagination": {
+      "previous": "Назад",
+      "next": "Далее",
+      "page": "Страница {{current}} из {{total}}"
+    },
+    "details": {
+      "location": "Местоположение",
+      "network": "Сеть",
+      "reputation": "Репутация",
+      "tags": "Теги",
+      "country": "Страна:",
+      "continent": "Континент:",
+      "networkRange": "Сеть:",
+      "asn": "ASN:",
+      "owner": "Владелец:",
+      "rir": "RIR:",
+      "score": "Оценка:"
+    },
+    "analysisDate": "Последний анализ",
+    "viewFullReport": "Просмотреть полный отчёт на VirusTotal →",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "otx": {
+    "threatIntelligence": "Разведка угроз",
+    "malicious": "Вредоносный",
+    "suspicious": "Подозрительный",
+    "pulses": "Пульсы",
+    "status": {
+      "clean": "Чистый",
+      "malicious": "Вредоносный",
+      "suspicious": "Подозрительный",
+      "flagged": "Отмечен"
+    },
+    "statusDescription": {
+      "clean": "Пульсы разведки угроз для этого индикатора не найдены",
+      "malicious": "Обнаружена угроза: {{reasons}}",
+      "suspicious": "Потенциальная угроза: {{reasons}}",
+      "flagged": "Найден в {{count}} пульсе(ах) разведки угроз - требуется расследование"
+    },
+    "threatSummary": {
+      "title": "Почему это отмечено?",
+      "description": "Этот индикатор появляется в <1>{{count}} пульсе(ах) разведки угроз</1> от сообщества AlienVault OTX. Пульсы OTX содержат Индикаторы Компрометации (IOC), которые представляют угрозы, кампании или вредоносную инфраструктуру.",
+      "highSeverity": "<1>{{count}}</1> пульс(ов) содержат угрозы высокой степени серьёзности (вредоносное ПО, ransomware, APT, фишинг и т.д.)",
+      "mediumSeverity": "<1>{{count}}</1> пульс(ов) указывают на подозрительную активность или потенциальные угрозы",
+      "recommendation": "<1>Рекомендация:</1> Этот IOC должен быть дополнительно исследован. Просмотрите детали пульсов ниже, чтобы понять конкретные угрозы, связанные с этим индикатором."
+    },
+    "tabs": {
+      "pulses": "Пульсы",
+      "details": "Детали"
+    },
+    "pulse": {
+      "highSeverity": "Высокая степень серьёзности",
+      "mediumSeverity": "Средняя степень серьёзности",
+      "threatIndicator": "Индикатор угрозы",
+      "malwareFamilies": "Семейства вредоносного ПО:",
+      "targetedCountries": "Целевые страны:",
+      "viewOnOTX": "Просмотреть на OTX →",
+      "moreCount": "+{{count}} ещё"
+    },
+    "details": {
+      "statistics": "Статистика",
+      "totalPulses": "Всего пульсов:",
+      "malicious": "Вредоносных:",
+      "suspicious": "Подозрительных:",
+      "harmless": "Безопасных:",
+      "reputation": "Репутация",
+      "score": "Оценка:",
+      "relatedAdversaries": "Связанные противники",
+      "malwareFamilies": "Семейства вредоносного ПО",
+      "targetedIndustries": "Целевые отрасли"
+    },
+    "noPulses": "Пульсы разведки угроз для этого индикатора не найдены",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "Поиск интернет-устройств",
+    "status": {
+      "safe": "Безопасно",
+      "suspicious": "Подозрительно",
+      "malicious": "Вредоносно",
+      "error": "Ошибка",
+      "unknown": "Неизвестно"
+    },
+    "hostInformation": "Информация о хосте",
+    "ipAddress": "IP-адрес:",
+    "operatingSystem": "Операционная система:",
+    "lastScan": "Последнее сканирование:",
+    "organization": "Организация",
+    "organizationLabel": "Организация:",
+    "isp": "Провайдер:",
+    "asn": "ASN:",
+    "location": "Местоположение",
+    "country": "Страна:",
+    "city": "Город:",
+    "coordinates": "Координаты:",
+    "ports": "Порты ({{count}})",
+    "moreCount": "+{{count}} ещё",
+    "vulnerabilities": "Уязвимости ({{count}})",
+    "moreVulnerabilities": "+{{count}} уязвимостей ещё",
+    "detectedServices": "Обнаруженные сервисы ({{count}})",
+    "port": "Порт {{port}}",
+    "hostnames": "Имена хостов ({{count}})",
+    "tags": "Теги",
+    "viewFullReport": "Просмотреть полный отчёт на Shodan →",
+    "domainInformation": "Информация о домене",
+    "domain": "Домен:",
+    "subdomains": "Поддомены:",
+    "subdomainsCount": "Поддомены ({{count}})",
+    "moreSubdomains": "+{{count}} поддоменов ещё",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "abuseipdb": {
+    "abuseConfidence": "Уверенность в злоупотреблении",
+    "score": "Оценка",
+    "reports": "{{count}} Отчётов",
+    "users": "{{count}} Пользователей",
+    "status": {
+      "whitelisted": "В белом списке",
+      "malicious": "Вредоносный",
+      "suspicious": "Подозрительный",
+      "clean": "Чистый"
+    },
+    "statusDescription": {
+      "whitelisted": "Этот IP находится в белом списке AbuseIPDB и считается безопасным",
+      "malicious": "Высокий показатель уверенности в злоупотреблении ({{score}}%). У этого IP значительные отчёты о злоупотреблении.",
+      "suspicious": "Умеренный показатель уверенности в злоупотреблении ({{score}}%). Будьте осторожны с этим IP.",
+      "clean": "Низкий показатель уверенности в злоупотреблении ({{score}}%). Значительных отчётов о злоупотреблении не найдено."
+    },
+    "badges": {
+      "torExitNode": "Выходной узел Tor",
+      "whitelisted": "В белом списке"
+    },
+    "tabs": {
+      "overview": "Обзор",
+      "reports": "Отчёты",
+      "details": "Детали"
+    },
+    "overview": {
+      "abuseMetrics": "Метрики злоупотребления",
+      "confidenceScore": "Показатель уверенности:",
+      "totalReports": "Всего отчётов:",
+      "uniqueReporters": "Уникальных репортёров:",
+      "lastReported": "Последний отчёт:",
+      "locationNetwork": "Местоположение и сеть",
+      "country": "Страна:",
+      "isp": "Провайдер:",
+      "domain": "Домен:",
+      "usageType": "Тип использования:",
+      "abuseCategories": "Категории злоупотребления"
+    },
+    "reportsTab": {
+      "noReports": "Отчёты о злоупотреблении для этого IP-адреса не найдены"
+    },
+    "details": {
+      "ipInformation": "Информация об IP",
+      "ipAddress": "IP-адрес:",
+      "ipVersion": "Версия IP:",
+      "publicIp": "Публичный IP:",
+      "whitelisted": "В белом списке:",
+      "torExitNode": "Выходной узел Tor:",
+      "yes": "Да",
+      "no": "Нет",
+      "hostnames": "Имена хостов"
+    },
+    "viewFullReport": "Просмотреть полный отчёт на AbuseIPDB →",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "Разведка интернет-шума",
+    "status": {
+      "benign": "Безопасный",
+      "suspicious": "Подозрительный",
+      "malicious": "Вредоносный",
+      "error": "Ошибка",
+      "unknown": "Неизвестно"
+    },
+    "classification": "Классификация",
+    "classificationStatus": "Статус:",
+    "seenByGreyNoise": "Замечен GreyNoise:",
+    "yes": "Да",
+    "no": "Нет",
+    "actor": "Актор:",
+    "knownService": "Известный сервис:",
+    "locationOrganization": "Местоположение и организация",
+    "country": "Страна:",
+    "city": "Город:",
+    "organization": "Организация:",
+    "asn": "ASN:",
+    "reverseDns": "Обратный DNS:",
+    "activityTimeline": "Хронология активности",
+    "firstSeen": "Первое появление:",
+    "lastSeen": "Последнее появление:",
+    "behaviorTags": "Теги поведения ({{count}})",
+    "securityIndicators": "Индикаторы безопасности",
+    "torExitNode": "Выходной узел TOR",
+    "vpn": "VPN",
+    "proxy": "Прокси",
+    "viewFullReport": "Просмотреть полный отчёт на GreyNoise Visualizer →",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "malwarebazaar": {
+    "samples": "Образцы",
+    "malwareAnalysis": "Анализ вредоносного ПО",
+    "signatures": "{{count}} Сигнатур",
+    "tags": "{{count}} Тегов",
+    "status": {
+      "clean": "Чистый",
+      "malicious": "Вредоносный",
+      "unknown": "Неизвестно"
+    },
+    "statusDescription": {
+      "clean": "Образцы вредоносного ПО для этого хеша в базе данных MalwareBazaar не найдены",
+      "malicious": "Найдено {{count}} образец(ов) вредоносного ПО, соответствующих этому хешу в базе данных MalwareBazaar",
+      "unknown": "Невозможно определить статус угрозы"
+    },
+    "tabs": {
+      "overview": "Обзор",
+      "samples": "Образцы",
+      "details": "Детали"
+    },
+    "overview": {
+      "threatMetrics": "Метрики угрозы",
+      "totalSamples": "Всего образцов:",
+      "uniqueSignatures": "Уникальных сигнатур:",
+      "firstSeen": "Первое появление:",
+      "lastSeen": "Последнее появление:",
+      "intelligence": "Разведка",
+      "totalDownloads": "Всего загрузок:",
+      "totalUploads": "Всего выгрузок:",
+      "codeSigning": "Подпись кода:",
+      "present": "Есть",
+      "none": "Нет",
+      "fileTypes": "Типы файлов:",
+      "malwareSignatures": "Сигнатуры вредоносного ПО",
+      "malwareTags": "Теги вредоносного ПО"
+    },
+    "sample": {
+      "type": "Тип:",
+      "size": "Размер:",
+      "reporter": "Репортёр:",
+      "delivery": "Доставка:",
+      "origin": "Происхождение:",
+      "first": "Первый:",
+      "last": "Последний:",
+      "downloads": "{{count}} загрузок",
+      "uploads": "{{count}} выгрузок",
+      "codeSignedBy": "Подписано {{name}}"
+    },
+    "details": {
+      "fileTypes": "Типы файлов",
+      "summary": "Сводка",
+      "totalSamples": "Всего образцов:",
+      "signatures": "Сигнатуры:",
+      "tags": "Теги:",
+      "fileTypesCount": "Типы файлов:"
+    },
+    "noSamples": "Детали образцов недоступны",
+    "viewFullReport": "Просмотреть полный отчёт на MalwareBazaar →",
+    "checkOnMalwareBazaar": "Проверить на MalwareBazaar →",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "arin": {
+    "header": {
+      "title": "WHOIS информация"
+    },
+    "status": {
+      "whoisInfo": "WHOIS инфо"
+    },
+    "network": {
+      "title": "Информация о сети",
+      "networkName": "Название сети:",
+      "handle": "Дескриптор:",
+      "ipVersion": "Версия IP:",
+      "cidr": "CIDR:"
+    },
+    "organization": {
+      "title": "Организация",
+      "organization": "Организация:",
+      "orgHandle": "Дескриптор организации:",
+      "type": "Тип:",
+      "customerAssignment": "Назначение клиента",
+      "parentNetwork": "Родительская сеть:"
+    },
+    "addressRange": {
+      "title": "Диапазон IP-адресов",
+      "startAddress": "Начальный адрес:",
+      "endAddress": "Конечный адрес:",
+      "range": "Диапазон:"
+    },
+    "registration": {
+      "title": "Информация о регистрации",
+      "registrationDate": "Дата регистрации:",
+      "lastUpdated": "Последнее обновление:"
+    },
+    "comments": {
+      "title": "Комментарии"
+    },
+    "netBlocks": {
+      "title": "Сетевые блоки"
+    },
+    "viewFullWhois": "Просмотреть полный WHOIS на ARIN →",
+    "unsupportedType": "Поддерживаемые типы IOC:"
+  },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "Статус URL",
+    "threat": "Угроза",
+    "threats": "Угрозы",
+    "urlCount": "Количество URL",
+    "onlineCount": "Активных URL",
+    "offlineCount": "Офлайн URL",
+    "online": "Активен",
+    "offline": "Офлайн",
+    "firstSeen": "Первое появление:",
+    "blacklists": "Чёрные списки",
+    "blacklistStatus": "Статус чёрного списка",
+    "tags": "Теги",
+    "sampleUrls": "Примеры URL",
+    "details": "Детали",
+    "reporter": "Репортёр:",
+    "status": {
+      "malicious": "Вредоносный",
+      "suspicious": "Подозрительный",
+      "clean": "Чистый"
+    },
+    "statusDescription": {
+      "malicious": "Обнаружено {{count}} активных вредоносных URL на этом хосте",
+      "suspicious": "Найдено {{count}} вредоносных URL, но в настоящее время офлайн",
+      "clean": "Вредоносные URL для этого индикатора не найдены"
+    },
+    "viewFullReport": "Просмотреть полный отчёт на URLhaus →"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "Уровень риска",
+    "location": "Местоположение",
+    "country": "Страна:",
+    "region": "Регион:",
+    "org": "Организация",
+    "orgName": "Название:",
+    "netname": "Сеть:",
+    "timestamps": "Временные метки",
+    "firstSeen": "Первое появление:",
+    "lastUpdated": "Последнее обновление:",
+    "lastSeen": "Последнее появление:",
+    "threats": "Угрозы",
+    "riskFactors": "Факторы риска",
+    "feeds": "Фиды угроз",
+    "status": {
+      "critical": "Критический",
+      "high": "Высокий риск",
+      "medium": "Средний риск",
+      "low": "Низкий риск",
+      "clean": "Чистый",
+      "unknown": "Неизвестно"
+    },
+    "viewFullReport": "Просмотреть полный отчёт на Pulsedive →"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "Оценка мошенничества",
+    "riskLevel": "Уровень риска",
+    "ispScore": "Оценка ISP",
+    "blacklisted": "В чёрном списке",
+    "indicators": "Индикаторы мошенничества",
+    "proxyDetection": "Обнаружение прокси",
+    "noDescription": "Дополнительная информация о риске недоступна",
+    "status": {
+      "veryHigh": "Очень высокий риск",
+      "high": "Высокий риск",
+      "medium": "Средний риск",
+      "low": "Низкий риск",
+      "veryLow": "Очень низкий риск",
+      "unknown": "Неизвестно"
+    },
+    "viewFullReport": "Просмотреть полный отчёт на Scamalytics →"
+  },
+  "generic": {
+    "source": "Источник",
+    "type": "Тип",
+    "value": "Значение",
+    "status": "Статус",
+    "details": "Детали",
+    "error": "Ошибка"
+  },
+  "error": {
+    "status": "Ошибка",
+    "unknown": "Произошла неизвестная ошибка",
+    "types": {
+      "apiError": "Ошибка API",
+      "authError": "Ошибка аутентификации",
+      "notFound": "Не найдено",
+      "rateLimit": "Превышен лимит запросов",
+      "serverError": "Ошибка сервера",
+      "clientError": "Ошибка запроса"
+    },
+    "possibleCauses": "Возможные причины:",
+    "tips": {
+      "invalidApiKey": "Недействительный или отсутствующий API-ключ",
+      "expiredApiKey": "Возможно, API-ключ истёк",
+      "checkSettings": "Проверьте конфигурацию API в Настройках",
+      "rateLimitExceeded": "Превышен лимит запросов API для этого провайдера",
+      "waitAndRetry": "Подождите несколько минут и попробуйте снова",
+      "upgradePlan": "Рассмотрите обновление вашего API-плана для повышения лимитов",
+      "serverIssue": "Сервис провайдера временно недоступен",
+      "tryAgainLater": "Попробуйте снова через несколько минут",
+      "checkStatus": "Проверьте страницу статуса провайдера",
+      "checkApiKey": "Убедитесь, что ваш API-ключ верен",
+      "networkIssue": "Проблема сетевого соединения"
+    }
+  }
+}

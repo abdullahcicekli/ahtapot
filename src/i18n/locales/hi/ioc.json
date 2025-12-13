@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4 पता",
+    "ipv6": "IPv6 पता",
+    "domain": "डोमेन",
+    "url": "URL",
+    "md5": "MD5 हैश",
+    "sha1": "SHA1 हैश",
+    "sha256": "SHA256 हैश",
+    "email": "ईमेल पता",
+    "cve": "CVE नंबर",
+    "bitcoin": "बिटकॉइन पता",
+    "ethereum": "एथेरियम पता"
+  },
+  "categories": {
+    "network": "नेटवर्क संकेतक",
+    "file": "फ़ाइल संकेतक",
+    "email": "ईमेल संकेतक",
+    "vulnerability": "भेद्यता संकेतक",
+    "cryptocurrency": "क्रिप्टोकरेंसी संकेतक"
+  },
+  "labels": {
+    "detected": "{{count}} संकेतक मिला",
+    "detected_plural": "{{count}} संकेतक मिले",
+    "analyzing": "संकेतक का विश्लेषण हो रहा है...",
+    "analyzing_plural": "संकेतकों का विश्लेषण हो रहा है..."
+  }
+}

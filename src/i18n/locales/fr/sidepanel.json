@@ -1,0 +1,195 @@
+{
+  "header": {
+    "logoAlt": "Logo Ahtapot",
+    "detectTitle": "Détecter les IOC sur la page",
+    "detectLabel": "Scanner la page actuelle pour les IOC",
+    "settingsTitle": "Paramètres",
+    "settingsLabel": "Ouvrir les paramètres"
+  },
+  "apiWarning": {
+    "title": "Configuration API requise",
+    "description": "Pour analyser les indicateurs de sécurité, vous devez configurer au moins une clé API.",
+    "configureButton": "Configurer les clés API"
+  },
+  "input": {
+    "label": "Entrer les indicateurs de sécurité",
+    "placeholder": "Collez des adresses IP, domaines, hashes, URLs ou autres indicateurs de sécurité ici...",
+    "detectButton": "Rechercher les indicateurs",
+    "analyzeButton": "Analyser les menaces",
+    "analyzingButton": "Analyse...",
+    "multipleHint": "Pour plusieurs IOC, séparez par une virgule (,) ou utilisez Shift+Entrée pour une nouvelle ligne",
+    "detectedCount": "{{count}} IOC détectés"
+  },
+  "detected": {
+    "title": "Indicateurs détectés",
+    "count_one": "{{count}} indicateur trouvé",
+    "count_other": "{{count}} indicateurs trouvés",
+    "supportedBy": "Pris en charge par :"
+  },
+  "results": {
+    "title": "Résultats des fournisseurs"
+  },
+  "loading": {
+    "analyzing": "Analyse des indicateurs de sécurité..."
+  },
+  "providerNoResults": {
+    "title": "Aucun résultat de {{provider}}",
+    "searchedFor": "Vous avez recherché :",
+    "description": "Ce fournisseur ne prend pas en charge ces types d'indicateurs.",
+    "supportedLabel": "{{provider}} prend en charge :"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "Aucun indicateur détecté",
+      "description": "Aucun indicateur de sécurité (IOC) n'a été trouvé dans le texte fourni."
+    },
+    "welcome": {
+      "title": "Bienvenue dans Ahtapot Security",
+      "description": "Analysez rapidement les indicateurs de cybersécurité (IOC). Collez des adresses IP, domaines, hashes ou autres indicateurs dans le champ ci-dessus.",
+      "supportedTitle": "Types d'indicateurs pris en charge :",
+      "types": {
+        "ipAddresses": "Adresses IP (IPv4/IPv6)",
+        "domains": "Domaines et URLs",
+        "hashes": "Hashes de fichiers (MD5, SHA1, SHA256)",
+        "emails": "Adresses e-mail",
+        "cve": "Numéros CVE",
+        "crypto": "Adresses de cryptomonnaie"
+      }
+    }
+  },
+  "rateLimitConfirm": {
+    "title": "Fournisseur à limite de requêtes",
+    "pendingStatus": "En attente de confirmation",
+    "greynoise": {
+      "limit": "50 recherches/semaine",
+      "message": "Le plan GreyNoise Community a une limite de 50 recherches par semaine (combiné avec l'utilisation du Visualizer).",
+      "question": "Voulez-vous analyser {{count}} indicateur(s) avec GreyNoise ?",
+      "warning": "Cela utilisera {{count}} de votre quota hebdomadaire."
+    },
+    "shodan": {
+      "limit": "100 résultats/mois",
+      "message": "Le plan gratuit Shodan a une limite de 100 résultats par mois.",
+      "question": "Voulez-vous analyser {{count}} indicateur(s) avec Shodan ?",
+      "warning": "Cela utilisera {{count}} de votre quota mensuel."
+    },
+    "iocCount": "Analyse de {{count}} indicateur(s)",
+    "confirm": "Oui, analyser",
+    "cancel": "Ignorer",
+    "skipHint": "L'analyse ignorera ce fournisseur si non confirmé"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "Intelligence du bruit Internet"
+    },
+    "shodan": {
+      "subtitle": "Scanner de ports Internet mondial"
+    }
+  },
+  "ai": {
+    "title": "Analyse IA",
+    "noProviders": "Configurez un fournisseur IA pour activer l'analyse basée sur l'IA",
+    "configure": "Configurer",
+    "selectProvider": "Sélectionner le modèle",
+    "selectIOC": "Analyser :",
+    "noApiKey": "Clé API non configurée",
+    "noKey": "Pas de clé",
+    "configureKeys": "Configurer les clés API",
+    "modes": {
+      "summary": "Résumé",
+      "analysis": "Analyse",
+      "detailed": "Détaillé"
+    },
+    "modeInfo": {
+      "title": "Modes d'analyse",
+      "summary": "Décisions de triage rapides pour les analystes L1",
+      "analysis": "Décisions d'escalade pour le transfert L1/L2",
+      "detailed": "Investigation complète pour les équipes L2/L3 + IR"
+    },
+    "analyzing": "Analyse...",
+    "analyzingStates": {
+      "sending": "Envoi de la requête...",
+      "processing": "L'IA traite...",
+      "thinking": "Analyse des données de menace...",
+      "generating": "Génération du rapport...",
+      "almostDone": "Presque terminé...",
+      "finalizing": "Finalisation de l'analyse..."
+    },
+    "start": "Analyser",
+    "copyResult": "Copier le résultat",
+    "copyMarkdown": "Copier en Markdown",
+    "reanalyze": "Ré-analyser",
+    "exportImage": "Exporter en image",
+    "cached": "En cache",
+    "sections": {
+      "summary": "Résumé",
+      "keySignals": "Signaux clés",
+      "assessment": "Évaluation",
+      "providerAnalysis": "Analyse du fournisseur",
+      "consensus": "Consensus",
+      "threatIntel": "Renseignement sur les menaces",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "Actions recommandées",
+      "analystNotes": "Notes de l'analyste",
+      "executiveSummary": "Résumé exécutif",
+      "iocAnalysis": "Analyse IOC",
+      "crossReference": "Analyse croisée",
+      "infrastructure": "Infrastructure",
+      "falsePositive": "Analyse des faux positifs",
+      "responseActions": "Actions de réponse",
+      "detectionEngineering": "Ingénierie de détection",
+      "references": "Références"
+    },
+    "labels": {
+      "verdict": "Verdict",
+      "risk": "Risque",
+      "confidence": "Confiance",
+      "confidenceShort": "Conf:",
+      "sourceConfidence": "Confiance de la source - Fiabilité des données de ce fournisseur",
+      "escalation": "Escalade requise",
+      "priority": "Priorité",
+      "detection": "Détection",
+      "reputation": "Réputation",
+      "associations": "Associations",
+      "agreement": "Accord",
+      "conflicts": "Conflits",
+      "dataGaps": "Lacunes de données",
+      "knownAssociations": "Associations connues",
+      "historicalActivity": "Activité historique",
+      "infrastructureInfo": "Infrastructure",
+      "immediate": "Immédiat",
+      "shortTerm": "Court terme",
+      "longTerm": "Long terme",
+      "investigation": "Investigation",
+      "confidenceFactors": "Facteurs de confiance",
+      "limitations": "Limitations",
+      "followUp": "Suivi",
+      "source": "Source"
+    },
+    "verdicts": {
+      "malicious": "Malveillant",
+      "suspicious": "Suspect",
+      "likely_benign": "Probablement bénin",
+      "clean": "Propre",
+      "unknown": "Inconnu"
+    },
+    "riskLevels": {
+      "critical": "Critique",
+      "high": "Élevé",
+      "medium": "Moyen",
+      "low": "Faible",
+      "info": "Info"
+    },
+    "confidenceLevels": {
+      "high": "Élevée",
+      "medium": "Moyenne",
+      "low": "Faible"
+    },
+    "errors": {
+      "noApiKey": "Veuillez configurer une clé API pour ce fournisseur IA dans les Paramètres",
+      "unknown": "Une erreur inattendue s'est produite lors de l'analyse IA",
+      "invalidJson": "La réponse de l'IA était incomplète ou invalide",
+      "retrying": "Réponse incomplète, nouvelle tentative... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "Impossible d'obtenir une réponse complète après {{maxAttempts}} tentatives. Veuillez réessayer."
+    }
+  }
+}

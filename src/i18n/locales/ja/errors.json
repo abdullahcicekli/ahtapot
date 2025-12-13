@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "APIキーが必要です",
+    "keyInvalid": "無効なAPIキー",
+    "requestFailed": "リクエストに失敗しました",
+    "rateLimitExceeded": "レート制限を超えました",
+    "networkError": "ネットワークエラー",
+    "timeout": "リクエストがタイムアウトしました"
+  },
+  "analysis": {
+    "noIocs": "インジケーターが検出されませんでした",
+    "analysisError": "分析エラー",
+    "noResults": "結果がありません"
+  },
+  "storage": {
+    "saveFailed": "設定の保存に失敗しました",
+    "loadFailed": "設定の読み込みに失敗しました"
+  },
+  "provider": {
+    "notConfigured": "APIが設定されていません",
+    "unavailable": "サービスが利用できません"
+  }
+}

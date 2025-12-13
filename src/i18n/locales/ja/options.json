@@ -1,0 +1,348 @@
+{
+  "header": {
+    "title": "設定",
+    "subtitle": "拡張機能の設定を構成",
+    "logoAlt": "Ahtapotロゴ"
+  },
+  "tabs": {
+    "general": "一般設定",
+    "apiKeys": "APIキー",
+    "howToUse": "使い方"
+  },
+  "general": {
+    "title": "一般設定",
+    "language": {
+      "label": "言語",
+      "description": "お好みの言語を選択",
+      "select": "言語を選択"
+    },
+    "cache": {
+      "title": "キャッシュ設定",
+      "description": "IOC分析結果のキャッシュ動作を設定",
+      "infoTitle": "キャッシュについて",
+      "enabled": "キャッシュを有効化",
+      "enabledDescription": "繰り返しのAPI呼び出しを避けるために分析結果を保存",
+      "retentionDays": "保持期間（日）",
+      "retentionDescription": "キャッシュされた結果を保持する期間",
+      "statistics": "キャッシュ統計",
+      "totalEntries": "合計エントリ数",
+      "totalSize": "合計サイズ",
+      "oldestDate": "最古のエントリ",
+      "newestDate": "最新のエントリ",
+      "clearCache": "すべてのキャッシュをクリア",
+      "clearConfirm": "すべてのキャッシュデータをクリアしてもよろしいですか？",
+      "clearSuccess": "キャッシュが正常にクリアされました",
+      "clearError": "キャッシュのクリアに失敗しました",
+      "info": {
+        "whyTitle": "なぜキャッシュが存在するのか？",
+        "whyDescription": "キャッシュシステムは、以前に分析されたIOCの結果をデバイスに保存します。これにより、同じIOCを再度クエリすると、API呼び出しなしで即座に結果が得られます。",
+        "benefitsTitle": "メリット",
+        "benefit1": "⚡ 高速な結果: 繰り返しのクエリが即座に応答",
+        "benefit2": "📊 APIクォータ保護: 日次/月次API制限を節約",
+        "benefit3": "🔒 プライバシー: データはデバイスにのみ保存",
+        "benefit4": "💾 オフラインアクセス: インターネットなしで過去の結果にアクセス",
+        "howTitle": "どのように機能するか？",
+        "howDescription": "成功したすべての分析結果は自動的にキャッシュされます。指定した期間後に古いエントリは自動的に削除されます。いつでも手動ですべてのキャッシュをクリアできます。"
+      }
+    },
+    "providerOrder": {
+      "title": "プロバイダー表示順序",
+      "description": "分析結果でプロバイダーが表示される順序をカスタマイズ。ドラッグ＆ドロップで並べ替え。",
+      "customizeButton": "順序をカスタマイズ",
+      "modalDescription": "プロバイダーをドラッグして並べ替え。変更は自動的に保存されます。",
+      "lockedProviders": "常に利用可能（APIキー不要）",
+      "dragHint": "ドラッグして並べ替え",
+      "resetOrder": "デフォルトにリセット",
+      "doneButton": "完了",
+      "resetConfirm": "プロバイダーの順序をデフォルトにリセットしてもよろしいですか？",
+      "orderSaved": "プロバイダーの順序が正常に保存されました",
+      "orderSaveError": "プロバイダーの順序の保存に失敗しました"
+    }
+  },
+  "privacyNote": {
+    "title": "プライバシーに関する注意:",
+    "description": "APIキーはデバイスにのみ安全に保存され、外部サーバーに送信されることはありません。"
+  },
+  "apiKeys": {
+    "sectionTitle": "APIキー",
+    "sectionDescription": "各セキュリティツールのAPIキーを入力してください。使用するツールのキーのみ追加できます。",
+    "placeholder": "{{provider}} APIキー",
+    "showKey": "キーを表示",
+    "hideKey": "キーを非表示",
+    "validate": "検証",
+    "validating": "検証中...",
+    "valid": "有効",
+    "invalid": "無効",
+    "validationError": "検証に失敗"
+  },
+  "providers": {
+    "virustotal": {
+      "label": "VirusTotal",
+      "description": "ファイル、URL、IPアドレス分析",
+      "placeholder": "VirusTotal APIキー"
+    },
+    "otx": {
+      "label": "OTX AlienVault",
+      "description": "脅威インテリジェンスとIOC分析",
+      "placeholder": "OTX AlienVault APIキー"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "IPアドレスの評判と悪用レポート",
+      "placeholder": "AbuseIPDB APIキー"
+    },
+    "malwarebazaar": {
+      "label": "MalwareBazaar",
+      "description": "マルウェアハッシュ分析とサンプル情報（abuse.ch提供）",
+      "placeholder": "MalwareBazaar APIキー"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "インターネット接続デバイス検索と脆弱性分析",
+      "placeholder": "Shodan APIキー"
+    },
+    "greynoise": {
+      "label": "GreyNoise",
+      "description": "インターネットノイズ分類と脅威インテリジェンス",
+      "placeholder": "GreyNoise APIキー"
+    },
+    "urlhaus": {
+      "label": "URLhaus",
+      "description": "悪意のあるURLとマルウェア配布データベース（abuse.ch提供）",
+      "placeholder": "URLhaus APIキー"
+    },
+    "pulsedive": {
+      "label": "Pulsedive",
+      "description": "IOCエンリッチメントを備えた脅威インテリジェンスプラットフォーム",
+      "placeholder": "Pulsedive APIキー"
+    },
+    "scamalytics": {
+      "label": "Scamalytics",
+      "description": "IP詐欺スコアと詐欺検出",
+      "placeholder": "username:apikey（例：myuser:abc123...）"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IPアドレス登録とネットワーク情報",
+      "placeholder": "APIキー不要"
+    }
+  },
+  "lockedProvider": {
+    "message": "✓ このプロバイダーは常に利用可能で、APIキーは不要です"
+  },
+  "info": {
+    "limitsTitle": "無料プラン制限",
+    "dailyLimit": "日次/月次:",
+    "rateLimit": "レート制限:",
+    "featuresTitle": "機能",
+    "howToTitle": "APIキーの取得方法",
+    "importantNote": "重要な注意",
+    "steps": {
+      "signup": "こちらで無料アカウントを作成",
+      "verify": "メールアドレスを確認",
+      "getKey": "APIキーを取得",
+      "paste": "下のフィールドにキーを貼り付け"
+    }
+  },
+  "notes": {
+    "malwarebazaar": "認証キーは生成後に一度だけ表示されます。変更する必要がある場合は、新しいキーを生成する必要があります。一度生成すると再度表示できないため、すぐに拡張機能に保存してください。",
+    "scamalytics": "登録には手動レビューが必要です。承認後、API資格情報を含むプライベートリンク（30日で期限切れ）が届きます。無料プランにはESSENTIALフィールドで5,000クレジット/月が含まれます。PREMIUMフィールドは15日間のトライアルで利用可能です。"
+  },
+  "tooltips": {
+    "virustotal": "APIキーを追加",
+    "otx": "APIキーを追加",
+    "abuseipdb": "APIキーを追加",
+    "malwarebazaar": "APIキーを追加",
+    "shodan": "APIキーを追加",
+    "greynoise": "APIキーを追加",
+    "urlhaus": "APIキーを追加",
+    "pulsedive": "APIキーを追加",
+    "scamalytics": "APIキーを追加"
+  },
+  "features": {
+    "virustotal": {
+      "feature1": "IP/ドメイン分析",
+      "feature2": "ファイルハッシュチェック",
+      "feature3": "URLスキャン",
+      "feature4": "90以上のセキュリティエンジン"
+    },
+    "otx": {
+      "feature1": "脅威インテリジェンスパルス",
+      "feature2": "マルウェアファミリー検出",
+      "feature3": "CVE脆弱性分析",
+      "feature4": "コミュニティ駆動の脅威データ"
+    },
+    "abuseipdb": {
+      "feature1": "IPレピュテーションチェック",
+      "feature2": "90日間の悪用レポート",
+      "feature3": "信頼スコア分析",
+      "feature4": "地理的およびISP情報"
+    },
+    "malwarebazaar": {
+      "feature1": "ハッシュベースのマルウェア検索",
+      "feature2": "マルウェアシグネチャ識別",
+      "feature3": "ファイルタイプと配信方法分析",
+      "feature4": "コード署名情報"
+    },
+    "shodan": {
+      "feature1": "IPとドメイン検索",
+      "feature2": "オープンポートとサービス検出",
+      "feature3": "CVE脆弱性識別",
+      "feature4": "デバイスとバナー情報"
+    },
+    "greynoise": {
+      "feature1": "IPノイズ分類（良性/悪意/不明）",
+      "feature2": "アクターと行動タグ識別",
+      "feature3": "TOR/VPN/プロキシ検出",
+      "feature4": "既知の良性サービス用RIOTフラグ"
+    },
+    "urlhaus": {
+      "feature1": "悪意のあるURLデータベース",
+      "feature2": "ペイロードと脅威分類",
+      "feature3": "URLステータス監視（オンライン/オフライン）",
+      "feature4": "マルウェア配布追跡"
+    },
+    "pulsedive": {
+      "feature1": "リスクレベル評価",
+      "feature2": "脅威とフィード追跡",
+      "feature3": "リスク要因分析",
+      "feature4": "コミュニティ駆動インテリジェンス"
+    },
+    "scamalytics": {
+      "feature1": "IP詐欺リスクスコア（0-100）",
+      "feature2": "データセンターとVPN検出",
+      "feature3": "TOR出口ノード検出",
+      "feature4": "外部ブラックリストチェック"
+    }
+  },
+  "limits": {
+    "virustotal": {
+      "free": "500リクエスト/日",
+      "rate": "4リクエスト/分"
+    },
+    "otx": {
+      "free": "10,000リクエスト/日",
+      "rate": "10リクエスト/秒"
+    },
+    "abuseipdb": {
+      "free": "1,000リクエスト/日",
+      "rate": "1リクエスト/秒"
+    },
+    "malwarebazaar": {
+      "free": "無制限（アカウント有り）",
+      "rate": "制限なし"
+    },
+    "shodan": {
+      "free": "100結果/月（無料）",
+      "rate": "1リクエスト/秒"
+    },
+    "greynoise": {
+      "free": "50検索/週（Community）",
+      "rate": "Visualizer使用と合算"
+    },
+    "urlhaus": {
+      "free": "無制限（無料アカウント）",
+      "rate": "制限なし"
+    },
+    "pulsedive": {
+      "free": "250リクエスト/日（無料アカウント）",
+      "rate": "2,500リクエスト/月"
+    },
+    "scamalytics": {
+      "free": "5,000クレジット/月",
+      "rate": "15日PREMIUMトライアル"
+    }
+  },
+  "actions": {
+    "save": "変更を保存",
+    "saveIndividual": "保存",
+    "successMessage": "APIキーが正常に保存されました",
+    "errorMessage": "APIキーの保存に失敗しました",
+    "errorLoading": "APIキーの読み込みに失敗しました",
+    "saveSuccess": "正常に保存されました",
+    "saveError": "保存に失敗しました"
+  },
+  "ai": {
+    "sectionTitle": "AIプロバイダー",
+    "sectionDescription": "インテリジェントなIOC分析のためにAIプロバイダーを設定します。AIは要約、詳細な分析、推奨事項を提供できます。",
+    "providers": {
+      "claude": {
+        "description": "AnthropicのClaude - 高度な推論と分析",
+        "placeholder": "Claude APIキーを入力（sk-ant-...）",
+        "step2": "支払い方法を追加（APIアクセスに必要）"
+      },
+      "gemini": {
+        "description": "GoogleのGemini - 高速で効率的な分析",
+        "placeholder": "Gemini APIキーを入力",
+        "step2": "Google Cloud ConsoleでGemini APIを有効化"
+      },
+      "openai": {
+        "description": "OpenAIのGPT - 多用途な言語理解",
+        "placeholder": "OpenAI APIキーを入力（sk-...）",
+        "step2": "支払い方法を追加してクレジットを購入"
+      }
+    },
+    "pricing": {
+      "title": "料金",
+      "input": "入力",
+      "output": "出力",
+      "rate": "レート",
+      "viewMore": "完全な料金表を見る"
+    },
+    "howTo": {
+      "title": "APIキーの取得方法",
+      "signup": "アカウントを作成",
+      "getKey": "APIキーを取得",
+      "paste": "下にキーを貼り付け"
+    },
+    "models": {
+      "title": "利用可能なモデル"
+    }
+  },
+  "footer": {
+    "text": "Ahtapot v{{version}} • サイバーセキュリティインジケーター分析ツール"
+  },
+  "howToUse": {
+    "title": "Ahtapotの使い方",
+    "intro": "Ahtapotを使用すると、任意のウェブページからIOC（侵害の痕跡）を簡単に分析できます。分析を開始する方法は複数あります。",
+    "textSelection": {
+      "title": "テキスト選択",
+      "subtitle": "IOCを分析する最速の方法",
+      "step1": "ウェブページでIOCを含むテキストを選択（IPアドレス、ドメイン、ハッシュなど）",
+      "step2": "選択範囲の近くに表示される「分析」ボタンをクリック",
+      "step3": "サイドパネルで分析結果を表示"
+    },
+    "sidePanel": {
+      "title": "サイドパネル検索",
+      "subtitle": "手動検索と分析",
+      "step1": "ブラウザツールバーのAhtapotアイコンをクリック",
+      "step2": "「IOC分析」を選択してサイドパネルを開く",
+      "step3": "検索ボックスにIOCを入力してEnterを押す"
+    },
+    "keyboard": {
+      "title": "キーボードショートカット",
+      "subtitle": "ページ上のすべてのIOCをハイライト",
+      "step1": "IOCを含むウェブページに移動",
+      "step2": "キーボードショートカットを押してページ上の検出されたすべてのIOCをハイライト",
+      "or": "または"
+    },
+    "apiKeys": {
+      "title": "APIキー設定",
+      "subtitle": "脅威インテリジェンスクエリに必要",
+      "step1": "この設定ページで<0>APIキー</0>タブに移動",
+      "step2": "各プロバイダーの横にある情報アイコン（ⓘ）をクリックしてAPIキーの取得方法を確認",
+      "step3": "APIキーを入力して保存をクリック - キーはブラウザにのみ保存されます",
+      "note": "APIキーはブラウザにのみ安全に保存され、各プロバイダーのAPI以外の外部サーバーに送信されることはありません。"
+    },
+    "ai": {
+      "title": "AI分析（オプション）",
+      "subtitle": "インテリジェントな要約と推奨事項を取得",
+      "step1": "以下のサポートされているAIプロバイダーから1つを選択",
+      "step2": "プロバイダーからAPIキーを取得し、<0>APIキー</0>タブに入力"
+    },
+    "iocTypes": {
+      "title": "サポートされているIOCタイプ",
+      "subtitle": "Ahtapotはこれらのインジケータータイプを自動的に検出して分析します"
+    }
+  }
+}

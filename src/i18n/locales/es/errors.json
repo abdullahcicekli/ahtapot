@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "Clave API requerida",
+    "keyInvalid": "Clave API inválida",
+    "requestFailed": "Solicitud fallida",
+    "rateLimitExceeded": "Límite de tasa excedido",
+    "networkError": "Error de red",
+    "timeout": "Tiempo de espera agotado"
+  },
+  "analysis": {
+    "noIocs": "No se detectaron indicadores",
+    "analysisError": "Error de análisis",
+    "noResults": "No hay resultados disponibles"
+  },
+  "storage": {
+    "saveFailed": "Error al guardar configuración",
+    "loadFailed": "Error al cargar configuración"
+  },
+  "provider": {
+    "notConfigured": "API no configurada",
+    "unavailable": "Servicio no disponible"
+  }
+}

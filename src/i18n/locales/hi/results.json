@@ -1,0 +1,442 @@
+{
+  "virustotal": {
+    "communityScore": "समुदाय स्कोर",
+    "votes": {
+      "harmless": "हानिरहित",
+      "malicious": "दुर्भावनापूर्ण"
+    },
+    "status": {
+      "malicious": "दुर्भावनापूर्ण",
+      "suspicious": "संदिग्ध",
+      "clean": "स्वच्छ"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} सुरक्षा विक्रेताओं ने इसे दुर्भावनापूर्ण के रूप में चिह्नित किया",
+      "suspicious": "{{count}} / {{total}} सुरक्षा विक्रेताओं ने इसे संदिग्ध के रूप में चिह्नित किया",
+      "clean": "किसी भी सुरक्षा विक्रेता ने इसे दुर्भावनापूर्ण के रूप में चिह्नित नहीं किया"
+    },
+    "tabs": {
+      "detection": "पहचान",
+      "details": "विवरण"
+    },
+    "detection": {
+      "noDetections": "किसी भी सुरक्षा विक्रेता ने इसे दुर्भावनापूर्ण के रूप में चिह्नित नहीं किया",
+      "vendorCategory": {
+        "malicious": "दुर्भावनापूर्ण",
+        "suspicious": "संदिग्ध"
+      }
+    },
+    "pagination": {
+      "previous": "पिछला",
+      "next": "अगला",
+      "page": "पृष्ठ {{current}} का {{total}}"
+    },
+    "details": {
+      "location": "स्थान",
+      "network": "नेटवर्क",
+      "reputation": "प्रतिष्ठा",
+      "tags": "टैग",
+      "country": "देश:",
+      "continent": "महाद्वीप:",
+      "networkRange": "नेटवर्क:",
+      "asn": "ASN:",
+      "owner": "मालिक:",
+      "rir": "RIR:",
+      "score": "स्कोर:"
+    },
+    "analysisDate": "अंतिम विश्लेषण",
+    "viewFullReport": "VirusTotal पर पूर्ण रिपोर्ट देखें →",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "otx": {
+    "threatIntelligence": "खतरा इंटेलिजेंस",
+    "malicious": "दुर्भावनापूर्ण",
+    "suspicious": "संदिग्ध",
+    "pulses": "Pulse",
+    "status": {
+      "clean": "स्वच्छ",
+      "malicious": "दुर्भावनापूर्ण",
+      "suspicious": "संदिग्ध",
+      "flagged": "चिह्नित"
+    },
+    "statusDescription": {
+      "clean": "इस संकेतक के लिए कोई खतरा इंटेलिजेंस pulse नहीं मिला",
+      "malicious": "खतरा पहचाना: {{reasons}}",
+      "suspicious": "संभावित खतरा: {{reasons}}",
+      "flagged": "{{count}} खतरा इंटेलिजेंस pulse में पाया गया - जाँच आवश्यक"
+    },
+    "threatSummary": {
+      "title": "यह क्यों चिह्नित है?",
+      "description": "यह संकेतक AlienVault OTX समुदाय से <1>{{count}} खतरा इंटेलिजेंस pulse</1> में दिखाई देता है। OTX pulse में समझौता के संकेतक (IOC) होते हैं जो खतरों, अभियानों या दुर्भावनापूर्ण बुनियादी ढांचे का गठन करते हैं।",
+      "highSeverity": "<1>{{count}}</1> pulse में उच्च-गंभीरता खतरे हैं (मैलवेयर, रैंसमवेयर, APT, फ़िशिंग, आदि)",
+      "mediumSeverity": "<1>{{count}}</1> pulse संदिग्ध गतिविधि या संभावित खतरों को इंगित करते हैं",
+      "recommendation": "<1>सिफारिश:</1> इस IOC की आगे जाँच की जानी चाहिए। इस संकेतक से जुड़े विशिष्ट खतरों को समझने के लिए नीचे pulse विवरण की समीक्षा करें।"
+    },
+    "tabs": {
+      "pulses": "Pulse",
+      "details": "विवरण"
+    },
+    "pulse": {
+      "highSeverity": "उच्च गंभीरता",
+      "mediumSeverity": "मध्यम गंभीरता",
+      "threatIndicator": "खतरा संकेतक",
+      "malwareFamilies": "मैलवेयर परिवार:",
+      "targetedCountries": "लक्षित देश:",
+      "viewOnOTX": "OTX पर देखें →",
+      "moreCount": "+{{count}} और"
+    },
+    "details": {
+      "statistics": "आँकड़े",
+      "totalPulses": "कुल Pulse:",
+      "malicious": "दुर्भावनापूर्ण:",
+      "suspicious": "संदिग्ध:",
+      "harmless": "हानिरहित:",
+      "reputation": "प्रतिष्ठा",
+      "score": "स्कोर:",
+      "relatedAdversaries": "संबंधित प्रतिद्वंद्वी",
+      "malwareFamilies": "मैलवेयर परिवार",
+      "targetedIndustries": "लक्षित उद्योग"
+    },
+    "noPulses": "इस संकेतक के लिए कोई खतरा इंटेलिजेंस pulse नहीं मिला",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "इंटरनेट डिवाइस खोज",
+    "status": {
+      "safe": "सुरक्षित",
+      "suspicious": "संदिग्ध",
+      "malicious": "दुर्भावनापूर्ण",
+      "error": "त्रुटि",
+      "unknown": "अज्ञात"
+    },
+    "hostInformation": "होस्ट जानकारी",
+    "ipAddress": "IP पता:",
+    "operatingSystem": "ऑपरेटिंग सिस्टम:",
+    "lastScan": "अंतिम स्कैन:",
+    "organization": "संगठन",
+    "organizationLabel": "संगठन:",
+    "isp": "ISP:",
+    "asn": "ASN:",
+    "location": "स्थान",
+    "country": "देश:",
+    "city": "शहर:",
+    "coordinates": "निर्देशांक:",
+    "ports": "पोर्ट ({{count}})",
+    "moreCount": "+{{count}} और",
+    "vulnerabilities": "भेद्यताएं ({{count}})",
+    "moreVulnerabilities": "+{{count}} और भेद्यताएं",
+    "detectedServices": "पहचानी गई सेवाएं ({{count}})",
+    "port": "पोर्ट {{port}}",
+    "hostnames": "होस्टनाम ({{count}})",
+    "tags": "टैग",
+    "viewFullReport": "Shodan पर पूर्ण रिपोर्ट देखें →",
+    "domainInformation": "डोमेन जानकारी",
+    "domain": "डोमेन:",
+    "subdomains": "उपडोमेन:",
+    "subdomainsCount": "उपडोमेन ({{count}})",
+    "moreSubdomains": "+{{count}} और उपडोमेन",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "abuseipdb": {
+    "abuseConfidence": "दुर्व्यवहार विश्वास",
+    "score": "स्कोर",
+    "reports": "{{count}} रिपोर्ट",
+    "users": "{{count}} उपयोगकर्ता",
+    "status": {
+      "whitelisted": "श्वेतसूचीबद्ध",
+      "malicious": "दुर्भावनापूर्ण",
+      "suspicious": "संदिग्ध",
+      "clean": "स्वच्छ"
+    },
+    "statusDescription": {
+      "whitelisted": "यह IP AbuseIPDB श्वेतसूची में है और सुरक्षित माना जाता है",
+      "malicious": "उच्च दुर्व्यवहार विश्वास स्कोर ({{score}}%)। इस IP की महत्वपूर्ण दुर्व्यवहार रिपोर्ट हैं।",
+      "suspicious": "मध्यम दुर्व्यवहार विश्वास स्कोर ({{score}}%)। इस IP के साथ सावधानी बरतें।",
+      "clean": "कम दुर्व्यवहार विश्वास स्कोर ({{score}}%)। कोई महत्वपूर्ण दुर्व्यवहार रिपोर्ट नहीं मिली।"
+    },
+    "badges": {
+      "torExitNode": "Tor निकास नोड",
+      "whitelisted": "श्वेतसूचीबद्ध"
+    },
+    "tabs": {
+      "overview": "अवलोकन",
+      "reports": "रिपोर्ट",
+      "details": "विवरण"
+    },
+    "overview": {
+      "abuseMetrics": "दुर्व्यवहार मेट्रिक्स",
+      "confidenceScore": "विश्वास स्कोर:",
+      "totalReports": "कुल रिपोर्ट:",
+      "uniqueReporters": "अद्वितीय रिपोर्टर:",
+      "lastReported": "अंतिम रिपोर्ट:",
+      "locationNetwork": "स्थान और नेटवर्क",
+      "country": "देश:",
+      "isp": "ISP:",
+      "domain": "डोमेन:",
+      "usageType": "उपयोग प्रकार:",
+      "abuseCategories": "दुर्व्यवहार श्रेणियाँ"
+    },
+    "reportsTab": {
+      "noReports": "इस IP पते के लिए कोई दुर्व्यवहार रिपोर्ट नहीं मिली"
+    },
+    "details": {
+      "ipInformation": "IP जानकारी",
+      "ipAddress": "IP पता:",
+      "ipVersion": "IP संस्करण:",
+      "publicIp": "सार्वजनिक IP:",
+      "whitelisted": "श्वेतसूचीबद्ध:",
+      "torExitNode": "Tor निकास नोड:",
+      "yes": "हाँ",
+      "no": "नहीं",
+      "hostnames": "होस्टनाम"
+    },
+    "viewFullReport": "AbuseIPDB पर पूर्ण रिपोर्ट देखें →",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "इंटरनेट शोर इंटेलिजेंस",
+    "status": {
+      "benign": "सौम्य",
+      "suspicious": "संदिग्ध",
+      "malicious": "दुर्भावनापूर्ण",
+      "error": "त्रुटि",
+      "unknown": "अज्ञात"
+    },
+    "classification": "वर्गीकरण",
+    "classificationStatus": "स्थिति:",
+    "seenByGreyNoise": "GreyNoise द्वारा देखा गया:",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "actor": "अभिनेता:",
+    "knownService": "ज्ञात सेवा:",
+    "locationOrganization": "स्थान और संगठन",
+    "country": "देश:",
+    "city": "शहर:",
+    "organization": "संगठन:",
+    "asn": "ASN:",
+    "reverseDns": "रिवर्स DNS:",
+    "activityTimeline": "गतिविधि समयरेखा",
+    "firstSeen": "पहली बार:",
+    "lastSeen": "अंतिम बार:",
+    "behaviorTags": "व्यवहार टैग ({{count}})",
+    "securityIndicators": "सुरक्षा संकेतक",
+    "torExitNode": "TOR निकास नोड",
+    "vpn": "VPN",
+    "proxy": "प्रॉक्सी",
+    "viewFullReport": "GreyNoise Visualizer पर पूर्ण रिपोर्ट देखें →",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "malwarebazaar": {
+    "samples": "नमूने",
+    "malwareAnalysis": "मैलवेयर विश्लेषण",
+    "signatures": "{{count}} हस्ताक्षर",
+    "tags": "{{count}} टैग",
+    "status": {
+      "clean": "स्वच्छ",
+      "malicious": "दुर्भावनापूर्ण",
+      "unknown": "अज्ञात"
+    },
+    "statusDescription": {
+      "clean": "MalwareBazaar डेटाबेस में इस हैश के लिए कोई मैलवेयर नमूना नहीं मिला",
+      "malicious": "MalwareBazaar डेटाबेस में इस हैश से मेल खाते {{count}} मैलवेयर नमूने मिले",
+      "unknown": "खतरा स्थिति निर्धारित करने में असमर्थ"
+    },
+    "tabs": {
+      "overview": "अवलोकन",
+      "samples": "नमूने",
+      "details": "विवरण"
+    },
+    "overview": {
+      "threatMetrics": "खतरा मेट्रिक्स",
+      "totalSamples": "कुल नमूने:",
+      "uniqueSignatures": "अद्वितीय हस्ताक्षर:",
+      "firstSeen": "पहली बार:",
+      "lastSeen": "अंतिम बार:",
+      "intelligence": "इंटेलिजेंस",
+      "totalDownloads": "कुल डाउनलोड:",
+      "totalUploads": "कुल अपलोड:",
+      "codeSigning": "कोड हस्ताक्षर:",
+      "present": "मौजूद",
+      "none": "कोई नहीं",
+      "fileTypes": "फ़ाइल प्रकार:",
+      "malwareSignatures": "मैलवेयर हस्ताक्षर",
+      "malwareTags": "मैलवेयर टैग"
+    },
+    "sample": {
+      "type": "प्रकार:",
+      "size": "आकार:",
+      "reporter": "रिपोर्टर:",
+      "delivery": "वितरण:",
+      "origin": "मूल:",
+      "first": "पहला:",
+      "last": "अंतिम:",
+      "downloads": "{{count}} डाउनलोड",
+      "uploads": "{{count}} अपलोड",
+      "codeSignedBy": "{{name}} द्वारा हस्ताक्षरित"
+    },
+    "details": {
+      "fileTypes": "फ़ाइल प्रकार",
+      "summary": "सारांश",
+      "totalSamples": "कुल नमूने:",
+      "signatures": "हस्ताक्षर:",
+      "tags": "टैग:",
+      "fileTypesCount": "फ़ाइल प्रकार:"
+    },
+    "noSamples": "कोई नमूना विवरण उपलब्ध नहीं",
+    "viewFullReport": "MalwareBazaar पर पूर्ण रिपोर्ट देखें →",
+    "checkOnMalwareBazaar": "MalwareBazaar पर जाँचें →",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "arin": {
+    "header": {
+      "title": "WHOIS जानकारी"
+    },
+    "status": {
+      "whoisInfo": "WHOIS जानकारी"
+    },
+    "network": {
+      "title": "नेटवर्क जानकारी",
+      "networkName": "नेटवर्क नाम:",
+      "handle": "हैंडल:",
+      "ipVersion": "IP संस्करण:",
+      "cidr": "CIDR:"
+    },
+    "organization": {
+      "title": "संगठन",
+      "organization": "संगठन:",
+      "orgHandle": "संगठन हैंडल:",
+      "type": "प्रकार:",
+      "customerAssignment": "ग्राहक असाइनमेंट",
+      "parentNetwork": "मूल नेटवर्क:"
+    },
+    "addressRange": {
+      "title": "IP पता रेंज",
+      "startAddress": "शुरुआती पता:",
+      "endAddress": "अंतिम पता:",
+      "range": "रेंज:"
+    },
+    "registration": {
+      "title": "पंजीकरण जानकारी",
+      "registrationDate": "पंजीकरण तिथि:",
+      "lastUpdated": "अंतिम अपडेट:"
+    },
+    "comments": {
+      "title": "टिप्पणियाँ"
+    },
+    "netBlocks": {
+      "title": "नेट ब्लॉक"
+    },
+    "viewFullWhois": "ARIN पर पूर्ण WHOIS देखें →",
+    "unsupportedType": "समर्थित IOC प्रकार:"
+  },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "URL स्थिति",
+    "threat": "खतरा",
+    "threats": "खतरे",
+    "urlCount": "URL गणना",
+    "onlineCount": "सक्रिय URL",
+    "offlineCount": "ऑफ़लाइन URL",
+    "online": "सक्रिय",
+    "offline": "ऑफ़लाइन",
+    "firstSeen": "पहली बार:",
+    "blacklists": "ब्लैकलिस्ट",
+    "blacklistStatus": "ब्लैकलिस्ट स्थिति",
+    "tags": "टैग",
+    "sampleUrls": "नमूना URL",
+    "details": "विवरण",
+    "reporter": "रिपोर्टर:",
+    "status": {
+      "malicious": "दुर्भावनापूर्ण",
+      "suspicious": "संदिग्ध",
+      "clean": "स्वच्छ"
+    },
+    "statusDescription": {
+      "malicious": "इस होस्ट पर {{count}} सक्रिय दुर्भावनापूर्ण URL पाए गए",
+      "suspicious": "{{count}} दुर्भावनापूर्ण URL मिले लेकिन वर्तमान में ऑफ़लाइन हैं",
+      "clean": "इस संकेतक के लिए कोई दुर्भावनापूर्ण URL नहीं मिला"
+    },
+    "viewFullReport": "URLhaus पर पूर्ण रिपोर्ट देखें →"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "जोखिम स्तर",
+    "location": "स्थान",
+    "country": "देश:",
+    "region": "क्षेत्र:",
+    "org": "संगठन",
+    "orgName": "नाम:",
+    "netname": "नेटवर्क:",
+    "timestamps": "समय चिह्न",
+    "firstSeen": "पहली बार:",
+    "lastUpdated": "अंतिम अपडेट:",
+    "lastSeen": "अंतिम बार:",
+    "threats": "खतरे",
+    "riskFactors": "जोखिम कारक",
+    "feeds": "खतरा फ़ीड",
+    "status": {
+      "critical": "गंभीर",
+      "high": "उच्च जोखिम",
+      "medium": "मध्यम जोखिम",
+      "low": "कम जोखिम",
+      "clean": "स्वच्छ",
+      "unknown": "अज्ञात"
+    },
+    "viewFullReport": "Pulsedive पर पूर्ण रिपोर्ट देखें →"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "धोखाधड़ी स्कोर",
+    "riskLevel": "जोखिम स्तर",
+    "ispScore": "ISP स्कोर",
+    "blacklisted": "ब्लैकलिस्टेड",
+    "indicators": "धोखाधड़ी संकेतक",
+    "proxyDetection": "प्रॉक्सी पहचान",
+    "noDescription": "कोई अतिरिक्त जोखिम जानकारी उपलब्ध नहीं",
+    "status": {
+      "veryHigh": "बहुत उच्च जोखिम",
+      "high": "उच्च जोखिम",
+      "medium": "मध्यम जोखिम",
+      "low": "कम जोखिम",
+      "veryLow": "बहुत कम जोखिम",
+      "unknown": "अज्ञात"
+    },
+    "viewFullReport": "Scamalytics पर पूर्ण रिपोर्ट देखें →"
+  },
+  "generic": {
+    "source": "स्रोत",
+    "type": "प्रकार",
+    "value": "मान",
+    "status": "स्थिति",
+    "details": "विवरण",
+    "error": "त्रुटि"
+  },
+  "error": {
+    "status": "त्रुटि",
+    "unknown": "एक अज्ञात त्रुटि हुई",
+    "types": {
+      "apiError": "API त्रुटि",
+      "authError": "प्रमाणीकरण त्रुटि",
+      "notFound": "नहीं मिला",
+      "rateLimit": "दर सीमित",
+      "serverError": "सर्वर त्रुटि",
+      "clientError": "अनुरोध त्रुटि"
+    },
+    "possibleCauses": "संभावित कारण:",
+    "tips": {
+      "invalidApiKey": "अमान्य या गायब API कुंजी",
+      "expiredApiKey": "API कुंजी समाप्त हो गई होगी",
+      "checkSettings": "सेटिंग्स में अपना API कॉन्फ़िगरेशन जाँचें",
+      "rateLimitExceeded": "इस प्रदाता के लिए API दर सीमा पार हो गई",
+      "waitAndRetry": "कुछ मिनट प्रतीक्षा करें और पुनः प्रयास करें",
+      "upgradePlan": "उच्च सीमाओं के लिए अपनी API योजना अपग्रेड करने पर विचार करें",
+      "serverIssue": "प्रदाता सेवा अस्थायी रूप से अनुपलब्ध है",
+      "tryAgainLater": "कुछ मिनटों में पुनः प्रयास करें",
+      "checkStatus": "प्रदाता की स्थिति पृष्ठ जाँचें",
+      "checkApiKey": "सत्यापित करें कि आपकी API कुंजी सही है",
+      "networkIssue": "नेटवर्क कनेक्शन समस्या"
+    }
+  }
+}

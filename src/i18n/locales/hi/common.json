@@ -1,0 +1,45 @@
+{
+  "loading": "लोड हो रहा है...",
+  "buttons": {
+    "save": "सहेजें",
+    "saveChanges": "परिवर्तन सहेजें",
+    "cancel": "रद्द करें",
+    "analyze": "खतरों का विश्लेषण करें",
+    "detect": "संकेतकों के लिए स्कैन करें",
+    "configure": "कॉन्फ़िगर करें",
+    "configureApiKeys": "API कुंजियाँ कॉन्फ़िगर करें",
+    "close": "बंद करें",
+    "previous": "पिछला",
+    "next": "अगला"
+  },
+  "status": {
+    "safe": "सुरक्षित",
+    "clean": "स्वच्छ",
+    "suspicious": "संदिग्ध",
+    "malicious": "दुर्भावनापूर्ण",
+    "unknown": "अज्ञात",
+    "error": "त्रुटि",
+    "loading": "लोड हो रहा है...",
+    "analyzing": "विश्लेषण हो रहा है...",
+    "idle": "निष्क्रिय",
+    "success": "सफल"
+  },
+  "aria": {
+    "openSettings": "सेटिंग्स खोलें",
+    "closeDialog": "डायलॉग बंद करें",
+    "showKey": "कुंजी दिखाएं",
+    "hideKey": "कुंजी छिपाएं",
+    "selectLanguage": "भाषा चुनें"
+  },
+  "common": {
+    "logoAlt": "Ahtapot लोगो",
+    "externalLink": "नए टैब में खुलता है"
+  },
+  "providers": {
+    "configure": "{{provider}} API कुंजी कॉन्फ़िगर करने के लिए क्लिक करें",
+    "analyzing": "{{provider}} विश्लेषण कर रहा है...",
+    "success": "{{provider}} विश्लेषण पूर्ण",
+    "error": "{{provider}} विश्लेषण विफल",
+    "ready": "{{provider}} तैयार है"
+  }
+}

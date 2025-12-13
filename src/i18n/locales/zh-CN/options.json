@@ -1,0 +1,348 @@
+{
+  "header": {
+    "title": "设置",
+    "subtitle": "配置您的扩展设置",
+    "logoAlt": "Ahtapot 标志"
+  },
+  "tabs": {
+    "general": "常规设置",
+    "apiKeys": "API密钥",
+    "howToUse": "使用方法"
+  },
+  "general": {
+    "title": "常规设置",
+    "language": {
+      "label": "语言",
+      "description": "选择您的首选语言",
+      "select": "选择语言"
+    },
+    "cache": {
+      "title": "缓存设置",
+      "description": "配置IOC分析结果的缓存行为",
+      "infoTitle": "缓存信息",
+      "enabled": "启用缓存",
+      "enabledDescription": "存储分析结果以避免重复API调用",
+      "retentionDays": "保留期（天）",
+      "retentionDescription": "缓存结果保留多长时间",
+      "statistics": "缓存统计",
+      "totalEntries": "总条目",
+      "totalSize": "总大小",
+      "oldestDate": "最旧条目",
+      "newestDate": "最新条目",
+      "clearCache": "清除所有缓存",
+      "clearConfirm": "确定要清除所有缓存数据吗？",
+      "clearSuccess": "缓存清除成功",
+      "clearError": "清除缓存失败",
+      "info": {
+        "whyTitle": "为什么需要缓存？",
+        "whyDescription": "缓存系统将之前分析过的IOC结果存储在您的设备上。这样，当您再次查询相同的IOC时，可以立即获得结果而无需进行API调用。",
+        "benefitsTitle": "优点",
+        "benefit1": "⚡ 快速结果：重复查询即时响应",
+        "benefit2": "📊 API配额保护：保留您的每日/每月API限制",
+        "benefit3": "🔒 隐私：数据仅存储在您的设备上",
+        "benefit4": "💾 离线访问：无需互联网即可访问之前的结果",
+        "howTitle": "如何工作？",
+        "howDescription": "每个成功的分析结果都会自动缓存。旧条目会在您指定的时间后自动删除。您可以随时手动清除所有缓存。"
+      }
+    },
+    "providerOrder": {
+      "title": "提供商显示顺序",
+      "description": "自定义提供商在分析结果中的显示顺序。拖放以重新排序。",
+      "customizeButton": "自定义顺序",
+      "modalDescription": "拖动提供商以重新排序。更改会自动保存。",
+      "lockedProviders": "始终可用（无需API密钥）",
+      "dragHint": "拖动以重新排序",
+      "resetOrder": "重置为默认",
+      "doneButton": "完成",
+      "resetConfirm": "确定要将提供商顺序重置为默认吗？",
+      "orderSaved": "提供商顺序保存成功",
+      "orderSaveError": "保存提供商顺序失败"
+    }
+  },
+  "privacyNote": {
+    "title": "隐私声明：",
+    "description": "您的API密钥仅安全存储在您的设备上，永远不会发送到任何外部服务器。"
+  },
+  "apiKeys": {
+    "sectionTitle": "API密钥",
+    "sectionDescription": "为每个安全工具输入您的API密钥。您只需为要使用的工具添加密钥。",
+    "placeholder": "您的 {{provider}} API密钥",
+    "showKey": "显示密钥",
+    "hideKey": "隐藏密钥",
+    "validate": "验证",
+    "validating": "验证中...",
+    "valid": "有效",
+    "invalid": "无效",
+    "validationError": "验证失败"
+  },
+  "providers": {
+    "virustotal": {
+      "label": "VirusTotal",
+      "description": "文件、URL和IP地址分析",
+      "placeholder": "您的VirusTotal API密钥"
+    },
+    "otx": {
+      "label": "OTX AlienVault",
+      "description": "威胁情报和IOC分析",
+      "placeholder": "您的OTX AlienVault API密钥"
+    },
+    "abuseipdb": {
+      "label": "AbuseIPDB",
+      "description": "IP地址信誉和滥用报告",
+      "placeholder": "您的AbuseIPDB API密钥"
+    },
+    "malwarebazaar": {
+      "label": "MalwareBazaar",
+      "description": "恶意软件哈希分析和样本信息（由abuse.ch提供）",
+      "placeholder": "您的MalwareBazaar API密钥"
+    },
+    "shodan": {
+      "label": "Shodan",
+      "description": "联网设备搜索和漏洞分析",
+      "placeholder": "您的Shodan API密钥"
+    },
+    "greynoise": {
+      "label": "GreyNoise",
+      "description": "互联网噪音分类和威胁情报",
+      "placeholder": "您的GreyNoise API密钥"
+    },
+    "urlhaus": {
+      "label": "URLhaus",
+      "description": "恶意URL和恶意软件分发数据库（由abuse.ch提供）",
+      "placeholder": "您的URLhaus API密钥"
+    },
+    "pulsedive": {
+      "label": "Pulsedive",
+      "description": "威胁情报平台与IOC丰富化",
+      "placeholder": "您的Pulsedive API密钥"
+    },
+    "scamalytics": {
+      "label": "Scamalytics",
+      "description": "IP欺诈评分和诈骗检测",
+      "placeholder": "用户名:apikey（例如 myuser:abc123...）"
+    },
+    "arin": {
+      "label": "ARIN WHOIS",
+      "description": "IP地址注册和网络信息",
+      "placeholder": "无需API密钥"
+    }
+  },
+  "lockedProvider": {
+    "message": "✓ 此提供商始终可用，无需API密钥"
+  },
+  "info": {
+    "limitsTitle": "免费版限制",
+    "dailyLimit": "每日/每月：",
+    "rateLimit": "速率限制：",
+    "featuresTitle": "功能",
+    "howToTitle": "如何获取API密钥？",
+    "importantNote": "重要提示",
+    "steps": {
+      "signup": "在这里创建免费账户",
+      "verify": "验证您的电子邮件地址",
+      "getKey": "获取您的API密钥",
+      "paste": "将密钥粘贴到下面的字段中"
+    }
+  },
+  "notes": {
+    "malwarebazaar": "认证密钥在生成后仅显示一次。如果需要更改，必须生成新密钥。生成后无法再次查看，请立即保存到扩展中。",
+    "scamalytics": "注册需要人工审核。批准后，您将收到一个私人链接（30天后过期），其中包含您的API凭据。免费版每月包含5,000个积分，可使用ESSENTIAL字段。PREMIUM字段提供15天试用。"
+  },
+  "tooltips": {
+    "virustotal": "添加API密钥",
+    "otx": "添加API密钥",
+    "abuseipdb": "添加API密钥",
+    "malwarebazaar": "添加API密钥",
+    "shodan": "添加API密钥",
+    "greynoise": "添加API密钥",
+    "urlhaus": "添加API密钥",
+    "pulsedive": "添加API密钥",
+    "scamalytics": "添加API密钥"
+  },
+  "features": {
+    "virustotal": {
+      "feature1": "IP/域名分析",
+      "feature2": "文件哈希检查",
+      "feature3": "URL扫描",
+      "feature4": "90+安全引擎"
+    },
+    "otx": {
+      "feature1": "威胁情报脉冲",
+      "feature2": "恶意软件家族检测",
+      "feature3": "CVE漏洞分析",
+      "feature4": "社区驱动的威胁数据"
+    },
+    "abuseipdb": {
+      "feature1": "IP信誉检查",
+      "feature2": "90天滥用报告",
+      "feature3": "置信度评分分析",
+      "feature4": "地理和ISP信息"
+    },
+    "malwarebazaar": {
+      "feature1": "基于哈希的恶意软件查询",
+      "feature2": "恶意软件签名识别",
+      "feature3": "文件类型和传播方式分析",
+      "feature4": "代码签名信息"
+    },
+    "shodan": {
+      "feature1": "IP和域名查询",
+      "feature2": "开放端口和服务检测",
+      "feature3": "CVE漏洞识别",
+      "feature4": "设备和横幅信息"
+    },
+    "greynoise": {
+      "feature1": "IP噪音分类（良性/恶意/未知）",
+      "feature2": "攻击者和行为标签识别",
+      "feature3": "TOR/VPN/代理检测",
+      "feature4": "已知良性服务的RIOT标志"
+    },
+    "urlhaus": {
+      "feature1": "恶意URL数据库",
+      "feature2": "载荷和威胁分类",
+      "feature3": "URL状态监控（在线/离线）",
+      "feature4": "恶意软件分发追踪"
+    },
+    "pulsedive": {
+      "feature1": "风险等级评估",
+      "feature2": "威胁和源追踪",
+      "feature3": "风险因素分析",
+      "feature4": "社区驱动的情报"
+    },
+    "scamalytics": {
+      "feature1": "IP欺诈风险评分（0-100）",
+      "feature2": "数据中心和VPN检测",
+      "feature3": "TOR出口节点检测",
+      "feature4": "外部黑名单检查"
+    }
+  },
+  "limits": {
+    "virustotal": {
+      "free": "每天500次请求",
+      "rate": "每分钟4次请求"
+    },
+    "otx": {
+      "free": "每天10,000次请求",
+      "rate": "每秒10次请求"
+    },
+    "abuseipdb": {
+      "free": "每天1,000次请求",
+      "rate": "每秒1次请求"
+    },
+    "malwarebazaar": {
+      "free": "无限制（需注册）",
+      "rate": "无特定限制"
+    },
+    "shodan": {
+      "free": "每月100次结果（免费）",
+      "rate": "每秒1次请求"
+    },
+    "greynoise": {
+      "free": "每周50次搜索（社区版）",
+      "rate": "与Visualizer使用合并"
+    },
+    "urlhaus": {
+      "free": "无限制（免费账户）",
+      "rate": "无特定限制"
+    },
+    "pulsedive": {
+      "free": "每天250次请求（免费账户）",
+      "rate": "每月2,500次请求"
+    },
+    "scamalytics": {
+      "free": "每月5,000积分",
+      "rate": "15天PREMIUM试用"
+    }
+  },
+  "actions": {
+    "save": "保存更改",
+    "saveIndividual": "保存",
+    "successMessage": "API密钥保存成功",
+    "errorMessage": "保存API密钥失败",
+    "errorLoading": "加载API密钥失败",
+    "saveSuccess": "保存成功",
+    "saveError": "保存失败"
+  },
+  "ai": {
+    "sectionTitle": "AI提供商",
+    "sectionDescription": "配置AI提供商以进行智能IOC分析。AI可以提供摘要、详细分析和建议。",
+    "providers": {
+      "claude": {
+        "description": "Anthropic的Claude - 高级推理和分析",
+        "placeholder": "输入您的Claude API密钥（sk-ant-...）",
+        "step2": "添加付款方式（API访问所需）"
+      },
+      "gemini": {
+        "description": "Google的Gemini - 快速高效的分析",
+        "placeholder": "输入您的Gemini API密钥",
+        "step2": "在Google Cloud Console中启用Gemini API"
+      },
+      "openai": {
+        "description": "OpenAI的GPT - 多功能语言理解",
+        "placeholder": "输入您的OpenAI API密钥（sk-...）",
+        "step2": "添加付款方式并购买积分"
+      }
+    },
+    "pricing": {
+      "title": "定价",
+      "input": "输入",
+      "output": "输出",
+      "rate": "费率",
+      "viewMore": "查看完整定价"
+    },
+    "howTo": {
+      "title": "如何获取API密钥",
+      "signup": "创建账户",
+      "getKey": "获取您的API密钥",
+      "paste": "将密钥粘贴到下方"
+    },
+    "models": {
+      "title": "可用模型"
+    }
+  },
+  "footer": {
+    "text": "Ahtapot v{{version}} • 网络安全指标分析工具"
+  },
+  "howToUse": {
+    "title": "如何使用Ahtapot",
+    "intro": "Ahtapot让您可以轻松从任何网页分析IOC（入侵指标）。有多种方式开始分析。",
+    "textSelection": {
+      "title": "文本选择",
+      "subtitle": "分析IOC的最快方式",
+      "step1": "在网页上选择任何包含IOC的文本（IP地址、域名、哈希等）",
+      "step2": "点击选择附近出现的「分析」按钮",
+      "step3": "在侧边栏中查看分析结果"
+    },
+    "sidePanel": {
+      "title": "侧边栏搜索",
+      "subtitle": "手动搜索和分析",
+      "step1": "点击浏览器工具栏中的Ahtapot图标",
+      "step2": "选择「IOC分析」打开侧边栏",
+      "step3": "在搜索框中输入任何IOC并按Enter"
+    },
+    "keyboard": {
+      "title": "键盘快捷键",
+      "subtitle": "高亮页面上所有IOC",
+      "step1": "导航到任何包含IOC的网页",
+      "step2": "按键盘快捷键高亮页面上检测到的所有IOC",
+      "or": "或"
+    },
+    "apiKeys": {
+      "title": "API密钥设置",
+      "subtitle": "威胁情报查询所需",
+      "step1": "在此设置页面转到<0>API密钥</0>标签",
+      "step2": "点击每个提供商旁边的信息图标（ⓘ）查看如何获取API密钥",
+      "step3": "输入您的API密钥并点击保存 - 密钥仅存储在您的浏览器中",
+      "note": "您的API密钥仅安全存储在您的浏览器中，除相应的提供商API外，永远不会发送到任何外部服务器。"
+    },
+    "ai": {
+      "title": "AI分析（可选）",
+      "subtitle": "获取智能摘要和建议",
+      "step1": "从以下支持的AI提供商中选择一个",
+      "step2": "从提供商获取API密钥并在<0>API密钥</0>标签中输入"
+    },
+    "iocTypes": {
+      "title": "支持的IOC类型",
+      "subtitle": "Ahtapot自动检测和分析这些指标类型"
+    }
+  }
+}

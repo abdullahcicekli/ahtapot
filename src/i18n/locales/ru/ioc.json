@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4-адрес",
+    "ipv6": "IPv6-адрес",
+    "domain": "Домен",
+    "url": "URL",
+    "md5": "MD5-хеш",
+    "sha1": "SHA1-хеш",
+    "sha256": "SHA256-хеш",
+    "email": "Email-адрес",
+    "cve": "Номер CVE",
+    "bitcoin": "Bitcoin-адрес",
+    "ethereum": "Ethereum-адрес"
+  },
+  "categories": {
+    "network": "Сетевые индикаторы",
+    "file": "Файловые индикаторы",
+    "email": "Email-индикаторы",
+    "vulnerability": "Индикаторы уязвимостей",
+    "cryptocurrency": "Криптовалютные индикаторы"
+  },
+  "labels": {
+    "detected": "Обнаружен {{count}} индикатор",
+    "detected_plural": "Обнаружено {{count}} индикаторов",
+    "analyzing": "Анализ индикатора...",
+    "analyzing_plural": "Анализ индикаторов..."
+  }
+}

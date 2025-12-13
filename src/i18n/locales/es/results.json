@@ -1,0 +1,442 @@
+{
+  "virustotal": {
+    "communityScore": "Puntuación Comunitaria",
+    "votes": {
+      "harmless": "inofensivo",
+      "malicious": "malicioso"
+    },
+    "status": {
+      "malicious": "Malicioso",
+      "suspicious": "Sospechoso",
+      "clean": "Limpio"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} / {{total}} proveedores de seguridad marcaron esto como malicioso",
+      "suspicious": "{{count}} / {{total}} proveedores de seguridad marcaron esto como sospechoso",
+      "clean": "Ningún proveedor de seguridad marcó esto como malicioso"
+    },
+    "tabs": {
+      "detection": "Detección",
+      "details": "Detalles"
+    },
+    "detection": {
+      "noDetections": "Ningún proveedor de seguridad marcó esto como malicioso",
+      "vendorCategory": {
+        "malicious": "Malicioso",
+        "suspicious": "Sospechoso"
+      }
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "page": "Página {{current}} de {{total}}"
+    },
+    "details": {
+      "location": "Ubicación",
+      "network": "Red",
+      "reputation": "Reputación",
+      "tags": "Etiquetas",
+      "country": "País:",
+      "continent": "Continente:",
+      "networkRange": "Red:",
+      "asn": "ASN:",
+      "owner": "Propietario:",
+      "rir": "RIR:",
+      "score": "Puntuación:"
+    },
+    "analysisDate": "Último análisis",
+    "viewFullReport": "Ver Informe Completo en VirusTotal →",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "otx": {
+    "threatIntelligence": "Inteligencia de Amenazas",
+    "malicious": "Malicioso",
+    "suspicious": "Sospechoso",
+    "pulses": "Pulsos",
+    "status": {
+      "clean": "Limpio",
+      "malicious": "Malicioso",
+      "suspicious": "Sospechoso",
+      "flagged": "Marcado"
+    },
+    "statusDescription": {
+      "clean": "No se encontraron pulsos de inteligencia de amenazas para este indicador",
+      "malicious": "Amenaza detectada: {{reasons}}",
+      "suspicious": "Amenaza potencial: {{reasons}}",
+      "flagged": "Encontrado en {{count}} pulso(s) de inteligencia de amenazas - requiere investigación"
+    },
+    "threatSummary": {
+      "title": "¿Por qué está marcado?",
+      "description": "Este indicador aparece en <1>{{count}} pulso(s) de inteligencia de amenazas</1> de la comunidad AlienVault OTX. Los pulsos OTX contienen Indicadores de Compromiso (IOCs) que constituyen amenazas, campañas o infraestructura maliciosa.",
+      "highSeverity": "<1>{{count}}</1> pulso(s) contienen amenazas de alta severidad (malware, ransomware, APT, phishing, etc.)",
+      "mediumSeverity": "<1>{{count}}</1> pulso(s) indican actividad sospechosa o amenazas potenciales",
+      "recommendation": "<1>Recomendación:</1> Este IOC debe ser investigado más a fondo. Revisa los detalles del pulso a continuación para entender las amenazas específicas asociadas con este indicador."
+    },
+    "tabs": {
+      "pulses": "Pulsos",
+      "details": "Detalles"
+    },
+    "pulse": {
+      "highSeverity": "Alta Severidad",
+      "mediumSeverity": "Severidad Media",
+      "threatIndicator": "Indicador de Amenaza",
+      "malwareFamilies": "Familias de Malware:",
+      "targetedCountries": "Países Objetivo:",
+      "viewOnOTX": "Ver en OTX →",
+      "moreCount": "+{{count}} más"
+    },
+    "details": {
+      "statistics": "Estadísticas",
+      "totalPulses": "Total de Pulsos:",
+      "malicious": "Maliciosos:",
+      "suspicious": "Sospechosos:",
+      "harmless": "Inofensivos:",
+      "reputation": "Reputación",
+      "score": "Puntuación:",
+      "relatedAdversaries": "Adversarios Relacionados",
+      "malwareFamilies": "Familias de Malware",
+      "targetedIndustries": "Industrias Objetivo"
+    },
+    "noPulses": "No se encontraron pulsos de inteligencia de amenazas para este indicador",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "shodan": {
+    "title": "Shodan",
+    "subtitle": "Búsqueda de Dispositivos de Internet",
+    "status": {
+      "safe": "Seguro",
+      "suspicious": "Sospechoso",
+      "malicious": "Malicioso",
+      "error": "Error",
+      "unknown": "Desconocido"
+    },
+    "hostInformation": "Información del Host",
+    "ipAddress": "Dirección IP:",
+    "operatingSystem": "Sistema Operativo:",
+    "lastScan": "Último Escaneo:",
+    "organization": "Organización",
+    "organizationLabel": "Organización:",
+    "isp": "ISP:",
+    "asn": "ASN:",
+    "location": "Ubicación",
+    "country": "País:",
+    "city": "Ciudad:",
+    "coordinates": "Coordenadas:",
+    "ports": "Puertos ({{count}})",
+    "moreCount": "+{{count}} más",
+    "vulnerabilities": "Vulnerabilidades ({{count}})",
+    "moreVulnerabilities": "+{{count}} más vulnerabilidades",
+    "detectedServices": "Servicios Detectados ({{count}})",
+    "port": "Puerto {{port}}",
+    "hostnames": "Nombres de Host ({{count}})",
+    "tags": "Etiquetas",
+    "viewFullReport": "Ver Informe Completo en Shodan →",
+    "domainInformation": "Información del Dominio",
+    "domain": "Dominio:",
+    "subdomains": "Subdominios:",
+    "subdomainsCount": "Subdominios ({{count}})",
+    "moreSubdomains": "+{{count}} más subdominios",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "abuseipdb": {
+    "abuseConfidence": "Confianza de Abuso",
+    "score": "Puntuación",
+    "reports": "{{count}} Informes",
+    "users": "{{count}} Usuarios",
+    "status": {
+      "whitelisted": "En Lista Blanca",
+      "malicious": "Malicioso",
+      "suspicious": "Sospechoso",
+      "clean": "Limpio"
+    },
+    "statusDescription": {
+      "whitelisted": "Esta IP está en la lista blanca de AbuseIPDB y se considera segura",
+      "malicious": "Alta puntuación de confianza de abuso ({{score}}%). Esta IP tiene informes de abuso significativos.",
+      "suspicious": "Puntuación de confianza de abuso moderada ({{score}}%). Ten precaución con esta IP.",
+      "clean": "Baja puntuación de confianza de abuso ({{score}}%). No se encontraron informes de abuso significativos."
+    },
+    "badges": {
+      "torExitNode": "Nodo de Salida Tor",
+      "whitelisted": "En Lista Blanca"
+    },
+    "tabs": {
+      "overview": "Resumen",
+      "reports": "Informes",
+      "details": "Detalles"
+    },
+    "overview": {
+      "abuseMetrics": "Métricas de Abuso",
+      "confidenceScore": "Puntuación de Confianza:",
+      "totalReports": "Total de Informes:",
+      "uniqueReporters": "Reporteros Únicos:",
+      "lastReported": "Último Reporte:",
+      "locationNetwork": "Ubicación y Red",
+      "country": "País:",
+      "isp": "ISP:",
+      "domain": "Dominio:",
+      "usageType": "Tipo de Uso:",
+      "abuseCategories": "Categorías de Abuso"
+    },
+    "reportsTab": {
+      "noReports": "No se encontraron informes de abuso para esta dirección IP"
+    },
+    "details": {
+      "ipInformation": "Información de IP",
+      "ipAddress": "Dirección IP:",
+      "ipVersion": "Versión IP:",
+      "publicIp": "IP Pública:",
+      "whitelisted": "En Lista Blanca:",
+      "torExitNode": "Nodo de Salida Tor:",
+      "yes": "Sí",
+      "no": "No",
+      "hostnames": "Nombres de Host"
+    },
+    "viewFullReport": "Ver Informe Completo en AbuseIPDB →",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "greynoise": {
+    "title": "GreyNoise",
+    "subtitle": "Inteligencia de Ruido de Internet",
+    "status": {
+      "benign": "Benigno",
+      "suspicious": "Sospechoso",
+      "malicious": "Malicioso",
+      "error": "Error",
+      "unknown": "Desconocido"
+    },
+    "classification": "Clasificación",
+    "classificationStatus": "Estado:",
+    "seenByGreyNoise": "Visto por GreyNoise:",
+    "yes": "Sí",
+    "no": "No",
+    "actor": "Actor:",
+    "knownService": "Servicio Conocido:",
+    "locationOrganization": "Ubicación y Organización",
+    "country": "País:",
+    "city": "Ciudad:",
+    "organization": "Organización:",
+    "asn": "ASN:",
+    "reverseDns": "DNS Inverso:",
+    "activityTimeline": "Línea de Tiempo de Actividad",
+    "firstSeen": "Primera Vez Visto:",
+    "lastSeen": "Última Vez Visto:",
+    "behaviorTags": "Etiquetas de Comportamiento ({{count}})",
+    "securityIndicators": "Indicadores de Seguridad",
+    "torExitNode": "Nodo de Salida TOR",
+    "vpn": "VPN",
+    "proxy": "Proxy",
+    "viewFullReport": "Ver Informe Completo en GreyNoise Visualizer →",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "malwarebazaar": {
+    "samples": "Muestras",
+    "malwareAnalysis": "Análisis de Malware",
+    "signatures": "{{count}} Firmas",
+    "tags": "{{count}} Etiquetas",
+    "status": {
+      "clean": "Limpio",
+      "malicious": "Malicioso",
+      "unknown": "Desconocido"
+    },
+    "statusDescription": {
+      "clean": "No se encontraron muestras de malware para este hash en la base de datos de MalwareBazaar",
+      "malicious": "Se encontraron {{count}} muestra(s) de malware que coinciden con este hash en la base de datos de MalwareBazaar",
+      "unknown": "No se pudo determinar el estado de amenaza"
+    },
+    "tabs": {
+      "overview": "Resumen",
+      "samples": "Muestras",
+      "details": "Detalles"
+    },
+    "overview": {
+      "threatMetrics": "Métricas de Amenaza",
+      "totalSamples": "Total de Muestras:",
+      "uniqueSignatures": "Firmas Únicas:",
+      "firstSeen": "Primera Vez Visto:",
+      "lastSeen": "Última Vez Visto:",
+      "intelligence": "Inteligencia",
+      "totalDownloads": "Total de Descargas:",
+      "totalUploads": "Total de Subidas:",
+      "codeSigning": "Firma de Código:",
+      "present": "Presente",
+      "none": "Ninguna",
+      "fileTypes": "Tipos de Archivo:",
+      "malwareSignatures": "Firmas de Malware",
+      "malwareTags": "Etiquetas de Malware"
+    },
+    "sample": {
+      "type": "Tipo:",
+      "size": "Tamaño:",
+      "reporter": "Reportero:",
+      "delivery": "Entrega:",
+      "origin": "Origen:",
+      "first": "Primero:",
+      "last": "Último:",
+      "downloads": "{{count}} descargas",
+      "uploads": "{{count}} subidas",
+      "codeSignedBy": "Firmado por {{name}}"
+    },
+    "details": {
+      "fileTypes": "Tipos de Archivo",
+      "summary": "Resumen",
+      "totalSamples": "Total de Muestras:",
+      "signatures": "Firmas:",
+      "tags": "Etiquetas:",
+      "fileTypesCount": "Tipos de Archivo:"
+    },
+    "noSamples": "No hay detalles de muestra disponibles",
+    "viewFullReport": "Ver Informe Completo en MalwareBazaar →",
+    "checkOnMalwareBazaar": "Verificar en MalwareBazaar →",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "arin": {
+    "header": {
+      "title": "Información WHOIS"
+    },
+    "status": {
+      "whoisInfo": "Info WHOIS"
+    },
+    "network": {
+      "title": "Información de Red",
+      "networkName": "Nombre de Red:",
+      "handle": "Handle:",
+      "ipVersion": "Versión IP:",
+      "cidr": "CIDR:"
+    },
+    "organization": {
+      "title": "Organización",
+      "organization": "Organización:",
+      "orgHandle": "Handle de Org:",
+      "type": "Tipo:",
+      "customerAssignment": "Asignación de Cliente",
+      "parentNetwork": "Red Padre:"
+    },
+    "addressRange": {
+      "title": "Rango de Direcciones IP",
+      "startAddress": "Dirección Inicial:",
+      "endAddress": "Dirección Final:",
+      "range": "Rango:"
+    },
+    "registration": {
+      "title": "Información de Registro",
+      "registrationDate": "Fecha de Registro:",
+      "lastUpdated": "Última Actualización:"
+    },
+    "comments": {
+      "title": "Comentarios"
+    },
+    "netBlocks": {
+      "title": "Bloques de Red"
+    },
+    "viewFullWhois": "Ver WHOIS Completo en ARIN →",
+    "unsupportedType": "Tipos de IOC soportados:"
+  },
+  "urlhaus": {
+    "title": "URLhaus",
+    "urlStatus": "Estado de URL",
+    "threat": "Amenaza",
+    "threats": "Amenazas",
+    "urlCount": "Cantidad de URLs",
+    "onlineCount": "URLs Activas",
+    "offlineCount": "URLs Fuera de Línea",
+    "online": "Activo",
+    "offline": "Fuera de Línea",
+    "firstSeen": "Primera Vez Visto:",
+    "blacklists": "Listas Negras",
+    "blacklistStatus": "Estado de Lista Negra",
+    "tags": "Etiquetas",
+    "sampleUrls": "URLs de Muestra",
+    "details": "Detalles",
+    "reporter": "Reportero:",
+    "status": {
+      "malicious": "Malicioso",
+      "suspicious": "Sospechoso",
+      "clean": "Limpio"
+    },
+    "statusDescription": {
+      "malicious": "{{count}} URL(s) maliciosa(s) activa(s) detectada(s) en este host",
+      "suspicious": "{{count}} URL(s) maliciosa(s) encontrada(s) pero actualmente fuera de línea",
+      "clean": "No se encontraron URLs maliciosas para este indicador"
+    },
+    "viewFullReport": "Ver Informe Completo en URLhaus →"
+  },
+  "pulsedive": {
+    "title": "Pulsedive",
+    "risk": "Nivel de Riesgo",
+    "location": "Ubicación",
+    "country": "País:",
+    "region": "Región:",
+    "org": "Organización",
+    "orgName": "Nombre:",
+    "netname": "Red:",
+    "timestamps": "Marcas de Tiempo",
+    "firstSeen": "Primera Vez Visto:",
+    "lastUpdated": "Última Actualización:",
+    "lastSeen": "Última Vez Visto:",
+    "threats": "Amenazas",
+    "riskFactors": "Factores de Riesgo",
+    "feeds": "Feeds de Amenazas",
+    "status": {
+      "critical": "Crítico",
+      "high": "Alto Riesgo",
+      "medium": "Riesgo Medio",
+      "low": "Bajo Riesgo",
+      "clean": "Limpio",
+      "unknown": "Desconocido"
+    },
+    "viewFullReport": "Ver Informe Completo en Pulsedive →"
+  },
+  "scamalytics": {
+    "title": "Scamalytics",
+    "fraudScore": "Puntuación de Fraude",
+    "riskLevel": "Nivel de Riesgo",
+    "ispScore": "Puntuación ISP",
+    "blacklisted": "En Lista Negra",
+    "indicators": "Indicadores de Fraude",
+    "proxyDetection": "Detección de Proxy",
+    "noDescription": "No hay información de riesgo adicional disponible",
+    "status": {
+      "veryHigh": "Riesgo Muy Alto",
+      "high": "Riesgo Alto",
+      "medium": "Riesgo Medio",
+      "low": "Riesgo Bajo",
+      "veryLow": "Riesgo Muy Bajo",
+      "unknown": "Desconocido"
+    },
+    "viewFullReport": "Ver Informe Completo en Scamalytics →"
+  },
+  "generic": {
+    "source": "Fuente",
+    "type": "Tipo",
+    "value": "Valor",
+    "status": "Estado",
+    "details": "Detalles",
+    "error": "Error"
+  },
+  "error": {
+    "status": "Error",
+    "unknown": "Ocurrió un error desconocido",
+    "types": {
+      "apiError": "Error de API",
+      "authError": "Error de Autenticación",
+      "notFound": "No Encontrado",
+      "rateLimit": "Límite de Tasa",
+      "serverError": "Error del Servidor",
+      "clientError": "Error de Solicitud"
+    },
+    "possibleCauses": "Posibles causas:",
+    "tips": {
+      "invalidApiKey": "Clave API inválida o faltante",
+      "expiredApiKey": "La clave API puede haber expirado",
+      "checkSettings": "Verifica tu configuración de API en Configuración",
+      "rateLimitExceeded": "Límite de tasa de API excedido para este proveedor",
+      "waitAndRetry": "Espera unos minutos e intenta de nuevo",
+      "upgradePlan": "Considera actualizar tu plan de API para límites más altos",
+      "serverIssue": "El servicio del proveedor no está disponible temporalmente",
+      "tryAgainLater": "Intenta de nuevo en unos minutos",
+      "checkStatus": "Verifica la página de estado del proveedor",
+      "checkApiKey": "Verifica que tu clave API sea correcta",
+      "networkIssue": "Problema de conexión de red"
+    }
+  }
+}

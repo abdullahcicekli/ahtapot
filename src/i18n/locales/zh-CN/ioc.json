@@ -1,0 +1,28 @@
+{
+  "types": {
+    "ipv4": "IPv4地址",
+    "ipv6": "IPv6地址",
+    "domain": "域名",
+    "url": "网址",
+    "md5": "MD5哈希",
+    "sha1": "SHA1哈希",
+    "sha256": "SHA256哈希",
+    "email": "电子邮件地址",
+    "cve": "CVE编号",
+    "bitcoin": "比特币地址",
+    "ethereum": "以太坊地址"
+  },
+  "categories": {
+    "network": "网络指标",
+    "file": "文件指标",
+    "email": "邮件指标",
+    "vulnerability": "漏洞指标",
+    "cryptocurrency": "加密货币指标"
+  },
+  "labels": {
+    "detected": "检测到 {{count}} 个指标",
+    "detected_plural": "检测到 {{count}} 个指标",
+    "analyzing": "正在分析指标...",
+    "analyzing_plural": "正在分析指标..."
+  }
+}

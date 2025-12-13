@@ -1,0 +1,195 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot लोगो",
+    "detectTitle": "पेज पर IOC खोजें",
+    "detectLabel": "IOC के लिए वर्तमान पेज स्कैन करें",
+    "settingsTitle": "सेटिंग्स",
+    "settingsLabel": "सेटिंग्स खोलें"
+  },
+  "apiWarning": {
+    "title": "API कॉन्फ़िगरेशन आवश्यक",
+    "description": "सुरक्षा संकेतकों का विश्लेषण करने के लिए, आपको कम से कम एक API कुंजी कॉन्फ़िगर करनी होगी।",
+    "configureButton": "API कुंजियाँ कॉन्फ़िगर करें"
+  },
+  "input": {
+    "label": "सुरक्षा संकेतक दर्ज करें",
+    "placeholder": "IP पते, डोमेन, हैश, URL, या अन्य सुरक्षा संकेतक यहाँ पेस्ट करें...",
+    "detectButton": "संकेतकों के लिए स्कैन करें",
+    "analyzeButton": "खतरों का विश्लेषण करें",
+    "analyzingButton": "विश्लेषण हो रहा है...",
+    "multipleHint": "एकाधिक IOC के लिए, अल्पविराम (,) से अलग करें या नई लाइन के लिए Shift+Enter का उपयोग करें",
+    "detectedCount": "{{count}} IOC मिले"
+  },
+  "detected": {
+    "title": "मिले हुए संकेतक",
+    "count_one": "{{count}} संकेतक मिला",
+    "count_other": "{{count}} संकेतक मिले",
+    "supportedBy": "समर्थित:"
+  },
+  "results": {
+    "title": "प्रदाता परिणाम"
+  },
+  "loading": {
+    "analyzing": "सुरक्षा संकेतकों का विश्लेषण हो रहा है..."
+  },
+  "providerNoResults": {
+    "title": "{{provider}} से कोई परिणाम नहीं",
+    "searchedFor": "आपने खोजा:",
+    "description": "यह प्रदाता इन संकेतक प्रकारों का समर्थन नहीं करता।",
+    "supportedLabel": "{{provider}} समर्थित:"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "कोई संकेतक नहीं मिला",
+      "description": "दिए गए टेक्स्ट में कोई सुरक्षा संकेतक (IOC) नहीं मिला।"
+    },
+    "welcome": {
+      "title": "Ahtapot Security में आपका स्वागत है",
+      "description": "साइबर सुरक्षा संकेतकों (IOC) का त्वरित विश्लेषण करें। ऊपर दिए गए फ़ील्ड में IP पते, डोमेन, हैश, या अन्य संकेतक पेस्ट करें।",
+      "supportedTitle": "समर्थित संकेतक प्रकार:",
+      "types": {
+        "ipAddresses": "IP पते (IPv4/IPv6)",
+        "domains": "डोमेन और URL",
+        "hashes": "फ़ाइल हैश (MD5, SHA1, SHA256)",
+        "emails": "ईमेल पते",
+        "cve": "CVE नंबर",
+        "crypto": "क्रिप्टोकरेंसी पते"
+      }
+    }
+  },
+  "rateLimitConfirm": {
+    "title": "दर सीमित प्रदाता",
+    "pendingStatus": "पुष्टि की प्रतीक्षा",
+    "greynoise": {
+      "limit": "50 खोज/सप्ताह",
+      "message": "GreyNoise Community योजना की सीमा 50 खोज प्रति सप्ताह है (Visualizer उपयोग के साथ संयुक्त)।",
+      "question": "क्या आप GreyNoise के साथ {{count}} संकेतक(ओं) का विश्लेषण करना चाहते हैं?",
+      "warning": "यह आपके साप्ताहिक कोटा में से {{count}} का उपयोग करेगा।"
+    },
+    "shodan": {
+      "limit": "100 परिणाम/माह",
+      "message": "Shodan मुफ्त योजना की सीमा 100 परिणाम प्रति माह है।",
+      "question": "क्या आप Shodan के साथ {{count}} संकेतक(ओं) का विश्लेषण करना चाहते हैं?",
+      "warning": "यह आपके मासिक कोटा में से {{count}} का उपयोग करेगा।"
+    },
+    "iocCount": "{{count}} संकेतक(ओं) का विश्लेषण",
+    "confirm": "हाँ, विश्लेषण करें",
+    "cancel": "छोड़ें",
+    "skipHint": "पुष्टि न होने पर विश्लेषण इस प्रदाता को छोड़ देगा"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "इंटरनेट शोर इंटेलिजेंस"
+    },
+    "shodan": {
+      "subtitle": "इंटरनेट-व्यापी पोर्ट स्कैनर"
+    }
+  },
+  "ai": {
+    "title": "AI विश्लेषण",
+    "noProviders": "AI-संचालित विश्लेषण सक्षम करने के लिए AI प्रदाता कॉन्फ़िगर करें",
+    "configure": "कॉन्फ़िगर करें",
+    "selectProvider": "मॉडल चुनें",
+    "selectIOC": "विश्लेषण करें:",
+    "noApiKey": "API कुंजी कॉन्फ़िगर नहीं है",
+    "noKey": "कोई कुंजी नहीं",
+    "configureKeys": "API कुंजियाँ कॉन्फ़िगर करें",
+    "modes": {
+      "summary": "सारांश",
+      "analysis": "विश्लेषण",
+      "detailed": "विस्तृत"
+    },
+    "modeInfo": {
+      "title": "विश्लेषण मोड",
+      "summary": "L1 विश्लेषकों के लिए त्वरित ट्राइएज निर्णय",
+      "analysis": "L1/L2 हैंडऑफ के लिए एस्केलेशन निर्णय",
+      "detailed": "L2/L3 + IR टीमों के लिए पूर्ण जाँच"
+    },
+    "analyzing": "विश्लेषण हो रहा है...",
+    "analyzingStates": {
+      "sending": "अनुरोध भेजा जा रहा है...",
+      "processing": "AI प्रोसेस कर रहा है...",
+      "thinking": "खतरे के डेटा का विश्लेषण...",
+      "generating": "रिपोर्ट तैयार हो रही है...",
+      "almostDone": "लगभग पूर्ण...",
+      "finalizing": "विश्लेषण को अंतिम रूप दिया जा रहा है..."
+    },
+    "start": "विश्लेषण करें",
+    "copyResult": "परिणाम कॉपी करें",
+    "copyMarkdown": "Markdown के रूप में कॉपी करें",
+    "reanalyze": "पुनः विश्लेषण करें",
+    "exportImage": "छवि के रूप में निर्यात करें",
+    "cached": "कैश्ड",
+    "sections": {
+      "summary": "सारांश",
+      "keySignals": "मुख्य संकेत",
+      "assessment": "मूल्यांकन",
+      "providerAnalysis": "प्रदाता विश्लेषण",
+      "consensus": "सहमति",
+      "threatIntel": "खतरा इंटेलिजेंस",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "अनुशंसित कार्रवाइयाँ",
+      "analystNotes": "विश्लेषक नोट्स",
+      "executiveSummary": "कार्यकारी सारांश",
+      "iocAnalysis": "IOC विश्लेषण",
+      "crossReference": "क्रॉस-रेफरेंस विश्लेषण",
+      "infrastructure": "इंफ्रास्ट्रक्चर",
+      "falsePositive": "फॉल्स पॉजिटिव विश्लेषण",
+      "responseActions": "प्रतिक्रिया कार्रवाइयाँ",
+      "detectionEngineering": "डिटेक्शन इंजीनियरिंग",
+      "references": "संदर्भ"
+    },
+    "labels": {
+      "verdict": "निर्णय",
+      "risk": "जोखिम",
+      "confidence": "विश्वास",
+      "confidenceShort": "विश्वास:",
+      "sourceConfidence": "स्रोत विश्वास - इस प्रदाता का डेटा कितना विश्वसनीय है",
+      "escalation": "एस्केलेशन आवश्यक",
+      "priority": "प्राथमिकता",
+      "detection": "पहचान",
+      "reputation": "प्रतिष्ठा",
+      "associations": "संबंध",
+      "agreement": "सहमति",
+      "conflicts": "विवाद",
+      "dataGaps": "डेटा अंतराल",
+      "knownAssociations": "ज्ञात संबंध",
+      "historicalActivity": "ऐतिहासिक गतिविधि",
+      "infrastructureInfo": "इंफ्रास्ट्रक्चर",
+      "immediate": "तत्काल",
+      "shortTerm": "अल्पकालिक",
+      "longTerm": "दीर्घकालिक",
+      "investigation": "जाँच",
+      "confidenceFactors": "विश्वास कारक",
+      "limitations": "सीमाएं",
+      "followUp": "फॉलो-अप",
+      "source": "स्रोत"
+    },
+    "verdicts": {
+      "malicious": "दुर्भावनापूर्ण",
+      "suspicious": "संदिग्ध",
+      "likely_benign": "संभवतः सुरक्षित",
+      "clean": "स्वच्छ",
+      "unknown": "अज्ञात"
+    },
+    "riskLevels": {
+      "critical": "गंभीर",
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "निम्न",
+      "info": "जानकारी"
+    },
+    "confidenceLevels": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "निम्न"
+    },
+    "errors": {
+      "noApiKey": "कृपया सेटिंग्स में इस AI प्रदाता के लिए API कुंजी कॉन्फ़िगर करें",
+      "unknown": "AI विश्लेषण के दौरान अप्रत्याशित त्रुटि हुई",
+      "invalidJson": "AI प्रतिक्रिया अधूरी या अमान्य थी",
+      "retrying": "प्रतिक्रिया अधूरी, पुनः प्रयास... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "{{maxAttempts}} प्रयासों के बाद पूर्ण प्रतिक्रिया प्राप्त करने में विफल। कृपया पुनः प्रयास करें।"
+    }
+  }
+}

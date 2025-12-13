@@ -1,0 +1,31 @@
+{
+  "header": {
+    "logoAlt": "Ahtapot लोगो"
+  },
+  "menu": {
+    "iocAnalysis": {
+      "title": "IOC विश्लेषण",
+      "description": "साइड पैनल खोलें और IOC का विश्लेषण करें"
+    },
+    "apiSettings": {
+      "title": "API सेटिंग्स",
+      "description": "API कुंजियाँ प्रबंधित करें"
+    },
+    "howToUse": {
+      "title": "उपयोग कैसे करें",
+      "description": "Ahtapot का उपयोग करना सीखें"
+    },
+    "feedback": {
+      "title": "प्रतिक्रिया",
+      "description": "अपने विचार और सुझाव साझा करें"
+    },
+    "rateUs": {
+      "title": "हमें रेट करें",
+      "description": "Chrome Web Store पर समीक्षा दें"
+    }
+  },
+  "footer": {
+    "about": "के बारे में",
+    "privacy": "गोपनीयता नीति"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "api": {
+    "keyMissing": "API कुंजी आवश्यक है",
+    "keyInvalid": "अमान्य API कुंजी",
+    "requestFailed": "अनुरोध विफल",
+    "rateLimitExceeded": "दर सीमा पार हो गई",
+    "networkError": "नेटवर्क त्रुटि",
+    "timeout": "अनुरोध समय समाप्त"
+  },
+  "analysis": {
+    "noIocs": "कोई संकेतक नहीं मिला",
+    "analysisError": "विश्लेषण त्रुटि",
+    "noResults": "कोई परिणाम उपलब्ध नहीं"
+  },
+  "storage": {
+    "saveFailed": "सेटिंग्स सहेजने में विफल",
+    "loadFailed": "सेटिंग्स लोड करने में विफल"
+  },
+  "provider": {
+    "notConfigured": "API कॉन्फ़िगर नहीं है",
+    "unavailable": "सेवा अनुपलब्ध"
+  }
+}

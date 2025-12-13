@@ -1,0 +1,195 @@
+{
+  "header": {
+    "logoAlt": "Логотип Ahtapot",
+    "detectTitle": "Обнаружить IOC на странице",
+    "detectLabel": "Сканировать текущую страницу на IOC",
+    "settingsTitle": "Настройки",
+    "settingsLabel": "Открыть настройки"
+  },
+  "apiWarning": {
+    "title": "Требуется настройка API",
+    "description": "Для анализа индикаторов безопасности необходимо настроить хотя бы один API-ключ.",
+    "configureButton": "Настроить API-ключи"
+  },
+  "input": {
+    "label": "Введите индикаторы безопасности",
+    "placeholder": "Вставьте IP-адреса, домены, хеши, URL или другие индикаторы безопасности...",
+    "detectButton": "Искать индикаторы",
+    "analyzeButton": "Анализировать угрозы",
+    "analyzingButton": "Анализ...",
+    "multipleHint": "Для нескольких IOC разделите запятой (,) или используйте Shift+Enter для новой строки",
+    "detectedCount": "Обнаружено {{count}} IOC"
+  },
+  "detected": {
+    "title": "Обнаруженные индикаторы",
+    "count_one": "Найден {{count}} индикатор",
+    "count_other": "Найдено {{count}} индикаторов",
+    "supportedBy": "Поддерживается:"
+  },
+  "results": {
+    "title": "Результаты провайдеров"
+  },
+  "loading": {
+    "analyzing": "Анализ индикаторов безопасности..."
+  },
+  "providerNoResults": {
+    "title": "Нет результатов от {{provider}}",
+    "searchedFor": "Вы искали:",
+    "description": "Этот провайдер не поддерживает данные типы индикаторов.",
+    "supportedLabel": "{{provider}} поддерживает:"
+  },
+  "emptyState": {
+    "noDetection": {
+      "title": "Индикаторы не обнаружены",
+      "description": "В предоставленном тексте не найдены индикаторы безопасности (IOC)."
+    },
+    "welcome": {
+      "title": "Добро пожаловать в Ahtapot Security",
+      "description": "Быстрый анализ индикаторов кибербезопасности (IOC). Вставьте IP-адреса, домены, хеши или другие индикаторы в поле выше.",
+      "supportedTitle": "Поддерживаемые типы индикаторов:",
+      "types": {
+        "ipAddresses": "IP-адреса (IPv4/IPv6)",
+        "domains": "Домены и URL",
+        "hashes": "Хеши файлов (MD5, SHA1, SHA256)",
+        "emails": "Email-адреса",
+        "cve": "Номера CVE",
+        "crypto": "Криптовалютные адреса"
+      }
+    }
+  },
+  "rateLimitConfirm": {
+    "title": "Провайдер с лимитом запросов",
+    "pendingStatus": "Ожидание подтверждения",
+    "greynoise": {
+      "limit": "50 запросов/неделю",
+      "message": "Тарифный план GreyNoise Community имеет лимит 50 запросов в неделю (совместно с использованием Visualizer).",
+      "question": "Хотите проанализировать {{count}} индикатор(ов) с помощью GreyNoise?",
+      "warning": "Это использует {{count}} из вашей недельной квоты."
+    },
+    "shodan": {
+      "limit": "100 результатов/месяц",
+      "message": "Бесплатный план Shodan имеет лимит 100 результатов в месяц.",
+      "question": "Хотите проанализировать {{count}} индикатор(ов) с помощью Shodan?",
+      "warning": "Это использует {{count}} из вашей месячной квоты."
+    },
+    "iocCount": "Анализ {{count}} индикатор(ов)",
+    "confirm": "Да, анализировать",
+    "cancel": "Пропустить",
+    "skipHint": "Анализ пропустит этого провайдера, если не подтверждено"
+  },
+  "providers": {
+    "greynoise": {
+      "subtitle": "Интеллектуальный анализ интернет-шума"
+    },
+    "shodan": {
+      "subtitle": "Глобальный сканер портов"
+    }
+  },
+  "ai": {
+    "title": "ИИ-анализ",
+    "noProviders": "Настройте ИИ-провайдера для включения анализа на основе ИИ",
+    "configure": "Настроить",
+    "selectProvider": "Выбрать модель",
+    "selectIOC": "Анализировать:",
+    "noApiKey": "API-ключ не настроен",
+    "noKey": "Нет ключа",
+    "configureKeys": "Настроить API-ключи",
+    "modes": {
+      "summary": "Сводка",
+      "analysis": "Анализ",
+      "detailed": "Подробный"
+    },
+    "modeInfo": {
+      "title": "Режимы анализа",
+      "summary": "Быстрые решения для аналитиков L1",
+      "analysis": "Решения об эскалации для передачи L1/L2",
+      "detailed": "Полное расследование для команд L2/L3 + IR"
+    },
+    "analyzing": "Анализ...",
+    "analyzingStates": {
+      "sending": "Отправка запроса...",
+      "processing": "ИИ обрабатывает...",
+      "thinking": "Анализ данных об угрозах...",
+      "generating": "Генерация отчёта...",
+      "almostDone": "Почти готово...",
+      "finalizing": "Завершение анализа..."
+    },
+    "start": "Анализировать",
+    "copyResult": "Копировать результат",
+    "copyMarkdown": "Копировать как Markdown",
+    "reanalyze": "Повторный анализ",
+    "exportImage": "Экспорт как изображение",
+    "cached": "Из кеша",
+    "sections": {
+      "summary": "Сводка",
+      "keySignals": "Ключевые сигналы",
+      "assessment": "Оценка",
+      "providerAnalysis": "Анализ провайдера",
+      "consensus": "Консенсус",
+      "threatIntel": "Разведка угроз",
+      "mitreAttack": "MITRE ATT&CK",
+      "recommendedActions": "Рекомендуемые действия",
+      "analystNotes": "Заметки аналитика",
+      "executiveSummary": "Краткое резюме",
+      "iocAnalysis": "Анализ IOC",
+      "crossReference": "Перекрёстный анализ",
+      "infrastructure": "Инфраструктура",
+      "falsePositive": "Анализ ложных срабатываний",
+      "responseActions": "Действия по реагированию",
+      "detectionEngineering": "Инженерия обнаружения",
+      "references": "Ссылки"
+    },
+    "labels": {
+      "verdict": "Вердикт",
+      "risk": "Риск",
+      "confidence": "Уверенность",
+      "confidenceShort": "Увер:",
+      "sourceConfidence": "Уверенность в источнике - Насколько надёжны данные этого провайдера",
+      "escalation": "Требуется эскалация",
+      "priority": "Приоритет",
+      "detection": "Обнаружение",
+      "reputation": "Репутация",
+      "associations": "Связи",
+      "agreement": "Согласие",
+      "conflicts": "Конфликты",
+      "dataGaps": "Пробелы в данных",
+      "knownAssociations": "Известные связи",
+      "historicalActivity": "Историческая активность",
+      "infrastructureInfo": "Инфраструктура",
+      "immediate": "Немедленно",
+      "shortTerm": "Краткосрочно",
+      "longTerm": "Долгосрочно",
+      "investigation": "Расследование",
+      "confidenceFactors": "Факторы уверенности",
+      "limitations": "Ограничения",
+      "followUp": "Дальнейшие действия",
+      "source": "Источник"
+    },
+    "verdicts": {
+      "malicious": "Вредоносный",
+      "suspicious": "Подозрительный",
+      "likely_benign": "Вероятно безопасный",
+      "clean": "Чистый",
+      "unknown": "Неизвестно"
+    },
+    "riskLevels": {
+      "critical": "Критический",
+      "high": "Высокий",
+      "medium": "Средний",
+      "low": "Низкий",
+      "info": "Информационный"
+    },
+    "confidenceLevels": {
+      "high": "Высокая",
+      "medium": "Средняя",
+      "low": "Низкая"
+    },
+    "errors": {
+      "noApiKey": "Пожалуйста, настройте API-ключ для этого ИИ-провайдера в Настройках",
+      "unknown": "Произошла непредвиденная ошибка во время ИИ-анализа",
+      "invalidJson": "Ответ ИИ был неполным или недействительным",
+      "retrying": "Неполный ответ, повторная попытка... ({{attempt}}/{{maxAttempts}})",
+      "maxRetriesReached": "Не удалось получить полный ответ после {{maxAttempts}} попыток. Пожалуйста, попробуйте снова."
+    }
+  }
+}
