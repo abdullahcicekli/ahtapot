@@ -4,6 +4,7 @@
  */
 
 import { AIProvider, AIAnalysisMode, AI_PROVIDER_CONFIGS } from '@/types/ai';
+import { storage } from '@/platform';
 
 const STORAGE_KEY = 'aiPreferences';
 
@@ -24,7 +25,7 @@ const DEFAULT_PREFERENCES: AIPreferences = {
  */
 export async function getAIPreferences(): Promise<AIPreferences> {
   try {
-    const result = await chrome.storage.local.get(STORAGE_KEY);
+    const result = await storage.local.get(STORAGE_KEY);
     if (result[STORAGE_KEY]) {
       return { ...DEFAULT_PREFERENCES, ...result[STORAGE_KEY] };
     }
@@ -42,7 +43,7 @@ export async function saveAIPreferences(preferences: Partial<AIPreferences>): Pr
   try {
     const current = await getAIPreferences();
     const updated = { ...current, ...preferences };
-    await chrome.storage.local.set({ [STORAGE_KEY]: updated });
+    await storage.local.set({ [STORAGE_KEY]: updated });
   } catch (error) {
     console.error('Error saving AI preferences:', error);
   }

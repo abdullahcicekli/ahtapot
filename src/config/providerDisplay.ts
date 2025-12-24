@@ -1,4 +1,5 @@
 import { APIProvider } from '@/types/ioc';
+import { storage } from '@/platform';
 
 /**
  * Provider Display Configuration
@@ -77,7 +78,7 @@ export const PROVIDER_ORDER_STORAGE_KEY = 'ahtapot_provider_order';
  */
 export async function getProviderDisplayOrder(): Promise<APIProvider[]> {
   try {
-    const result = await chrome.storage.local.get(PROVIDER_ORDER_STORAGE_KEY);
+    const result = await storage.local.get(PROVIDER_ORDER_STORAGE_KEY);
     const customOrder = result[PROVIDER_ORDER_STORAGE_KEY];
 
     if (customOrder && Array.isArray(customOrder) && customOrder.length > 0) {
@@ -102,7 +103,7 @@ export async function getProviderDisplayOrder(): Promise<APIProvider[]> {
  */
 export async function saveProviderDisplayOrder(order: APIProvider[]): Promise<void> {
   try {
-    await chrome.storage.local.set({
+    await storage.local.set({
       [PROVIDER_ORDER_STORAGE_KEY]: order,
     });
   } catch (error) {
@@ -116,7 +117,7 @@ export async function saveProviderDisplayOrder(order: APIProvider[]): Promise<vo
  */
 export async function resetProviderDisplayOrder(): Promise<void> {
   try {
-    await chrome.storage.local.remove(PROVIDER_ORDER_STORAGE_KEY);
+    await storage.local.remove(PROVIDER_ORDER_STORAGE_KEY);
   } catch (error) {
     console.error('Failed to reset provider display order:', error);
     throw error;

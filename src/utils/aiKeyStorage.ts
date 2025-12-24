@@ -4,6 +4,7 @@
  */
 
 import { AIProvider, AIKeyData } from '@/types/ai';
+import { storage } from '@/platform';
 
 export type AIKeysStorage = Record<AIProvider, AIKeyData>;
 
@@ -14,7 +15,7 @@ const AI_KEYS_STORAGE_KEY = 'aiApiKeys';
  */
 export async function getAIKeys(): Promise<AIKeysStorage> {
   try {
-    const result = await chrome.storage.local.get(AI_KEYS_STORAGE_KEY);
+    const result = await storage.local.get(AI_KEYS_STORAGE_KEY);
     return (result[AI_KEYS_STORAGE_KEY] || {}) as AIKeysStorage;
   } catch (error) {
     console.error('Failed to get AI API keys:', error);
@@ -34,7 +35,7 @@ export async function saveAIKey(provider: AIProvider, key: string): Promise<void
       addedAt: Date.now(),
     };
 
-    await chrome.storage.local.set({ [AI_KEYS_STORAGE_KEY]: aiKeys });
+    await storage.local.set({ [AI_KEYS_STORAGE_KEY]: aiKeys });
   } catch (error) {
     console.error('Failed to save AI API key:', error);
     throw error;
@@ -48,7 +49,7 @@ export async function removeAIKey(provider: AIProvider): Promise<void> {
   try {
     const aiKeys = await getAIKeys();
     delete aiKeys[provider];
-    await chrome.storage.local.set({ [AI_KEYS_STORAGE_KEY]: aiKeys });
+    await storage.local.set({ [AI_KEYS_STORAGE_KEY]: aiKeys });
   } catch (error) {
     console.error('Failed to remove AI API key:', error);
     throw error;

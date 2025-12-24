@@ -5,6 +5,7 @@
  */
 
 import { AIAnalysisResult, AIProvider, AIAnalysisMode } from '@/types/ai';
+import { storage } from '@/platform';
 
 const CACHE_KEY_PREFIX = 'ahtapot_ai_cache_';
 const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -40,21 +41,20 @@ export async function getCachedAIResult(
 ): Promise<AIAnalysisResult | null> {
   try {
     const key = generateCacheKey(provider, iocValue, mode, language);
-    const result = await chrome.storage.local.get(key);
-    
-    if (result[key]) {
-      const cached: CachedAIResult = result[key];
-      
+    const result = await storage.local.get(key) as Record<string, CachedAIResult | undefined>;
+
+    const cached = result[key];
+    if (cached) {
       // Check if expired
       if (Date.now() > cached.expiresAt) {
         // Remove expired cache
-        await chrome.storage.local.remove(key);
+        await storage.local.remove(key);
         return null;
       }
-      
+
       return cached.result;
     }
-    
+
     return null;
   } catch (error) {
     console.error('Error reading AI cache:', error);
@@ -87,7 +87,7 @@ export async function cacheAIResult(
       expiresAt: now + CACHE_EXPIRY_MS,
     };
     
-    await chrome.storage.local.set({ [key]: cachedData });
+    await storage.local.set({ [key]: cachedData });
   } catch (error) {
     console.error('Error saving AI cache:', error);
   }
@@ -104,7 +104,7 @@ export async function clearCachedAIResult(
 ): Promise<void> {
   try {
     const key = generateCacheKey(provider, iocValue, mode, language);
-    await chrome.storage.local.remove(key);
+    await storage.local.remove(key);
   } catch (error) {
     console.error('Error clearing AI cache:', error);
   }
@@ -115,13 +115,13 @@ export async function clearCachedAIResult(
  */
 export async function clearAllAICache(): Promise<void> {
   try {
-    const allData = await chrome.storage.local.get(null);
+    const allData = await storage.local.get(null);
     const keysToRemove = Object.keys(allData).filter(key => 
       key.startsWith(CACHE_KEY_PREFIX)
     );
     
     if (keysToRemove.length > 0) {
-      await chrome.storage.local.remove(keysToRemove);
+      await storage.local.remove(keysToRemove);
     }
   } catch (error) {
     console.error('Error clearing all AI cache:', error);
@@ -138,7 +138,7 @@ export async function getAICacheStats(): Promise<{
   newestEntry: number | null;
 }> {
   try {
-    const allData = await chrome.storage.local.get(null);
+    const allData = await storage.local.get(null);
     const cacheEntries = Object.entries(allData).filter(([key]) => 
       key.startsWith(CACHE_KEY_PREFIX)
     );
@@ -181,7 +181,7 @@ export async function getAICacheStats(): Promise<{
  */
 export async function cleanExpiredAICache(): Promise<number> {
   try {
-    const allData = await chrome.storage.local.get(null);
+    const allData = await storage.local.get(null);
     const now = Date.now();
     const keysToRemove: string[] = [];
     
@@ -195,7 +195,7 @@ export async function cleanExpiredAICache(): Promise<number> {
     });
     
     if (keysToRemove.length > 0) {
-      await chrome.storage.local.remove(keysToRemove);
+      await storage.local.remove(keysToRemove);
     }
     
     return keysToRemove.length;

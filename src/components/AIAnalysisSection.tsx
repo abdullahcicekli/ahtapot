@@ -9,6 +9,7 @@ import { AIProvider, AIAnalysisMode, AI_PROVIDER_CONFIGS } from '@/types/ai';
 import { getConfiguredAIProviders } from '@/utils/aiKeyStorage';
 import { getAIPreferences, saveAIPreferences, getValidModelForProvider } from '@/utils/aiPreferences';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
+import { storage, runtime, tabs } from '@/platform';
 import './AIAnalysisSection.css';
 
 interface IOCItem {
@@ -139,8 +140,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
       }
     };
 
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
+    storage.onChanged.addListener(handleStorageChange);
+    return () => storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   // Close dropdowns when clicking outside
@@ -195,8 +196,8 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
   };
 
   const openSettings = () => {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL('src/pages/options/index.html?tab=apiKeys&section=ai'),
+    tabs.create({
+      url: runtime.getURL('src/pages/options/index.html?tab=apiKeys&section=ai'),
     });
   };
 

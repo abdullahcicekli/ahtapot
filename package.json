@@ -1,14 +1,22 @@
 {
   "name": "ahtapot-extension",
-  "version": "3.0.0",
-  "description": "AI-powered Chrome extension for IOC threat intelligence. Analyze IPs, domains, URLs, hashes with Claude, Gemini, GPT-4o and 10 security providers.",
-  "homepage": "https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg",
+  "version": "3.1.0",
+  "description": "AI-powered browser extension for IOC threat intelligence. Analyze IPs, domains, URLs, hashes with Claude, Gemini, GPT-4o and 10 security providers. Supports Chrome, Firefox, and Edge.",
+  "homepage": "https://ahtapot.me",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "BROWSER=chrome vite",
+    "dev:chrome": "BROWSER=chrome vite",
+    "dev:firefox": "BROWSER=firefox vite",
+    "dev:edge": "BROWSER=edge vite",
+    "build": "npm run build:chrome",
+    "build:chrome": "BROWSER=chrome tsc && BROWSER=chrome vite build",
+    "build:firefox": "BROWSER=firefox tsc && BROWSER=firefox vite build",
+    "build:edge": "BROWSER=edge tsc && BROWSER=edge vite build",
+    "build:all": "npm run build:chrome && npm run build:firefox && npm run build:edge",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
@@ -17,15 +25,34 @@
     "lucide-react": "^0.462.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-i18next": "^15.0.0"
+    "react-i18next": "^15.0.0",
+    "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@types/chrome": "^0.0.275",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/webextension-polyfill": "^0.10.7",
     "@vitejs/plugin-react": "^4.3.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",
     "vite-plugin-web-extension": "^4.1.6"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "firefox-addon",
+    "edge-extension",
+    "ioc-analysis",
+    "threat-intelligence",
+    "cybersecurity",
+    "virustotal",
+    "malware-detection",
+    "ai-analysis"
+  ],
+  "author": "Abdullah Cicekli",
+  "license": "MIT"
 }

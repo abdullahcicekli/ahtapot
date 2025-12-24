@@ -4,6 +4,7 @@
  */
 
 import { APIProvider } from '@/types/ioc';
+import { storage } from '@/platform';
 
 export interface APIKeyData {
   key: string;
@@ -17,7 +18,7 @@ export type APIKeysStorage = Record<APIProvider, APIKeyData>;
  */
 export async function getAPIKeys(): Promise<APIKeysStorage> {
   try {
-    const result = await chrome.storage.local.get('apiKeys');
+    const result = await storage.local.get('apiKeys');
     const apiKeys = result.apiKeys || {};
 
     // Check if migration is needed (old format: string values)
@@ -26,7 +27,7 @@ export async function getAPIKeys(): Promise<APIKeysStorage> {
     if (needsMigration) {
       console.log('Migrating API keys to new format with timestamps...');
       const migratedKeys = await migrateAPIKeys(apiKeys);
-      await chrome.storage.local.set({ apiKeys: migratedKeys });
+      await storage.local.set({ apiKeys: migratedKeys });
       return migratedKeys;
     }
 
@@ -49,7 +50,7 @@ export async function saveAPIKey(provider: APIProvider, key: string): Promise<vo
       addedAt: Date.now(),
     };
 
-    await chrome.storage.local.set({ apiKeys });
+    await storage.local.set({ apiKeys });
   } catch (error) {
     console.error('Failed to save API key:', error);
     throw error;
@@ -70,7 +71,7 @@ export async function removeAPIKey(provider: APIProvider): Promise<void> {
 
     const apiKeys = await getAPIKeys();
     delete apiKeys[provider];
-    await chrome.storage.local.set({ apiKeys });
+    await storage.local.set({ apiKeys });
   } catch (error) {
     console.error('Failed to remove API key:', error);
     throw error;

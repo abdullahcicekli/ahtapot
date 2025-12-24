@@ -1,4 +1,5 @@
 import { IOCAnalysisResult } from '@/types/ioc';
+import { storage } from '@/platform';
 
 export interface CacheSettings {
   retentionDays: number;
@@ -31,8 +32,8 @@ export class CacheManager {
    */
   static async getSettings(): Promise<CacheSettings> {
     try {
-      const result = await chrome.storage.local.get(this.SETTINGS_KEY);
-      return result[this.SETTINGS_KEY] || {
+      const result = await storage.local.get(this.SETTINGS_KEY) as Record<string, CacheSettings | undefined>;
+      return result[this.SETTINGS_KEY] ?? {
         retentionDays: this.DEFAULT_RETENTION_DAYS,
         enabled: true,
       };
@@ -50,7 +51,7 @@ export class CacheManager {
    */
   static async saveSettings(settings: CacheSettings): Promise<void> {
     try {
-      await chrome.storage.local.set({
+      await storage.local.set({
         [this.SETTINGS_KEY]: settings,
       });
       // Clean old cache after settings change
@@ -99,8 +100,8 @@ export class CacheManager {
       );
 
       // Get today's cache data
-      const storageResult = await chrome.storage.local.get(cacheKey);
-      const dailyCache: DailyCacheData = storageResult[cacheKey] || {};
+      const storageResult = await storage.local.get(cacheKey) as Record<string, DailyCacheData | undefined>;
+      const dailyCache: DailyCacheData = storageResult[cacheKey] ?? {};
 
       // Store the result
       const cacheEntry: CacheEntry = {
@@ -114,7 +115,7 @@ export class CacheManager {
       dailyCache[iocKey] = cacheEntry;
 
       // Save back to storage
-      await chrome.storage.local.set({
+      await storage.local.set({
         [cacheKey]: dailyCache,
       });
 
@@ -150,11 +151,11 @@ export class CacheManager {
       }
 
       // OPTIMIZED: Single storage call instead of N sequential calls
-      const storageResult = await chrome.storage.local.get(cacheKeys);
+      const storageResult = await storage.local.get(cacheKeys) as Record<string, DailyCacheData | undefined>;
 
       // Check all retrieved caches
       for (const cacheKey of cacheKeys) {
-        const dailyCache: DailyCacheData = storageResult[cacheKey];
+        const dailyCache = storageResult[cacheKey];
         if (dailyCache && dailyCache[iocKey]) {
           console.log(`[CacheManager] Cache hit for ${iocKey} in ${cacheKey}`);
           return dailyCache[iocKey].result;
@@ -175,7 +176,7 @@ export class CacheManager {
   static async cleanOldCache(): Promise<void> {
     try {
       const settings = await this.getSettings();
-      const allKeys = await chrome.storage.local.get(null);
+      const allKeys = await storage.local.get(null) as Record<string, unknown>;
       const cacheKeys = Object.keys(allKeys).filter((key) =>
         key.startsWith(this.CACHE_PREFIX)
       );
@@ -187,7 +188,7 @@ export class CacheManager {
       const keysToRemove = cacheKeys.filter((key) => key < cutoffKey);
 
       if (keysToRemove.length > 0) {
-        await chrome.storage.local.remove(keysToRemove);
+        await storage.local.remove(keysToRemove);
         console.log(
           `[CacheManager] Cleaned ${keysToRemove.length} old cache entries`
         );
@@ -207,7 +208,7 @@ export class CacheManager {
     newestDate: string | null;
   }> {
     try {
-      const allKeys = await chrome.storage.local.get(null);
+      const allKeys = await storage.local.get(null) as Record<string, unknown>;
       const cacheKeys = Object.keys(allKeys).filter((key) =>
         key.startsWith(this.CACHE_PREFIX)
       );
@@ -216,7 +217,8 @@ export class CacheManager {
       let totalSize = 0;
 
       for (const key of cacheKeys) {
-        const dailyCache: DailyCacheData = allKeys[key];
+        const dailyCache = allKeys[key] as DailyCacheData | undefined;
+        if (!dailyCache) continue;
         const entries = Object.keys(dailyCache).length;
         totalEntries += entries;
 
@@ -258,13 +260,13 @@ export class CacheManager {
    */
   static async clearAll(): Promise<void> {
     try {
-      const allKeys = await chrome.storage.local.get(null);
+      const allKeys = await storage.local.get(null) as Record<string, unknown>;
       const cacheKeys = Object.keys(allKeys).filter((key) =>
         key.startsWith(this.CACHE_PREFIX)
       );
 
       if (cacheKeys.length > 0) {
-        await chrome.storage.local.remove(cacheKeys);
+        await storage.local.remove(cacheKeys);
         console.log(`[CacheManager] Cleared all cache (${cacheKeys.length} entries)`);
       }
     } catch (error) {

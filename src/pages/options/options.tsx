@@ -11,6 +11,7 @@ import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
+import { storage, runtime } from '@/platform';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -186,10 +187,10 @@ const OptionsPage: React.FC = () => {
       }
     };
 
-    chrome.runtime.onMessage.addListener(messageListener);
+    runtime.onMessage.addListener(messageListener);
 
     return () => {
-      chrome.runtime.onMessage.removeListener(messageListener);
+      runtime.onMessage.removeListener(messageListener);
     };
   }, []);
 
@@ -242,7 +243,7 @@ const OptionsPage: React.FC = () => {
     try {
       // Load API keys using new storage format
       const apiKeys = await getAPIKeys();
-      const result = await chrome.storage.local.get('language');
+      const result = await storage.local.get('language') as Record<string, SupportedLanguage | undefined>;
 
       // Initialize state for each provider
       const initialStates: Record<string, APIKeyState> = {};
@@ -287,11 +288,11 @@ const OptionsPage: React.FC = () => {
     try {
       setCurrentLanguage(lang);
       await i18n.changeLanguage(lang);
-      await chrome.storage.local.set({ language: lang });
+      await storage.local.set({ language: lang });
       
       // Notify sidepanel to reload for language change
       try {
-        await chrome.runtime.sendMessage({ type: 'LANGUAGE_CHANGED', payload: { language: lang } });
+        await runtime.sendMessage({ type: 'LANGUAGE_CHANGED', payload: { language: lang } });
       } catch {
         // Sidepanel might not be open, ignore error
       }
@@ -1152,7 +1153,7 @@ const OptionsPage: React.FC = () => {
       </main>
 
       <footer className="options-footer">
-        <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
+        <p>{t('footer.text', { ns: 'options', version: runtime.getManifest().version })}</p>
       </footer>
 
       {/* Provider Order Modal */}

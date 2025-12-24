@@ -1,6 +1,8 @@
 import React, { useEffect, memo, useCallback, useMemo, useState } from 'react';
 import { Settings, Search, Info, MessageSquare, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { storage, runtime, tabs, Platform } from '@/platform';
+import { SidePanel } from '@/platform/sidepanel';
 import '@/i18n/config';
 
 
@@ -9,41 +11,47 @@ const Popup: React.FC = memo(() => {
   const [version, setVersion] = useState<string>('');
 
   useEffect(() => {
-    chrome.storage.local.get('language').then((result) => {
+    storage.local.get('language').then((result: Record<string, unknown>) => {
       if (result.language) {
-        i18n.changeLanguage(result.language);
+        i18n.changeLanguage(result.language as string);
       }
     });
 
-    const manifest = chrome.runtime.getManifest();
+    const manifest = runtime.getManifest();
     setVersion(manifest.version);
   }, [i18n]);
 
   const handleOpenOptions = useCallback(() => {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL('src/pages/options/index.html')
+    tabs.create({
+      url: runtime.getURL('src/pages/options/index.html')
     });
     window.close();
   }, []);
 
   const handleOpenSidePanel = useCallback(async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const [tab] = await tabs.query({ active: true, currentWindow: true });
     if (tab.id) {
-      await chrome.sidePanel.open({ tabId: tab.id });
+      await SidePanel.open({ tabId: tab.id });
       window.close();
     }
   }, []);
 
   const handleOpenAbout = useCallback(() => {
-    chrome.tabs.create({ url: 'https://ahtapot.me' });
+    tabs.create({ url: 'https://ahtapot.me' });
   }, []);
 
   const handleOpenFeedback = useCallback(() => {
-    chrome.tabs.create({ url: 'https://ahtapot.me/#feedback' });
+    tabs.create({ url: 'https://ahtapot.me/#feedback' });
   }, []);
 
-  const handleOpenChromeStore = useCallback(() => {
-    chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg' });
+  const handleOpenStore = useCallback(() => {
+    // Open the appropriate store based on browser
+    const storeUrls = {
+      chrome: 'https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg',
+      firefox: 'https://addons.mozilla.org/firefox/addon/ahtapot-ioc-analysis/',
+      edge: 'https://microsoftedge.microsoft.com/addons/detail/ahtapot-ioc-analysis/placeholder',
+    };
+    tabs.create({ url: storeUrls[Platform.browser] || storeUrls.chrome });
   }, []);
 
   const menuItems = useMemo(() => [
@@ -75,9 +83,9 @@ const Popup: React.FC = memo(() => {
       icon: <Star className="w-5 h-5" />,
       title: t('menu.rateUs.title', { ns: 'popup' }),
       description: t('menu.rateUs.description', { ns: 'popup' }),
-      onClick: handleOpenChromeStore,
+      onClick: handleOpenStore,
     },
-  ], [t, version, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback, handleOpenChromeStore]);
+  ], [t, version, handleOpenSidePanel, handleOpenOptions, handleOpenAbout, handleOpenFeedback, handleOpenStore]);
 
   return (
     <div className="popup-container">

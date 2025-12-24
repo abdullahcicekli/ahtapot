@@ -6,6 +6,7 @@
 import { APIProvider } from '@/types/ioc';
 import { PROVIDER_TO_SERVICE_NAME } from './providerMappings';
 import { isProviderEnabled, getEnabledProviders } from '@/config/providerDisplay';
+import { storage } from '@/platform';
 
 const STORAGE_KEY = 'providerOrder';
 
@@ -28,7 +29,7 @@ export function getDefaultProviderOrder(): APIProvider[] {
  */
 export async function getProviderOrder(): Promise<APIProvider[]> {
   try {
-    const result = await chrome.storage.local.get(STORAGE_KEY);
+    const result = await storage.local.get(STORAGE_KEY);
 
     if (result[STORAGE_KEY] && Array.isArray(result[STORAGE_KEY])) {
       const storedOrder = result[STORAGE_KEY] as APIProvider[];
@@ -56,7 +57,7 @@ export async function getProviderOrder(): Promise<APIProvider[]> {
  */
 export async function saveProviderOrder(order: APIProvider[]): Promise<void> {
   try {
-    await chrome.storage.local.set({ [STORAGE_KEY]: order });
+    await storage.local.set({ [STORAGE_KEY]: order });
   } catch (error) {
     console.error('Failed to save provider order:', error);
     throw error;
@@ -68,7 +69,7 @@ export async function saveProviderOrder(order: APIProvider[]): Promise<void> {
  */
 export async function resetProviderOrder(): Promise<void> {
   try {
-    await chrome.storage.local.remove(STORAGE_KEY);
+    await storage.local.remove(STORAGE_KEY);
   } catch (error) {
     console.error('Failed to reset provider order:', error);
     throw error;

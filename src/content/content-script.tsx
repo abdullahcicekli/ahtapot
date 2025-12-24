@@ -3,6 +3,7 @@ import FloatingButton from '@/components/FloatingButton';
 import { detectIOCs } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { DetectedIOC } from '@/types/ioc';
+import { runtime } from '@/platform';
 
 /**
  * Content Script - Sayfa içinde çalışır
@@ -72,7 +73,7 @@ function hideFloatingButton() {
 async function handleAnalyze() {
   try {
     // Side panel'i aç
-    await chrome.runtime.sendMessage({
+    await runtime.sendMessage({
       type: MessageType.OPEN_SIDEPANEL,
       payload: { iocs: detectedIOCs },
     });

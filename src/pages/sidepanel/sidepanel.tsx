@@ -18,6 +18,7 @@ import { DetectedIOC, IOCAnalysisResult, APIProvider, IOCType } from '@/types/io
 import { AIProvider, AIAnalysisMode, AIAnalysisResult } from '@/types/ai';
 import { detectIOCs, getIOCTypeLabel } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
+import { storage, runtime, tabs } from '@/platform';
 import { ProviderSlider } from '@/components/ProviderSlider';
 import { VirusTotalResultCard } from '@/components/results/VirusTotalResultCard';
 import { OTXResultCard } from '@/components/results/OTXResultCard';
@@ -132,10 +133,10 @@ const SidePanel: React.FC = () => {
       }
     };
 
-    chrome.storage.onChanged.addListener(handleStorageChange);
+    storage.onChanged.addListener(handleStorageChange);
 
     return () => {
-      chrome.storage.onChanged.removeListener(handleStorageChange);
+      storage.onChanged.removeListener(handleStorageChange);
     };
   }, []);
 
@@ -152,24 +153,24 @@ const SidePanel: React.FC = () => {
           handleAnalyze(text);
         }
       }
-      
+
       // Reload sidepanel when language changes
       if (message.type === 'LANGUAGE_CHANGED') {
         window.location.reload();
       }
     };
 
-    chrome.runtime.onMessage.addListener(messageListener);
+    runtime.onMessage.addListener(messageListener);
 
     return () => {
-      chrome.runtime.onMessage.removeListener(messageListener);
+      runtime.onMessage.removeListener(messageListener);
     };
   }, []);
 
   async function checkAPIKeys() {
     try {
-      const result = await chrome.storage.local.get('apiKeys');
-      const apiKeys = result.apiKeys || {};
+      const result = await storage.local.get('apiKeys');
+      const apiKeys = (result as Record<string, unknown>).apiKeys || {};
 
       // Support both old format (string) and new format (object with key)
       const hasKeys = Object.values(apiKeys).some((value: any) => {
@@ -213,8 +214,8 @@ const SidePanel: React.FC = () => {
 
     if (ipv4IOCs.length > 0) {
       try {
-        const result = await chrome.storage.local.get('apiKeys');
-        const apiKeys = result.apiKeys || {};
+        const result = await storage.local.get('apiKeys');
+        const apiKeys = (result as Record<string, any>).apiKeys || {};
 
         // Check if GreyNoise is configured and not excluded
         const hasGreyNoise = apiKeys['greynoise'] &&
@@ -253,7 +254,7 @@ const SidePanel: React.FC = () => {
     }
 
     try {
-      const response = await chrome.runtime.sendMessage({
+      const response = await runtime.sendMessage({
         type: MessageType.ANALYZE_IOC,
         payload: {
           iocs,
@@ -325,7 +326,7 @@ const SidePanel: React.FC = () => {
     try {
       const providerEnum = provider === 'greynoise' ? APIProvider.GREYNOISE : APIProvider.SHODAN;
 
-      const response = await chrome.runtime.sendMessage({
+      const response = await runtime.sendMessage({
         type: MessageType.ANALYZE_IOC,
         payload: {
           iocs: currentIOCs,
@@ -519,7 +520,7 @@ const SidePanel: React.FC = () => {
         </div>
         <div className="header-actions">
           <button
-            onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html') })}
+            onClick={() => tabs.create({ url: runtime.getURL('src/pages/options/index.html') })}
             className="settings-btn"
             title={t('header.settingsTitle')}
             aria-label={t('header.settingsLabel')}
@@ -537,7 +538,7 @@ const SidePanel: React.FC = () => {
               <strong>{t('apiWarning.title')}</strong>
               <p>{t('apiWarning.description')}</p>
               <button
-                onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('src/pages/options/index.html?tab=apiKeys') })}
+                onClick={() => tabs.create({ url: runtime.getURL('src/pages/options/index.html?tab=apiKeys') })}
                 className="setup-btn"
               >
                 {t('apiWarning.configureButton')}

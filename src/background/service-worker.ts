@@ -5,6 +5,9 @@ import { getAPIKeys } from '@/utils/apiKeyStorage';
 import { findProviderByServiceName } from '@/utils/providerMappings';
 import { initializeDevelopmentAPIKeys } from '@/utils/devApiKeys';
 import { initializeDevelopmentAIKeys } from '@/utils/devAIKeys';
+import { runtime, tabs, windows } from '@/platform';
+import { SidePanel } from '@/platform/sidepanel';
+import { ContextMenus } from '@/platform/menus';
 
 /**
  * Background Service Worker
@@ -15,11 +18,26 @@ import { initializeDevelopmentAIKeys } from '@/utils/devAIKeys';
 let apiService: APIService | null = null;
 
 // Context menu oluştur
-chrome.runtime.onInstalled.addListener(async () => {
-  chrome.contextMenus.create({
+runtime.onInstalled.addListener(async () => {
+  ContextMenus.create({
     id: 'ahtapot-analyze',
     title: 'Ahtapot ile Analiz Et',
     contexts: ['selection'],
+  }, async (info, tab) => {
+    if (info.selectionText && tab?.id) {
+      // Side panel'i aç
+      try {
+        await SidePanel.open({ tabId: tab.id });
+
+        // Seçili metni side panel'e gönder
+        runtime.sendMessage({
+          type: MessageType.OPEN_SIDEPANEL,
+          payload: { selectedText: info.selectionText },
+        });
+      } catch (error) {
+        console.error('[ServiceWorker] Error opening side panel:', error);
+      }
+    }
   });
 
   // Initialize development API keys from .env (only in dev mode)
@@ -29,76 +47,58 @@ chrome.runtime.onInstalled.addListener(async () => {
   await initializeDevelopmentAIKeys();
 });
 
-// Context menu tıklaması
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === 'ahtapot-analyze' && info.selectionText && tab?.id) {
-    // Side panel'i aç
-    try {
-      await chrome.sidePanel.open({ tabId: tab.id });
-
-      // Seçili metni side panel'e gönder
-      chrome.runtime.sendMessage({
-        type: MessageType.OPEN_SIDEPANEL,
-        payload: { selectedText: info.selectionText },
-      });
-    } catch (error) {
-    }
-  }
-});
-
 // Mesaj dinleyici (content script'ten gelen istekler)
-chrome.runtime.onMessage.addListener(
-  (message: ExtensionMessage, sender, sendResponse) => {
+// Using promise-based response pattern for webextension-polyfill
+runtime.onMessage.addListener(
+  (message: ExtensionMessage, sender): Promise<unknown> | undefined => {
     if (message.type === MessageType.OPEN_SIDEPANEL) {
       // Side panel'i aç
       const tabId = sender.tab?.id;
       if (tabId) {
-        chrome.sidePanel
-          .open({ tabId })
+        return SidePanel.open({ tabId })
           .then(() => {
             // Side panel'e IOC'leri gönder - daha uzun timeout ile side panel'in hazır olmasını bekle
             setTimeout(() => {
-              chrome.runtime.sendMessage({
+              runtime.sendMessage({
                 type: MessageType.OPEN_SIDEPANEL,
                 payload: message.payload,
               });
             }, 500);
-            sendResponse({ success: true });
+            return { success: true };
           })
-          .catch((error) => {
-            sendResponse({ success: false, error: error.message });
+          .catch((error: Error) => {
+            return { success: false, error: error.message };
           });
       } else {
-        sendResponse({ success: false, error: 'Tab ID bulunamadı' });
+        return Promise.resolve({ success: false, error: 'Tab ID bulunamadı' });
       }
-      return true; // Async response için gerekli
     }
 
     if (message.type === MessageType.ANALYZE_IOC) {
-      handleAnalyzeIOC(
+      return handleAnalyzeIOC(
         message.payload.iocs,
         message.payload.excludeProviders,
         message.payload.includeProviders
       )
         .then((response) => {
-          sendResponse({ success: true, ...response });
+          return { success: true, ...response };
         })
         .catch((error) => {
-          sendResponse({ success: false, error: error.message });
+          return { success: false, error: error.message };
         });
-      return true;
     }
 
     if (message.type === MessageType.NAVIGATE_TO_PROVIDER) {
-      handleNavigateToProvider(message.payload.provider)
+      return handleNavigateToProvider(message.payload.provider)
         .then((response) => {
-          sendResponse(response);
+          return response;
         })
         .catch((error) => {
-          sendResponse({ success: false, error: error.message });
+          return { success: false, error: error.message };
         });
-      return true;
     }
+
+    return undefined;
   }
 );
 
@@ -187,50 +187,28 @@ async function handleAnalyzeIOC(
  * Provider sayfasına navigasyon
  */
 async function handleNavigateToProvider(provider: string): Promise<{ success: boolean }> {
-  const optionsUrl = chrome.runtime.getURL('src/pages/options/index.html');
+  const optionsUrl = runtime.getURL('src/pages/options/index.html');
+  const newUrl = `${optionsUrl}?tab=apiKeys&provider=${provider}`;
 
-  // Extension'ın açık olan tüm view'larını al (tabs izni gerektirmez)
-  const views = chrome.extension.getViews({ type: 'tab' });
-
-  // Options sayfası açık mı kontrol et
-  let optionsView = null;
-  for (const view of views) {
-    if (view.location.href.includes('src/pages/options/index.html')) {
-      optionsView = view;
-      break;
-    }
-  }
-
-  if (optionsView) {
-    // Options sayfası açık, URL'i güncelle
-    const newUrl = `${optionsUrl}?tab=apiKeys&provider=${provider}`;
-    optionsView.location.href = newUrl;
-
-    // Pencereyi öne getir
-    try {
-      const allTabs = await chrome.tabs.query({});
-      for (const tab of allTabs) {
-        if (tab.url && tab.url.includes('src/pages/options/index.html')) {
-          await chrome.tabs.update(tab.id!, { active: true });
-          if (tab.windowId) {
-            await chrome.windows.update(tab.windowId, { focused: true });
-          }
-          break;
+  // Check if options page is already open
+  try {
+    const allTabs = await tabs.query({});
+    for (const tab of allTabs) {
+      if (tab.url && tab.url.includes('src/pages/options/index.html')) {
+        // Update existing tab
+        await tabs.update(tab.id!, { active: true, url: newUrl });
+        if (tab.windowId) {
+          await windows.update(tab.windowId, { focused: true });
         }
+        return { success: true };
       }
-    } catch (error) {
-      // Could not focus window
     }
-  } else {
-    // Options sayfası açık değil, yeni sekme aç
-    const newUrl = `${optionsUrl}?tab=apiKeys&provider=${provider}`;
-    await chrome.tabs.create({ url: newUrl });
+  } catch (error) {
+    console.error('[ServiceWorker] Error checking existing tabs:', error);
   }
+
+  // Options sayfası açık değil, yeni sekme aç
+  await tabs.create({ url: newUrl });
 
   return { success: true };
 }
-
-// Extension icon'a tıklandığında options sayfasını aç
-chrome.action.onClicked.addListener(() => {
-  chrome.runtime.openOptionsPage();
-});
