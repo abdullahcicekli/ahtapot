@@ -6,6 +6,7 @@ package-lock.json
 dist/
 build/
 dist.zip
+ahtapot-*.zip
 
 # Environment variables
 .env
