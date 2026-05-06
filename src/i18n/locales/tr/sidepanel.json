@@ -1,4 +1,8 @@
 {
+  "outpostBanner": {
+    "logoAlt": "Outpost Logosu",
+    "text": "Powered by Outpost | Binalyze"
+  },
   "header": {
     "logoAlt": "Ahtapot Logo",
     "settingsTitle": "Ayarlar",

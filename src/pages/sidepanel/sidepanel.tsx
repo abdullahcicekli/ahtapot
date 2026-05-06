@@ -509,6 +509,23 @@ const SidePanel: React.FC = () => {
 
   return (
     <div className="sidepanel-container">
+      <a
+        className="outpost-banner"
+        href="https://outpost.binalyze.ai/en"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="outpost-banner-text">Powered by</span>
+        <img
+          src="/icons/outpost-logo.svg"
+          alt={t('outpostBanner.logoAlt')}
+          className="outpost-banner-logo"
+        />
+        <span className="outpost-banner-divider">|</span>
+        <span className="outpost-banner-brand">Binalyze</span>
+        <ExternalLink size={11} className="outpost-banner-icon" />
+      </a>
+
       <header className="sidepanel-header">
         <div className="header-title">
           <img

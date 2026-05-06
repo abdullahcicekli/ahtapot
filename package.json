@@ -1,6 +1,6 @@
 {
   "name": "ahtapot-extension",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "AI-powered Chrome extension for IOC threat intelligence. Analyze IPs, domains, URLs, hashes with Claude, Gemini, GPT-4o and 10 security providers.",
   "homepage": "https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg",
   "type": "module",
