@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { width: 1280px; height: 800px; }
+  .stage { display: flex; align-items: center; gap: 56px; padding: 0 72px; }
+
+  .copy { width: 480px; flex-shrink: 0; }
+  .copy .brand { display: flex; margin-bottom: 44px; }
+  .copy .chip { margin-bottom: 18px; }
+  .copy .h1 { font-size: 58px; margin-bottom: 20px; }
+  .copy .sub { font-size: 19px; max-width: 420px; }
+  .copy .pills { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
+
+  /* Sidepanel mockup */
+  .sidepanel {
+    width: 560px;
+    padding: 22px;
+    transform: rotate(0.0001deg); /* crisp text */
+  }
+
+  .sp-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg-inset);
+    border: 1px solid var(--border-hi);
+    border-radius: 12px;
+  }
+  .sp-search svg { flex-shrink: 0; }
+  .sp-search .q { font-family: 'Commit Mono', monospace; font-size: 14px; color: var(--text); }
+  .sp-search .go {
+    margin-left: auto;
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--text);
+    color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .sp-detected { margin: 10px 2px 0; display: flex; justify-content: flex-end; }
+
+  .sp-providers { display: flex; gap: 8px; margin: 18px 0 16px; }
+  .sp-provider {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .sp-provider img { width: 24px; height: 24px; object-fit: contain; }
+  .sp-provider.active { border-color: var(--border-hi); background: var(--bg-inset); }
+  .sp-provider.pending img { opacity: .38; }
+  .sp-provider.pending::after {
+    content: '';
+    position: absolute; inset: 8px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.1);
+    border-top-color: rgba(255,255,255,.6);
+    transform: rotate(48deg);
+  }
+
+  .result { padding: 18px; }
+  .result-head { display: flex; align-items: center; gap: 12px; }
+  .score {
+    width: 58px; height: 58px; border-radius: 50%;
+    border: 3px solid var(--danger);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Commit Mono', monospace;
+  }
+  .score b { font-size: 17px; color: var(--danger); }
+  .score i { font-style: normal; font-size: 9px; color: var(--text-3); }
+  .result-title { font-weight: 600; font-size: 16px; }
+  .result-sub { font-family: 'Commit Mono', monospace; font-size: 12px; color: var(--text-2); margin-top: 3px; }
+  .result-head .pill { margin-left: auto; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+  .stat { background: var(--bg-inset); border-radius: 9px; padding: 10px 12px; }
+  .stat i { font-style: normal; display: block; font-family: 'Commit Mono', monospace; font-size: 9px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); }
+  .stat b { font-size: 16px; font-weight: 620; }
+  .stat b.red { color: var(--danger); }
+  .stat b.green { color: var(--success); }
+
+  /* İkinci kart: SGB, streaming hissi için kısmen görünür */
+  .result2 { margin-top: 12px; padding: 16px 18px; }
+  .r2-head { display: flex; align-items: center; gap: 10px; }
+  .r2-head img { width: 20px; height: 20px; object-fit: contain; }
+  .r2-head b { font-size: 14px; font-weight: 600; }
+  .r2-head .pill { margin-left: auto; }
+  .crit { margin-top: 12px; }
+  .crit-track { height: 6px; border-radius: 99px; background: var(--border); overflow: hidden; }
+  .crit-fill { width: 78%; height: 100%; border-radius: 99px; background: var(--danger); }
+  .crit-row { display: flex; justify-content: space-between; margin-bottom: 7px; font-family: 'Commit Mono', monospace; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; }
+  .crit-row i { font-style: normal; color: var(--text-3); }
+  .crit-row b { color: var(--danger); }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grid-lines"></div>
+  <div class="stage">
+    <div class="copy">
+      <div class="brand">
+        <img src="../../public/icons/mark.svg" width="44" height="44" alt="">
+        <span class="brand-name">Ahtapot</span>
+      </div>
+      <div class="chip">IOC Analysis</div>
+      <div class="h1">Threat intel<br>on any page.</div>
+      <p class="sub">Select an IP, domain, URL or hash anywhere on the web and get verdicts from 11 intelligence sources — without leaving the tab.</p>
+      <div class="pills">
+        <span class="pill lime">11 providers</span>
+        <span class="pill clean">Free &amp; open source</span>
+        <span class="pill warn">AI verdicts</span>
+      </div>
+    </div>
+
+    <div class="sidepanel panel">
+      <div class="sp-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8C96" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="q">login-portal.financorp.net</span>
+        <span class="go">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+        </span>
+      </div>
+      <div class="sp-detected"><span class="pill lime">1 IOC detected</span></div>
+
+      <div class="sp-providers">
+        <div class="sp-provider active"><img src="../../public/provider-icons/virustotal_logo.png" alt=""></div>
+        <div class="sp-provider"><img src="../../public/provider-icons/siberguvenlik-logo.png" alt=""></div>
+        <div class="sp-provider"><img src="../../public/provider-icons/alienVaultOtx-logo.png" alt=""></div>
+        <div class="sp-provider"><img src="../../public/provider-icons/abuseipdb-logo.png" alt=""></div>
+        <div class="sp-provider pending"><img src="../../public/provider-icons/pulsedive-logo.png" alt=""></div>
+        <div class="sp-provider pending"><img src="../../public/provider-icons/greynoise-logo.png" alt=""></div>
+      </div>
+
+      <div class="result card">
+        <div class="result-head">
+          <div class="score"><b>12</b><i>/ 95</i></div>
+          <div>
+            <div class="result-title">VirusTotal</div>
+            <div class="result-sub">login-portal.financorp.net</div>
+          </div>
+          <span class="pill malicious">Malicious</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><i>Malicious</i><b class="red">12</b></div>
+          <div class="stat"><i>Suspicious</i><b>3</b></div>
+          <div class="stat"><i>Harmless</i><b class="green">55</b></div>
+          <div class="stat"><i>Undetected</i><b>25</b></div>
+        </div>
+      </div>
+
+      <div class="result2 card">
+        <div class="r2-head">
+          <img src="../../public/provider-icons/siberguvenlik-logo.png" alt="">
+          <b>Türkiye SGB</b>
+          <span class="pill malicious">Listed</span>
+        </div>
+        <div class="crit">
+          <div class="crit-row"><i>Criticality</i><b>8 / 10</b></div>
+          <div class="crit-track"><div class="crit-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

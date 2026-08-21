@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { width: 1280px; height: 800px; }
+  .stage { display: flex; align-items: center; gap: 60px; padding: 0 72px; }
+
+  .copy { width: 450px; flex-shrink: 0; }
+  .copy .chip { margin-bottom: 18px; }
+  .copy .h1 { font-size: 50px; margin-bottom: 18px; }
+  .copy .sub { font-size: 18px; margin-bottom: 34px; }
+  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .type {
+    display: flex; align-items: center; gap: 9px;
+    padding: 11px 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Commit Mono', monospace;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+  .type::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+  /* Rapor mockup: açık zeminli sayfa, seçim + floating button */
+  .page {
+    flex: 1;
+    background: #F7F7F5;
+    border-radius: 18px;
+    padding: 44px 48px 104px;
+    color: #1F1F24;
+    box-shadow: 0 40px 90px rgba(0,0,0,.55);
+    position: relative;
+  }
+  .page h3 { font-size: 20px; font-weight: 640; letter-spacing: -0.02em; margin-bottom: 16px; color: #141417; }
+  .page p { font-family: 'Commit Mono', monospace; font-size: 14.5px; line-height: 2.05; color: #3C3C43; }
+  .hl { background: rgba(153, 153, 170, 0.22); border-radius: 3px; padding: 1px 0; }
+  .ioc { border-bottom: 2px solid #7BB662; }
+  .ioc.red { border-bottom-color: #D95B60; }
+  .ioc.purple { border-bottom-color: #9a6fd0; }
+
+  /* Buton, gerçek UX'teki gibi seçimin bittiği yerin sağ-altında durur */
+  .fab {
+    position: absolute;
+    right: 118px;
+    bottom: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 16px 11px 12px;
+    background: #1A1A1F;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(0,0,0,.35);
+  }
+  .fab img { width: 22px; height: 22px; }
+  .fab b { font-size: 13.5px; font-weight: 600; color: #fff; }
+  .fab i {
+    font-style: normal;
+    min-width: 20px; height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: rgba(199, 245, 77, .16);
+    color: var(--accent);
+    font-size: 11px; font-weight: 640;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .cursor { position: absolute; right: 106px; bottom: 24px; }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grid-lines"></div>
+  <div class="stage">
+    <div class="copy">
+      <div class="chip">Detection</div>
+      <div class="h1">Reads reports<br>like you do.</div>
+      <p class="sub">Select any text — Ahtapot finds the indicators, even defanged ones. <span class="mono" style="color:var(--text)">hxxps://</span> and <span class="mono" style="color:var(--text)">[.]</span> are handled automatically.</p>
+      <div class="types">
+        <span class="type">IPv4 / IPv6</span>
+        <span class="type">Domain / URL</span>
+        <span class="type">MD5 / SHA1 / SHA256</span>
+        <span class="type">CVE ID</span>
+        <span class="type">Email</span>
+        <span class="type">BTC / ETH wallet</span>
+      </div>
+    </div>
+
+    <div class="page">
+      <h3>Threat Advisory — FIN-2026-081</h3>
+      <p>
+        <span class="hl">Phishing emails originated from <span class="ioc">secure-updates[.]financorp[.]net</span> and linked to
+        <span class="ioc red">hxxps://login-portal[.]financorp[.]net/auth/verify</span>, a credential harvesting page.
+        Post-exploitation, the actor leveraged <span class="ioc purple">CVE-2021-44228</span> and staged payloads on
+        <span class="ioc red">203.0.113.50</span>. The dropped loader matches
+        <span class="ioc">e3b0c44298fc1c149afbf4c8996fb924…</span></span>
+      </p>
+
+      <div class="fab">
+        <img src="../../public/icons/mark.svg" alt="">
+        <b>Analyze</b>
+        <i>5</i>
+      </div>
+      <svg class="cursor" width="22" height="22" viewBox="0 0 24 24" fill="#141417" stroke="#fff" stroke-width="1.6"><path d="M5 3l14 9-6.5 1.5L9 20z"/></svg>
+    </div>
+  </div>
+</body>
+</html>

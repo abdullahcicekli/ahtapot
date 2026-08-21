@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { width: 1280px; height: 800px; }
+  .stage { display: flex; align-items: center; gap: 60px; padding: 0 72px; }
+
+  .mock { width: 600px; flex-shrink: 0; padding: 22px; }
+
+  .ai-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    background: var(--bg-inset);
+    border: 1px solid var(--border-hi);
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .select {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hi);
+    border-radius: 9px;
+    font-size: 13px; font-weight: 520;
+  }
+  .select img { width: 16px; height: 16px; object-fit: contain; filter: grayscale(1) invert(1) brightness(1.1); }
+  .select svg { opacity: .5; }
+  .run {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--text);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 640;
+  }
+
+  .verdict { padding: 20px; }
+  .v-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .v-icon {
+    width: 40px; height: 40px; border-radius: 11px;
+    background: rgba(242, 85, 90, .12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .v-head b { font-size: 17px; font-weight: 620; display: block; }
+  .v-head i { font-style: normal; font-family: 'Commit Mono', monospace; font-size: 11px; color: var(--text-2); }
+  .v-head .pill { margin-left: auto; }
+
+  .sev { margin-bottom: 18px; }
+  .sev-row { display: flex; justify-content: space-between; font-family: 'Commit Mono', monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+  .sev-row i { font-style: normal; color: var(--text-3); }
+  .sev-row b { color: var(--danger); }
+  .sev-track { height: 7px; border-radius: 99px; background: var(--border); }
+  .sev-fill { width: 86%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--warning), var(--danger)); }
+
+  .v-text { font-size: 14px; line-height: 1.6; color: var(--text-2); }
+  .v-text b { color: var(--text); font-weight: 560; }
+
+  .v-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+  .copy { max-width: 470px; }
+  .copy .chip { margin-bottom: 18px; }
+  .copy .h1 { font-size: 50px; margin-bottom: 18px; }
+  .copy .sub { font-size: 18px; margin-bottom: 34px; }
+  .features { display: flex; flex-direction: column; gap: 20px; }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grid-lines"></div>
+  <div class="stage">
+    <div class="mock panel">
+      <div class="ai-bar">
+        <span class="select">
+          Claude Opus 5
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+        <span class="select">
+          Summary
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+        <span class="run">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Analyze
+        </span>
+      </div>
+
+      <div class="verdict card">
+        <div class="v-head">
+          <span class="v-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2555A" stroke-width="2"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.7 3.86a2 2 0 0 0-3.4 0z"/></svg>
+          </span>
+          <span>
+            <b>Phishing infrastructure</b>
+            <i>login-portal.financorp.net</i>
+          </span>
+          <span class="pill malicious">High risk</span>
+        </div>
+
+        <div class="sev">
+          <div class="sev-row"><i>Severity</i><b>8.6 / 10</b></div>
+          <div class="sev-track"><div class="sev-fill"></div></div>
+        </div>
+
+        <p class="v-text">Domain registered <b>11 days ago</b> and flagged by 12 engines. Hosts a credential-harvesting page mimicking a corporate SSO portal; infrastructure overlaps with a known <b>phishing kit</b> cluster on the same ASN.</p>
+
+        <div class="v-tags">
+          <span class="pill malicious">credential theft</span>
+          <span class="pill warn">young domain</span>
+          <span class="pill warn">shared ASN</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy">
+      <div class="chip">AI Analysis</div>
+      <div class="h1">Raw data in.<br>Verdicts out.</div>
+      <p class="sub">Let a model read every provider result and explain what it means — in plain language.</p>
+      <div class="features">
+        <div class="feature">
+          <span class="feature-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C7F54D" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b>Claude, GPT &amp; Gemini</b><span>Three tiers per provider — economy to frontier. Your key, your choice.</span></span>
+        </div>
+        <div class="feature">
+          <span class="feature-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C7F54D" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b>Structured verdicts</b><span>Severity, indicators and recommended actions — not a wall of text.</span></span>
+        </div>
+        <div class="feature">
+          <span class="feature-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C7F54D" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b>Summary or deep-dive</b><span>Quick triage for the queue, full analysis when it matters.</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
