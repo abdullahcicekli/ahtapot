@@ -1,10 +1,10 @@
 {
   "extName": {
-    "message": "Ahtapot - AI-Powered IOC Threat Intelligence",
+    "message": "Ahtapot — Cyber Threat Intelligence: IOC & AI Security Analysis",
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "AI-powered threat analysis with Claude, Gemini & GPT-4o. 10 intel sources including VirusTotal, Shodan, AbuseIPDB. Privacy-first.",
+    "message": "Cyber threat intelligence in your browser: analyze IPs, domains, URLs & hashes with 11 security sources and AI. Free, open source.",
     "description": "Extension description"
   }
 }

@@ -3,6 +3,20 @@
 Release süreci tamamen otomatiktir; `main`'e merge edilen her sürüm bump'ı
 kendini yayınlar.
 
+## Paketten gelen mağaza alanları (Title / Summary from package)
+
+Chrome Web Store'daki **başlık** ve **özet (Summary)** dashboard'dan değil,
+paketten gelir: `src/manifest.json` → `__MSG_extName__` / `__MSG_extDescription__`
+→ `public/_locales/{en,tr}/messages.json`. Bu alanları değiştirmek yeni bir
+paket yüklemek, yani **sürüm bump'ı + release** demektir ve mağazada yeniden
+incelemeye girer.
+
+**Kural:** Bu alanlarda değişiklik gerektiğinde önce kullanıcıyı uyar
+(değişikliğin release gerektirdiğini ve önerilen yeni metinleri göstererek),
+onay al, sonra değiştir. Karakter sınırları: name ≤ 75 (vitrin görünümü için
+≤ 45 idealdir), description ≤ 132. `docs/store-assets/listing.md` ile tutarlı
+tut.
+
 ## Akış
 
 1. Feature branch'inde çalış; `package.json` **ve** `src/manifest.json`
