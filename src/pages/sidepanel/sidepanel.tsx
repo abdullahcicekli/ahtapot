@@ -53,6 +53,7 @@ const PROVIDER_SUPPORT: Record<string, IOCType[]> = {
   'OTX AlienVault': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL, IOCType.MD5, IOCType.SHA1, IOCType.SHA256, IOCType.CVE],
   'MalwareBazaar': [IOCType.MD5, IOCType.SHA1, IOCType.SHA256],
   'ARIN': [IOCType.IPV4, IOCType.IPV6],
+  'Turkiye SGB': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN, IOCType.URL],
   'Shodan': [IOCType.IPV4, IOCType.IPV6, IOCType.DOMAIN],
   'GreyNoise': [IOCType.IPV4],
   'URLhaus': [IOCType.URL, IOCType.DOMAIN, IOCType.IPV4, IOCType.IPV6, IOCType.MD5, IOCType.SHA256],
