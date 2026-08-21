@@ -100,6 +100,13 @@ const API_CONFIGS: APIKeyConfig[] = [
     signupLink: 'https://www.arin.net/resources/registry/whois/',
     requiresApiKey: false,
   },
+  {
+    provider: APIProvider.SIBERGUVENLIK,
+    label: 'Turkiye SGB',
+    link: 'https://siberguvenlik.gov.tr/api/',
+    signupLink: 'https://siberguvenlik.gov.tr/',
+    requiresApiKey: false,
+  },
 ];
 
 const OptionsPage: React.FC = () => {
@@ -660,6 +667,7 @@ const OptionsPage: React.FC = () => {
     [APIProvider.URLHAUS]: '/provider-icons/urlhaus-logo.png',
     [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
     [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
+    [APIProvider.SIBERGUVENLIK]: '/provider-icons/siberguvenlik-logo.png',
   };
 
   // Sort API configs by provider order, with locked providers at the end

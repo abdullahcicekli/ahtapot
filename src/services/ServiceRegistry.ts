@@ -9,6 +9,7 @@ import { GreyNoiseService } from './tools/GreyNoiseService';
 import { URLhausService } from './tools/URLhausService';
 import { PulsediveService } from './tools/PulsediveService';
 import { ScamalyticsService } from './tools/ScamalyticsService';
+import { SiberGuvenlikService } from './tools/SiberGuvenlikService';
 import { APIProvider } from '@/types/ioc';
 import { APIKeysStorage } from '@/utils/apiKeyStorage';
 import { isProviderEnabled } from '@/config/providerDisplay';
@@ -25,9 +26,10 @@ export class ServiceRegistry {
     this.services = new Map();
     this.apiKeys = new Map();
 
-    // Initialize ARIN service automatically (no API key required)
+    // Initialize keyless services automatically (no API key required)
     this.initializeService(APIProvider.ARIN);
-    console.log('[ServiceRegistry] ARIN service auto-initialized (no API key required)');
+    this.initializeService(APIProvider.SIBERGUVENLIK);
+    console.log('[ServiceRegistry] ARIN and Turkiye SGB services auto-initialized (no API key required)');
   }
 
   /**
@@ -133,6 +135,17 @@ export class ServiceRegistry {
         console.log('[ServiceRegistry] ARIN service initialized (no API key required)');
         break;
 
+      case APIProvider.SIBERGUVENLIK:
+        // Turkiye SGB is a public feed - always initialize
+        this.services.set(
+          provider,
+          new SiberGuvenlikService({
+            timeout: 30000,
+          })
+        );
+        console.log('[ServiceRegistry] Turkiye SGB service initialized (no API key required)');
+        break;
+
       case APIProvider.SHODAN:
         this.services.set(
           provider,
@@ -233,11 +246,13 @@ export class ServiceRegistry {
       }
     });
 
-    // Always include ARIN service (no API key required, initialized in constructor)
-    const arinService = this.getService(APIProvider.ARIN);
-    if (arinService && arinService.isConfigured()) {
-      console.log('[ServiceRegistry] Including ARIN service (always available, no API key)');
-      configured.push(arinService);
+    // Always include keyless services (no API key required, initialized in constructor)
+    for (const keylessProvider of [APIProvider.ARIN, APIProvider.SIBERGUVENLIK]) {
+      const keylessService = this.getService(keylessProvider);
+      if (keylessService && keylessService.isConfigured()) {
+        console.log(`[ServiceRegistry] Including ${keylessService.name} service (always available, no API key)`);
+        configured.push(keylessService);
+      }
     }
 
     console.log('[ServiceRegistry] Total configured services:', configured.length);
@@ -258,9 +273,9 @@ export class ServiceRegistry {
    * Note: ARIN cannot be removed as it requires no API key and is always available
    */
   removeProvider(provider: APIProvider): void {
-    // Prevent removing ARIN (it's always available)
-    if (provider === APIProvider.ARIN) {
-      console.warn('[ServiceRegistry] Cannot remove ARIN service - it requires no API key and is always available');
+    // Prevent removing keyless services (they're always available)
+    if (provider === APIProvider.ARIN || provider === APIProvider.SIBERGUVENLIK) {
+      console.warn('[ServiceRegistry] Cannot remove a keyless service - it requires no API key and is always available');
       return;
     }
 
@@ -276,9 +291,10 @@ export class ServiceRegistry {
     this.services.clear();
     this.apiKeys.clear();
 
-    // Re-initialize ARIN (always available, no API key needed)
+    // Re-initialize keyless services (always available, no API key needed)
     this.initializeService(APIProvider.ARIN);
-    console.log('[ServiceRegistry] ARIN service re-initialized after clear (no API key required)');
+    this.initializeService(APIProvider.SIBERGUVENLIK);
+    console.log('[ServiceRegistry] Keyless services re-initialized after clear (no API key required)');
   }
 }
 

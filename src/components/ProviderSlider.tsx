@@ -37,6 +37,7 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: 'URLhaus',
   [APIProvider.PULSEDIVE]: 'Pulsedive',
   [APIProvider.SCAMALYTICS]: 'Scamalytics',
+  [APIProvider.SIBERGUVENLIK]: 'Turkiye SGB',
 };
 
 const PROVIDER_LOGOS: Record<APIProvider, string> = {
@@ -50,6 +51,7 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
   [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
   [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
+  [APIProvider.SIBERGUVENLIK]: '/provider-icons/siberguvenlik-logo.png',
 };
 
 export const ProviderSlider: React.FC<ProviderSliderProps> = ({

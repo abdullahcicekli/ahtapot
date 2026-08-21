@@ -135,6 +135,11 @@
       "label": "ARIN WHOIS",
       "description": "IP address registration and network information",
       "placeholder": "No API key required"
+    },
+    "siberguvenlik": {
+      "label": "Turkiye SGB",
+      "description": "National threat feed by the Turkish Cybersecurity Directorate (TR-CERT/USOM)",
+      "placeholder": "No API key required"
     }
   },
   "lockedProvider": {
@@ -223,6 +228,12 @@
       "feature2": "Datacenter & VPN detection",
       "feature3": "TOR exit node detection",
       "feature4": "External blacklist checks"
+    },
+    "siberguvenlik": {
+      "feature1": "Malicious domain / URL / IP feed",
+      "feature2": "Phishing & malware categorization",
+      "feature3": "Criticality scoring (1-10)",
+      "feature4": "APT / botnet C&C tagging"
     }
   },
   "limits": {
@@ -261,6 +272,10 @@
     "scamalytics": {
       "free": "5,000 credits/month",
       "rate": "15-day PREMIUM trial"
+    },
+    "siberguvenlik": {
+      "free": "Unlimited (public feed)",
+      "rate": "Fair use"
     }
   },
   "actions": {

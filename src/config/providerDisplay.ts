@@ -21,6 +21,7 @@ export const PROVIDER_ENABLED_STATUS: Record<APIProvider, boolean> = {
   [APIProvider.SHODAN]: true,
   [APIProvider.MALWAREBAZAAR]: true,
   [APIProvider.ARIN]: true,
+  [APIProvider.SIBERGUVENLIK]: true,
 };
 
 /**
@@ -55,6 +56,7 @@ export function getDisabledProviders(): APIProvider[] {
  */
 export const DEFAULT_PROVIDER_ORDER: APIProvider[] = [
   APIProvider.VIRUSTOTAL,
+  APIProvider.SIBERGUVENLIK,
   APIProvider.URLHAUS,
   APIProvider.ABUSEIPDB,
   APIProvider.PULSEDIVE,

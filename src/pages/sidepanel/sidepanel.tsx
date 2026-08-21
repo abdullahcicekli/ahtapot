@@ -24,6 +24,7 @@ import { OTXResultCard } from '@/components/results/OTXResultCard';
 import { AbuseIPDBResultCard } from '@/components/results/AbuseIPDBResultCard';
 import { MalwareBazaarResultCard } from '@/components/results/MalwareBazaarResultCard';
 import { ARINResultCard } from '@/components/results/ARINResultCard';
+import { SGBResultCard } from '@/components/results/SGBResultCard';
 import { ShodanResultCard } from '@/components/results/ShodanResultCard';
 import { GreyNoiseResultCard } from '@/components/results/GreyNoiseResultCard';
 import { URLhausResultCard } from '@/components/results/URLhausResultCard';
@@ -898,6 +899,10 @@ const SidePanel: React.FC = () => {
 
                     if (result.source === 'ARIN') {
                       return <ARINResultCard key={`${result.ioc.value}-${index}`} result={result} />;
+                    }
+
+                    if (result.source === 'Turkiye SGB') {
+                      return <SGBResultCard key={`${result.ioc.value}-${index}`} result={result} />;
                     }
 
                     if (result.source === 'Shodan') {

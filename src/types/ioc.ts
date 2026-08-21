@@ -55,6 +55,7 @@ export enum APIProvider {
   URLHAUS = 'urlhaus',
   PULSEDIVE = 'pulsedive',
   SCAMALYTICS = 'scamalytics',
+  SIBERGUVENLIK = 'siberguvenlik',
 }
 
 /**

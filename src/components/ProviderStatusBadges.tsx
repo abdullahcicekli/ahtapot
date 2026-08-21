@@ -31,6 +31,7 @@ const PROVIDER_LABELS: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: 'URLhaus',
   [APIProvider.PULSEDIVE]: 'Pulsedive',
   [APIProvider.SCAMALYTICS]: 'Scamalytics',
+  [APIProvider.SIBERGUVENLIK]: 'Turkiye SGB',
 };
 
 // Map providers to their logo images
@@ -45,6 +46,7 @@ const PROVIDER_LOGOS: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
   [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
   [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
+  [APIProvider.SIBERGUVENLIK]: '/provider-icons/siberguvenlik-logo.png',
 };
 
 // Map provider enum to i18n key
@@ -59,6 +61,7 @@ const PROVIDER_I18N_KEYS: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: 'urlhaus',
   [APIProvider.PULSEDIVE]: 'pulsedive',
   [APIProvider.SCAMALYTICS]: 'scamalytics',
+  [APIProvider.SIBERGUVENLIK]: 'siberguvenlik',
 };
 
 /**
