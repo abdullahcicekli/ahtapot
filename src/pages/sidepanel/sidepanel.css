@@ -130,11 +130,11 @@ body {
   display: flex;
   gap: 12px;
   padding: 16px;
-  background: rgba(199, 245, 77, 0.08);
-  border: 1px solid rgba(199, 245, 77, 0.2);
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
   border-radius: 12px;
   margin-bottom: 20px;
-  color: var(--accent);
+  color: var(--text-secondary);
   animation: slideDown 0.3s ease-out;
 }
 
@@ -172,7 +172,7 @@ body {
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: var(--accent);
+  background: var(--text);
   color: var(--accent-ink);
   border: none;
   border-radius: 6px;
@@ -204,8 +204,8 @@ body {
 }
 
 .search-bar:focus-within {
-  border-color: rgba(199, 245, 77, 0.4);
-  box-shadow: 0 0 0 2px rgba(199, 245, 77, 0.1);
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.10);
 }
 
 .search-icon {
@@ -215,7 +215,7 @@ body {
 }
 
 .search-bar:focus-within .search-icon {
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .search-input {
@@ -260,8 +260,8 @@ body {
 .detected-count {
   flex-shrink: 0;
   padding: 3px 8px;
-  background: var(--accent-dim);
-  color: var(--accent);
+  background: var(--bg-input);
+  color: var(--text-secondary);
   border-radius: 10px;
   font-weight: 600;
   font-size: 10px;
@@ -283,8 +283,8 @@ body {
 }
 
 .analyze-btn-compact.has-input {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--text);
+  border-color: var(--border-hi);
   color: var(--accent-ink);
 }
 
@@ -399,8 +399,8 @@ body {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--text-secondary);
+  background: var(--bg-input);
   padding: 4px 8px;
   border-radius: 4px;
   white-space: nowrap;
@@ -438,11 +438,11 @@ body {
 .ioc-provider-badge {
   font-size: 10px;
   font-weight: 600;
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--text-secondary);
+  background: var(--bg-input);
   padding: 2px 6px;
   border-radius: 3px;
-  border: 1px solid rgba(199, 245, 77, 0.2);
+  border: 1px solid var(--border-hi);
   white-space: nowrap;
 }
 
@@ -509,13 +509,13 @@ body {
 }
 
 .ioc-tab.active {
-  background: var(--accent);
+  background: var(--text);
   color: var(--accent-ink);
   font-weight: 600;
 }
 
 .ioc-tab.active:hover {
-  background: var(--accent);
+  background: var(--text);
 }
 
 .result-card {
@@ -527,7 +527,7 @@ body {
 }
 
 .result-card:hover {
-  border-color: rgba(199, 245, 77, 0.2);
+  border-color: var(--border-hi);
 }
 
 .result-header {
@@ -613,8 +613,8 @@ body {
 }
 
 .result-status.unknown {
-  background: rgba(199, 245, 77, 0.15);
-  color: var(--accent);
+  background: var(--bg-input);
+  color: var(--text-secondary);
 }
 
 .result-status.error {
@@ -642,8 +642,8 @@ body {
 /* Unsupported IOC Type Display */
 .result-unsupported {
   padding: 12px 16px;
-  background: rgba(199, 245, 77, 0.05);
-  border-top: 1px solid rgba(199, 245, 77, 0.1);
+  background: var(--bg-input);
+  border-top: 1px solid var(--border-hi);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -654,7 +654,7 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--accent);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -680,11 +680,11 @@ body {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--text-secondary);
+  background: var(--bg-input);
   padding: 4px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(199, 245, 77, 0.2);
+  border: 1px solid var(--border-hi);
   white-space: nowrap;
 }
 
@@ -745,7 +745,7 @@ body {
 }
 
 .no-results-icon {
-  color: var(--accent);
+  color: var(--text-secondary);
   opacity: 0.6;
 }
 
@@ -759,15 +759,15 @@ body {
 .searched-iocs-section {
   margin-bottom: 20px;
   padding: 16px;
-  background: rgba(199, 245, 77, 0.05);
-  border: 1px solid rgba(199, 245, 77, 0.15);
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
   border-radius: 8px;
 }
 
 .searched-iocs-label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--text-secondary);
   margin: 0 0 12px 0;
 }
 
@@ -790,9 +790,9 @@ body {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text-secondary);
   padding: 2px 8px;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border-radius: 4px;
   white-space: nowrap;
 }
@@ -840,9 +840,9 @@ body {
   font-size: 12px;
   font-weight: 500;
   padding: 8px 12px;
-  background: var(--accent-dim);
-  color: var(--accent);
-  border: 1px solid rgba(199, 245, 77, 0.2);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hi);
   border-radius: 6px;
   text-align: center;
   white-space: nowrap;
@@ -937,7 +937,7 @@ body {
 
 .supported-iocs li:before {
   content: '✓';
-  color: var(--accent);
+  color: var(--text-secondary);
   font-weight: bold;
   margin-right: 8px;
 }

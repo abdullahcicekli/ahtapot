@@ -8,7 +8,7 @@
 }
 
 .ai-structured-card:hover {
-  border-color: rgba(199, 245, 77, 0.2);
+  border-color: var(--border-hi);
 }
 
 /* Header */
@@ -47,8 +47,8 @@
 .ai-structured-mode-badge {
   font-size: 11px;
   font-weight: 600;
-  color: var(--accent, #C7F54D);
-  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
+  color: var(--text-secondary);
+  background: var(--bg-input);
   padding: 3px 8px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -229,8 +229,8 @@
 }
 
 .ai-section.executive {
-  background: rgba(199, 245, 77, 0.05);
-  border: 1px solid rgba(199, 245, 77, 0.1);
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
   border-radius: 8px;
   padding: 14px;
 }
@@ -247,7 +247,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -298,8 +298,8 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: rgba(199, 245, 77, 0.08);
-  border: 1px solid rgba(199, 245, 77, 0.2);
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
   border-radius: 8px;
   padding: 12px 14px;
   margin-top: 16px;
@@ -307,7 +307,7 @@
 
 .ai-action-box svg {
   flex-shrink: 0;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
@@ -498,7 +498,7 @@
   background: rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 4px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .ai-ioc-type,
@@ -631,7 +631,7 @@
 .ai-fp-recommendation {
   margin: 12px 0 0 0;
   font-size: 12px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   font-style: italic;
 }
 
@@ -703,13 +703,13 @@
 }
 
 .ai-structured-btn.requery {
-  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
-  border-color: rgba(199, 245, 77, 0.2);
-  color: var(--accent, #C7F54D);
+  background: var(--bg-input);
+  border-color: var(--border-hi);
+  color: var(--text-secondary);
 }
 
 .ai-structured-btn.requery:hover {
-  background: rgba(199, 245, 77, 0.15);
+  background: var(--bg-input);
 }
 
 /* Icon-only mode for small screens */
@@ -734,7 +734,7 @@
 
 /* Links */
 .ai-link {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   text-decoration: none;
   display: inline-flex;
   align-items: center;

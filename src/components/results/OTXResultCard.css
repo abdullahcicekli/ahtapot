@@ -173,9 +173,9 @@
 /* Threat Summary */
 .otx-threat-summary {
   padding: var(--space-lg, 16px) var(--space-xl, 20px);
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  background: var(--accent-bg, var(--bg-input));
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
-  border-left: 3px solid var(--accent, #C7F54D);
+  border-left: 3px solid var(--border-hi);
   cursor: pointer;
 }
 
@@ -185,7 +185,7 @@
   justify-content: space-between;
   font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .otx-threat-summary-content {
@@ -250,11 +250,11 @@
   font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent, #C7F54D);
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  color: var(--text-secondary);
+  background: var(--accent-bg, var(--bg-input));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  border: 1px solid var(--accent-border, var(--border-hi));
 }
 
 /* Tabs */
@@ -286,14 +286,14 @@
 }
 
 .otx-tab.active {
-  color: var(--accent, #C7F54D);
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border-bottom-color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
+  background: var(--accent-bg, var(--bg-input));
+  border-bottom-color: var(--border-hi);
 }
 
 .otx-tab-badge {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: var(--text-sm, 11px);
@@ -376,11 +376,11 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  border: 1px solid var(--accent-border, var(--border-hi));
   border-radius: var(--radius-lg, 8px);
   font-size: var(--text-sm, 11px);
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .otx-pulse-tag-more {
@@ -404,7 +404,7 @@
 }
 
 .otx-pulse-malware { background: var(--danger-bg, rgba(242, 85, 90, 0.08)); }
-.otx-pulse-countries { background: var(--accent-bg, rgba(199, 245, 77, 0.08)); }
+.otx-pulse-countries { background: var(--accent-bg, var(--bg-input)); }
 .otx-pulse-malware strong,
 .otx-pulse-countries strong { color: var(--text-primary, #FFFFFF); }
 
@@ -421,7 +421,7 @@
 .otx-pulse-date { color: var(--text-muted, rgba(255, 255, 255, 0.5)); }
 
 .otx-pulse-link {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
 }
@@ -461,7 +461,7 @@
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   margin-bottom: var(--space-md, 12px);
 }
 
@@ -485,11 +485,11 @@
 
 .otx-tag {
   padding: 5px 10px;
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  border: 1px solid var(--accent-border, var(--border-hi));
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .otx-tag.adversary {
@@ -517,17 +517,17 @@
 
 .otx-page-btn {
   padding: var(--space-sm, 8px) var(--space-lg, 16px);
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  border: 1px solid var(--accent-border, var(--border-hi));
   border-radius: var(--radius-md, 6px);
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   font-size: var(--text-md, 13px);
   cursor: pointer;
 }
 
 .otx-page-btn:hover:not(:disabled) {
-  background: rgba(199, 245, 77, 0.2);
-  border-color: var(--accent, #C7F54D);
+  background: var(--bg-input);
+  border-color: var(--border-hi);
 }
 
 .otx-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }

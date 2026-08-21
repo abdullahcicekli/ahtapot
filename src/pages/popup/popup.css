@@ -61,7 +61,7 @@ body {
 }
 
 .menu-item:hover .menu-item-icon {
-  background: var(--accent);
+  background: var(--text);
   color: var(--bg-primary);
 }
 
@@ -76,9 +76,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border-radius: 8px;
-  color: var(--accent);
+  color: var(--text-secondary);
   transition: all 0.15s ease;
 }
 

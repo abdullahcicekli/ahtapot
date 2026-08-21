@@ -27,9 +27,9 @@
 
 .copy-btn:hover,
 .export-btn:hover {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border-color: var(--accent-border, rgba(199, 245, 77, 0.3));
-  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, var(--bg-input));
+  border-color: var(--accent-border, var(--border-hi));
+  color: var(--text-secondary);
 }
 
 .copy-btn.copied {
@@ -39,9 +39,9 @@
 }
 
 .export-btn.exporting {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border-color: var(--accent-border, rgba(199, 245, 77, 0.3));
-  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, var(--bg-input));
+  border-color: var(--accent-border, var(--border-hi));
+  color: var(--text-secondary);
   pointer-events: none;
 }
 

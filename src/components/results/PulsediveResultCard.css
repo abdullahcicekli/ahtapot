@@ -169,9 +169,9 @@
 }
 
 .pulsedive-external-link:hover {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border-color: var(--accent-border, rgba(199, 245, 77, 0.3));
-  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, var(--bg-input));
+  border-color: var(--accent-border, var(--border-hi));
+  color: var(--text-secondary);
 }
 
 /* Content */
@@ -216,14 +216,14 @@
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .pulsedive-metric-header svg {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .pulsedive-metric-body {
@@ -293,11 +293,11 @@
 
 .pulsedive-tag {
   padding: 5px 10px;
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  border: 1px solid var(--accent-border, var(--border-hi));
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .pulsedive-tag.threat {

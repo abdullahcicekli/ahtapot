@@ -9,7 +9,7 @@
 }
 
 .greynoise-result-card:hover {
-  border-color: var(--border-hover, rgba(199, 245, 77, 0.3));
+  border-color: var(--border-hover, var(--border-hi));
 }
 
 /* Header */
@@ -175,9 +175,9 @@
 }
 
 .greynoise-ioc-badge {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  color: var(--accent, #C7F54D);
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
+  border: 1px solid var(--accent-border, var(--border-hi));
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -274,7 +274,7 @@
 }
 
 .greynoise-metric-header svg {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   width: 16px;
   height: 16px;
 }
@@ -382,9 +382,9 @@
 }
 
 .greynoise-tag {
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
-  color: var(--accent, #C7F54D);
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
+  border: 1px solid var(--accent-border, var(--border-hi));
   padding: 5px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -438,7 +438,7 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--accent, #C7F54D);
+  background: var(--text);
   color: var(--bg-header, #121215);
   border: none;
   border-radius: var(--radius-lg, 8px);

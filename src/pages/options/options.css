@@ -142,7 +142,7 @@ body {
   align-items: flex-start;
   gap: 16px;
   margin-bottom: 16px;
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .setting-header > div {
@@ -190,8 +190,8 @@ body {
 }
 
 .language-select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-dim);
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .language-select option {
@@ -216,7 +216,7 @@ body {
 }
 
 .api-keys-icon {
-  color: var(--accent);
+  color: var(--text-secondary);
   margin-top: 4px;
   flex-shrink: 0;
 }
@@ -253,7 +253,7 @@ body {
 
 .customize-order-btn:hover {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
   transform: translateY(-1px);
 }
 
@@ -277,10 +277,7 @@ body {
 }
 
 @keyframes highlight-pulse {
-  0% {
-    background: var(--bg-input);
-    border-color: var(--accent);
-  }
+  0% { background: rgba(255, 255, 255, 0.12); border-color: var(--border-hi); }
   100% {
     background: var(--bg-tertiary);
     border-color: var(--border);
@@ -329,12 +326,12 @@ body {
 
 .info-btn:hover {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
 }
 
 .info-btn.active {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
 }
 
 /* API Info Box */
@@ -394,7 +391,7 @@ body {
 }
 
 .limit-value {
-  color: var(--accent);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -439,7 +436,7 @@ body {
   position: absolute;
   left: 8px;
   top: 8px;
-  background: var(--accent);
+  background: var(--text);
   color: var(--accent-ink);
   width: 20px;
   height: 20px;
@@ -452,7 +449,7 @@ body {
 }
 
 .api-steps-list li a {
-  color: var(--accent);
+  color: var(--text-secondary);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -462,7 +459,7 @@ body {
 }
 
 .api-steps-list li a:hover {
-  border-bottom-color: var(--accent);
+  border-bottom-color: var(--border-hi);
 }
 
 .external-icon {
@@ -493,7 +490,7 @@ body {
 }
 
 .api-key-link {
-  color: var(--accent);
+  color: var(--text-secondary);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -504,9 +501,9 @@ body {
 }
 
 .api-key-link:hover {
-  background: var(--accent);
+  background: var(--text);
   color: var(--accent-ink);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
 }
 
 .api-key-input-wrapper {
@@ -538,8 +535,8 @@ body {
 
 .api-key-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-dim);
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .toggle-visibility-btn {
@@ -657,7 +654,7 @@ body {
 .validate-btn:hover,
 .save-individual-btn:hover {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
   transform: translateY(-1px);
 }
 
@@ -771,8 +768,8 @@ body {
 
 .cache-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-dim);
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .cache-input:disabled {
@@ -807,7 +804,7 @@ body {
 .cache-info-section h4 {
   font-size: 14px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
@@ -867,7 +864,7 @@ body {
 
 .stat-value {
   font-size: 16px;
-  color: var(--accent);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -1031,10 +1028,10 @@ body {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border: 1px solid var(--border-hi);
   border-radius: var(--r-card);
-  color: var(--accent);
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
@@ -1080,9 +1077,9 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 12px 24px;
-  background: var(--accent-dim);
-  border-bottom: 1px solid rgba(199, 245, 77, 0.1);
-  color: var(--accent);
+  background: var(--bg-input);
+  border-bottom: 1px solid var(--border-hi);
+  color: var(--text-secondary);
   font-size: 13px;
   font-weight: 500;
 }
@@ -1141,14 +1138,14 @@ body {
 .modal-provider-item.dragging {
   opacity: 0.5;
   cursor: grabbing;
-  border: 2px dashed var(--accent);
-  background: var(--accent-dim);
+  border: 2px dashed var(--border-hi);
+  background: var(--bg-input);
   transform: scale(0.98);
 }
 
 .modal-provider-item.drop-target {
-  border-color: var(--accent);
-  background: var(--accent-dim);
+  border-color: var(--border-hi);
+  background: var(--bg-input);
   transform: scale(1.02);
 }
 
@@ -1165,7 +1162,7 @@ body {
 }
 
 .modal-provider-item:hover:not(.locked) .modal-drag-handle-wrapper {
-  background: var(--accent-dim);
+  background: var(--bg-input);
 }
 
 .modal-drag-handle {
@@ -1175,7 +1172,7 @@ body {
 }
 
 .modal-provider-item:hover:not(.locked) .modal-drag-handle {
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .modal-drag-handle:active {
@@ -1188,10 +1185,10 @@ body {
   justify-content: center;
   min-width: 26px;
   height: 26px;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border: 1px solid var(--border-hi);
   border-radius: 6px;
-  color: var(--accent);
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
@@ -1200,7 +1197,7 @@ body {
 
 .modal-provider-item:hover:not(.locked) .modal-provider-number {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
   transform: scale(1.1);
 }
 
@@ -1266,17 +1263,17 @@ body {
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border: 1px solid var(--border-hi);
   border-radius: 4px;
-  color: var(--accent);
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .modal-move-btn:hover:not(.disabled) {
   background: var(--bg-input);
-  border-color: var(--accent);
+  border-color: var(--border-hi);
   transform: scale(1.1);
 }
 

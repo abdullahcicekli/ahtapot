@@ -162,7 +162,7 @@
   justify-content: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--accent, #C7F54D);
+  background: var(--text);
   border: none;
   border-radius: var(--radius-lg, 8px);
   color: var(--bg-header, #121215);

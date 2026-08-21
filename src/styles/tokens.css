@@ -55,4 +55,42 @@
   --font-sans: 'Uncut Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', sans-serif;
   --font-mono: 'Commit Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* The result cards were written against these names, historically without
+     definitions, so styles silently leaned on their fallbacks. Values match
+     the dominant fallbacks so defining them changes nothing visually, and
+     the "accent" chip surfaces resolve to neutral chrome per the accent
+     budget. */
+  --accent-bg: var(--bg-input);
+  --accent-border: var(--border-hi);
+  --bg-card: var(--bg-tertiary);
+  --bg-header: var(--bg-secondary);
+  --bg-section: var(--bg-input);
+  --border-default: var(--border);
+  --text-primary: var(--text);
+  --text-muted: var(--text-tertiary);
+  --danger-border: rgba(242, 85, 90, 0.3);
+  --warning-border: rgba(240, 178, 60, 0.3);
+  --success-border: rgba(123, 216, 143, 0.3);
+  --info-border: rgba(56, 189, 248, 0.3);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --text-xs: 10px;
+  --text-sm: 11px;
+  --text-base: 12px;
+  --text-md: 13px;
+  --text-lg: 14px;
+  --text-2xl: 20px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+}
+
+/* The one systematic accent on chrome, mirroring the site: keyboard focus. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

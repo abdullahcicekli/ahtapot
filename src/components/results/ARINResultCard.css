@@ -33,7 +33,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--accent, #C7F54D);
+  background: var(--text);
   color: var(--bg-header, #121215);
   flex-shrink: 0;
 }
@@ -173,11 +173,11 @@
   font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent, #C7F54D);
-  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  color: var(--text-secondary);
+  background: var(--accent-bg, var(--bg-input));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
+  border: 1px solid var(--accent-border, var(--border-hi));
 }
 
 /* Summary */
@@ -223,11 +223,11 @@
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .arin-metric-header svg {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   width: 16px;
   height: 16px;
 }
@@ -305,7 +305,7 @@
 .arin-netblock-type {
   font-size: var(--text-sm, 11px);
   font-weight: 600;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   text-transform: uppercase;
 }
 

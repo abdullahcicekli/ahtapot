@@ -28,7 +28,7 @@
 }
 
 .ai-providers-icon {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   margin-top: 4px;
   flex-shrink: 0;
 }
@@ -64,7 +64,7 @@
 }
 
 .ai-provider-card:hover {
-  border-color: rgba(199, 245, 77, 0.3);
+  border-color: var(--border-hi);
 }
 
 .ai-provider-card.highlight-flash {
@@ -139,12 +139,12 @@
 }
 
 .ai-info-section h4 svg {
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 /* Pricing Section */
 .ai-pricing-section {
-  background: var(--accent-dim, rgba(199, 245, 77, 0.15));
+  background: var(--bg-input);
   border-radius: 8px;
   padding: 14px;
   margin: -4px -4px 16px;
@@ -177,10 +177,10 @@
 .ai-model-id {
   font-family: var(--font-mono);
   font-size: 11px;
-  background: rgba(199, 245, 77, 0.1);
+  background: var(--bg-input);
   padding: 4px 8px;
   border-radius: 4px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .ai-pricing-summary {
@@ -220,7 +220,7 @@
 .ai-pricing-value {
   font-size: 14px;
   font-weight: 500;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .ai-pricing-note {
@@ -238,7 +238,7 @@
 .ai-pricing-note svg {
   flex-shrink: 0;
   margin-top: 1px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 .ai-pricing-link {
@@ -246,14 +246,14 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 0.2s ease;
 }
 
 .ai-pricing-link:hover {
-  border-bottom-color: var(--accent, #C7F54D);
+  border-bottom-color: var(--border-hi);
 }
 
 /* Steps List */
@@ -278,7 +278,7 @@
   position: absolute;
   left: 8px;
   top: 8px;
-  background: var(--accent, #C7F54D);
+  background: var(--text);
   color: #121215;
   width: 20px;
   height: 20px;
@@ -298,14 +298,14 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
 
 .ai-steps-list a:hover {
-  border-bottom-color: var(--accent, #C7F54D);
+  border-bottom-color: var(--border-hi);
 }
 
 .external-icon {
@@ -324,7 +324,7 @@
   background: var(--bg-secondary, #171719);
   padding: 6px 12px;
   border-radius: 6px;
-  color: var(--accent, #C7F54D);
+  color: var(--text-secondary);
 }
 
 /* Input Wrapper */
@@ -351,8 +351,8 @@
 }
 
 .ai-key-input:focus {
-  border-color: var(--accent, #C7F54D);
-  box-shadow: 0 0 0 2px var(--accent-dim, rgba(199, 245, 77, 0.15));
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
 .ai-key-input.invalid {
@@ -387,7 +387,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: var(--accent, #C7F54D);
+  background: var(--text);
   border: none;
   border-radius: 6px;
   font-size: 14px;
@@ -462,9 +462,9 @@
 
 /* Info Button */
 .ai-provider-card .info-btn {
-  background: var(--accent-dim, rgba(199, 245, 77, 0.15));
-  border: 1px solid rgba(199, 245, 77, 0.3);
-  color: var(--accent, #C7F54D);
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 8px;
   display: flex;
@@ -476,12 +476,12 @@
 }
 
 .ai-provider-card .info-btn:hover {
-  background: rgba(199, 245, 77, 0.25);
-  border-color: var(--accent, #C7F54D);
+  background: var(--bg-input);
+  border-color: var(--border-hi);
 }
 
 .ai-provider-card .info-btn.active {
-  background: rgba(199, 245, 77, 0.3);
-  border-color: var(--accent, #C7F54D);
+  background: var(--bg-input);
+  border-color: var(--border-hi);
 }
 

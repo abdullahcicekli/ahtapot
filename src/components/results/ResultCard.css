@@ -195,7 +195,7 @@
   gap: var(--space-sm);
   font-size: var(--text-md);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--text-secondary);
   margin-bottom: var(--space-md);
 }
 
@@ -250,14 +250,14 @@
 }
 
 .tab-base.active {
-  color: var(--accent);
+  color: var(--text-secondary);
   background: var(--accent-bg);
-  border-bottom-color: var(--accent);
+  border-bottom-color: var(--border-hi);
 }
 
 .tab-badge-base {
   background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--text-secondary);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: var(--text-sm);
@@ -271,7 +271,7 @@
   border: 1px solid var(--accent-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .tag-base.danger {
@@ -285,7 +285,7 @@
   font-size: var(--text-sm);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text-secondary);
   background: var(--accent-bg);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
@@ -353,7 +353,7 @@
   align-items: center;
   gap: var(--space-sm);
   padding: 10px var(--space-xl);
-  background: var(--accent);
+  background: var(--text);
   color: var(--bg-header);
   border: none;
   border-radius: var(--radius-lg);
