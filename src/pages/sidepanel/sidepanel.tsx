@@ -529,7 +529,7 @@ const SidePanel: React.FC = () => {
       <header className="sidepanel-header">
         <div className="header-title">
           <img
-            src="/icons/logo-white.png"
+            src="/icons/mark.svg"
             alt={t('header.logoAlt')}
             className="header-logo"
           />
@@ -631,7 +631,7 @@ const SidePanel: React.FC = () => {
          {loading && (
           <div className="loading-spinner-container">
             <img
-              src="/icons/logo-white.png"
+              src="/icons/mark.svg"
               alt="Loading"
               className="ahtapot-spinner"
             />

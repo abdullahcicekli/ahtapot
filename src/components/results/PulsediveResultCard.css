@@ -2,8 +2,8 @@
 
 .pulsedive-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
@@ -15,8 +15,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -32,8 +32,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 3px solid var(--risk-color, var(--success));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 3px solid var(--risk-color, var(--success);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--risk-color, var(--success));
+  color: var(--risk-color, var(--success);
 }
 
 .pulsedive-risk-icon svg {
@@ -125,33 +125,33 @@
 }
 
 .pulsedive-status-badge.high {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 .pulsedive-status-badge.medium {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 .pulsedive-status-badge.low {
-  background: var(--info-bg));
+  background: var(--info-bg);
   color: var(--info);
-  border: 1px solid var(--info-border));
+  border: 1px solid var(--info-border);
 }
 
 .pulsedive-status-badge.clean {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
 }
 
 .pulsedive-status-badge.unknown {
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
-  border: 1px solid var(--border-default));
+  border: 1px solid var(--border-default);
 }
 
 /* External Link in header */
@@ -161,16 +161,16 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 6px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   text-decoration: none;
 }
 
 .pulsedive-external-link:hover {
-  background: var(--accent-bg));
-  border-color: var(--accent-border));
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
   color: var(--accent);
 }
 
@@ -185,8 +185,8 @@
   align-items: center;
   gap: var(--space-md, 12px);
   padding: var(--space-lg, 16px);
-  background: var(--info-bg));
-  border: 1px solid var(--info-border));
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
   border-radius: var(--radius-lg, 8px);
   color: var(--info);
   font-size: var(--text-md, 13px);
@@ -200,8 +200,8 @@
 }
 
 .pulsedive-metric-card {
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -219,7 +219,7 @@
   color: var(--accent);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
 }
 
 .pulsedive-metric-header svg {
@@ -265,8 +265,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md, 12px);
-  background: var(--danger-bg));
-  border: 1px solid var(--danger-border));
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
   border-radius: var(--radius-md, 6px);
 }
 
@@ -280,7 +280,7 @@
   font-size: var(--text-sm, 11px);
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
   padding: 4px 8px;
-  background: var(--bg-header, var(--bg-primary));
+  background: var(--bg-header, var(--bg-primary);
   border-radius: var(--radius-sm, 4px);
 }
 
@@ -293,23 +293,23 @@
 
 .pulsedive-tag {
   padding: 5px 10px;
-  background: var(--accent-bg));
-  border: 1px solid var(--accent-border));
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
   color: var(--accent);
 }
 
 .pulsedive-tag.threat {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border-color: var(--danger-border));
+  border-color: var(--danger-border);
 }
 
 .pulsedive-tag.feed {
-  background: var(--info-bg));
+  background: var(--info-bg);
   color: var(--info);
-  border-color: var(--info-border));
+  border-color: var(--info-border);
 }
 
 @media (max-width: 768px) {

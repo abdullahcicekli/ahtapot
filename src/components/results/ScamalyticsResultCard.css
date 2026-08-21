@@ -2,8 +2,8 @@
 
 .scamalytics-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
@@ -15,8 +15,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -32,8 +32,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 3px solid var(--score-color, var(--warning));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 3px solid var(--score-color, var(--warning);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,33 +114,33 @@
 
 .scamalytics-status-badge.very-high,
 .scamalytics-status-badge.high {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 .scamalytics-status-badge.medium {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 .scamalytics-status-badge.low {
-  background: var(--info-bg));
+  background: var(--info-bg);
   color: var(--info);
-  border: 1px solid var(--info-border));
+  border: 1px solid var(--info-border);
 }
 
 .scamalytics-status-badge.very-low {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
 }
 
 .scamalytics-status-badge.unknown {
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
-  border: 1px solid var(--border-default));
+  border: 1px solid var(--border-default);
 }
 
 /* External Link in header */
@@ -150,16 +150,16 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 6px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   text-decoration: none;
 }
 
 .scamalytics-external-link:hover {
-  background: var(--accent-bg));
-  border-color: var(--accent-border));
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
   color: var(--accent);
 }
 
@@ -170,25 +170,25 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   font-size: var(--text-md, 13px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
 }
 
 .scamalytics-status-description.malicious {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
   border-left: 3px solid var(--danger);
 }
 
 .scamalytics-status-description.suspicious {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
   border-left: 3px solid var(--warning);
 }
 
 .scamalytics-status-description.clean {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
   border-left: 3px solid var(--success);
 }
@@ -204,8 +204,8 @@
   align-items: center;
   gap: var(--space-md, 12px);
   padding: var(--space-lg, 16px);
-  background: var(--info-bg));
-  border: 1px solid var(--info-border));
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
   border-radius: var(--radius-lg, 8px);
   color: var(--info);
   font-size: var(--text-md, 13px);
@@ -224,8 +224,8 @@
   flex-direction: column;
   gap: 4px;
   padding: var(--space-md, 12px);
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 6px);
   text-align: center;
 }
@@ -276,17 +276,17 @@
 
 .scamalytics-tag {
   padding: 5px 10px;
-  background: var(--accent-bg));
-  border: 1px solid var(--accent-border));
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
   color: var(--accent);
 }
 
 .scamalytics-tag.warning {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border-color: var(--warning-border));
+  border-color: var(--warning-border);
 }
 
 /* Overview Grid */
@@ -297,8 +297,8 @@
 }
 
 .scamalytics-metric-card {
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -316,7 +316,7 @@
   color: var(--accent);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
 }
 
 .scamalytics-metric-header svg {

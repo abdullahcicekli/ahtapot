@@ -2,8 +2,8 @@
 
 .rate-limit-confirm-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--warning-border));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--warning-border);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
@@ -15,8 +15,8 @@
   justify-content: space-between;
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--warning-border));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--warning-border);
   flex-wrap: wrap;
 }
 
@@ -30,7 +30,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-lg, 8px);
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,8 +66,8 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--info-bg));
-  border: 1px solid var(--info-border));
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
   border-radius: var(--radius-md, 6px);
   color: var(--info);
   font-size: var(--text-base, 12px);
@@ -90,8 +90,8 @@
   align-items: center;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-lg, 16px);
-  background: var(--warning-bg));
-  border: 1px solid var(--warning-border));
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
   border-radius: var(--radius-lg, 8px);
   margin-bottom: var(--space-lg, 16px);
 }
@@ -118,7 +118,7 @@
   display: inline-flex;
   padding: 4px 10px;
   background: var(--warning);
-  color: var(--bg-header, var(--bg-primary));
+  color: var(--bg-header, var(--bg-primary);
   border-radius: var(--radius-sm, 4px);
   font-size: var(--text-sm, 11px);
   font-weight: 600;
@@ -152,7 +152,7 @@
   align-items: center;
   gap: var(--space-md, 12px);
   padding-top: var(--space-lg, 16px);
-  border-top: 1px solid var(--border-default));
+  border-top: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -165,7 +165,7 @@
   background: var(--accent);
   border: none;
   border-radius: var(--radius-lg, 8px);
-  color: var(--bg-header, var(--bg-primary));
+  color: var(--bg-header, var(--bg-primary);
   font-size: var(--text-md, 13px);
   font-weight: 600;
   cursor: pointer;

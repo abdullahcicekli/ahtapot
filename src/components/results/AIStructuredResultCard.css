@@ -1,7 +1,7 @@
 /* AI Structured Result Card */
 .ai-structured-card {
   background: var(--bg-secondary);
-  border: 1px solid var(--border));
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 12px;
@@ -48,7 +48,7 @@
   font-size: 11px;
   font-weight: 600;
   color: var(--accent);
-  background: var(--accent-dim));
+  background: var(--accent-dim);
   padding: 3px 8px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -703,7 +703,7 @@
 }
 
 .ai-structured-btn.requery {
-  background: var(--accent-dim));
+  background: var(--accent-dim);
   border-color: rgba(199, 245, 77, 0.2);
   color: var(--accent);
 }

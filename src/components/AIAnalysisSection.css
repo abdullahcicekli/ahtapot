@@ -1,8 +1,8 @@
 /* AI Analysis Section Styles */
 
 .ai-section {
-  background: var(--bg-tertiary));
-  border: 1px solid var(--border));
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
@@ -20,7 +20,7 @@
 }
 
 .ai-section-empty {
-  background: var(--bg-tertiary));
+  background: var(--bg-tertiary);
   border: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
@@ -46,7 +46,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--accent-dim));
+  background: var(--accent-dim);
   border: 1px solid rgba(199, 245, 77, 0.3);
   border-radius: 6px;
   font-size: 12px;
@@ -90,7 +90,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: var(--accent-dim));
+  background: var(--accent-dim);
   border: 1px solid var(--accent);
   border-radius: 8px;
   cursor: pointer;
@@ -146,7 +146,7 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: var(--bg-primary));
+  background: var(--bg-primary);
   border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -216,8 +216,8 @@
   gap: 8px;
   padding: 6px 10px;
   height: 36px;
-  background: var(--bg-primary));
-  border: 1px solid var(--border));
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -277,7 +277,7 @@
   top: calc(100% + 4px);
   left: 0;
   min-width: 220px;
-  background: var(--bg-primary));
+  background: var(--bg-primary);
   border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -329,7 +329,7 @@
 }
 
 .ai-model-flat-item.selected {
-  background: var(--accent-dim));
+  background: var(--accent-dim);
 }
 
 .ai-model-flat-item:disabled {
@@ -528,8 +528,8 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: var(--bg-primary));
-  border: 1px solid var(--border));
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
@@ -550,7 +550,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 320px;
-  background: var(--bg-primary));
+  background: var(--bg-primary);
   border: 1px solid rgba(199, 245, 77, 0.3);
   border-radius: 12px;
   overflow: hidden;
@@ -630,7 +630,7 @@
 }
 
 .ai-mode-info-item.selected {
-  background: var(--accent-dim));
+  background: var(--accent-dim);
 }
 
 .ai-mode-info-name {
@@ -684,7 +684,7 @@
 }
 
 .ai-mode-info-item.selected .ai-mode-info-audience {
-  background: var(--accent-dim));
+  background: var(--accent-dim);
   color: var(--accent);
 }
 

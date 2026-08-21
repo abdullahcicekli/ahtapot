@@ -2,8 +2,8 @@
 
 .arin-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
@@ -15,8 +15,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -34,7 +34,7 @@
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
   background: var(--accent);
-  color: var(--bg-header, var(--bg-primary));
+  color: var(--bg-header, var(--bg-primary);
   flex-shrink: 0;
 }
 
@@ -103,16 +103,16 @@
 }
 
 .arin-status-badge.info {
-  background: var(--info-bg));
+  background: var(--info-bg);
   color: var(--info);
-  border: 1px solid var(--info-border));
+  border: 1px solid var(--info-border);
 }
 
 /* Not Found */
 .arin-not-found {
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--warning-bg);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .arin-not-found-message {
@@ -139,8 +139,8 @@
   flex-direction: column;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--warning-bg);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .arin-unsupported-message {
@@ -174,10 +174,10 @@
   font-weight: 600;
   text-transform: uppercase;
   color: var(--accent);
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border));
+  border: 1px solid var(--accent-border);
 }
 
 /* Summary */
@@ -186,8 +186,8 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--info-bg));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--info-bg);
+  border-bottom: 1px solid var(--border-default);
   font-size: var(--text-md, 13px);
   color: var(--info);
 }
@@ -204,8 +204,8 @@
 }
 
 .arin-metric-card {
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -220,7 +220,7 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
   font-size: var(--text-md, 13px);
   font-weight: 600;
   color: var(--accent);
@@ -272,7 +272,7 @@
 
 .arin-comment {
   padding: var(--space-md, 12px);
-  background: var(--bg-header, var(--bg-primary));
+  background: var(--bg-header, var(--bg-primary);
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-base, 12px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
@@ -291,7 +291,7 @@
   flex-direction: column;
   gap: 4px;
   padding: var(--space-md, 12px);
-  background: var(--bg-header, var(--bg-primary));
+  background: var(--bg-header, var(--bg-primary);
   border-radius: var(--radius-md, 6px);
   min-width: 180px;
 }

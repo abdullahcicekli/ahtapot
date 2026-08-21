@@ -2,14 +2,14 @@
 
 .vt-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .vt-result-card:hover {
-  border-color: var(--border-hover));
+  border-color: var(--border-hover);
 }
 
 /* Header */
@@ -19,8 +19,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -37,7 +37,7 @@
   border-radius: 50%;
   background: conic-gradient(
     var(--score-color) var(--score-percent),
-    var(--bg-section, var(--bg-tertiary)) var(--score-percent)
+    var(--bg-section, var(--bg-tertiary) var(--score-percent)
   );
   display: flex;
   flex-direction: column;
@@ -51,7 +51,7 @@
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: var(--bg-header, var(--bg-primary));
+  background: var(--bg-header, var(--bg-primary);
 }
 
 .vt-score-value {
@@ -146,21 +146,21 @@
 }
 
 .vt-status-badge.malicious {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 .vt-status-badge.suspicious {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 .vt-status-badge.clean {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
 }
 
 .vt-analysis-date {
@@ -178,23 +178,23 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   font-size: var(--text-md, 13px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
 }
 
 .vt-status-description.malicious {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
   border-left: 3px solid var(--danger);
 }
 
 .vt-status-description.suspicious {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
   border-left: 3px solid var(--warning);
 }
 
 .vt-status-description.clean {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
   border-left: 3px solid var(--success);
 }
@@ -205,9 +205,9 @@
   flex-direction: column;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   border-left: 3px solid var(--warning);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
 }
 
 .vt-unsupported-message {
@@ -241,17 +241,17 @@
   font-weight: 600;
   text-transform: uppercase;
   color: var(--accent);
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border));
+  border: 1px solid var(--accent-border);
 }
 
 /* Tabs */
 .vt-tabs {
   display: flex;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .vt-tab {
@@ -272,18 +272,18 @@
 }
 
 .vt-tab:hover {
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .vt-tab.active {
   color: var(--accent);
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   border-bottom-color: var(--accent);
 }
 
 .vt-tab-badge {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
   padding: 2px 8px;
   border-radius: 10px;
@@ -308,8 +308,8 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm, 8px) var(--space-md, 12px);
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-base, 12px);
 }
@@ -369,13 +369,13 @@
   gap: var(--space-lg, 16px);
   margin-top: var(--space-lg, 16px);
   padding-top: var(--space-lg, 16px);
-  border-top: 1px solid var(--border-default));
+  border-top: 1px solid var(--border-default);
 }
 
 .vt-page-btn {
   padding: 6px 14px;
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 6px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   font-size: var(--text-base, 12px);
@@ -384,7 +384,7 @@
 }
 
 .vt-page-btn:hover:not(:disabled) {
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -407,8 +407,8 @@
 }
 
 .vt-detail-section {
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -428,7 +428,7 @@
   letter-spacing: 0.5px;
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
 }
 
 .vt-detail-header svg {
@@ -479,8 +479,8 @@
 
 .vt-tag {
   padding: 4px 10px;
-  background: var(--accent-bg));
-  border: 1px solid var(--accent-border));
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius-sm, 4px);
   color: var(--accent);
   font-size: var(--text-sm, 11px);

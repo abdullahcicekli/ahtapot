@@ -701,7 +701,7 @@ const OptionsPage: React.FC = () => {
       <header className="options-header">
         <div className="header-content">
           <img
-            src="/icons/logo-white.png"
+            src="/icons/mark.svg"
             alt={t('header.logoAlt', { ns: 'options' })}
             className="header-logo"
           />

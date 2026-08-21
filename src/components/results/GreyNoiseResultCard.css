@@ -2,14 +2,14 @@
 
 .greynoise-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-card, var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .greynoise-result-card:hover {
-  border-color: var(--border-hover));
+  border-color: var(--border-hover);
 }
 
 /* Header */
@@ -19,8 +19,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary));
-  border-bottom: 1px solid var(--border-default));
+  background: var(--bg-header, var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   flex-wrap: wrap;
 }
 
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--bg-section, var(--bg-tertiary));
+  background: var(--bg-section, var(--bg-tertiary);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -108,40 +108,40 @@
 }
 
 .greynoise-status-badge.safe {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
 }
 
 .greynoise-status-badge.suspicious {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 .greynoise-status-badge.malicious {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 .greynoise-status-badge.unknown {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 .greynoise-status-badge.error {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: var(--danger);
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 /* Unsupported */
 .greynoise-unsupported {
   padding: var(--space-lg, 16px) var(--space-xl, 20px);
-  background: var(--warning-bg));
-  border: 1px solid var(--warning-border));
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
   border-radius: var(--radius-lg, 8px);
   margin: var(--space-xl, 20px);
 }
@@ -175,9 +175,9 @@
 }
 
 .greynoise-ioc-badge {
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   color: var(--accent);
-  border: 1px solid var(--accent-border));
+  border: 1px solid var(--accent-border);
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -251,8 +251,8 @@
 }
 
 .greynoise-metric-card {
-  background: var(--bg-section, var(--bg-tertiary));
-  border: 1px solid var(--border-default));
+  background: var(--bg-section, var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -267,7 +267,7 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default));
+  border-bottom: 1px solid var(--border-default);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   font-size: var(--text-md, 13px);
   font-weight: 600;
@@ -323,21 +323,21 @@
 }
 
 .greynoise-classification-badge.benign {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
 }
 
 .greynoise-classification-badge.malicious {
-  background: var(--danger-bg));
+  background: var(--danger-bg);
   color: #f87171;
-  border: 1px solid var(--danger-border));
+  border: 1px solid var(--danger-border);
 }
 
 .greynoise-classification-badge.unknown {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 /* Seen Status */
@@ -361,9 +361,9 @@
 
 /* RIOT Badge */
 .greynoise-riot-badge {
-  background: var(--success-bg));
+  background: var(--success-bg);
   color: var(--success);
-  border: 1px solid var(--success-border));
+  border: 1px solid var(--success-border);
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-weight: 600;
@@ -382,9 +382,9 @@
 }
 
 .greynoise-tag {
-  background: var(--accent-bg));
+  background: var(--accent-bg);
   color: var(--accent);
-  border: 1px solid var(--accent-border));
+  border: 1px solid var(--accent-border);
   padding: 5px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -416,21 +416,21 @@
 }
 
 .greynoise-indicator-badge.vpn {
-  background: var(--info-bg));
+  background: var(--info-bg);
   color: var(--info);
-  border: 1px solid var(--info-border));
+  border: 1px solid var(--info-border);
 }
 
 .greynoise-indicator-badge.proxy {
-  background: var(--warning-bg));
+  background: var(--warning-bg);
   color: #fb923c;
-  border: 1px solid var(--warning-border));
+  border: 1px solid var(--warning-border);
 }
 
 /* External Link */
 .greynoise-external-link {
   padding: var(--space-xl, 20px);
-  border-top: 1px solid var(--border-default));
+  border-top: 1px solid var(--border-default);
 }
 
 .greynoise-link-button {
@@ -439,7 +439,7 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   background: var(--accent);
-  color: var(--bg-header, var(--bg-primary));
+  color: var(--bg-header, var(--bg-primary);
   border: none;
   border-radius: var(--radius-lg, 8px);
   font-size: var(--text-md, 13px);

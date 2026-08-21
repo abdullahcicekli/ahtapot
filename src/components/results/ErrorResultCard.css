@@ -154,7 +154,7 @@
 /* Troubleshooting Tips */
 .error-result-tips {
   background: var(--bg-tertiary);
-  border: 1px solid var(--border));
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
 }
