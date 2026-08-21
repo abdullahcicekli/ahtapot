@@ -1,7 +1,7 @@
 /* Error Result Card */
 .error-result-card {
-  background: var(--bg-secondary, #1E1E24);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--bg-secondary);
+  border: 1px solid rgba(242, 85, 90, 0.3);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -12,8 +12,8 @@
   align-items: flex-start;
   gap: 12px;
   padding: 16px;
-  background: rgba(239, 68, 68, 0.08);
-  border-bottom: 1px solid rgba(239, 68, 68, 0.15);
+  background: rgba(242, 85, 90, 0.08);
+  border-bottom: 1px solid rgba(242, 85, 90, 0.15);
 }
 
 .error-result-header-left {
@@ -24,11 +24,11 @@
 
 .error-icon {
   flex-shrink: 0;
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .error-icon.auth {
-  color: #f59e0b;
+  color: var(--warning);
 }
 
 .error-icon.rate-limit {
@@ -50,8 +50,8 @@
 .error-result-type-badge {
   font-size: 11px;
   font-weight: 600;
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  background: rgba(242, 85, 90, 0.15);
   padding: 2px 8px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -96,11 +96,11 @@
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  background: rgba(242, 85, 90, 0.15);
   padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(242, 85, 90, 0.3);
 }
 
 /* Error Content */
@@ -113,15 +113,15 @@
   align-items: flex-start;
   gap: 12px;
   padding: 12px;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  background: rgba(242, 85, 90, 0.08);
+  border: 1px solid rgba(242, 85, 90, 0.15);
   border-radius: 8px;
   margin-bottom: 16px;
 }
 
 .error-result-message svg {
   flex-shrink: 0;
-  color: #ef4444;
+  color: var(--danger);
   margin-top: 2px;
 }
 
@@ -135,9 +135,9 @@
 .error-code {
   font-size: 12px;
   font-weight: 700;
-  color: #ef4444;
+  color: var(--danger);
   font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(242, 85, 90, 0.15);
   padding: 2px 6px;
   border-radius: 4px;
   display: inline-block;
@@ -153,8 +153,8 @@
 
 /* Troubleshooting Tips */
 .error-result-tips {
-  background: var(--bg-tertiary, #15151A);
-  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border));
   border-radius: 8px;
   padding: 12px;
 }

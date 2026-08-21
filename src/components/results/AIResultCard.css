@@ -14,8 +14,8 @@
 }
 
 .ai-result-error {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.08) 100%);
-  border-color: rgba(239, 68, 68, 0.2);
+  background: linear-gradient(135deg, rgba(242, 85, 90, 0.05) 0%, rgba(242, 85, 90, 0.08) 100%);
+  border-color: rgba(242, 85, 90, 0.2);
 }
 
 /* Header */
@@ -43,7 +43,7 @@
 }
 
 .ai-result-error-icon {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .ai-result-provider {
@@ -63,8 +63,8 @@
 }
 
 .ai-result-mode-badge.error {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  background: rgba(242, 85, 90, 0.15);
+  color: var(--danger);
 }
 
 .ai-result-header-right {
@@ -119,7 +119,7 @@
 }
 
 .ai-result-content-error {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 14px;
 }
 

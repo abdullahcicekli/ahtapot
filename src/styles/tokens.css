@@ -1,0 +1,58 @@
+/* Ahtapot design tokens, shared with ahtapot.me.
+   The site is the source of truth for these values; the variable NAMES keep
+   the extension's existing vocabulary so component CSS needs no rewrite. */
+
+@font-face {
+  font-family: 'Uncut Sans';
+  src: url('/fonts/UncutSans-Variable.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Commit Mono';
+  src: url('/fonts/CommitMono-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Canvas layers (site: --bg, --bg-raised, --bg-card, --bg-input) */
+  --bg-primary: #0B0B0D;
+  --bg-secondary: #121215;
+  --bg-tertiary: #171719;
+  --bg-input: #1E1E22;
+
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hi: rgba(255, 255, 255, 0.12);
+
+  --text: #F2F2F3;
+  --text-secondary: #9B9BA3;
+  --text-tertiary: #8C8C96;
+
+  /* Accent - Lime Green. Chrome only ever gets it in small doses:
+     primary action, live dot, the mark. */
+  --accent: #C7F54D;
+  --accent-dim: rgba(199, 245, 77, 0.12);
+  --accent-ink: #1A1A1F;
+
+  /* Semantic verdict colors (site: --verdict-*) */
+  --success: #7BD88F;
+  --success-bg: rgba(123, 216, 143, 0.12);
+  --warning: #F0B23C;
+  --warning-bg: rgba(240, 178, 60, 0.12);
+  --danger: #F2555A;
+  --danger-bg: rgba(242, 85, 90, 0.12);
+  --info: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.12);
+
+  --r-outer: 24px;
+  --r-card: 16px;
+  --r-control: 10px;
+
+  --font-sans: 'Uncut Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: 'Commit Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}

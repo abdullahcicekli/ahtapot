@@ -56,9 +56,9 @@
   align-items: center;
   gap: 0;
   padding: 10px;
-  background: #1A1A1F;
+  background: #121215;
   color: white;
-  border: 1px solid rgba(255, 247, 112, 0.3);
+  border: 1px solid rgba(199, 245, 77, 0.3);
   border-radius: 50px;
   font-size: 14px;
   font-weight: 500;
@@ -96,7 +96,7 @@
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  background: rgba(255, 247, 112, 0.3);
+  background: rgba(199, 245, 77, 0.3);
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
@@ -113,7 +113,7 @@
   gap: 8px;
   padding: 10px 16px;
   background: #C7F54D;
-  color: #1A1A1F;
+  color: #121215;
   border-color: #C7F54D;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
@@ -121,7 +121,7 @@
 
 .ahtapot-floating-button button:hover .ahtapot-logo,
 .ahtapot-floating-button button.expanded .ahtapot-logo {
-  color: #1A1A1F;
+  color: #121215;
 }
 
 .ahtapot-floating-button button:hover .button-text,
@@ -137,7 +137,7 @@
   opacity: 1;
   margin-left: 4px;
   background: rgba(26, 26, 31, 0.3);
-  color: #1A1A1F;
+  color: #121215;
 }
 
 /* Active state */
@@ -158,7 +158,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   50% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 247, 112, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(199, 245, 77, 0.3);
   }
 }
 

@@ -2,9 +2,9 @@
 
 :root {
   /* Backgrounds */
-  --bg-card: #222228;
-  --bg-header: #1A1A1F;
-  --bg-section: #2A2A32;
+  --bg-card: var(--bg-secondary);
+  --bg-header: var(--bg-primary);
+  --bg-section: var(--bg-tertiary);
   
   /* Accent - Lime Green */
   --accent: #C7F54D;
@@ -13,17 +13,17 @@
   --accent-border: rgba(199, 245, 77, 0.3);
   
   /* Success - Emerald (harmonizes with lime) */
-  --success: #4ADE80;
+  --success: var(--success);
   --success-bg: rgba(74, 222, 128, 0.12);
   --success-border: rgba(74, 222, 128, 0.25);
   
   /* Danger - Coral Red */
-  --danger: #E63946;
+  --danger: var(--danger);
   --danger-bg: rgba(230, 57, 70, 0.12);
   --danger-border: rgba(230, 57, 70, 0.25);
   
   /* Warning - Warm Amber */
-  --warning: #FBBF24;
+  --warning: var(--warning);
   --warning-bg: rgba(251, 191, 36, 0.12);
   --warning-border: rgba(251, 191, 36, 0.25);
   

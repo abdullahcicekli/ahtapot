@@ -40,7 +40,7 @@
   width: 48px;
   height: 48px;
   padding: 10px;
-  background: #222228;
+  background: var(--bg-secondary);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   cursor: pointer;
@@ -55,7 +55,7 @@
   transform: translateX(-50%);
   padding: 6px 12px;
   background: rgba(26, 26, 31, 0.98);
-  border: 1px solid rgba(255, 247, 112, 0.4);
+  border: 1px solid rgba(199, 245, 77, 0.4);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -80,7 +80,7 @@
 
 /* Enabled state */
 .provider-slide-item.enabled {
-  background: #2A2A32;
+  background: var(--bg-tertiary);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -91,13 +91,13 @@
 
 /* Active state - highlighted with yellow border */
 .provider-slide-item.active {
-  background: rgba(255, 247, 112, 0.08);
+  background: rgba(199, 245, 77, 0.08);
   border-color: #C7F54D;
-  box-shadow: 0 0 0 1px rgba(255, 247, 112, 0.2);
+  box-shadow: 0 0 0 1px rgba(199, 245, 77, 0.2);
 }
 
 .provider-slide-item.active:hover {
-  background: rgba(255, 247, 112, 0.12);
+  background: rgba(199, 245, 77, 0.12);
   border-color: #C7F54D;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .provider-slide-item.disabled:hover {
-  background: #222228;
-  border-color: rgba(255, 247, 112, 0.1);
+  background: var(--bg-secondary);
+  border-color: rgba(199, 245, 77, 0.1);
   opacity: 0.8;
 }
 
@@ -155,12 +155,12 @@
   background: #C7F54D;
   border: none;
   border-radius: 10px;
-  color: #1A1A1F;
+  color: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: -8px 0 16px 8px #1A1A1F;
+  box-shadow: -8px 0 16px 8px var(--bg-primary);
   transition: all 0.2s ease;
   z-index: 10;
 }

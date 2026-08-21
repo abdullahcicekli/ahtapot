@@ -1,36 +1,14 @@
+@import '../../styles/tokens.css';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  /* Minimal Theme Colors */
-  --bg-primary: #1A1A1F;
-  --bg-secondary: #222228;
-  --bg-tertiary: #2A2A32;
-  --border: rgba(255, 255, 255, 0.08);
-  --text: rgba(255, 255, 255, 0.9);
-  --text-secondary: rgba(255, 255, 255, 0.6);
-  
-  /* Accent - Lime Green */
-  --accent: #C7F54D;
-  --accent-dim: rgba(199, 245, 77, 0.15);
-  
-  /* Semantic Colors - Harmonized with Accent */
-  --success: #4ADE80;
-  --success-bg: rgba(74, 222, 128, 0.12);
-  --warning: #FBBF24;
-  --warning-bg: rgba(251, 191, 36, 0.12);
-  --danger: #E63946;
-  --danger-bg: rgba(230, 57, 70, 0.12);
-  --info: #38BDF8;
-  --info-bg: rgba(56, 189, 248, 0.12);
-}
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-sans);
   background: var(--bg-primary);
   height: 100vh;
   overflow: hidden;
@@ -152,8 +130,8 @@ body {
   display: flex;
   gap: 12px;
   padding: 16px;
-  background: rgba(255, 247, 112, 0.08);
-  border: 1px solid rgba(255, 247, 112, 0.2);
+  background: rgba(199, 245, 77, 0.08);
+  border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 12px;
   margin-bottom: 20px;
   color: var(--accent);
@@ -195,7 +173,7 @@ body {
   gap: 6px;
   padding: 8px 16px;
   background: var(--accent);
-  color: #1A1A1F;
+  color: var(--accent-ink);
   border: none;
   border-radius: 6px;
   font-size: 13px;
@@ -226,8 +204,8 @@ body {
 }
 
 .search-bar:focus-within {
-  border-color: rgba(255, 247, 112, 0.4);
-  box-shadow: 0 0 0 2px rgba(255, 247, 112, 0.1);
+  border-color: rgba(199, 245, 77, 0.4);
+  box-shadow: 0 0 0 2px rgba(199, 245, 77, 0.1);
 }
 
 .search-icon {
@@ -246,7 +224,7 @@ body {
   border: none;
   outline: none;
   font-size: 15px;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-family: var(--font-mono);
   color: rgba(255, 255, 255, 0.95);
   padding: 4px 0;
   min-width: 0;
@@ -260,7 +238,7 @@ body {
 
 .search-input::placeholder {
   color: rgba(255, 255, 255, 0.25);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Search hint */
@@ -307,7 +285,7 @@ body {
 .analyze-btn-compact.has-input {
   background: var(--accent);
   border-color: var(--accent);
-  color: #1A1A1F;
+  color: var(--accent-ink);
 }
 
 .analyze-btn-compact.has-input:hover:not(:disabled) {
@@ -430,7 +408,7 @@ body {
 }
 
 .ioc-value {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.8);
   word-break: break-all;
@@ -464,7 +442,7 @@ body {
   background: var(--accent-dim);
   padding: 2px 6px;
   border-radius: 3px;
-  border: 1px solid rgba(255, 247, 112, 0.2);
+  border: 1px solid rgba(199, 245, 77, 0.2);
   white-space: nowrap;
 }
 
@@ -518,7 +496,7 @@ body {
   border: none;
   border-radius: 8px;
   font-size: 13px;
-  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-family: var(--font-mono);
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -532,7 +510,7 @@ body {
 
 .ioc-tab.active {
   background: var(--accent);
-  color: #1A1A1F;
+  color: var(--accent-ink);
   font-weight: 600;
 }
 
@@ -549,7 +527,7 @@ body {
 }
 
 .result-card:hover {
-  border-color: rgba(255, 247, 112, 0.2);
+  border-color: rgba(199, 245, 77, 0.2);
 }
 
 .result-header {
@@ -578,7 +556,7 @@ body {
 }
 
 .status-icon.unknown {
-  color: #f59e0b;
+  color: var(--warning);
 }
 
 .status-icon.error {
@@ -591,7 +569,7 @@ body {
 }
 
 .result-value {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
@@ -630,18 +608,18 @@ body {
 }
 
 .result-status.malicious {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  background: rgba(242, 85, 90, 0.15);
+  color: var(--danger);
 }
 
 .result-status.unknown {
-  background: rgba(255, 247, 112, 0.15);
+  background: rgba(199, 245, 77, 0.15);
   color: var(--accent);
 }
 
 .result-status.error {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  background: rgba(242, 85, 90, 0.15);
+  color: var(--danger);
 }
 
 .result-details {
@@ -655,17 +633,17 @@ body {
 
 .result-error {
   padding: 12px 16px;
-  background: rgba(239, 68, 68, 0.1);
-  border-top: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(242, 85, 90, 0.1);
+  border-top: 1px solid rgba(242, 85, 90, 0.2);
   font-size: 13px;
-  color: #ef4444;
+  color: var(--danger);
 }
 
 /* Unsupported IOC Type Display */
 .result-unsupported {
   padding: 12px 16px;
-  background: rgba(255, 247, 112, 0.05);
-  border-top: 1px solid rgba(255, 247, 112, 0.1);
+  background: rgba(199, 245, 77, 0.05);
+  border-top: 1px solid rgba(199, 245, 77, 0.1);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -706,7 +684,7 @@ body {
   background: var(--accent-dim);
   padding: 4px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(255, 247, 112, 0.2);
+  border: 1px solid rgba(199, 245, 77, 0.2);
   white-space: nowrap;
 }
 
@@ -781,8 +759,8 @@ body {
 .searched-iocs-section {
   margin-bottom: 20px;
   padding: 16px;
-  background: rgba(255, 247, 112, 0.05);
-  border: 1px solid rgba(255, 247, 112, 0.15);
+  background: rgba(199, 245, 77, 0.05);
+  border: 1px solid rgba(199, 245, 77, 0.15);
   border-radius: 8px;
 }
 
@@ -821,7 +799,7 @@ body {
 
 .searched-ioc-value {
   font-size: 13px;
-  font-family: monospace;
+  font-family: var(--font-mono);
   color: rgba(255, 255, 255, 0.85);
   word-break: break-all;
 }
@@ -864,7 +842,7 @@ body {
   padding: 8px 12px;
   background: var(--accent-dim);
   color: var(--accent);
-  border: 1px solid rgba(255, 247, 112, 0.2);
+  border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 6px;
   text-align: center;
   white-space: nowrap;
@@ -884,7 +862,7 @@ body {
   width: 32px;
   height: 32px;
   animation: spin-vertical 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255, 247, 112, 0.3));
+  filter: drop-shadow(0 0 8px rgba(199, 245, 77, 0.3));
 }
 
 @keyframes spin-vertical {

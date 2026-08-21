@@ -2,14 +2,14 @@
 
 .greynoise-result-card {
   position: relative;
-  background: var(--bg-card, #222228);
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  background: var(--bg-card, var(--bg-secondary));
+  border: 1px solid var(--border-default));
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .greynoise-result-card:hover {
-  border-color: var(--border-hover, rgba(255, 247, 112, 0.3));
+  border-color: var(--border-hover));
 }
 
 /* Header */
@@ -19,8 +19,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, #1A1A1F);
-  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  background: var(--bg-header, var(--bg-primary));
+  border-bottom: 1px solid var(--border-default));
   flex-wrap: wrap;
 }
 
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--bg-section, #2A2A32);
+  background: var(--bg-section, var(--bg-tertiary));
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -108,40 +108,40 @@
 }
 
 .greynoise-status-badge.safe {
-  background: var(--success-bg, rgba(34, 197, 94, 0.15));
-  color: var(--success, #22c55e);
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg));
+  color: var(--success);
+  border: 1px solid var(--success-border));
 }
 
 .greynoise-status-badge.suspicious {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg));
+  color: var(--warning);
+  border: 1px solid var(--warning-border));
 }
 
 .greynoise-status-badge.malicious {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg));
+  color: var(--danger);
+  border: 1px solid var(--danger-border));
 }
 
 .greynoise-status-badge.unknown {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg));
+  color: var(--warning);
+  border: 1px solid var(--warning-border));
 }
 
 .greynoise-status-badge.error {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg));
+  color: var(--danger);
+  border: 1px solid var(--danger-border));
 }
 
 /* Unsupported */
 .greynoise-unsupported {
   padding: var(--space-lg, 16px) var(--space-xl, 20px);
-  background: var(--warning-bg, rgba(251, 146, 60, 0.1));
-  border: 1px solid var(--warning-border, rgba(251, 146, 60, 0.2));
+  background: var(--warning-bg));
+  border: 1px solid var(--warning-border));
   border-radius: var(--radius-lg, 8px);
   margin: var(--space-xl, 20px);
 }
@@ -175,9 +175,9 @@
 }
 
 .greynoise-ioc-badge {
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
-  color: var(--accent, #FFF770);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  background: var(--accent-bg));
+  color: var(--accent);
+  border: 1px solid var(--accent-border));
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -251,8 +251,8 @@
 }
 
 .greynoise-metric-card {
-  background: var(--bg-section, #2A2A32);
-  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  background: var(--bg-section, var(--bg-tertiary));
+  border: 1px solid var(--border-default));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -267,14 +267,14 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--border-default));
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   font-size: var(--text-md, 13px);
   font-weight: 600;
 }
 
 .greynoise-metric-header svg {
-  color: var(--accent, #FFF770);
+  color: var(--accent);
   width: 16px;
   height: 16px;
 }
@@ -323,26 +323,26 @@
 }
 
 .greynoise-classification-badge.benign {
-  background: var(--success-bg, rgba(34, 197, 94, 0.2));
-  color: #4ade80;
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg));
+  color: var(--success);
+  border: 1px solid var(--success-border));
 }
 
 .greynoise-classification-badge.malicious {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.2));
+  background: var(--danger-bg));
   color: #f87171;
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  border: 1px solid var(--danger-border));
 }
 
 .greynoise-classification-badge.unknown {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.2));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg));
+  color: var(--warning);
+  border: 1px solid var(--warning-border));
 }
 
 /* Seen Status */
 .greynoise-seen-yes {
-  color: #4ade80;
+  color: var(--success);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -361,9 +361,9 @@
 
 /* RIOT Badge */
 .greynoise-riot-badge {
-  background: var(--success-bg, rgba(34, 197, 94, 0.2));
-  color: #4ade80;
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg));
+  color: var(--success);
+  border: 1px solid var(--success-border));
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-weight: 600;
@@ -382,9 +382,9 @@
 }
 
 .greynoise-tag {
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
-  color: var(--accent, #FFF770);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  background: var(--accent-bg));
+  color: var(--accent);
+  border: 1px solid var(--accent-border));
   padding: 5px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -416,21 +416,21 @@
 }
 
 .greynoise-indicator-badge.vpn {
-  background: var(--info-bg, rgba(59, 130, 246, 0.15));
-  color: var(--info, #60a5fa);
-  border: 1px solid var(--info-border, rgba(59, 130, 246, 0.3));
+  background: var(--info-bg));
+  color: var(--info);
+  border: 1px solid var(--info-border));
 }
 
 .greynoise-indicator-badge.proxy {
-  background: var(--warning-bg, rgba(251, 146, 60, 0.15));
+  background: var(--warning-bg));
   color: #fb923c;
-  border: 1px solid var(--warning-border, rgba(251, 146, 60, 0.3));
+  border: 1px solid var(--warning-border));
 }
 
 /* External Link */
 .greynoise-external-link {
   padding: var(--space-xl, 20px);
-  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  border-top: 1px solid var(--border-default));
 }
 
 .greynoise-link-button {
@@ -438,8 +438,8 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--accent, #FFF770);
-  color: var(--bg-header, #1A1A1F);
+  background: var(--accent);
+  color: var(--bg-header, var(--bg-primary));
   border: none;
   border-radius: var(--radius-lg, 8px);
   font-size: var(--text-md, 13px);
