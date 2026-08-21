@@ -1,5 +1,10 @@
 {
   "virustotal": {
+    "notFound": {
+      "title": "No record in VirusTotal",
+      "description": "VirusTotal has not analyzed this indicator yet. You can submit it for scanning on the VirusTotal website.",
+      "view": "Search on VirusTotal"
+    },
     "communityScore": "Community Score",
     "votes": {
       "harmless": "harmless",
@@ -438,5 +443,20 @@
       "checkApiKey": "Verify your API key is correct",
       "networkIssue": "Network connection issue"
     }
+  },
+  "sgb": {
+    "listed": "Listed as malicious",
+    "notListed": "Not on the national threat list",
+    "criticality": "Criticality Level",
+    "recordType": "Record Type",
+    "source": "Source",
+    "connection": "Connection Type",
+    "dateAdded": "Date Added",
+    "category": "Category",
+    "related": "Related Entries",
+    "viewDetails": "View details",
+    "levelLow": "Low",
+    "levelMedium": "Medium",
+    "levelCritical": "Critical"
   }
 }

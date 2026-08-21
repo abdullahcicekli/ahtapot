@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move, Search } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
@@ -11,6 +11,10 @@ import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
+import { FolderTabs } from '@/components/FolderTabs';
+import { Select } from '@/components/Select';
+import { InfoModal } from '@/components/InfoModal';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -97,6 +101,13 @@ const API_CONFIGS: APIKeyConfig[] = [
     signupLink: 'https://www.arin.net/resources/registry/whois/',
     requiresApiKey: false,
   },
+  {
+    provider: APIProvider.SIBERGUVENLIK,
+    label: 'Turkiye SGB',
+    link: 'https://siberguvenlik.gov.tr/api/',
+    signupLink: 'https://siberguvenlik.gov.tr/',
+    requiresApiKey: false,
+  },
 ];
 
 const OptionsPage: React.FC = () => {
@@ -113,10 +124,17 @@ const OptionsPage: React.FC = () => {
   };
   
   const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
-  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(i18n.language as SupportedLanguage || 'en');
+  // i18n may report a region tag (en-US); normalize to a supported base code.
+  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(() => {
+    const base = i18n.language?.split('-')[0] as SupportedLanguage;
+    return base && base in SUPPORTED_LANGUAGES ? base : 'en';
+  });
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
-  const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
+  const [infoProvider, setInfoProvider] = useState<APIProvider | null>(null);
+  const [confirmAction, setConfirmAction] = useState<'clearCache' | 'resetOrder' | null>(null);
+  const [keyQuery, setKeyQuery] = useState('');
+  const [keyFilter, setKeyFilter] = useState<'all' | 'configured' | 'missing'>('all');
   const [showCacheInfo, setShowCacheInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -449,19 +467,6 @@ const OptionsPage: React.FC = () => {
     });
   }, []);
 
-  // Toggle info
-  const toggleInfo = useCallback((provider: string) => {
-    setExpandedInfo((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(provider)) {
-        newSet.delete(provider);
-      } else {
-        newSet.add(provider);
-      }
-      return newSet;
-    });
-  }, []);
-
   // Handle cache settings change
   const handleCacheSettingsChange = useCallback(async (updates: Partial<CacheSettings>) => {
     try {
@@ -480,10 +485,6 @@ const OptionsPage: React.FC = () => {
 
   // Clear cache
   const handleClearCache = useCallback(async () => {
-    if (!confirm(t('general.cache.clearConfirm', { ns: 'options' }))) {
-      return;
-    }
-
     setIsClearingCache(true);
     try {
       await CacheManager.clearAll();
@@ -580,10 +581,6 @@ const OptionsPage: React.FC = () => {
 
   // Reset provider order
   const handleResetProviderOrder = useCallback(async () => {
-    if (!confirm(t('general.providerOrder.resetConfirm', { ns: 'options' }))) {
-      return;
-    }
-
     try {
       await resetProviderOrder();
       await loadProviderOrder();
@@ -657,13 +654,14 @@ const OptionsPage: React.FC = () => {
     [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
     [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
     [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
-    [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
+    [APIProvider.MALWAREBAZAAR]: '/provider-icons/malwarebazaar-logo.png',
     [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
     [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
     [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
-    [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
+    [APIProvider.URLHAUS]: '/provider-icons/urlhaus-logo.png',
     [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
     [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
+    [APIProvider.SIBERGUVENLIK]: '/provider-icons/siberguvenlik-logo.png',
   };
 
   // Sort API configs by provider order, with locked providers at the end
@@ -696,12 +694,46 @@ const OptionsPage: React.FC = () => {
     return [...sortedUnlocked, ...lockedConfigs];
   }, [providerOrder]);
 
+  // A provider is configured when it needs no key, or a key value is present.
+  const isConfigured = useCallback(
+    (config: APIKeyConfig) =>
+      config.requiresApiKey === false ||
+      Boolean(apiKeyStates[config.provider]?.value?.trim()),
+    [apiKeyStates],
+  );
+
+  const filterCounts = useMemo(() => {
+    const configured = sortedApiConfigs.filter(isConfigured).length;
+    return {
+      all: sortedApiConfigs.length,
+      configured,
+      missing: sortedApiConfigs.length - configured,
+    };
+  }, [sortedApiConfigs, isConfigured]);
+
+  const visibleApiConfigs = useMemo(() => {
+    const query = keyQuery.trim().toLowerCase();
+    return sortedApiConfigs.filter((config) => {
+      if (keyFilter === 'configured' && !isConfigured(config)) return false;
+      if (keyFilter === 'missing' && isConfigured(config)) return false;
+      if (!query) return true;
+      const providerKey = config.provider.toLowerCase();
+      const localizedLabel = t(`providers.${providerKey}.label`, { ns: 'options' });
+      const localizedDescription = t(`providers.${providerKey}.description`, { ns: 'options' });
+      return (
+        config.label.toLowerCase().includes(query) ||
+        localizedLabel.toLowerCase().includes(query) ||
+        localizedDescription.toLowerCase().includes(query)
+      );
+    });
+  }, [sortedApiConfigs, keyFilter, keyQuery, isConfigured, t]);
+
   return (
     <div className="options-container">
       <header className="options-header">
         <div className="header-content">
           <img
-            src="/icons/logo-white.png"
+            src="/icons/mark.svg"
             alt={t('header.logoAlt', { ns: 'options' })}
             className="header-logo"
           />
@@ -712,25 +744,15 @@ const OptionsPage: React.FC = () => {
         </div>
       </header>
 
-      {/* Tabs */}
-      <div className="tabs-container">
-        <button
-          className={`tab ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => handleTabChange('general')}
-        >
-          <Settings size={18} />
-          {t('tabs.general', { ns: 'options' })}
-        </button>
-        <button
-          className={`tab ${activeTab === 'apiKeys' ? 'active' : ''}`}
-          onClick={() => handleTabChange('apiKeys')}
-        >
-          <Key size={18} />
-          {t('tabs.apiKeys', { ns: 'options' })}
-        </button>
-      </div>
-
-      <main className="options-main">
+      <FolderTabs
+        className="options-main"
+        items={[
+          { id: 'general', label: t('tabs.general', { ns: 'options' }), icon: <Settings /> },
+          { id: 'apiKeys', label: t('tabs.apiKeys', { ns: 'options' }), icon: <Key /> },
+        ]}
+        active={activeTab}
+        onChange={(id) => handleTabChange(id as TabType)}
+      >
         {/* General Settings Tab */}
         {activeTab === 'general' && (
           <div className="settings-section">
@@ -749,18 +771,15 @@ const OptionsPage: React.FC = () => {
               </div>
 
               <div className="language-selector">
-                <select
+                <Select
                   value={currentLanguage}
-                  onChange={(e) => handleLanguageChange(e.target.value as SupportedLanguage)}
-                  className="language-select"
+                  options={Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => ({
+                    value: code,
+                    label: name,
+                  }))}
+                  onChange={(code) => handleLanguageChange(code as SupportedLanguage)}
                   aria-label={t('general.language.select', { ns: 'options' })}
-                >
-                  {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
-                    <option key={code} value={code}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
             </div>
 
@@ -867,7 +886,7 @@ const OptionsPage: React.FC = () => {
 
                 {/* Clear Cache Button */}
                 <button
-                  onClick={handleClearCache}
+                  onClick={() => setConfirmAction('clearCache')}
                   className="clear-cache-btn"
                   disabled={isClearingCache || cacheStats.totalEntries === 0}
                 >
@@ -924,11 +943,43 @@ const OptionsPage: React.FC = () => {
                 </button>
               </div>
 
+              <div className="api-keys-toolbar">
+                <div className="filter-chips" role="group" aria-label={t('apiKeys.sectionTitle', { ns: 'options' })}>
+                  {(['all', 'configured', 'missing'] as const).map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      className={`filter-chip ${keyFilter === filter ? 'active' : ''}`}
+                      aria-pressed={keyFilter === filter}
+                      onClick={() => setKeyFilter(filter)}
+                    >
+                      {t(`apiKeys.filter.${filter}`, { ns: 'options' })}
+                      <span className="filter-count">{filterCounts[filter]}</span>
+                    </button>
+                  ))}
+                </div>
+                <label className="key-search">
+                  <Search size={15} aria-hidden="true" />
+                  <input
+                    type="search"
+                    value={keyQuery}
+                    onChange={(event) => setKeyQuery(event.target.value)}
+                    placeholder={t('apiKeys.searchPlaceholder', { ns: 'options' })}
+                    aria-label={t('apiKeys.searchPlaceholder', { ns: 'options' })}
+                  />
+                </label>
+              </div>
+
+              {visibleApiConfigs.length === 0 && (
+                <p className="no-results">{t('apiKeys.noResults', { ns: 'options' })}</p>
+              )}
+
               <div className="api-keys-list">
-                {sortedApiConfigs.map((config) => {
+                {visibleApiConfigs.map((config) => {
                   const providerKey = config.provider.toLowerCase();
                   const state = apiKeyStates[config.provider];
                   const isLocked = config.requiresApiKey === false;
+                  const configured = isConfigured(config);
 
                   return (
                     <div
@@ -938,23 +989,35 @@ const OptionsPage: React.FC = () => {
                     >
                       <div className="api-key-header">
                         <div className="api-key-title-row">
-                          <div>
-                            <h3>{t(`providers.${providerKey}.label`, { ns: 'options' })}</h3>
-                            <p className="api-key-description">
-                              {t(`providers.${providerKey}.description`, { ns: 'options' })}
-                            </p>
+                          <div className="api-key-identity">
+                            <span className="provider-logo-tile" aria-hidden="true">
+                              <img src={PROVIDER_LOGOS[config.provider]} alt="" loading="lazy" />
+                            </span>
+                            <div>
+                              <h3>{t(`providers.${providerKey}.label`, { ns: 'options' })}</h3>
+                              <p className="api-key-description">
+                                {t(`providers.${providerKey}.description`, { ns: 'options' })}
+                              </p>
+                            </div>
                           </div>
-                          {!isLocked && (
-                            <button
-                              type="button"
-                              onClick={() => toggleInfo(config.provider)}
-                              className="info-btn"
-                              aria-label="API information"
-                              title="API limits and features"
-                            >
-                              <Info size={18} />
-                            </button>
-                          )}
+                          <div className="api-key-meta">
+                            <span className={`key-status ${configured ? 'configured' : 'missing'}`}>
+                              {configured
+                                ? t('apiKeys.status.configured', { ns: 'options' })
+                                : t('apiKeys.status.missing', { ns: 'options' })}
+                            </span>
+                            {!isLocked && (
+                              <button
+                                type="button"
+                                onClick={() => setInfoProvider(config.provider)}
+                                className="info-btn"
+                                aria-label="API information"
+                                title="API limits and features"
+                              >
+                                <Info size={18} />
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -965,89 +1028,6 @@ const OptionsPage: React.FC = () => {
                         </div>
                       ) : (
                         <>
-                          {expandedInfo.has(config.provider) && (
-                        <div className="api-info-box">
-                          <div className="api-info-section">
-                            <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
-                            <div className="api-limits">
-                              <div className="limit-item">
-                                <span className="limit-label">
-                                  {t('info.dailyLimit', { ns: 'options' })}
-                                </span>
-                                <span className="limit-value">
-                                  {t(`limits.${providerKey}.free`, { ns: 'options' })}
-                                </span>
-                              </div>
-                              <div className="limit-item">
-                                <span className="limit-label">
-                                  {t('info.rateLimit', { ns: 'options' })}
-                                </span>
-                                <span className="limit-value">
-                                  {t(`limits.${providerKey}.rate`, { ns: 'options' })}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="api-info-section">
-                            <h4>{t('info.featuresTitle', { ns: 'options' })}</h4>
-                            <ul className="api-features-list">
-                              {[1, 2, 3, 4].map((num) => (
-                                <li key={num}>
-                                  {t(`features.${providerKey}.feature${num}`, { ns: 'options' })}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="api-info-section">
-                            <h4>{t('info.howToTitle', { ns: 'options' })}</h4>
-                            <ol className="api-steps-list">
-                              <li>
-                                <a href={config.signupLink} target="_blank" rel="noopener noreferrer">
-                                  {t('info.steps.signup', { ns: 'options' })}
-                                  <ExternalLink size={14} className="external-icon" />
-                                </a>
-                              </li>
-                              <li>{t('info.steps.verify', { ns: 'options' })}</li>
-                              <li>
-                                <a href={config.link} target="_blank" rel="noopener noreferrer">
-                                  {t('info.steps.getKey', { ns: 'options' })}
-                                  <ExternalLink size={14} className="external-icon" />
-                                </a>
-                              </li>
-                              <li>{t('info.steps.paste', { ns: 'options' })}</li>
-                            </ol>
-                          </div>
-
-                          {/* Special note for MalwareBazaar */}
-                          {config.provider === APIProvider.MALWAREBAZAAR && (
-                            <div className="api-info-section api-warning-section">
-                              <h4>
-                                <AlertCircle size={16} />
-                                {t('info.importantNote', { ns: 'options' })}
-                              </h4>
-                              <p className="api-warning-text">
-                                {t(`notes.${providerKey}`, { ns: 'options' })}
-                              </p>
-                            </div>
-                          )}
-
-                          {/* Special note for Scamalytics */}
-                          {config.provider === APIProvider.SCAMALYTICS && (
-                            <div className="api-info-section api-warning-section">
-                              <h4>
-                                <AlertCircle size={16} />
-                                {t('info.importantNote', { ns: 'options' })}
-                              </h4>
-                              <p className="api-warning-text">
-                                {t(`notes.${providerKey}`, { ns: 'options' })}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
                           <div className="api-key-input-wrapper">
                             <input
                               type={visibleKeys.has(config.provider) ? 'text' : 'password'}
@@ -1149,11 +1129,123 @@ const OptionsPage: React.FC = () => {
             )}
           </>
         )}
-      </main>
+      </FolderTabs>
 
       <footer className="options-footer">
         <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
       </footer>
+
+      {/* Confirm Modal (cache temizleme / sıra sıfırlama) */}
+      {confirmAction && (
+        <ConfirmModal
+          title={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearCache', { ns: 'options' })
+              : t('general.providerOrder.resetOrder', { ns: 'options' })
+          }
+          message={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearConfirm', { ns: 'options' })
+              : t('general.providerOrder.resetConfirm', { ns: 'options' })
+          }
+          confirmLabel={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearCache', { ns: 'options' })
+              : t('general.providerOrder.resetOrder', { ns: 'options' })
+          }
+          cancelLabel={t('buttons.cancel', { ns: 'common' })}
+          danger={confirmAction === 'clearCache'}
+          onCancel={() => setConfirmAction(null)}
+          onConfirm={() => {
+            const action = confirmAction;
+            setConfirmAction(null);
+            if (action === 'clearCache') {
+              void handleClearCache();
+            } else {
+              void handleResetProviderOrder();
+            }
+          }}
+        />
+      )}
+
+      {/* Provider Info Modal */}
+      {infoProvider &&
+        (() => {
+          const providerKey = infoProvider.toLowerCase();
+          const infoConfig = API_CONFIGS.find((c) => c.provider === infoProvider);
+          if (!infoConfig) return null;
+          const hasNote =
+            infoProvider === APIProvider.MALWAREBAZAAR || infoProvider === APIProvider.SCAMALYTICS;
+          return (
+            <InfoModal
+              title={t(`providers.${providerKey}.label`, { ns: 'options' })}
+              subtitle={t(`providers.${providerKey}.description`, { ns: 'options' })}
+              icon={
+                <img src={PROVIDER_LOGOS[infoProvider]} alt="" className="info-modal-logo" />
+              }
+              onClose={() => setInfoProvider(null)}
+            >
+              <div className="api-info-section">
+                <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
+                <div className="api-limits">
+                  <div className="limit-item">
+                    <span className="limit-label">{t('info.dailyLimit', { ns: 'options' })}</span>
+                    <span className="limit-value">
+                      {t(`limits.${providerKey}.free`, { ns: 'options' })}
+                    </span>
+                  </div>
+                  <div className="limit-item">
+                    <span className="limit-label">{t('info.rateLimit', { ns: 'options' })}</span>
+                    <span className="limit-value">
+                      {t(`limits.${providerKey}.rate`, { ns: 'options' })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="api-info-section">
+                <h4>{t('info.featuresTitle', { ns: 'options' })}</h4>
+                <ul className="api-features-list">
+                  {[1, 2, 3, 4].map((num) => (
+                    <li key={num}>
+                      {t(`features.${providerKey}.feature${num}`, { ns: 'options' })}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="api-info-section">
+                <h4>{t('info.howToTitle', { ns: 'options' })}</h4>
+                <ol className="api-steps-list">
+                  <li>
+                    <a href={infoConfig.signupLink} target="_blank" rel="noopener noreferrer">
+                      {t('info.steps.signup', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t('info.steps.verify', { ns: 'options' })}</li>
+                  <li>
+                    <a href={infoConfig.link} target="_blank" rel="noopener noreferrer">
+                      {t('info.steps.getKey', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t('info.steps.paste', { ns: 'options' })}</li>
+                </ol>
+              </div>
+
+              {hasNote && (
+                <div className="api-info-section api-warning-section">
+                  <h4>
+                    <AlertCircle size={16} />
+                    {t('info.importantNote', { ns: 'options' })}
+                  </h4>
+                  <p className="api-warning-text">{t(`notes.${providerKey}`, { ns: 'options' })}</p>
+                </div>
+              )}
+            </InfoModal>
+          );
+        })()}
 
       {/* Provider Order Modal */}
       {isOrderModalOpen && (
@@ -1274,7 +1366,7 @@ const OptionsPage: React.FC = () => {
 
             <div className="modal-actions">
               <button
-                onClick={handleResetProviderOrder}
+                onClick={() => setConfirmAction('resetOrder')}
                 className="modal-reset-btn"
               >
                 <RotateCcw size={16} />

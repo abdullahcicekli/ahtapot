@@ -2,14 +2,14 @@
 
 .shodan-result-card {
   position: relative;
-  background: var(--bg-card, #222228);
+  background: var(--bg-card, #171719);
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .shodan-result-card:hover {
-  border-color: var(--border-hover, rgba(255, 247, 112, 0.3));
+  border-color: var(--border-hover, var(--border-hi));
 }
 
 /* Header */
@@ -19,7 +19,7 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, #1A1A1F);
+  background: var(--bg-header, #121215);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--bg-section, #2A2A32);
+  background: var(--bg-section, #1E1E22);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -108,33 +108,33 @@
 }
 
 .shodan-status-badge.safe {
-  background: var(--success-bg, rgba(34, 197, 94, 0.15));
-  color: var(--success, #22c55e);
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg, rgba(123, 216, 143, 0.15));
+  color: var(--success, #7BD88F);
+  border: 1px solid var(--success-border, rgba(123, 216, 143, 0.3));
 }
 
 .shodan-status-badge.suspicious {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 .shodan-status-badge.malicious {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
 }
 
 .shodan-status-badge.unknown {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 .shodan-status-badge.error {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
   max-width: 200px;
   white-space: normal;
   word-break: break-word;
@@ -146,8 +146,8 @@
   flex-direction: column;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  border-left: 3px solid var(--warning, #f59e0b);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  border-left: 3px solid var(--warning, #F0B23C);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
@@ -156,7 +156,7 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
-  color: var(--warning, #f59e0b);
+  color: var(--warning, #F0B23C);
   font-weight: 600;
 }
 
@@ -181,11 +181,11 @@
   font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent, #FFF770);
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  color: var(--text-secondary);
+  background: var(--accent-bg, var(--bg-input));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border: 1px solid var(--accent-border, var(--border-hi));
 }
 
 /* Summary */
@@ -195,14 +195,14 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   font-size: var(--text-md, 13px);
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  background: var(--accent-bg, var(--bg-input));
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
-  border-left: 3px solid var(--accent, #FFF770);
+  border-left: 3px solid var(--border-hi);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .shodan-summary svg {
-  color: var(--accent, #FFF770);
+  color: var(--text-secondary);
 }
 
 /* Content */
@@ -218,7 +218,7 @@
 }
 
 .shodan-metric-card {
-  background: var(--bg-section, #2A2A32);
+  background: var(--bg-section, #1E1E22);
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
@@ -241,7 +241,7 @@
 }
 
 .shodan-metric-header svg {
-  color: var(--accent, #FFF770);
+  color: var(--text-secondary);
   width: 16px;
   height: 16px;
 }
@@ -288,11 +288,11 @@
   font-family: var(--font-mono, 'Monaco', monospace);
   font-size: var(--text-sm, 11px);
   font-weight: 600;
-  color: var(--accent, #FFF770);
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
+  color: var(--text-secondary);
+  background: var(--accent-bg, var(--bg-input));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  border: 1px solid var(--accent-border, var(--border-hi));
 }
 
 /* Vulnerabilities */
@@ -304,8 +304,8 @@
 
 .shodan-vulnerability {
   padding: var(--space-sm, 8px) var(--space-md, 12px);
-  background: var(--danger-bg, rgba(239, 68, 68, 0.1));
-  border-left: 3px solid var(--danger, #ef4444);
+  background: var(--danger-bg, rgba(242, 85, 90, 0.1));
+  border-left: 3px solid var(--danger, #F2555A);
   border-radius: var(--radius-sm, 4px);
   font-family: var(--font-mono, 'Monaco', monospace);
   font-size: var(--text-sm, 11px);
@@ -321,7 +321,7 @@
 }
 
 .shodan-service {
-  background: var(--bg-header, #1A1A1F);
+  background: var(--bg-header, #121215);
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-md, 6px);
   padding: var(--space-md, 12px);
@@ -338,14 +338,14 @@
   font-family: var(--font-mono, 'Monaco', monospace);
   font-size: var(--text-md, 13px);
   font-weight: 700;
-  color: var(--accent, #FFF770);
+  color: var(--text-secondary);
 }
 
 .shodan-service-protocol {
   padding: 2px 8px;
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
-  color: var(--accent, #FFF770);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
+  border: 1px solid var(--accent-border, var(--border-hi));
   border-radius: var(--radius-sm, 4px);
   font-size: var(--text-xs, 10px);
   font-weight: 600;
@@ -376,7 +376,7 @@
   font-size: var(--text-base, 12px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   padding: var(--space-sm, 8px) var(--space-md, 12px);
-  background: var(--bg-header, #1A1A1F);
+  background: var(--bg-header, #121215);
   border-radius: var(--radius-sm, 4px);
   word-break: break-all;
 }

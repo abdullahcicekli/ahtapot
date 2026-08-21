@@ -94,6 +94,10 @@ export class VirusTotalService extends BaseToolService {
 
     console.log(`[VirusTotal] API response status: ${response.status}`);
 
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
+
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
       console.log(`[VirusTotal] API error:`, errorData);
@@ -129,7 +133,7 @@ export class VirusTotalService extends BaseToolService {
         regional_internet_registry: attrs.regional_internet_registry,
         total_votes: attrs.total_votes,
         tags: attrs.tags || [],
-        last_analysis_date: new Date(attrs.last_analysis_date * 1000).toISOString(),
+        last_analysis_date: this.toISODate(attrs.last_analysis_date),
         last_analysis_results: attrs.last_analysis_results,
         whois: attrs.whois,
         rdap: attrs.rdap ? {
@@ -155,6 +159,10 @@ export class VirusTotalService extends BaseToolService {
         'x-apikey': this.config.apiKey!,
       },
     });
+
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
 
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
@@ -183,12 +191,10 @@ export class VirusTotalService extends BaseToolService {
         reputation: attrs.reputation,
         total_votes: attrs.total_votes,
         registrar: attrs.registrar,
-        creation_date: attrs.creation_date
-          ? new Date(attrs.creation_date * 1000).toISOString()
-          : undefined,
+        creation_date: this.toISODate(attrs.creation_date),
         tags: attrs.tags || [],
         categories: attrs.categories,
-        last_analysis_date: new Date(attrs.last_analysis_date * 1000).toISOString(),
+        last_analysis_date: this.toISODate(attrs.last_analysis_date),
         last_analysis_results: attrs.last_analysis_results,
         whois: attrs.whois,
       },
@@ -215,6 +221,10 @@ export class VirusTotalService extends BaseToolService {
         'x-apikey': this.config.apiKey!,
       },
     });
+
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
 
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
@@ -247,7 +257,7 @@ export class VirusTotalService extends BaseToolService {
         http_response_code: attrs.last_http_response_code,
         tags: attrs.tags || [],
         categories: attrs.categories,
-        last_analysis_date: new Date(attrs.last_analysis_date * 1000).toISOString(),
+        last_analysis_date: this.toISODate(attrs.last_analysis_date),
         last_analysis_results: attrs.last_analysis_results,
       },
       timestamp: Date.now(),
@@ -266,6 +276,10 @@ export class VirusTotalService extends BaseToolService {
         'x-apikey': this.config.apiKey!,
       },
     });
+
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
 
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
@@ -302,11 +316,36 @@ export class VirusTotalService extends BaseToolService {
         meaningful_name: attrs.meaningful_name,
         names: attrs.names,
         tags: attrs.tags || [],
-        last_analysis_date: new Date(attrs.last_analysis_date * 1000).toISOString(),
+        last_analysis_date: this.toISODate(attrs.last_analysis_date),
         last_analysis_results: attrs.last_analysis_results,
       },
       timestamp: Date.now(),
     };
+  }
+
+  /**
+   * VT'nin veritabanında hiç kaydı olmayan girdiler 404 döner; bu bir API
+   * hatası değil "kayıt yok" bilgisidir. Kart tarafı details.notFound ile
+   * bilgilendirici bir durum gösterir.
+   */
+  private createNotFoundResult(ioc: DetectedIOC): IOCAnalysisResult {
+    return {
+      ioc,
+      source: this.name,
+      status: 'unknown',
+      details: { notFound: true },
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
+   * VT epoch (saniye) alanları her kayıtta bulunmaz (ör. hiç taranmamış domain);
+   * eksikse undefined döner ki "Invalid time value" fırlamasın.
+   */
+  private toISODate(epochSeconds?: number): string | undefined {
+    return typeof epochSeconds === 'number' && Number.isFinite(epochSeconds)
+      ? new Date(epochSeconds * 1000).toISOString()
+      : undefined;
   }
 
   /**

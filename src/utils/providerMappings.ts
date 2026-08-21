@@ -19,6 +19,7 @@ export const SERVICE_NAME_TO_PROVIDER: Record<string, APIProvider> = {
   'URLhaus': APIProvider.URLHAUS,
   'Pulsedive': APIProvider.PULSEDIVE,
   'Scamalytics': APIProvider.SCAMALYTICS,
+  'Turkiye SGB': APIProvider.SIBERGUVENLIK,
 };
 
 /**
@@ -35,6 +36,7 @@ export const PROVIDER_TO_SERVICE_NAME: Record<APIProvider, string> = {
   [APIProvider.URLHAUS]: 'URLhaus',
   [APIProvider.PULSEDIVE]: 'Pulsedive',
   [APIProvider.SCAMALYTICS]: 'Scamalytics',
+  [APIProvider.SIBERGUVENLIK]: 'Turkiye SGB',
 };
 
 /**

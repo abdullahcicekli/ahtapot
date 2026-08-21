@@ -83,7 +83,7 @@ const Popup: React.FC = memo(() => {
     <div className="popup-container">
       <div className="popup-header">
         <img
-          src="/icons/logo-white.png"
+          src="/icons/mark.svg"
           alt={t('header.logoAlt', { ns: 'popup' })}
           className="popup-logo"
         />

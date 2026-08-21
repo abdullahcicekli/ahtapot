@@ -72,7 +72,18 @@
     "validating": "Doğrulanıyor...",
     "valid": "Geçerli",
     "invalid": "Geçersiz",
-    "validationError": "Doğrulama başarısız"
+    "validationError": "Doğrulama başarısız",
+    "searchPlaceholder": "Sağlayıcı ara…",
+    "noResults": "Aramanıza uyan sağlayıcı yok.",
+    "filter": {
+      "all": "Tümü",
+      "configured": "Yapılandırılmış",
+      "missing": "Anahtar eksik"
+    },
+    "status": {
+      "configured": "Yapılandırıldı",
+      "missing": "Anahtar yok"
+    }
   },
   "providers": {
     "virustotal": {
@@ -124,6 +135,11 @@
       "label": "ARIN WHOIS",
       "description": "IP adresi kayıt ve ağ bilgileri",
       "placeholder": "API anahtarı gerektirmez"
+    },
+    "siberguvenlik": {
+      "label": "Türkiye SGB",
+      "description": "Siber Güvenlik Başkanlığı (TR-CERT/USOM) ulusal tehdit akışı",
+      "placeholder": "API anahtarı gerekmez"
     }
   },
   "lockedProvider": {
@@ -212,6 +228,12 @@
       "feature2": "Datacenter & VPN tespiti",
       "feature3": "TOR çıkış düğümü tespiti",
       "feature4": "Harici kara liste kontrolleri"
+    },
+    "siberguvenlik": {
+      "feature1": "Zararlı domain / URL / IP akışı",
+      "feature2": "Oltalama ve zararlı yazılım kategorileri",
+      "feature3": "Kritiklik puanı (1-10)",
+      "feature4": "APT / botnet C&C etiketleme"
     }
   },
   "limits": {
@@ -250,6 +272,10 @@
     "scamalytics": {
       "free": "5.000 kredi/ay",
       "rate": "15 gün PREMIUM deneme"
+    },
+    "siberguvenlik": {
+      "free": "Sınırsız (halka açık akış)",
+      "rate": "Adil kullanım"
     }
   },
   "actions": {
@@ -266,17 +292,17 @@
     "sectionDescription": "Akıllı IOC analizi için AI sağlayıcılarını yapılandırın. AI, özetler, detaylı analizler ve öneriler sunabilir.",
     "providers": {
       "claude": {
-        "description": "Anthropic'in Claude'u - Gelişmiş muhakeme ve analiz",
+        "description": "Anthropic'in Claude modelleri",
         "placeholder": "Claude API anahtarınızı girin (sk-ant-...)",
         "step2": "Ödeme yöntemi ekleyin (API erişimi için gerekli)"
       },
       "gemini": {
-        "description": "Google'ın Gemini'si - Hızlı ve verimli analiz",
+        "description": "Google'ın Gemini modelleri",
         "placeholder": "Gemini API anahtarınızı girin",
         "step2": "Google Cloud Console'da Gemini API'yi etkinleştirin"
       },
       "openai": {
-        "description": "OpenAI'nin GPT'si - Çok yönlü dil anlama",
+        "description": "OpenAI'ın GPT modelleri",
         "placeholder": "OpenAI API anahtarınızı girin (sk-...)",
         "step2": "Ödeme yöntemi ekleyin ve kredi satın alın"
       }
@@ -296,6 +322,23 @@
     },
     "models": {
       "title": "Kullanılabilir Modeller"
+    },
+    "actions": {
+      "test": "Anahtarı test et",
+      "testing": "Test ediliyor…",
+      "testPassed": "Anahtar doğrulandı"
+    },
+    "model": {
+      "label": "Model",
+      "locked": "Model seçmek için önce doğrulanmış bir anahtar kaydedin."
+    },
+    "tier": {
+      "low": "Ekonomik",
+      "mid": "Dengeli",
+      "high": "En güçlü"
+    },
+    "modelNotes": {
+      "fable": "Claude Fable 5, Anthropic hesabınızda 30 günlük veri saklamayı gerektirir. Sıfır veri saklama (ZDR) hesaplarda tüm istekler hata döner — bu durumda Opus 5 veya Haiku 4.5 seçin."
     }
   },
   "footer": {

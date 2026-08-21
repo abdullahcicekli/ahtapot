@@ -2,14 +2,14 @@
 
 .greynoise-result-card {
   position: relative;
-  background: var(--bg-card, #222228);
+  background: var(--bg-card, #171719);
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .greynoise-result-card:hover {
-  border-color: var(--border-hover, rgba(255, 247, 112, 0.3));
+  border-color: var(--border-hover, var(--border-hi));
 }
 
 /* Header */
@@ -19,7 +19,7 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, #1A1A1F);
+  background: var(--bg-header, #121215);
   border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--bg-section, #2A2A32);
+  background: var(--bg-section, #1E1E22);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -108,33 +108,33 @@
 }
 
 .greynoise-status-badge.safe {
-  background: var(--success-bg, rgba(34, 197, 94, 0.15));
-  color: var(--success, #22c55e);
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg, rgba(123, 216, 143, 0.15));
+  color: var(--success, #7BD88F);
+  border: 1px solid var(--success-border, rgba(123, 216, 143, 0.3));
 }
 
 .greynoise-status-badge.suspicious {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 .greynoise-status-badge.malicious {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
 }
 
 .greynoise-status-badge.unknown {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.15));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 .greynoise-status-badge.error {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.15));
-  color: var(--danger, #ef4444);
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
 }
 
 /* Unsupported */
@@ -175,9 +175,9 @@
 }
 
 .greynoise-ioc-badge {
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
-  color: var(--accent, #FFF770);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
+  border: 1px solid var(--accent-border, var(--border-hi));
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -251,7 +251,7 @@
 }
 
 .greynoise-metric-card {
-  background: var(--bg-section, #2A2A32);
+  background: var(--bg-section, #1E1E22);
   border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
@@ -274,7 +274,7 @@
 }
 
 .greynoise-metric-header svg {
-  color: var(--accent, #FFF770);
+  color: var(--text-secondary);
   width: 16px;
   height: 16px;
 }
@@ -323,26 +323,26 @@
 }
 
 .greynoise-classification-badge.benign {
-  background: var(--success-bg, rgba(34, 197, 94, 0.2));
-  color: #4ade80;
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg, rgba(123, 216, 143, 0.2));
+  color: #7BD88F;
+  border: 1px solid var(--success-border, rgba(123, 216, 143, 0.3));
 }
 
 .greynoise-classification-badge.malicious {
-  background: var(--danger-bg, rgba(239, 68, 68, 0.2));
+  background: var(--danger-bg, rgba(242, 85, 90, 0.2));
   color: #f87171;
-  border: 1px solid var(--danger-border, rgba(239, 68, 68, 0.3));
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
 }
 
 .greynoise-classification-badge.unknown {
-  background: var(--warning-bg, rgba(245, 158, 11, 0.2));
-  color: var(--warning, #f59e0b);
-  border: 1px solid var(--warning-border, rgba(245, 158, 11, 0.3));
+  background: var(--warning-bg, rgba(240, 178, 60, 0.2));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 /* Seen Status */
 .greynoise-seen-yes {
-  color: #4ade80;
+  color: #7BD88F;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -361,9 +361,9 @@
 
 /* RIOT Badge */
 .greynoise-riot-badge {
-  background: var(--success-bg, rgba(34, 197, 94, 0.2));
-  color: #4ade80;
-  border: 1px solid var(--success-border, rgba(34, 197, 94, 0.3));
+  background: var(--success-bg, rgba(123, 216, 143, 0.2));
+  color: #7BD88F;
+  border: 1px solid var(--success-border, rgba(123, 216, 143, 0.3));
   padding: 4px 10px;
   border-radius: var(--radius-md, 6px);
   font-weight: 600;
@@ -382,9 +382,9 @@
 }
 
 .greynoise-tag {
-  background: var(--accent-bg, rgba(255, 247, 112, 0.1));
-  color: var(--accent, #FFF770);
-  border: 1px solid var(--accent-border, rgba(255, 247, 112, 0.3));
+  background: var(--accent-bg, var(--bg-input));
+  color: var(--text-secondary);
+  border: 1px solid var(--accent-border, var(--border-hi));
   padding: 5px 10px;
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -438,8 +438,8 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--accent, #FFF770);
-  color: var(--bg-header, #1A1A1F);
+  background: var(--text);
+  color: var(--bg-header, #121215);
   border: none;
   border-radius: var(--radius-lg, 8px);
   font-size: var(--text-md, 13px);

@@ -3,6 +3,7 @@ import FloatingButton from '@/components/FloatingButton';
 import { detectIOCs } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { DetectedIOC } from '@/types/ioc';
+import floatingButtonStyles from './content-script.css?inline';
 
 /**
  * Content Script - Sayfa içinde çalışır
@@ -14,40 +15,75 @@ let floatingButtonContainer: HTMLDivElement | null = null;
 let currentSelection: string = '';
 let detectedIOCs: DetectedIOC[] = [];
 
-// Floating button container'ını oluştur
+// Floating button container'ını oluştur.
+// Shadow DOM: sayfanın kendi button/pseudo-element stilleri balona sızmasın,
+// bizim stillerimiz de sayfayı etkilemesin diye tam izolasyon.
 function createFloatingButtonContainer(): HTMLDivElement {
   if (floatingButtonContainer) {
     return floatingButtonContainer;
   }
 
-  const container = document.createElement('div');
-  container.id = 'ahtapot-floating-button-root';
-  container.style.cssText = `
+  const host = document.createElement('div');
+  host.id = 'ahtapot-floating-button-root';
+  host.style.cssText = `
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 0;
     z-index: 2147483647;
-    pointer-events: none;
   `;
-  document.body.appendChild(container);
 
-  floatingButtonContainer = container;
-  floatingButtonRoot = ReactDOM.createRoot(container);
+  const shadow = host.attachShadow({ mode: 'open' });
+  const style = document.createElement('style');
+  style.textContent = floatingButtonStyles;
+  shadow.appendChild(style);
 
-  return container;
+  const mount = document.createElement('div');
+  shadow.appendChild(mount);
+  document.body.appendChild(host);
+
+  floatingButtonContainer = host;
+  floatingButtonRoot = ReactDOM.createRoot(mount);
+
+  return host;
 }
 
-function showFloatingButton(rect: DOMRect, iocs: DetectedIOC[]) {
+/**
+ * Seçim okuma yönünde biter: buton, seçim çokgeninin en alt satırının
+ * sağ ucunda (bitiş noktasında) çıkmalı — ilk satırın sağında değil.
+ */
+function selectionAnchor(range: Range): { top: number; left: number } {
+  let anchor: DOMRect | null = null;
+
+  for (const rect of Array.from(range.getClientRects())) {
+    if (rect.width === 0 && rect.height === 0) continue;
+    if (
+      !anchor ||
+      rect.bottom > anchor.bottom + 1 ||
+      (Math.abs(rect.bottom - anchor.bottom) <= 1 && rect.right > anchor.right)
+    ) {
+      anchor = rect;
+    }
+  }
+
+  const rect = anchor ?? range.getBoundingClientRect();
+
+  // Buton kompakt ~44px, hover'da ~170px'e genişler; viewport dışına taşırma
+  const BUTTON = 44;
+  const EXPANDED = 180;
+  return {
+    top: Math.min(rect.bottom + 6, window.innerHeight - BUTTON - 8),
+    left: Math.min(Math.max(rect.right + 6, 8), window.innerWidth - EXPANDED),
+  };
+}
+
+function showFloatingButton(range: Range, iocs: DetectedIOC[]) {
   if (!floatingButtonRoot) {
     createFloatingButtonContainer();
   }
 
-  const position = {
-    top: rect.top - 2,
-    left: rect.right + 5,
-  };
+  const position = selectionAnchor(range);
 
   detectedIOCs = iocs;
 
@@ -116,9 +152,8 @@ function handleSelectionChange() {
     const iocs = detectIOCs(selectedText);
 
     if (iocs.length > 0) {
-      const range = selection!.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-      showFloatingButton(rect, iocs);
+      const range = selection!.getRangeAt(selection!.rangeCount - 1);
+      showFloatingButton(range, iocs);
     } else {
       hideFloatingButton();
     }

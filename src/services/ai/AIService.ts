@@ -178,7 +178,9 @@ export class AIService {
       },
       body: JSON.stringify({
         model: this.model,
-        max_tokens: 4096,
+        // Current Anthropic models think by default and max_tokens caps
+        // thinking + answer together, so leave generous headroom.
+        max_tokens: 8192,
         system: systemPrompt,
         messages: [
           {
@@ -247,7 +249,8 @@ export class AIService {
       },
       body: JSON.stringify({
         model: this.model,
-        max_tokens: 4096,
+        // GPT-5.x models accept max_completion_tokens, not max_tokens.
+        max_completion_tokens: 4096,
         messages: [
           {
             role: 'system',

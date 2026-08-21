@@ -1,30 +1,15 @@
+@import '../../styles/tokens.css';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --bg-primary: #1A1A1F;
-  --bg-secondary: #222228;
-  --border: rgba(255, 255, 255, 0.08);
-  
-  /* Accent - Lime Green */
-  --accent: #C7F54D;
-  --accent-dim: rgba(199, 245, 77, 0.15);
-  
-  /* Semantic Colors */
-  --success: #4ADE80;
-  --warning: #FBBF24;
-  --danger: #E63946;
-  --info: #38BDF8;
-}
 
 body {
   width: 300px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-primary);
@@ -76,7 +61,7 @@ body {
 }
 
 .menu-item:hover .menu-item-icon {
-  background: var(--accent);
+  background: var(--text);
   color: var(--bg-primary);
 }
 
@@ -91,9 +76,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-dim);
+  background: var(--bg-input);
   border-radius: 8px;
-  color: var(--accent);
+  color: var(--text-secondary);
   transition: all 0.15s ease;
 }
 

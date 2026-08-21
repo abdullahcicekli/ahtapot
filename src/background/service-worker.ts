@@ -78,7 +78,8 @@ chrome.runtime.onMessage.addListener(
       handleAnalyzeIOC(
         message.payload.iocs,
         message.payload.excludeProviders,
-        message.payload.includeProviders
+        message.payload.includeProviders,
+        message.payload.requestId
       )
         .then((response) => {
           sendResponse({ success: true, ...response });
@@ -108,7 +109,8 @@ chrome.runtime.onMessage.addListener(
 async function handleAnalyzeIOC(
   iocs: DetectedIOC[],
   excludeProviders?: APIProvider[],
-  includeProviders?: APIProvider[]
+  includeProviders?: APIProvider[],
+  requestId?: string
 ): Promise<{
   results: IOCAnalysisResult[];
   analyzingProviders: APIProvider[];
@@ -135,7 +137,19 @@ async function handleAnalyzeIOC(
       // Non-null assertion: apiService is initialized above
       const results = await apiService!.analyzeIOC(ioc, {
         excludeProviders,
-        includeProviders
+        includeProviders,
+        // Streaming: her provider bitince sidepanel'e anında iletilir;
+        // panel kapalıysa sendMessage reject eder, sessizce yutulur.
+        onResult: requestId
+          ? (result) => {
+              chrome.runtime
+                .sendMessage({
+                  type: MessageType.ANALYSIS_PROGRESS,
+                  payload: { requestId, result },
+                })
+                .catch(() => {});
+            }
+          : undefined,
       });
       return { success: true, results };
     } catch (error) {

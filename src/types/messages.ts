@@ -6,6 +6,7 @@ import { DetectedIOC, IOCAnalysisResult, APIProvider } from './ioc';
 export enum MessageType {
   ANALYZE_IOC = 'ANALYZE_IOC',
   ANALYSIS_RESULT = 'ANALYSIS_RESULT',
+  ANALYSIS_PROGRESS = 'ANALYSIS_PROGRESS',
   OPEN_SIDEPANEL = 'OPEN_SIDEPANEL',
   GET_API_KEYS = 'GET_API_KEYS',
   NAVIGATE_TO_PROVIDER = 'NAVIGATE_TO_PROVIDER',
@@ -20,6 +21,8 @@ export interface AnalyzeIOCMessage {
     iocs: DetectedIOC[];
     excludeProviders?: APIProvider[];
     includeProviders?: APIProvider[];
+    /** Streaming ilerleme mesajlarını bu isteğe bağlamak için */
+    requestId?: string;
   };
 }
 

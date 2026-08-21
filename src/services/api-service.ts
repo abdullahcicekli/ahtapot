@@ -27,6 +27,8 @@ export class APIService {
     options?: {
       excludeProviders?: APIProvider[];
       includeProviders?: APIProvider[];
+      /** Her provider sonucu hazır olur olmaz çağrılır (streaming UI için). */
+      onResult?: (result: IOCAnalysisResult) => void;
     }
   ): Promise<IOCAnalysisResult[]> {
     const results: IOCAnalysisResult[] = [];
@@ -64,6 +66,7 @@ export class APIService {
 
         if (cachedResult) {
           console.log(`[APIService] Cache hit for ${service.name} - ${ioc.type} - ${ioc.value}`);
+          options?.onResult?.(cachedResult);
           return cachedResult;
         }
       }
@@ -78,6 +81,7 @@ export class APIService {
         console.log(`[APIService] Cached result for ${service.name} - ${ioc.type} - ${ioc.value}`);
       }
 
+      options?.onResult?.(result);
       return result;
     });
 

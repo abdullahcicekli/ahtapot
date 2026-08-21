@@ -3,21 +3,24 @@
  * Floating button ve diğer sayfa içi elementler için
  */
 
-/* Reset ve izolasyon için */
-#ahtapot-floating-button-root {
+/* Shadow root içinde çalışır; sayfadan yalnızca inherit edilen özellikler
+   sızabilir, onları da :host'ta sıfırlıyoruz. */
+:host {
   all: initial;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#ahtapot-floating-button-root * {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 /* Floating button container */
 .ahtapot-floating-button {
-  position: absolute;
-  pointer-events: auto !important;
+  position: fixed;
+  pointer-events: auto;
   animation: ahtapot-fade-in 0.2s ease-out;
   z-index: 2147483647;
 }
@@ -52,13 +55,16 @@
 
 /* Button styles - Compact by default, expands on hover */
 .ahtapot-floating-button button {
+  all: unset;
   display: flex;
   align-items: center;
   gap: 0;
   padding: 10px;
   background: #1A1A1F;
   color: white;
-  border: 1px solid rgba(255, 247, 112, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: inherit;
+  line-height: 1;
   border-radius: 50px;
   font-size: 14px;
   font-weight: 500;
@@ -69,13 +75,13 @@
   white-space: nowrap;
 }
 
-/* Logo - SVG icon */
+/* Logo - marka işareti (koyu zeminde lime, hover'da zeminle ters döner) */
 .ahtapot-logo {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
   transition: all 0.3s ease;
-  color: white;
+  color: #C7F54D;
   display: block;
 }
 
@@ -89,6 +95,7 @@
 }
 
 /* Badge - initially hidden */
+/* IOC sayısı rozetle her zaman görünür; hover'da renkler zeminle ters döner */
 .ahtapot-ioc-badge {
   display: inline-flex;
   align-items: center;
@@ -96,15 +103,14 @@
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  background: rgba(255, 247, 112, 0.3);
+  background: rgba(199, 245, 77, 0.16);
+  color: #C7F54D;
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
+  line-height: 1;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 0;
+  margin-left: 8px;
 }
 
 /* Hover state - expand button */
@@ -113,7 +119,7 @@
   gap: 8px;
   padding: 10px 16px;
   background: #C7F54D;
-  color: #1A1A1F;
+  color: #121215;
   border-color: #C7F54D;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
@@ -121,7 +127,7 @@
 
 .ahtapot-floating-button button:hover .ahtapot-logo,
 .ahtapot-floating-button button.expanded .ahtapot-logo {
-  color: #1A1A1F;
+  color: #121215;
 }
 
 .ahtapot-floating-button button:hover .button-text,
@@ -133,11 +139,9 @@
 
 .ahtapot-floating-button button:hover .ahtapot-ioc-badge,
 .ahtapot-floating-button button.expanded .ahtapot-ioc-badge {
-  max-width: 40px;
-  opacity: 1;
   margin-left: 4px;
-  background: rgba(26, 26, 31, 0.3);
-  color: #1A1A1F;
+  background: rgba(26, 26, 31, 0.35);
+  color: #F2F2F3;
 }
 
 /* Active state */
@@ -158,7 +162,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   50% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 247, 112, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(199, 245, 77, 0.3);
   }
 }
 

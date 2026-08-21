@@ -2,9 +2,9 @@
 
 :root {
   /* Backgrounds */
-  --bg-card: #222228;
-  --bg-header: #1A1A1F;
-  --bg-section: #2A2A32;
+  --bg-card: #171719;
+  --bg-header: #121215;
+  --bg-section: #1E1E22;
   
   /* Accent - Lime Green */
   --accent: #C7F54D;
@@ -13,19 +13,19 @@
   --accent-border: rgba(199, 245, 77, 0.3);
   
   /* Success - Emerald (harmonizes with lime) */
-  --success: #4ADE80;
-  --success-bg: rgba(74, 222, 128, 0.12);
-  --success-border: rgba(74, 222, 128, 0.25);
+  --success: #7BD88F;
+  --success-bg: rgba(123, 216, 143, 0.12);
+  --success-border: rgba(123, 216, 143, 0.25);
   
   /* Danger - Coral Red */
-  --danger: #E63946;
-  --danger-bg: rgba(230, 57, 70, 0.12);
-  --danger-border: rgba(230, 57, 70, 0.25);
+  --danger: #F2555A;
+  --danger-bg: rgba(242, 85, 90, 0.12);
+  --danger-border: rgba(242, 85, 90, 0.25);
   
   /* Warning - Warm Amber */
-  --warning: #FBBF24;
-  --warning-bg: rgba(251, 191, 36, 0.12);
-  --warning-border: rgba(251, 191, 36, 0.25);
+  --warning: #F0B23C;
+  --warning-bg: rgba(240, 178, 60, 0.12);
+  --warning-border: rgba(240, 178, 60, 0.25);
   
   /* Info - Sky Blue */
   --info: #38BDF8;
@@ -195,7 +195,7 @@
   gap: var(--space-sm);
   font-size: var(--text-md);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--text-secondary);
   margin-bottom: var(--space-md);
 }
 
@@ -250,14 +250,14 @@
 }
 
 .tab-base.active {
-  color: var(--accent);
+  color: var(--text-secondary);
   background: var(--accent-bg);
-  border-bottom-color: var(--accent);
+  border-bottom-color: var(--border-hi);
 }
 
 .tab-badge-base {
   background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--text-secondary);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: var(--text-sm);
@@ -271,7 +271,7 @@
   border: 1px solid var(--accent-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .tag-base.danger {
@@ -285,7 +285,7 @@
   font-size: var(--text-sm);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text-secondary);
   background: var(--accent-bg);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
@@ -353,7 +353,7 @@
   align-items: center;
   gap: var(--space-sm);
   padding: 10px var(--space-xl);
-  background: var(--accent);
+  background: var(--text);
   color: var(--bg-header);
   border: none;
   border-radius: var(--radius-lg);

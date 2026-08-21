@@ -1,5 +1,10 @@
 {
   "virustotal": {
+    "notFound": {
+      "title": "VirusTotal'de kayıt yok",
+      "description": "VirusTotal bu göstergeyi henüz analiz etmemiş. VirusTotal sitesinde taramaya gönderebilirsiniz.",
+      "view": "VirusTotal'de ara"
+    },
     "communityScore": "Topluluk Puanı",
     "votes": {
       "harmless": "zararsız",
@@ -438,5 +443,20 @@
       "checkApiKey": "API anahtarınızın doğru olduğunu doğrulayın",
       "networkIssue": "Ağ bağlantı sorunu"
     }
+  },
+  "sgb": {
+    "listed": "Zararlı olarak listelenmiş",
+    "notListed": "Ulusal tehdit listesinde yok",
+    "criticality": "Kritiklik Seviyesi",
+    "recordType": "Kayıt Türü",
+    "source": "Kaynak",
+    "connection": "Bağlantı Türü",
+    "dateAdded": "Eklenme Tarihi",
+    "category": "Kategori",
+    "related": "İlgili Kayıtlar",
+    "viewDetails": "Detayları gör",
+    "levelLow": "Düşük",
+    "levelMedium": "Orta",
+    "levelCritical": "Kritik"
   }
 }

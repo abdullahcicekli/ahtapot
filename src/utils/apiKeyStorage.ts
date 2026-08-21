@@ -13,6 +13,15 @@ export interface APIKeyData {
 export type APIKeysStorage = Record<APIProvider, APIKeyData>;
 
 /**
+ * Anahtar gerektirmeyen, her zaman yapılandırılmış sayılan sağlayıcılar.
+ * ServiceRegistry bunları otomatik başlatır; buradaki liste onunla eş tutulmalı.
+ */
+export const KEYLESS_PROVIDERS: readonly APIProvider[] = [
+  APIProvider.ARIN,
+  APIProvider.SIBERGUVENLIK,
+];
+
+/**
  * Get all API keys from storage with migration support
  */
 export async function getAPIKeys(): Promise<APIKeysStorage> {
@@ -58,13 +67,12 @@ export async function saveAPIKey(provider: APIProvider, key: string): Promise<vo
 
 /**
  * Remove an API key
- * Note: ARIN cannot be removed as it requires no API key and is always available
+ * Note: keyless providers cannot be removed - they are always available
  */
 export async function removeAPIKey(provider: APIProvider): Promise<void> {
   try {
-    // Prevent removing ARIN - it's always available (no API key needed)
-    if (provider === APIProvider.ARIN) {
-      console.warn('Cannot remove ARIN - it requires no API key and is always available');
+    if (KEYLESS_PROVIDERS.includes(provider)) {
+      console.warn(`Cannot remove ${provider} - it requires no API key and is always available`);
       return;
     }
 
@@ -79,7 +87,7 @@ export async function removeAPIKey(provider: APIProvider): Promise<void> {
 
 /**
  * Get configured providers sorted by timestamp (most recent first)
- * Note: ARIN is always included as it requires no API key
+ * Note: keyless providers are always included
  */
 export async function getConfiguredProvidersSorted(): Promise<
   Array<{ provider: APIProvider; addedAt: number }>
@@ -98,13 +106,14 @@ export async function getConfiguredProvidersSorted(): Promise<
       }
     });
 
-    // Always include ARIN (no API key required, public API)
-    const hasARIN = configured.some(p => p.provider === APIProvider.ARIN);
-    if (!hasARIN) {
-      configured.push({
-        provider: APIProvider.ARIN,
-        addedAt: 0, // Always show first (oldest timestamp)
-      });
+    // Always include keyless providers (public APIs)
+    for (const provider of KEYLESS_PROVIDERS) {
+      if (!configured.some(p => p.provider === provider)) {
+        configured.push({
+          provider,
+          addedAt: 0, // Always show first (oldest timestamp)
+        });
+      }
     }
 
     // Sort by addedAt (most recent first)
@@ -113,8 +122,8 @@ export async function getConfiguredProvidersSorted(): Promise<
     return configured;
   } catch (error) {
     console.error('Failed to get configured providers:', error);
-    // Even on error, return ARIN as it's always available
-    return [{ provider: APIProvider.ARIN, addedAt: 0 }];
+    // Even on error, keyless providers are always available
+    return KEYLESS_PROVIDERS.map(provider => ({ provider, addedAt: 0 }));
   }
 }
 
@@ -143,12 +152,11 @@ async function migrateAPIKeys(oldKeys: any): Promise<APIKeysStorage> {
 
 /**
  * Check if a provider has an API key configured
- * Note: ARIN always returns true as it requires no API key (public API)
+ * Note: keyless providers always return true (public APIs)
  */
 export async function hasAPIKey(provider: APIProvider): Promise<boolean> {
   try {
-    // ARIN doesn't require an API key - it's a public API
-    if (provider === APIProvider.ARIN) {
+    if (KEYLESS_PROVIDERS.includes(provider)) {
       return true;
     }
 

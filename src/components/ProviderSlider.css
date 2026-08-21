@@ -40,7 +40,7 @@
   width: 48px;
   height: 48px;
   padding: 10px;
-  background: #222228;
+  background: var(--bg-secondary);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   cursor: pointer;
@@ -55,7 +55,7 @@
   transform: translateX(-50%);
   padding: 6px 12px;
   background: rgba(26, 26, 31, 0.98);
-  border: 1px solid rgba(255, 247, 112, 0.4);
+  border: 1px solid var(--border-hi);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -80,7 +80,7 @@
 
 /* Enabled state */
 .provider-slide-item.enabled {
-  background: #2A2A32;
+  background: var(--bg-tertiary);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -91,14 +91,14 @@
 
 /* Active state - highlighted with yellow border */
 .provider-slide-item.active {
-  background: rgba(255, 247, 112, 0.08);
-  border-color: #C7F54D;
-  box-shadow: 0 0 0 1px rgba(255, 247, 112, 0.2);
+  background: var(--bg-input);
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10);
 }
 
 .provider-slide-item.active:hover {
-  background: rgba(255, 247, 112, 0.12);
-  border-color: #C7F54D;
+  background: var(--bg-input);
+  border-color: var(--border-hi);
 }
 
 /* Disabled state */
@@ -109,8 +109,8 @@
 }
 
 .provider-slide-item.disabled:hover {
-  background: #222228;
-  border-color: rgba(255, 247, 112, 0.1);
+  background: var(--bg-secondary);
+  border-color: var(--border-hi);
   opacity: 0.8;
 }
 
@@ -152,15 +152,15 @@
   transform: translateY(-50%);
   width: 36px;
   height: 36px;
-  background: #C7F54D;
+  background: var(--bg-input);
   border: none;
   border-radius: 10px;
-  color: #1A1A1F;
+  color: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: -8px 0 16px 8px #1A1A1F;
+  box-shadow: -8px 0 16px 8px var(--bg-primary);
   transition: all 0.2s ease;
   z-index: 10;
 }
@@ -220,4 +220,27 @@
     width: 28px;
     height: 28px;
   }
+}
+
+/* Pending: sonuç bekleniyor — logo soluk, çevresinde dönen halka */
+.provider-slide-item.pending .provider-slide-logo img {
+  opacity: 0.4;
+}
+
+.provider-slide-item.pending .provider-slide-logo {
+  position: relative;
+}
+
+.provider-pending-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.65);
+  animation: provider-ring-spin 0.9s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes provider-ring-spin {
+  to { transform: rotate(360deg); }
 }
