@@ -9,6 +9,17 @@
 
   .copy { width: 480px; flex-shrink: 0; }
   .copy .brand { display: flex; margin-bottom: 44px; }
+
+  /* Marka illüstrasyonu: dokunaç, sol alttan çerçeveye girer */
+  .tentacle {
+    position: absolute;
+    left: -128px;
+    bottom: -158px;
+    width: 430px;
+    transform: rotate(-8deg);
+    opacity: 0.92;
+    pointer-events: none;
+  }
   .copy .chip { margin-bottom: 18px; }
   .copy .h1 { font-size: 58px; margin-bottom: 20px; }
   .copy .sub { font-size: 19px; max-width: 420px; }
@@ -102,6 +113,7 @@
 <body>
   <div class="backdrop"></div>
   <div class="grid-lines"></div>
+  <img class="tentacle" src="assets/tentacle.png" alt="">
   <div class="stage">
     <div class="copy">
       <div class="brand">
