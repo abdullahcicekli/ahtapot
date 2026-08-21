@@ -2,9 +2,9 @@
 
 :root {
   /* Backgrounds */
-  --bg-card: var(--bg-secondary);
-  --bg-header: var(--bg-primary);
-  --bg-section: var(--bg-tertiary);
+  --bg-card: #171719;
+  --bg-header: #121215;
+  --bg-section: #1E1E22;
   
   /* Accent - Lime Green */
   --accent: #C7F54D;
@@ -13,19 +13,19 @@
   --accent-border: rgba(199, 245, 77, 0.3);
   
   /* Success - Emerald (harmonizes with lime) */
-  --success: var(--success);
-  --success-bg: rgba(74, 222, 128, 0.12);
-  --success-border: rgba(74, 222, 128, 0.25);
+  --success: #7BD88F;
+  --success-bg: rgba(123, 216, 143, 0.12);
+  --success-border: rgba(123, 216, 143, 0.25);
   
   /* Danger - Coral Red */
-  --danger: var(--danger);
-  --danger-bg: rgba(230, 57, 70, 0.12);
-  --danger-border: rgba(230, 57, 70, 0.25);
+  --danger: #F2555A;
+  --danger-bg: rgba(242, 85, 90, 0.12);
+  --danger-border: rgba(242, 85, 90, 0.25);
   
   /* Warning - Warm Amber */
-  --warning: var(--warning);
-  --warning-bg: rgba(251, 191, 36, 0.12);
-  --warning-border: rgba(251, 191, 36, 0.25);
+  --warning: #F0B23C;
+  --warning-bg: rgba(240, 178, 60, 0.12);
+  --warning-border: rgba(240, 178, 60, 0.25);
   
   /* Info - Sky Blue */
   --info: #38BDF8;

@@ -1,7 +1,7 @@
 /* AI Structured Result Card */
 .ai-structured-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--bg-secondary, #1E1E24);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 12px;
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   cursor: pointer;
   transition: background 0.2s ease;
 }
@@ -47,8 +47,8 @@
 .ai-structured-mode-badge {
   font-size: 11px;
   font-weight: 600;
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--accent, #C7F54D);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
   padding: 3px 8px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -61,14 +61,14 @@
 
 .ai-structured-mode-badge.error {
   background: rgba(242, 85, 90, 0.15);
-  color: var(--danger);
+  color: #F2555A;
 }
 
 .ai-structured-cached-badge {
   font-size: 10px;
   font-weight: 600;
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.15);
+  color: #7BD88F;
+  background: rgba(123, 216, 143, 0.15);
   padding: 2px 6px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -99,12 +99,12 @@
 
 .ai-structured-content-error {
   background: rgba(242, 85, 90, 0.08);
-  color: var(--danger);
+  color: #F2555A;
   font-size: 13px;
 }
 
 .ai-structured-raw {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
@@ -180,13 +180,13 @@
   padding: 4px 10px;
   border-radius: 4px;
   /* Default - will be overridden by data attribute */
-  color: var(--warning);
+  color: #F0B23C;
   background: rgba(240, 178, 60, 0.15);
 }
 
 /* P0 - Critical (Red) */
 .ai-priority-badge[data-priority="P0"] {
-  color: var(--danger);
+  color: #F2555A;
   background: rgba(242, 85, 90, 0.15);
 }
 
@@ -217,7 +217,7 @@
 .ai-escalation-badge {
   font-size: 11px;
   font-weight: 600;
-  color: var(--danger);
+  color: #F2555A;
   background: rgba(242, 85, 90, 0.15);
   padding: 4px 10px;
   border-radius: 4px;
@@ -236,7 +236,7 @@
 }
 
 .ai-section.notes {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 14px;
@@ -247,7 +247,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -273,7 +273,7 @@
 }
 
 .ai-signal-item {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
@@ -307,7 +307,7 @@
 
 .ai-action-box svg {
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   margin-top: 2px;
 }
 
@@ -329,7 +329,7 @@
   grid-template-columns: 100px 100px 1fr;
   gap: 12px;
   padding: 10px 12px;
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 12px;
@@ -356,7 +356,7 @@
 }
 
 .ai-provider-card {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
@@ -410,7 +410,7 @@
 .ai-cross-ref-item,
 .ai-threat-intel-item,
 .ai-infra-item {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 10px 12px;
@@ -455,7 +455,7 @@
   grid-template-columns: 120px 180px 1fr;
   gap: 12px;
   padding: 10px 12px;
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 12px;
@@ -477,7 +477,7 @@
 
 /* IOC Card */
 .ai-ioc-card {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
@@ -493,12 +493,12 @@
 }
 
 .ai-ioc-value {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: 12px;
   background: rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 4px;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 .ai-ioc-type,
@@ -534,7 +534,7 @@
 }
 
 .ai-action-group {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 12px;
@@ -553,7 +553,7 @@
 }
 
 .ai-action-label.urgent {
-  color: var(--danger);
+  color: #F2555A;
   background: rgba(242, 85, 90, 0.15);
 }
 
@@ -572,7 +572,7 @@
 
 /* False Positive Analysis */
 .ai-fp-analysis {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 14px;
@@ -589,9 +589,9 @@
   text-transform: capitalize;
 }
 
-.ai-fp-probability span.high { color: var(--danger); }
-.ai-fp-probability span.medium { color: var(--warning); }
-.ai-fp-probability span.low { color: #22c55e; }
+.ai-fp-probability span.high { color: #F2555A; }
+.ai-fp-probability span.medium { color: #F0B23C; }
+.ai-fp-probability span.low { color: #7BD88F; }
 
 .ai-fp-factors {
   display: grid;
@@ -631,7 +631,7 @@
 .ai-fp-recommendation {
   margin: 12px 0 0 0;
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   font-style: italic;
 }
 
@@ -679,7 +679,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #15151A);
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 12px;
@@ -703,9 +703,9 @@
 }
 
 .ai-structured-btn.requery {
-  background: var(--accent-dim);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
   border-color: rgba(199, 245, 77, 0.2);
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 .ai-structured-btn.requery:hover {
@@ -729,12 +729,12 @@
 }
 
 .ai-structured-error-icon {
-  color: var(--danger);
+  color: #F2555A;
 }
 
 /* Links */
 .ai-link {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   text-decoration: none;
   display: inline-flex;
   align-items: center;

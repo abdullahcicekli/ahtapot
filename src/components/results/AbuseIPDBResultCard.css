@@ -2,14 +2,14 @@
 
 .abuseipdb-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-card, #171719);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
 
 .abuseipdb-result-card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--border-hover, rgba(199, 245, 77, 0.3));
 }
 
 /* Header */
@@ -19,8 +19,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-header, #121215);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
 
@@ -37,7 +37,7 @@
   border-radius: 50%;
   background: conic-gradient(
     var(--score-color) var(--score-percent),
-    var(--bg-section, var(--bg-tertiary) var(--score-percent)
+    var(--bg-section, #1E1E22) var(--score-percent)
   );
   display: flex;
   flex-direction: column;
@@ -51,7 +51,7 @@
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: var(--bg-header, var(--bg-primary);
+  background: var(--bg-header, #121215);
 }
 
 .abuseipdb-score-value {
@@ -142,27 +142,27 @@
 }
 
 .abuseipdb-status-badge.malicious {
-  background: var(--danger-bg);
-  color: var(--danger);
-  border: 1px solid var(--danger-border);
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
 }
 
 .abuseipdb-status-badge.suspicious {
-  background: var(--warning-bg);
-  color: var(--warning);
-  border: 1px solid var(--warning-border);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border: 1px solid var(--warning-border, rgba(240, 178, 60, 0.3));
 }
 
 .abuseipdb-status-badge.clean {
-  background: var(--success-bg);
-  color: var(--success);
-  border: 1px solid var(--success-border);
+  background: var(--success-bg, rgba(123, 216, 143, 0.15));
+  color: var(--success, #7BD88F);
+  border: 1px solid var(--success-border, rgba(123, 216, 143, 0.3));
 }
 
 .abuseipdb-status-badge.whitelisted {
-  background: var(--info-bg);
-  color: var(--info);
-  border: 1px solid var(--info-border);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
 }
 
 /* Status Description */
@@ -172,31 +172,31 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   font-size: var(--text-md, 13px);
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .abuseipdb-status-description.malicious {
-  background: var(--danger-bg);
-  color: var(--danger);
-  border-left: 3px solid var(--danger);
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border-left: 3px solid var(--danger, #F2555A);
 }
 
 .abuseipdb-status-description.suspicious {
-  background: var(--warning-bg);
-  color: var(--warning);
-  border-left: 3px solid var(--warning);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  color: var(--warning, #F0B23C);
+  border-left: 3px solid var(--warning, #F0B23C);
 }
 
 .abuseipdb-status-description.clean {
-  background: var(--success-bg);
-  color: var(--success);
-  border-left: 3px solid var(--success);
+  background: var(--success-bg, rgba(123, 216, 143, 0.15));
+  color: var(--success, #7BD88F);
+  border-left: 3px solid var(--success, #7BD88F);
 }
 
 .abuseipdb-status-description.whitelisted {
-  background: var(--info-bg);
-  color: var(--info);
-  border-left: 3px solid var(--info);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border-left: 3px solid var(--info, #60a5fa);
 }
 
 /* Unsupported */
@@ -205,9 +205,9 @@
   flex-direction: column;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg);
-  border-left: 3px solid var(--warning);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  border-left: 3px solid var(--warning, #F0B23C);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .abuseipdb-unsupported-message {
@@ -215,7 +215,7 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
   font-weight: 600;
 }
 
@@ -240,11 +240,11 @@
   font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-bg);
+  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border);
+  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
 }
 
 /* Badges */
@@ -253,7 +253,7 @@
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
   flex-wrap: wrap;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .abuseipdb-badge {
@@ -273,16 +273,16 @@
 }
 
 .abuseipdb-badge.whitelisted {
-  background: var(--info-bg);
-  color: var(--info);
-  border: 1px solid var(--info-border);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
 }
 
 /* Tabs */
 .abuseipdb-tabs {
   display: flex;
-  background: var(--bg-header, var(--bg-primary);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-header, #121215);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .abuseipdb-tab {
@@ -303,19 +303,19 @@
 }
 
 .abuseipdb-tab:hover {
-  background: var(--bg-section, var(--bg-tertiary);
+  background: var(--bg-section, #1E1E22);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 .abuseipdb-tab.active {
-  color: var(--accent);
-  background: var(--accent-bg);
-  border-bottom-color: var(--accent);
+  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  border-bottom-color: var(--accent, #C7F54D);
 }
 
 .abuseipdb-tab-badge {
-  background: var(--danger-bg);
-  color: var(--danger);
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: var(--text-sm, 11px);
@@ -335,8 +335,8 @@
 }
 
 .abuseipdb-metric-card {
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -351,7 +351,7 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   font-size: var(--text-base, 12px);
   font-weight: 600;
   text-transform: uppercase;
@@ -360,7 +360,7 @@
 }
 
 .abuseipdb-metric-header svg {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   width: 14px;
   height: 14px;
 }
@@ -389,27 +389,27 @@
 }
 
 .abuseipdb-metric-value.score-malicious {
-  color: var(--danger);
+  color: var(--danger, #F2555A);
 }
 
 .abuseipdb-metric-value.score-suspicious {
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
 }
 
 .abuseipdb-metric-value.score-clean {
-  color: var(--success);
+  color: var(--success, #7BD88F);
 }
 
 .abuseipdb-metric-value.score-whitelisted {
-  color: var(--info);
+  color: var(--info, #60a5fa);
 }
 
 .abuseipdb-metric-value.positive {
-  color: var(--success);
+  color: var(--success, #7BD88F);
 }
 
 .abuseipdb-metric-value.warning {
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
 }
 
 /* Categories */
@@ -421,9 +421,9 @@
 
 .abuseipdb-category {
   padding: 5px 10px;
-  background: var(--danger-bg);
-  color: var(--danger);
-  border: 1px solid var(--danger-border);
+  background: var(--danger-bg, rgba(242, 85, 90, 0.15));
+  color: var(--danger, #F2555A);
+  border: 1px solid var(--danger-border, rgba(242, 85, 90, 0.3));
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
   font-weight: 600;
@@ -437,8 +437,8 @@
 }
 
 .abuseipdb-report-item {
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -464,8 +464,8 @@
 .abuseipdb-report-comment {
   margin: var(--space-md, 12px) 0;
   padding: var(--space-md, 12px);
-  background: var(--bg-header, var(--bg-primary);
-  border-left: 3px solid var(--accent);
+  background: var(--bg-header, #121215);
+  border-left: 3px solid var(--accent, #C7F54D);
   border-radius: var(--radius-sm, 4px);
   font-size: var(--text-md, 13px);
   line-height: 1.5;
@@ -483,8 +483,8 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background: var(--bg-header, var(--bg-primary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-header, #121215);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-sm, 11px);
@@ -501,7 +501,7 @@
 }
 
 .abuseipdb-no-reports svg {
-  color: var(--success);
+  color: var(--success, #7BD88F);
 }
 
 .abuseipdb-no-reports p {
@@ -517,13 +517,13 @@
   gap: var(--space-lg, 16px);
   margin-top: var(--space-lg, 16px);
   padding-top: var(--space-lg, 16px);
-  border-top: 1px solid var(--border-default);
+  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .abuseipdb-page-btn {
   padding: 6px 14px;
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-md, 6px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   font-size: var(--text-base, 12px);
@@ -532,9 +532,9 @@
 }
 
 .abuseipdb-page-btn:hover:not(:disabled) {
-  background: var(--accent-bg);
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  border-color: var(--accent, #C7F54D);
+  color: var(--accent, #C7F54D);
 }
 
 .abuseipdb-page-btn:disabled {
@@ -555,8 +555,8 @@
 }
 
 .abuseipdb-detail-section {
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -571,7 +571,7 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   font-size: var(--text-base, 12px);
   font-weight: 600;
   text-transform: uppercase;
@@ -580,7 +580,7 @@
 }
 
 .abuseipdb-detail-header svg {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   width: 14px;
   height: 14px;
 }
@@ -612,11 +612,11 @@
 }
 
 .abuseipdb-detail-value.positive {
-  color: var(--success);
+  color: var(--success, #7BD88F);
 }
 
 .abuseipdb-detail-value.warning {
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
 }
 
 /* Hostnames */
@@ -628,8 +628,8 @@
 
 .abuseipdb-hostname {
   padding: 6px 12px;
-  background: var(--bg-header, var(--bg-primary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-header, #121215);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-base, 12px);

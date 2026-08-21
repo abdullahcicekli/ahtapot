@@ -2,8 +2,8 @@
 
 .arin-result-card {
   position: relative;
-  background: var(--bg-card, var(--bg-secondary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-card, #171719);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-xl, 10px);
   overflow: hidden;
 }
@@ -15,8 +15,8 @@
   gap: var(--space-lg, 16px);
   padding: var(--space-xl, 20px);
   padding-right: 50px;
-  background: var(--bg-header, var(--bg-primary);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-header, #121215);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   flex-wrap: wrap;
 }
 
@@ -33,8 +33,8 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg, 8px);
-  background: var(--accent);
-  color: var(--bg-header, var(--bg-primary);
+  background: var(--accent, #C7F54D);
+  color: var(--bg-header, #121215);
   flex-shrink: 0;
 }
 
@@ -103,16 +103,16 @@
 }
 
 .arin-status-badge.info {
-  background: var(--info-bg);
-  color: var(--info);
-  border: 1px solid var(--info-border);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  color: var(--info, #60a5fa);
+  border: 1px solid var(--info-border, rgba(96, 165, 250, 0.3));
 }
 
 /* Not Found */
 .arin-not-found {
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .arin-not-found-message {
@@ -120,7 +120,7 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
   font-weight: 600;
   margin-bottom: var(--space-sm, 8px);
 }
@@ -139,8 +139,8 @@
   flex-direction: column;
   gap: var(--space-md, 12px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--warning-bg);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--warning-bg, rgba(240, 178, 60, 0.15));
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
 }
 
 .arin-unsupported-message {
@@ -148,7 +148,7 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   font-size: var(--text-md, 13px);
-  color: var(--warning);
+  color: var(--warning, #F0B23C);
   font-weight: 600;
 }
 
@@ -173,11 +173,11 @@
   font-size: var(--text-sm, 11px);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-bg);
+  color: var(--accent, #C7F54D);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
   padding: 4px 10px;
   border-radius: var(--radius-sm, 4px);
-  border: 1px solid var(--accent-border);
+  border: 1px solid var(--accent-border, rgba(199, 245, 77, 0.3));
 }
 
 /* Summary */
@@ -186,10 +186,10 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-md, 12px) var(--space-xl, 20px);
-  background: var(--info-bg);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--info-bg, rgba(96, 165, 250, 0.15));
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   font-size: var(--text-md, 13px);
-  color: var(--info);
+  color: var(--info, #60a5fa);
 }
 
 /* Content */
@@ -204,8 +204,8 @@
 }
 
 .arin-metric-card {
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-lg, 8px);
   padding: var(--space-lg, 16px);
 }
@@ -220,14 +220,14 @@
   gap: var(--space-sm, 8px);
   margin-bottom: var(--space-md, 12px);
   padding-bottom: var(--space-sm, 8px);
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   font-size: var(--text-md, 13px);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 .arin-metric-header svg {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   width: 16px;
   height: 16px;
 }
@@ -272,7 +272,7 @@
 
 .arin-comment {
   padding: var(--space-md, 12px);
-  background: var(--bg-header, var(--bg-primary);
+  background: var(--bg-header, #121215);
   border-radius: var(--radius-md, 6px);
   font-size: var(--text-base, 12px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
@@ -291,7 +291,7 @@
   flex-direction: column;
   gap: 4px;
   padding: var(--space-md, 12px);
-  background: var(--bg-header, var(--bg-primary);
+  background: var(--bg-header, #121215);
   border-radius: var(--radius-md, 6px);
   min-width: 180px;
 }
@@ -305,7 +305,7 @@
 .arin-netblock-type {
   font-size: var(--text-sm, 11px);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   text-transform: uppercase;
 }
 

@@ -1,8 +1,8 @@
 /* AI Analysis Section Styles */
 
 .ai-section {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
+  background: var(--bg-tertiary, #1E1E22);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
@@ -20,7 +20,7 @@
 }
 
 .ai-section-empty {
-  background: var(--bg-tertiary);
+  background: var(--bg-tertiary, #1E1E22);
   border: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
@@ -46,19 +46,19 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: var(--accent-dim);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.15));
   border: 1px solid rgba(199, 245, 77, 0.3);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .ai-configure-btn:hover {
   background: rgba(199, 245, 77, 0.25);
-  border-color: var(--accent);
+  border-color: var(--accent, #C7F54D);
 }
 
 /* Header */
@@ -70,13 +70,13 @@
 }
 
 .ai-icon {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 .ai-title {
   font-size: 14px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 /* IOC Selector */
@@ -90,8 +90,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: var(--accent-dim);
-  border: 1px solid var(--accent);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
+  border: 1px solid var(--accent, #C7F54D);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -110,7 +110,7 @@
 .ai-ioc-type {
   font-size: 9px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   padding: 3px 6px;
   background: rgba(199, 245, 77, 0.15);
   border-radius: 4px;
@@ -121,7 +121,7 @@
 .ai-ioc-value {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.9);
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -130,7 +130,7 @@
 }
 
 .ai-ioc-arrow {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   opacity: 0.7;
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -146,7 +146,7 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: var(--bg-primary);
+  background: var(--bg-primary, #121215);
   border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -193,7 +193,7 @@
 }
 
 .ai-ioc-check {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   flex-shrink: 0;
   margin-left: auto;
 }
@@ -216,8 +216,8 @@
   gap: 8px;
   padding: 6px 10px;
   height: 36px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
+  background: var(--bg-primary, #121215);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -230,7 +230,7 @@
 }
 
 .ai-provider-trigger.open {
-  border-color: var(--accent);
+  border-color: var(--accent, #C7F54D);
   background: rgba(199, 245, 77, 0.1);
 }
 
@@ -277,7 +277,7 @@
   top: calc(100% + 4px);
   left: 0;
   min-width: 220px;
-  background: var(--bg-primary);
+  background: var(--bg-primary, #121215);
   border: 1px solid rgba(199, 245, 77, 0.2);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -329,7 +329,7 @@
 }
 
 .ai-model-flat-item.selected {
-  background: var(--accent-dim);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.12));
 }
 
 .ai-model-flat-item:disabled {
@@ -350,7 +350,7 @@
 }
 
 .ai-model-flat-item.selected .ai-model-name {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   font-weight: 600;
 }
 
@@ -359,7 +359,7 @@
 }
 
 .ai-model-check {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   flex-shrink: 0;
 }
 
@@ -409,7 +409,7 @@
 
 .ai-provider-settings:hover {
   background: rgba(255, 255, 255, 0.04);
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 /* Actions Row */
@@ -439,8 +439,8 @@
 }
 
 .ai-mode-badge.summary {
-  background: rgba(34, 197, 94, 0.15);
-  color: var(--success);
+  background: rgba(123, 216, 143, 0.15);
+  color: #7BD88F;
 }
 
 .ai-mode-badge.analysis {
@@ -480,12 +480,12 @@
   gap: 6px;
   padding: 6px 14px;
   height: 36px;
-  background: var(--accent);
+  background: var(--accent, #C7F54D);
   border: none;
   border-radius: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--bg-primary);
+  color: #121215;
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 100px;
@@ -528,8 +528,8 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
+  background: var(--bg-primary, #121215);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
@@ -540,7 +540,7 @@
 .ai-mode-info-btn:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(199, 245, 77, 0.3);
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 /* Mode Info Popup */
@@ -550,7 +550,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 320px;
-  background: var(--bg-primary);
+  background: var(--bg-primary, #121215);
   border: 1px solid rgba(199, 245, 77, 0.3);
   border-radius: 12px;
   overflow: hidden;
@@ -581,7 +581,7 @@
 .ai-mode-info-header span {
   font-size: 12px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -630,7 +630,7 @@
 }
 
 .ai-mode-info-item.selected {
-  background: var(--accent-dim);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.1));
 }
 
 .ai-mode-info-name {
@@ -642,7 +642,7 @@
 }
 
 .ai-mode-info-item.selected .ai-mode-info-name {
-  color: var(--accent);
+  color: var(--accent, #C7F54D);
 }
 
 .ai-mode-info-meta {
@@ -684,8 +684,8 @@
 }
 
 .ai-mode-info-item.selected .ai-mode-info-audience {
-  background: var(--accent-dim);
-  color: var(--accent);
+  background: var(--accent-dim, rgba(199, 245, 77, 0.15));
+  color: var(--accent, #C7F54D);
 }
 
 /* Responsive */

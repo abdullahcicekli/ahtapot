@@ -5,8 +5,8 @@
   align-items: center;
   gap: var(--space-sm, 8px);
   padding: var(--space-lg, 16px) var(--space-xl, 20px);
-  border-top: 1px solid var(--border-default);
-  background: var(--bg-header, var(--bg-primary);
+  border-top: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
+  background: var(--bg-header, #121215);
 }
 
 .copy-btn,
@@ -15,8 +15,8 @@
   align-items: center;
   gap: 6px;
   padding: var(--space-sm, 8px) var(--space-md, 12px);
-  background: var(--bg-section, var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  background: var(--bg-section, #1E1E22);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.08));
   border-radius: var(--radius-md, 6px);
   color: var(--text-secondary, rgba(255, 255, 255, 0.7));
   font-size: var(--text-base, 12px);
@@ -27,21 +27,21 @@
 
 .copy-btn:hover,
 .export-btn:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent-border);
-  color: var(--accent);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  border-color: var(--accent-border, rgba(199, 245, 77, 0.3));
+  color: var(--accent, #C7F54D);
 }
 
 .copy-btn.copied {
-  background: var(--success-bg);
-  border-color: var(--success-border);
-  color: var(--success);
+  background: var(--success-bg, rgba(123, 216, 143, 0.15));
+  border-color: var(--success-border, rgba(123, 216, 143, 0.3));
+  color: var(--success, #7BD88F);
 }
 
 .export-btn.exporting {
-  background: var(--accent-bg);
-  border-color: var(--accent-border);
-  color: var(--accent);
+  background: var(--accent-bg, rgba(199, 245, 77, 0.1));
+  border-color: var(--accent-border, rgba(199, 245, 77, 0.3));
+  color: var(--accent, #C7F54D);
   pointer-events: none;
 }
 
