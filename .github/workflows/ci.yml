@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  # Path filtresi bilinçli olarak yok: main korumasi bu context'leri beklerse
+  # hiç başlamayan bir workflow status raporlamaz ve docs PR'ı merge edilemez
+  # kalır. Docs PR'ında birkaç CI dakikası harcamak daha ucuz hata.
+  pull_request:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Typecheck & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run type-check
+
+      # manifest.json ve package.json sürümleri elle senkron tutuluyor;
+      # release workflow'u package.json'dan okur, mağazaya manifest gider.
+      # Ayrışırlarsa tag ile yayınlanan sürüm birbirini tutmaz.
+      - name: Versions must match
+        run: |
+          PKG=$(node -p "require('./package.json').version")
+          MAN=$(node -p "require('./src/manifest.json').version")
+          if [ "$PKG" != "$MAN" ]; then
+            echo "::error::package.json ($PKG) and src/manifest.json ($MAN) versions differ."
+            exit 1
+          fi
+          echo "Version: $PKG"
+
+      - name: Build
+        run: npm run build
+
+      - name: Compute dev version
+        if: github.event_name == 'pull_request'
+        id: version
+        run: |
+          BASE=$(node -p "require('./package.json').version")
+          echo "version=$BASE.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload dev build
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v6
+        with:
+          name: ahtapot-dev-${{ steps.version.outputs.version }}
+          path: dist/
+          retention-days: 30
+          if-no-files-found: error

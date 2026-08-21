@@ -1,0 +1,46 @@
+name: Store Publish
+
+# Mağaza gönderiminin retry yolu: release çalışırken tag/GitHub Release
+# oluştuktan sonra bpp adımı hata verirse, sürümü bump'lamadan ve tag'i
+# silmeden mevcut release'in zip'ini yeniden gönderir.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Store'a gönderilecek release tag'i (ör. v3.0.2)"
+        required: true
+
+jobs:
+  publish:
+    name: Publish to Chrome Web Store
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release asset
+        id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          gh release download "$TAG" --repo "${{ github.repository }}" \
+            --pattern "*-chrome.zip" --dir assets
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify artifact
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          zip="assets/ahtapot-${VERSION}-chrome.zip"
+          if [ ! -f "$zip" ]; then
+            echo "::error::Expected artifact not found: $zip"
+            exit 1
+          fi
+          listing=$(unzip -l "$zip")
+          grep -q " manifest.json" <<< "$listing" \
+            || { echo "::error::manifest.json is not at the zip root."; exit 1; }
+
+      - name: Publish to Chrome Web Store
+        uses: PlasmoHQ/bpp@v3
+        with:
+          keys: ${{ secrets.BPP_KEYS }}
+          chrome-file: assets/ahtapot-${{ steps.meta.outputs.version }}-chrome.zip

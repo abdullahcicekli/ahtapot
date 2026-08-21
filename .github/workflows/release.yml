@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  release:
+    name: Tag, Release & Publish
+    runs-on: ubuntu-latest
+    needs: ci
+    permissions:
+      contents: write
+    env:
+      BPP_KEYS: ${{ secrets.BPP_KEYS }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Sürüm zaten tag'lenmişse (ör. docs commit'i ya da bump'sız merge)
+      # release adımları atlanır; aynı sürüm asla ikinci kez yayınlanmaz.
+      - name: Compute version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo "Tag v$VERSION already exists, skipping release."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.version.outputs.exists == 'false'
+        run: npm ci
+
+      - name: Build
+        if: steps.version.outputs.exists == 'false'
+        run: npm run build
+
+      # Chrome Web Store zip'i: manifest.json zip kökünde olmalı, bu yüzden
+      # dist klasörünün kendisi değil içeriği paketlenir.
+      - name: Build store zip
+        if: steps.version.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          (cd dist && zip -r "../ahtapot-${VERSION}-chrome.zip" .)
+          listing=$(unzip -l "ahtapot-${VERSION}-chrome.zip")
+          grep -q " manifest.json" <<< "$listing" \
+            || { echo "::error::manifest.json is not at the zip root."; exit 1; }
+          echo "Built ahtapot-${VERSION}-chrome.zip"
+
+      # git archive yalnızca commit'lenmiş dosyaları içerir; secret'lar
+      # arşive sızamaz. İnceleme/yeniden üretilebilirlik için release'e eklenir.
+      - name: Build sources zip
+        if: steps.version.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: git archive --format=zip -o "ahtapot-${VERSION}-sources.zip" HEAD
+
+      - name: Create tag & GitHub release
+        if: steps.version.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "v$VERSION" \
+            --title "v$VERSION" \
+            --generate-notes \
+            "ahtapot-${VERSION}-chrome.zip" \
+            "ahtapot-${VERSION}-sources.zip"
+
+      # BPP_KEYS secret'ı yoksa mağaza adımı sessizce atlanır; tag ve GitHub
+      # Release yine oluşur. Mağaza gönderimi sonradan publish.yml ile
+      # (workflow_dispatch) tekrarlanabilir.
+      - name: Publish to Chrome Web Store
+        if: steps.version.outputs.exists == 'false' && env.BPP_KEYS != ''
+        uses: PlasmoHQ/bpp@v3
+        with:
+          keys: ${{ secrets.BPP_KEYS }}
+          chrome-file: ahtapot-${{ steps.version.outputs.version }}-chrome.zip

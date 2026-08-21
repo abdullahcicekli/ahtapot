@@ -1,0 +1,59 @@
+name: Version Check
+
+on:
+  pull_request:
+    branches: [main]
+    # `labeled`/`unlabeled` default event setinde yok; onlarsız documentation
+    # muafiyeti yalnızca push'ta değerlendirilir ve etiket değişince rapor
+    # edilen durum PR'ın gerçek etiketleriyle uyuşmaz.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  version-bump:
+    name: Version Bump Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Docs/CI PR'ları sürüm zorunluluğundan açık ve incelenebilir bir
+      # etiketle muaf tutulur; "yorum-only diff" tespiti gerçek bir değişimde
+      # açık kalırdı (fail open).
+      - name: Skip when the PR is labelled documentation
+        id: docs_label
+        env:
+          LABELLED: ${{ contains(github.event.pull_request.labels.*.name, 'documentation') || contains(github.event.pull_request.labels.*.name, 'docs') }}
+        run: |
+          if [ "$LABELLED" = "true" ]; then
+            echo "Labelled documentation — version bump not required."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Require version bump for functional changes
+        if: steps.docs_label.outputs.skip != 'true'
+        run: |
+          git fetch origin "${{ github.base_ref }}" --quiet
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" \
+            | grep -vE '(\.md$|^docs/|^\.github/)' || true)
+          if [ -z "$CHANGED" ]; then
+            echo "No functional changes — version bump not required."
+            exit 0
+          fi
+          BASE_VERSION=$(git show "origin/${{ github.base_ref }}:package.json" > /tmp/base-package.json && node -p "require('/tmp/base-package.json').version")
+          HEAD_VERSION=$(node -p "require('./package.json').version")
+          echo "Base version: $BASE_VERSION — PR version: $HEAD_VERSION"
+          if [ "$BASE_VERSION" = "$HEAD_VERSION" ]; then
+            echo "::error::Functional changes present but the version was not bumped (still $BASE_VERSION). Bump package.json AND src/manifest.json together."
+            echo "Changed files:"
+            echo "$CHANGED"
+            exit 1
+          fi
+          HIGHEST=$(printf '%s\n%s\n' "$BASE_VERSION" "$HEAD_VERSION" | sort -V | tail -n1)
+          if [ "$HIGHEST" != "$HEAD_VERSION" ]; then
+            echo "::error::Version downgrade: $BASE_VERSION -> $HEAD_VERSION. The PR version must be higher than the base version."
+            exit 1
+          fi
+          echo "Version bumped: $BASE_VERSION -> $HEAD_VERSION"
