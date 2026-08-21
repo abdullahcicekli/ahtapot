@@ -12,6 +12,7 @@ import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
 import { FolderTabs } from '@/components/FolderTabs';
+import { Select } from '@/components/Select';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -114,7 +115,11 @@ const OptionsPage: React.FC = () => {
   };
   
   const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
-  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(i18n.language as SupportedLanguage || 'en');
+  // i18n may report a region tag (en-US); normalize to a supported base code.
+  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(() => {
+    const base = i18n.language?.split('-')[0] as SupportedLanguage;
+    return base && base in SUPPORTED_LANGUAGES ? base : 'en';
+  });
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
@@ -776,18 +781,15 @@ const OptionsPage: React.FC = () => {
               </div>
 
               <div className="language-selector">
-                <select
+                <Select
                   value={currentLanguage}
-                  onChange={(e) => handleLanguageChange(e.target.value as SupportedLanguage)}
-                  className="language-select"
+                  options={Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => ({
+                    value: code,
+                    label: name,
+                  }))}
+                  onChange={(code) => handleLanguageChange(code as SupportedLanguage)}
                   aria-label={t('general.language.select', { ns: 'options' })}
-                >
-                  {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
-                    <option key={code} value={code}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
             </div>
 
