@@ -221,3 +221,26 @@
     height: 28px;
   }
 }
+
+/* Pending: sonuç bekleniyor — logo soluk, çevresinde dönen halka */
+.provider-slide-item.pending .provider-slide-logo img {
+  opacity: 0.4;
+}
+
+.provider-slide-item.pending .provider-slide-logo {
+  position: relative;
+}
+
+.provider-pending-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.65);
+  animation: provider-ring-spin 0.9s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes provider-ring-spin {
+  to { transform: rotate(360deg); }
+}

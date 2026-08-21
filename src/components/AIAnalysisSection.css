@@ -768,3 +768,33 @@
   color: var(--text-tertiary);
   margin-top: 2px;
 }
+
+/* AI analiz sürerken shimmer iskelet paneli */
+.ai-analyzing-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--bg-card, #171719);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.07));
+  border-radius: var(--radius-lg, 8px);
+}
+
+.ai-analyzing-line {
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.13) 38%,
+    rgba(255, 255, 255, 0.05) 55%
+  );
+  background-size: 400% 100%;
+  animation: ai-shimmer 1.4s ease infinite;
+}
+
+@keyframes ai-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}

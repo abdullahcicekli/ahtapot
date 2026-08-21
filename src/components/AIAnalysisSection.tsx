@@ -448,6 +448,17 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
             )}
           </button>
         </div>
+
+        {/* Analiz sürerken shimmer iskelet: cevabın geleceği yerde bir şeylerin
+            olduğunu gösterir, buton spinner'ı tek başına yetersiz kalıyordu */}
+        {isAnalyzing && (
+          <div className="ai-analyzing-panel" role="status" aria-live="polite">
+            <div className="ai-analyzing-line" style={{ width: '38%' }} />
+            <div className="ai-analyzing-line" style={{ width: '92%' }} />
+            <div className="ai-analyzing-line" style={{ width: '84%' }} />
+            <div className="ai-analyzing-line" style={{ width: '64%' }} />
+          </div>
+        )}
       </div>
     </div>
   );

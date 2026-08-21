@@ -95,23 +95,22 @@
 }
 
 /* Badge - initially hidden */
+/* IOC sayısı rozetle her zaman görünür; hover'da renkler zeminle ters döner */
 .ahtapot-ioc-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* min-width kapalı durumda max-width: 0'ı ezer; genişlik hover'da verilir */
-  min-width: 0;
+  min-width: 20px;
   height: 20px;
-  padding: 0;
-  background: rgba(199, 245, 77, 0.3);
+  padding: 0 6px;
+  background: rgba(199, 245, 77, 0.16);
+  color: #C7F54D;
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
+  line-height: 1;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 0;
+  margin-left: 8px;
 }
 
 /* Hover state - expand button */
@@ -140,13 +139,9 @@
 
 .ahtapot-floating-button button:hover .ahtapot-ioc-badge,
 .ahtapot-floating-button button.expanded .ahtapot-ioc-badge {
-  max-width: 40px;
-  min-width: 20px;
-  padding: 0 6px;
-  opacity: 1;
   margin-left: 4px;
-  background: rgba(26, 26, 31, 0.3);
-  color: #121215;
+  background: rgba(26, 26, 31, 0.35);
+  color: #F2F2F3;
 }
 
 /* Active state */

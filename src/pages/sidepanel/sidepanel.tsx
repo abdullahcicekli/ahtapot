@@ -31,6 +31,8 @@ import { URLhausResultCard } from '@/components/results/URLhausResultCard';
 import { PulsediveResultCard } from '@/components/results/PulsediveResultCard';
 import { ScamalyticsResultCard } from '@/components/results/ScamalyticsResultCard';
 import { RateLimitConfirmCard } from '@/components/results/RateLimitConfirmCard';
+import { ProviderSkeletonCard } from '@/components/results/ProviderSkeletonCard';
+import { getConfiguredProvidersSorted } from '@/utils/apiKeyStorage';
 import { ErrorResultCard, isErrorResult } from '@/components/results/ErrorResultCard';
 import { AIAnalysisSection } from '@/components/AIAnalysisSection';
 import { AIStructuredResultCard } from '@/components/results/AIStructuredResultCard';
@@ -82,6 +84,35 @@ const SidePanel: React.FC = () => {
   const [pendingRateLimitProviders, setPendingRateLimitProviders] = useState<Set<'greynoise' | 'shodan'>>(new Set());
   const [currentIOCs, setCurrentIOCs] = useState<DetectedIOC[]>([]);
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
+  // Streaming analiz: sonucu hâlâ beklenen provider'lar (servis adlarıyla)
+  const [pendingProviders, setPendingProviders] = useState<string[]>([]);
+  const analysisRequestIdRef = useRef<string>('');
+  const providerOrderRef = useRef<APIProvider[]>([]);
+  providerOrderRef.current = providerOrder;
+
+  // Streaming sonuçlar: service worker her provider bitince ANALYSIS_PROGRESS
+  // yollar; sonuç geldikçe listeye eklenir, tamamı beklenmez.
+  useEffect(() => {
+    const onProgress = (message: { type?: MessageType; payload?: { requestId?: string; result?: IOCAnalysisResult } }) => {
+      if (message?.type !== MessageType.ANALYSIS_PROGRESS) return;
+      const payload = message.payload;
+      if (!payload?.result || payload.requestId !== analysisRequestIdRef.current) return;
+      const result = payload.result;
+
+      setPendingProviders(prev => prev.filter(p => p !== result.source));
+      setResults(prev => {
+        if (prev.some(r => r.source === result.source && r.ioc.value === result.ioc.value)) {
+          return prev;
+        }
+        return sortResultsByProviderOrder<IOCAnalysisResult>([...prev, result], providerOrderRef.current);
+      });
+      setActiveProviderTab(prev => prev || result.source);
+      setActiveIOCTab(prev => prev || result.ioc.value);
+    };
+
+    chrome.runtime.onMessage.addListener(onProgress);
+    return () => chrome.runtime.onMessage.removeListener(onProgress);
+  }, []);
 
   // AI Analysis state
   const [aiResult, setAiResult] = useState<AIAnalysisResult | null>(null);
@@ -254,12 +285,41 @@ const SidePanel: React.FC = () => {
       pendingProviderEnums.push(APIProvider.SHODAN);
     }
 
+    // Streaming: bu isteğin kimliği; eski isteklerin geciken sonuçları yok sayılır
+    const requestId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    analysisRequestIdRef.current = requestId;
+
+    // Sonuç beklenen provider'ları hemen göster: yapılandırılmış olanlardan,
+    // analiz edilen IOC tiplerinden en az birini destekleyip hariç tutulmayanlar
+    try {
+      const excludedSet = new Set<APIProvider>([
+        ...Array.from(excludeProviders),
+        ...pendingProviderEnums,
+      ]);
+      const iocTypes = new Set(iocs.map((i) => i.type));
+      const [configured, order] = await Promise.all([
+        getConfiguredProvidersSorted(),
+        getProviderOrder(),
+      ]);
+      const configuredSet = new Set(configured.map((c) => c.provider));
+      const expected = order
+        .filter((p) => configuredSet.has(p) && !excludedSet.has(p))
+        .map((p) => PROVIDER_TO_SERVICE_NAME[p])
+        .filter((name): name is string =>
+          !!name && (PROVIDER_SUPPORT[name] || []).some((type) => iocTypes.has(type))
+        );
+      setPendingProviders(expected);
+    } catch {
+      setPendingProviders([]);
+    }
+
     try {
       const response = await chrome.runtime.sendMessage({
         type: MessageType.ANALYZE_IOC,
         payload: {
           iocs,
-          excludeProviders: Array.from(excludeProviders).concat(pendingProviderEnums)
+          excludeProviders: Array.from(excludeProviders).concat(pendingProviderEnums),
+          requestId
         },
       });
 
@@ -293,25 +353,27 @@ const SidePanel: React.FC = () => {
             return orderA - orderB;
           });
           
-          // Set first provider in order as active
+          // Set first provider in order as active — streaming sırasında
+          // kullanıcı bir sekme seçtiyse onu ezme
           const firstProvider = sortedProviders[0];
-          setActiveProviderTab(firstProvider);
-          
+          setActiveProviderTab(prev => prev || firstProvider);
+
           // Set first IOC of that provider as active
           const firstProviderResult = sortedResults.find(r => r.source === firstProvider);
           if (firstProviderResult) {
-            setActiveIOCTab(firstProviderResult.ioc.value);
+            setActiveIOCTab(prev => prev || firstProviderResult.ioc.value);
           }
         } else if (sortedResults.length > 0) {
           // Fallback if providerOrder is not loaded yet
-          setActiveProviderTab(sortedResults[0].source);
-          setActiveIOCTab(sortedResults[0].ioc.value);
+          setActiveProviderTab(prev => prev || sortedResults[0].source);
+          setActiveIOCTab(prev => prev || sortedResults[0].ioc.value);
         }
       }
     } catch (error) {
       console.error('[Sidepanel] Error analyzing IOCs:', error);
     } finally {
       setLoading(false);
+      setPendingProviders([]);
     }
   };
 
@@ -630,7 +692,8 @@ const SidePanel: React.FC = () => {
           />
         )}
 
-         {loading && (
+         {/* Fallback: beklenen provider listesi henüz hesaplanamadıysa */}
+         {loading && results.length === 0 && pendingProviders.length === 0 && (
           <div className="loading-spinner-container">
             <img
               src="/icons/mark.svg"
@@ -672,7 +735,7 @@ const SidePanel: React.FC = () => {
           </div>
         )}
 
-        {results.length > 0 && (
+        {(results.length > 0 || pendingProviders.length > 0) && (
           <div className="results-section">
             {/* Collapsible header for provider results when AI result exists */}
             <div 
@@ -760,6 +823,7 @@ const SidePanel: React.FC = () => {
             {isProviderResultsExpanded && (
               <ProviderSlider
                 activeProvider={activeProviderTab}
+                pendingProviders={pendingProviders}
                 onProviderClick={(providerName) => {
                   setActiveProviderTab(providerName);
                 }}
@@ -775,9 +839,16 @@ const SidePanel: React.FC = () => {
                   
                   // Get providers from filtered results
                   const resultProviders = Array.from(new Set(iocResults.map(r => r.source)));
-                  
+
                   // Add pending rate-limited providers to visible list (only for IPv4)
                   const activeIOCType = currentIOCs.find(ioc => ioc.value === currentActiveIOC)?.type;
+
+                  // Sonucu beklenen provider'lar da slider'da görünsün (spinner ile)
+                  pendingProviders
+                    .filter(name => !activeIOCType || (PROVIDER_SUPPORT[name] || []).includes(activeIOCType))
+                    .forEach(name => {
+                      if (!resultProviders.includes(name)) resultProviders.push(name);
+                    });
                   if (activeIOCType === IOCType.IPV4) {
                     if (pendingRateLimitProviders.has('greynoise') && !resultProviders.includes('GreyNoise')) {
                       resultProviders.push('GreyNoise');
@@ -810,6 +881,11 @@ const SidePanel: React.FC = () => {
 
                   // If no results for active provider (rate limit pending check)
                   if (filteredResults.length === 0 && activeProviderTab) {
+                    // Sonucu hâlâ yolda olan provider: iskelet göster
+                    if (pendingProviders.includes(activeProviderTab)) {
+                      return <ProviderSkeletonCard provider={activeProviderTab} />;
+                    }
+
                     // Check if this is a pending rate-limited provider
                     const isPendingGreyNoise = activeProviderTab === 'GreyNoise' && pendingRateLimitProviders.has('greynoise');
                     const isPendingShodan = activeProviderTab === 'Shodan' && pendingRateLimitProviders.has('shodan');
@@ -973,7 +1049,23 @@ const SidePanel: React.FC = () => {
                     );
                   });
 
-                  return resultElements;
+                  // Aktif sekme yokken (ilk sonuç henüz gelmediyse) tüm beklenen
+                  // provider'lar için iskelet kartları listelenir
+                  const pendingType = currentIOCs.find(i => i.value === currentActiveIOC)?.type;
+                  const pendingForView = activeProviderTab
+                    ? []
+                    : pendingProviders.filter(name =>
+                        !pendingType || (PROVIDER_SUPPORT[name] || []).includes(pendingType)
+                      );
+
+                  return (
+                    <>
+                      {resultElements}
+                      {pendingForView.map(name => (
+                        <ProviderSkeletonCard key={name} provider={name} />
+                      ))}
+                    </>
+                  );
                 })()}
               </div>
             )}
