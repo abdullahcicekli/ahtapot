@@ -3,21 +3,24 @@
  * Floating button ve diğer sayfa içi elementler için
  */
 
-/* Reset ve izolasyon için */
-#ahtapot-floating-button-root {
+/* Shadow root içinde çalışır; sayfadan yalnızca inherit edilen özellikler
+   sızabilir, onları da :host'ta sıfırlıyoruz. */
+:host {
   all: initial;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#ahtapot-floating-button-root * {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 /* Floating button container */
 .ahtapot-floating-button {
-  position: absolute;
-  pointer-events: auto !important;
+  position: fixed;
+  pointer-events: auto;
   animation: ahtapot-fade-in 0.2s ease-out;
   z-index: 2147483647;
 }
@@ -52,6 +55,7 @@
 
 /* Button styles - Compact by default, expands on hover */
 .ahtapot-floating-button button {
+  all: unset;
   display: flex;
   align-items: center;
   gap: 0;
@@ -59,6 +63,8 @@
   background: #1A1A1F;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: inherit;
+  line-height: 1;
   border-radius: 50px;
   font-size: 14px;
   font-weight: 500;
@@ -93,9 +99,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
+  /* min-width kapalı durumda max-width: 0'ı ezer; genişlik hover'da verilir */
+  min-width: 0;
   height: 20px;
-  padding: 0 6px;
+  padding: 0;
   background: rgba(199, 245, 77, 0.3);
   border-radius: 10px;
   font-size: 11px;
@@ -134,6 +141,8 @@
 .ahtapot-floating-button button:hover .ahtapot-ioc-badge,
 .ahtapot-floating-button button.expanded .ahtapot-ioc-badge {
   max-width: 40px;
+  min-width: 20px;
+  padding: 0 6px;
   opacity: 1;
   margin-left: 4px;
   background: rgba(26, 26, 31, 0.3);

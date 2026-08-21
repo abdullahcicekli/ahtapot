@@ -3,6 +3,7 @@ import FloatingButton from '@/components/FloatingButton';
 import { detectIOCs } from '@/utils/ioc-detector';
 import { MessageType } from '@/types/messages';
 import { DetectedIOC } from '@/types/ioc';
+import floatingButtonStyles from './content-script.css?inline';
 
 /**
  * Content Script - Sayfa içinde çalışır
@@ -14,29 +15,38 @@ let floatingButtonContainer: HTMLDivElement | null = null;
 let currentSelection: string = '';
 let detectedIOCs: DetectedIOC[] = [];
 
-// Floating button container'ını oluştur
+// Floating button container'ını oluştur.
+// Shadow DOM: sayfanın kendi button/pseudo-element stilleri balona sızmasın,
+// bizim stillerimiz de sayfayı etkilemesin diye tam izolasyon.
 function createFloatingButtonContainer(): HTMLDivElement {
   if (floatingButtonContainer) {
     return floatingButtonContainer;
   }
 
-  const container = document.createElement('div');
-  container.id = 'ahtapot-floating-button-root';
-  container.style.cssText = `
+  const host = document.createElement('div');
+  host.id = 'ahtapot-floating-button-root';
+  host.style.cssText = `
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 0;
     z-index: 2147483647;
-    pointer-events: none;
   `;
-  document.body.appendChild(container);
 
-  floatingButtonContainer = container;
-  floatingButtonRoot = ReactDOM.createRoot(container);
+  const shadow = host.attachShadow({ mode: 'open' });
+  const style = document.createElement('style');
+  style.textContent = floatingButtonStyles;
+  shadow.appendChild(style);
 
-  return container;
+  const mount = document.createElement('div');
+  shadow.appendChild(mount);
+  document.body.appendChild(host);
+
+  floatingButtonContainer = host;
+  floatingButtonRoot = ReactDOM.createRoot(mount);
+
+  return host;
 }
 
 /**

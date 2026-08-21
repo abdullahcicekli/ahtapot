@@ -1,5 +1,10 @@
 {
   "virustotal": {
+    "notFound": {
+      "title": "VirusTotal'de kayıt yok",
+      "description": "VirusTotal bu göstergeyi henüz analiz etmemiş. VirusTotal sitesinde taramaya gönderebilirsiniz.",
+      "view": "VirusTotal'de ara"
+    },
     "communityScore": "Topluluk Puanı",
     "votes": {
       "harmless": "zararsız",

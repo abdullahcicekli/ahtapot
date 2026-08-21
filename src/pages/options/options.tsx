@@ -14,6 +14,7 @@ import { AIProviderSettings } from '@/components/AIProviderSettings';
 import { FolderTabs } from '@/components/FolderTabs';
 import { Select } from '@/components/Select';
 import { InfoModal } from '@/components/InfoModal';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -131,6 +132,7 @@ const OptionsPage: React.FC = () => {
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const [infoProvider, setInfoProvider] = useState<APIProvider | null>(null);
+  const [confirmAction, setConfirmAction] = useState<'clearCache' | 'resetOrder' | null>(null);
   const [keyQuery, setKeyQuery] = useState('');
   const [keyFilter, setKeyFilter] = useState<'all' | 'configured' | 'missing'>('all');
   const [showCacheInfo, setShowCacheInfo] = useState(false);
@@ -483,10 +485,6 @@ const OptionsPage: React.FC = () => {
 
   // Clear cache
   const handleClearCache = useCallback(async () => {
-    if (!confirm(t('general.cache.clearConfirm', { ns: 'options' }))) {
-      return;
-    }
-
     setIsClearingCache(true);
     try {
       await CacheManager.clearAll();
@@ -583,10 +581,6 @@ const OptionsPage: React.FC = () => {
 
   // Reset provider order
   const handleResetProviderOrder = useCallback(async () => {
-    if (!confirm(t('general.providerOrder.resetConfirm', { ns: 'options' }))) {
-      return;
-    }
-
     try {
       await resetProviderOrder();
       await loadProviderOrder();
@@ -892,7 +886,7 @@ const OptionsPage: React.FC = () => {
 
                 {/* Clear Cache Button */}
                 <button
-                  onClick={handleClearCache}
+                  onClick={() => setConfirmAction('clearCache')}
                   className="clear-cache-btn"
                   disabled={isClearingCache || cacheStats.totalEntries === 0}
                 >
@@ -1141,6 +1135,39 @@ const OptionsPage: React.FC = () => {
         <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
       </footer>
 
+      {/* Confirm Modal (cache temizleme / sıra sıfırlama) */}
+      {confirmAction && (
+        <ConfirmModal
+          title={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearCache', { ns: 'options' })
+              : t('general.providerOrder.resetOrder', { ns: 'options' })
+          }
+          message={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearConfirm', { ns: 'options' })
+              : t('general.providerOrder.resetConfirm', { ns: 'options' })
+          }
+          confirmLabel={
+            confirmAction === 'clearCache'
+              ? t('general.cache.clearCache', { ns: 'options' })
+              : t('general.providerOrder.resetOrder', { ns: 'options' })
+          }
+          cancelLabel={t('buttons.cancel', { ns: 'common' })}
+          danger={confirmAction === 'clearCache'}
+          onCancel={() => setConfirmAction(null)}
+          onConfirm={() => {
+            const action = confirmAction;
+            setConfirmAction(null);
+            if (action === 'clearCache') {
+              void handleClearCache();
+            } else {
+              void handleResetProviderOrder();
+            }
+          }}
+        />
+      )}
+
       {/* Provider Info Modal */}
       {infoProvider &&
         (() => {
@@ -1339,7 +1366,7 @@ const OptionsPage: React.FC = () => {
 
             <div className="modal-actions">
               <button
-                onClick={handleResetProviderOrder}
+                onClick={() => setConfirmAction('resetOrder')}
                 className="modal-reset-btn"
               >
                 <RotateCcw size={16} />

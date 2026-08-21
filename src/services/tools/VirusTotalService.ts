@@ -94,6 +94,10 @@ export class VirusTotalService extends BaseToolService {
 
     console.log(`[VirusTotal] API response status: ${response.status}`);
 
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
+
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
       console.log(`[VirusTotal] API error:`, errorData);
@@ -156,6 +160,10 @@ export class VirusTotalService extends BaseToolService {
       },
     });
 
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
+
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
       throw new Error(
@@ -214,6 +222,10 @@ export class VirusTotalService extends BaseToolService {
       },
     });
 
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
+
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
       throw new Error(
@@ -265,6 +277,10 @@ export class VirusTotalService extends BaseToolService {
       },
     });
 
+    if (response.status === 404) {
+      return this.createNotFoundResult(ioc);
+    }
+
     if (!response.ok) {
       const errorData: VTErrorResponse = await response.json();
       throw new Error(
@@ -303,6 +319,21 @@ export class VirusTotalService extends BaseToolService {
         last_analysis_date: this.toISODate(attrs.last_analysis_date),
         last_analysis_results: attrs.last_analysis_results,
       },
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
+   * VT'nin veritabanında hiç kaydı olmayan girdiler 404 döner; bu bir API
+   * hatası değil "kayıt yok" bilgisidir. Kart tarafı details.notFound ile
+   * bilgilendirici bir durum gösterir.
+   */
+  private createNotFoundResult(ioc: DetectedIOC): IOCAnalysisResult {
+    return {
+      ioc,
+      source: this.name,
+      status: 'unknown',
+      details: { notFound: true },
       timestamp: Date.now(),
     };
   }

@@ -1566,3 +1566,36 @@ body {
   object-fit: contain;
   filter: grayscale(1) brightness(1.5);
 }
+
+/* Confirm Modal */
+.confirm-modal {
+  max-width: 440px;
+}
+
+.confirm-modal-body {
+  padding: 20px 28px;
+}
+
+.confirm-modal-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary, #9b9ba3);
+}
+
+.confirm-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 28px 24px;
+}
+
+.confirm-modal-icon-danger {
+  background: rgba(242, 85, 90, 0.12);
+  color: var(--danger, #f2555a);
+}
+
+.confirm-modal-danger {
+  background: var(--danger, #f2555a);
+  color: #fff;
+}

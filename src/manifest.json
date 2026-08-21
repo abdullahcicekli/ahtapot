@@ -47,7 +47,6 @@
     {
       "matches": ["<all_urls>"],
       "js": ["src/content/content-script.tsx"],
-      "css": ["src/content/content-script.css"],
       "run_at": "document_end"
     }
   ],

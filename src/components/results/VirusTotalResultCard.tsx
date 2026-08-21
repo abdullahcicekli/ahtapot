@@ -35,6 +35,30 @@ export const VirusTotalResultCard: React.FC<VirusTotalResultCardProps> = ({ resu
 
   const { details } = result;
 
+  // VT'nin hiç görmediği kayıtlar (404): hata değil, bilgi durumu
+  if (details?.notFound) {
+    return (
+      <div className="vt-result-card" ref={cardRef}>
+        <div className="vt-notfound">
+          <Info size={20} />
+          <div className="vt-notfound-text">
+            <strong>{t('virustotal.notFound.title')}</strong>
+            <span>{t('virustotal.notFound.description')}</span>
+          </div>
+          <a
+            className="vt-notfound-link"
+            href={`https://www.virustotal.com/gui/search/${encodeURIComponent(result.ioc.value)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t('virustotal.notFound.view')}
+            <ExternalLink size={12} />
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   // Community score calculation
   const totalEngines = details?.total || 95;
   const maliciousCount = details?.malicious || 0;

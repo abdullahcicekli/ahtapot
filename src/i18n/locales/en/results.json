@@ -1,5 +1,10 @@
 {
   "virustotal": {
+    "notFound": {
+      "title": "No record in VirusTotal",
+      "description": "VirusTotal has not analyzed this indicator yet. You can submit it for scanning on the VirusTotal website.",
+      "view": "Search on VirusTotal"
+    },
     "communityScore": "Community Score",
     "votes": {
       "harmless": "harmless",
