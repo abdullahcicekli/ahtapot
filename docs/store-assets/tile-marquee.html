@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { width: 1400px; height: 560px; }
+  .stage { display: flex; align-items: center; gap: 70px; padding: 0 90px; }
+
+  .copy { flex: 1; }
+  .brand { margin-bottom: 30px; }
+  .h1 { font-size: 56px; margin-bottom: 16px; }
+  .sub { font-size: 19px; max-width: 520px; }
+  .pills { display: flex; gap: 8px; margin-top: 26px; }
+
+  .mock { width: 520px; flex-shrink: 0; padding: 20px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
+  .row + .row { margin-top: 10px; }
+  .row img { width: 24px; height: 24px; object-fit: contain; }
+  .row b { font-size: 14.5px; font-weight: 600; }
+  .row i { font-style: normal; font-family: 'Commit Mono', monospace; font-size: 11.5px; color: var(--text-3); margin-left: 2px; }
+  .row .pill { margin-left: auto; }
+  .row .ring {
+    margin-left: auto;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.12);
+    border-top-color: rgba(255,255,255,.6);
+    transform: rotate(42deg);
+  }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grid-lines"></div>
+  <div class="stage">
+    <div class="copy">
+      <div class="brand">
+        <img src="../../public/icons/mark.svg" width="52" height="52" alt="">
+        <span class="brand-name" style="font-size:26px">Ahtapot</span>
+      </div>
+      <div class="h1">Threat intel<br>on any page.</div>
+      <p class="sub">Select an indicator, get verdicts from 11 intelligence sources and AI — right in your browser.</p>
+      <div class="pills">
+        <span class="pill lime">Free &amp; open source</span>
+        <span class="pill clean">No account needed</span>
+      </div>
+    </div>
+
+    <div class="mock panel">
+      <div class="row card">
+        <img src="../../public/provider-icons/virustotal_logo.png" alt="">
+        <span><b>VirusTotal</b> <i>12 / 95 engines</i></span>
+        <span class="pill malicious">Malicious</span>
+      </div>
+      <div class="row card">
+        <img src="../../public/provider-icons/siberguvenlik-logo.png" alt="">
+        <span><b>Türkiye SGB</b> <i>criticality 8 / 10</i></span>
+        <span class="pill malicious">Listed</span>
+      </div>
+      <div class="row card">
+        <img src="../../public/provider-icons/abuseipdb-logo.png" alt="">
+        <span><b>AbuseIPDB</b> <i>confidence 97%</i></span>
+        <span class="pill warn">Reported</span>
+      </div>
+      <div class="row card">
+        <img src="../../public/provider-icons/greynoise-logo.png" alt="">
+        <span><b>GreyNoise</b> <i>querying…</i></span>
+        <span class="ring"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

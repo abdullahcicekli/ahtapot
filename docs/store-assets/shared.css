@@ -1,0 +1,190 @@
+/* Chrome Web Store görselleri — site/extension tasarım dili */
+
+@font-face {
+  font-family: 'Uncut Sans';
+  src: url('../../public/fonts/UncutSans-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Commit Mono';
+  src: url('../../public/fonts/CommitMono-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0B0B0D;
+  --bg-panel: #121215;
+  --bg-card: #171719;
+  --bg-inset: #1E1E22;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hi: rgba(255, 255, 255, 0.12);
+  --text: #F2F2F3;
+  --text-2: #9B9BA3;
+  --text-3: #8C8C96;
+  --accent: #C7F54D;
+  --accent-ink: #121215;
+  --danger: #F2555A;
+  --warning: #F0B23C;
+  --success: #7BD88F;
+}
+
+html, body { overflow: hidden; }
+
+body {
+  font-family: 'Uncut Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+.mono { font-family: 'Commit Mono', monospace; }
+
+/* Zemin: köşeden yayılan çok hafif ışık + ince grid */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 520px at 82% -10%, rgba(199, 245, 77, 0.07), transparent 62%),
+    radial-gradient(700px 500px at -8% 108%, rgba(255, 255, 255, 0.035), transparent 60%);
+}
+
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(75% 75% at 50% 40%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(75% 75% at 50% 40%, #000 30%, transparent 100%);
+}
+
+.stage { position: relative; height: 100%; }
+
+/* Marka satırı */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img { display: block; }
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+}
+
+/* Mono etiket / chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Commit Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.chip::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Başlıklar */
+.h1 {
+  font-weight: 620;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
+}
+
+.sub {
+  color: var(--text-2);
+  line-height: 1.5;
+  font-weight: 420;
+}
+
+/* Panel / kart */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-hi);
+  border-radius: 20px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(255, 255, 255, 0.04) inset;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Verdict rozetleri */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: 'Commit Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pill.clean { background: rgba(123, 216, 143, 0.12); color: var(--success); }
+.pill.malicious { background: rgba(242, 85, 90, 0.14); color: var(--danger); }
+.pill.warn { background: rgba(240, 178, 60, 0.14); color: var(--warning); }
+.pill.lime { background: rgba(199, 245, 77, 0.14); color: var(--accent); }
+
+/* Özellik maddeleri */
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.feature-dot {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 7px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-hi);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-dot svg { display: block; }
+
+.feature b {
+  display: block;
+  font-weight: 560;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+
+.feature span {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Mini iskelet çizgisi */
+.skel {
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.08);
+}
