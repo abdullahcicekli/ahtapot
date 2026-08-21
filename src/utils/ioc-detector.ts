@@ -39,12 +39,36 @@ const IOC_PATTERNS: Record<IOCType, RegExp> = {
 };
 
 /**
+ * Defang edilmiş IOC gösterimlerini gerçek karakterlerine çevirir (refang).
+ * Tehdit raporlarında IOC'ler tıklanmasın diye bozulur: secure[.]example[.]com,
+ * hxxps://..., user[at]domain gibi. Tespit ve sorgulama temiz değerle yapılır.
+ */
+export function refangText(text: string): string {
+  return (
+    text
+      // [.] (.) {.} ve [dot] (dot) {dot} → .  (ayraç içi boşluklara tolerans)
+      .replace(/[[({]\s*(?:\.|dot)\s*[\])}]/gi, '.')
+      // [@] (@) {@} ve [at] (at yalnızca ayraçlı) → @
+      .replace(/[[({]\s*(?:@|at)\s*[\])}]/gi, '@')
+      // [:] ve [://] → : ve ://  (hxxp'den önce: hxxps[:]// → hxxps://)
+      .replace(/\[:\/\/\]/g, '://')
+      .replace(/\[:\]/g, ':')
+      // hxxp / hXXp / hxxps → http(s), fxp → ftp
+      .replace(/\bhxx(ps?):\/\//gi, 'htt$1://')
+      .replace(/\bfxp:\/\//gi, 'ftp://')
+  );
+}
+
+/**
  * Verilen metinde IOC'leri tespit eder
  * OPTIMIZED: O(n) complexity with position-based and value-based deduplication
+ * Metin önce refang edilir; dönen value'lar sorgulanabilir temiz değerlerdir
+ * (position alanları refang edilmiş metne göredir, yalnızca iç dedup'ta kullanılır).
  * @param text Taranacak metin
  * @returns Tespit edilen IOC'lerin listesi (unique values only)
  */
-export function detectIOCs(text: string): DetectedIOC[] {
+export function detectIOCs(rawText: string): DetectedIOC[] {
+  const text = refangText(rawText);
   const detected: DetectedIOC[] = [];
 
   // Position range tracking for O(1) duplicate detection

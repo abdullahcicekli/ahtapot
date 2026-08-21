@@ -56,9 +56,9 @@
   align-items: center;
   gap: 0;
   padding: 10px;
-  background: #121215;
+  background: #1A1A1F;
   color: white;
-  border: 1px solid rgba(199, 245, 77, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50px;
   font-size: 14px;
   font-weight: 500;
@@ -69,13 +69,13 @@
   white-space: nowrap;
 }
 
-/* Logo - SVG icon */
+/* Logo - marka işareti (koyu zeminde lime, hover'da zeminle ters döner) */
 .ahtapot-logo {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
   transition: all 0.3s ease;
-  color: white;
+  color: #C7F54D;
   display: block;
 }
 
