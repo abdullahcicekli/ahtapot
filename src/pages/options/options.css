@@ -26,10 +26,8 @@ body {
 
 /* Header */
 .options-header {
-  background: var(--bg-secondary);
   color: var(--text);
-  padding: 24px 32px;
-  border-bottom: 1px solid var(--border);
+  padding: 8px 4px 24px;
 }
 
 .header-content {
@@ -61,46 +59,9 @@ body {
   color: var(--text-secondary);
 }
 
-/* Tabs */
-.tabs-container {
-  display: flex;
-  gap: 8px;
-  padding: 16px 32px;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--text-tertiary);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tab:hover {
-  border-color: var(--border-hi);
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-}
-
-.tab.active {
-  color: var(--text);
-  border-color: var(--border-hi);
-  background: var(--bg-input);
-}
-
 /* Main Content */
 .options-main {
-  padding: 32px;
+  margin-bottom: 24px;
 }
 
 .info-card {
@@ -618,9 +579,7 @@ body {
 
 /* Footer */
 .options-footer {
-  padding: 20px 32px;
-  background: var(--bg-primary);
-  border-top: 1px solid var(--border);
+  padding: 8px 4px 20px;
   text-align: center;
   color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
@@ -1427,4 +1386,149 @@ body {
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+
+/* API keys toolbar: filter chips + search, gallery-style */
+.api-keys-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-chip:hover {
+  border-color: var(--border-hi);
+  color: var(--text-secondary);
+}
+
+.filter-chip.active {
+  background: var(--bg-input);
+  border-color: var(--border-hi);
+  color: var(--text);
+}
+
+.filter-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.key-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-tertiary);
+  transition: border-color 0.2s;
+}
+
+.key-search:focus-within {
+  border-color: var(--border-hi);
+}
+
+.key-search input {
+  width: 190px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font-sans);
+}
+
+.key-search input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.no-results {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+/* Provider identity: logo tile + status chip, reference-gallery style */
+.api-key-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.provider-logo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.provider-logo-tile img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.5);
+  opacity: 0.85;
+}
+
+.api-key-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.key-status {
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.key-status.configured {
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+
+.key-status.missing {
+  color: var(--text-tertiary);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
 }

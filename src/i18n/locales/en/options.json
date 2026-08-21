@@ -72,7 +72,18 @@
     "validating": "Validating...",
     "valid": "Valid",
     "invalid": "Invalid",
-    "validationError": "Validation failed"
+    "validationError": "Validation failed",
+    "searchPlaceholder": "Search providers…",
+    "noResults": "No providers match your search.",
+    "filter": {
+      "all": "All",
+      "configured": "Configured",
+      "missing": "Missing key"
+    },
+    "status": {
+      "configured": "Configured",
+      "missing": "No key"
+    }
   },
   "providers": {
     "virustotal": {

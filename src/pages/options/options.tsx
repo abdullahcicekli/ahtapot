@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move, Search } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
@@ -11,6 +11,7 @@ import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
+import { FolderTabs } from '@/components/FolderTabs';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -117,6 +118,8 @@ const OptionsPage: React.FC = () => {
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
+  const [keyQuery, setKeyQuery] = useState('');
+  const [keyFilter, setKeyFilter] = useState<'all' | 'configured' | 'missing'>('all');
   const [showCacheInfo, setShowCacheInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -657,11 +660,11 @@ const OptionsPage: React.FC = () => {
     [APIProvider.VIRUSTOTAL]: '/provider-icons/virustotal_logo.png',
     [APIProvider.OTX]: '/provider-icons/alienVaultOtx-logo.png',
     [APIProvider.ABUSEIPDB]: '/provider-icons/abuseipdb-logo.png',
-    [APIProvider.MALWAREBAZAAR]: '/provider-icons/abuse-logo.png',
+    [APIProvider.MALWAREBAZAAR]: '/provider-icons/malwarebazaar-logo.png',
     [APIProvider.ARIN]: '/provider-icons/arin-logo.png',
     [APIProvider.SHODAN]: '/provider-icons/shodan-logo.png',
     [APIProvider.GREYNOISE]: '/provider-icons/greynoise-logo.png',
-    [APIProvider.URLHAUS]: '/provider-icons/abuse-logo.png',
+    [APIProvider.URLHAUS]: '/provider-icons/urlhaus-logo.png',
     [APIProvider.PULSEDIVE]: '/provider-icons/pulsedive-logo.png',
     [APIProvider.SCAMALYTICS]: '/provider-icons/scamalytics-logo.png',
   };
@@ -696,6 +699,40 @@ const OptionsPage: React.FC = () => {
     return [...sortedUnlocked, ...lockedConfigs];
   }, [providerOrder]);
 
+  // A provider is configured when it needs no key, or a key value is present.
+  const isConfigured = useCallback(
+    (config: APIKeyConfig) =>
+      config.requiresApiKey === false ||
+      Boolean(apiKeyStates[config.provider]?.value?.trim()),
+    [apiKeyStates],
+  );
+
+  const filterCounts = useMemo(() => {
+    const configured = sortedApiConfigs.filter(isConfigured).length;
+    return {
+      all: sortedApiConfigs.length,
+      configured,
+      missing: sortedApiConfigs.length - configured,
+    };
+  }, [sortedApiConfigs, isConfigured]);
+
+  const visibleApiConfigs = useMemo(() => {
+    const query = keyQuery.trim().toLowerCase();
+    return sortedApiConfigs.filter((config) => {
+      if (keyFilter === 'configured' && !isConfigured(config)) return false;
+      if (keyFilter === 'missing' && isConfigured(config)) return false;
+      if (!query) return true;
+      const providerKey = config.provider.toLowerCase();
+      const localizedLabel = t(`providers.${providerKey}.label`, { ns: 'options' });
+      const localizedDescription = t(`providers.${providerKey}.description`, { ns: 'options' });
+      return (
+        config.label.toLowerCase().includes(query) ||
+        localizedLabel.toLowerCase().includes(query) ||
+        localizedDescription.toLowerCase().includes(query)
+      );
+    });
+  }, [sortedApiConfigs, keyFilter, keyQuery, isConfigured, t]);
+
   return (
     <div className="options-container">
       <header className="options-header">
@@ -712,25 +749,15 @@ const OptionsPage: React.FC = () => {
         </div>
       </header>
 
-      {/* Tabs */}
-      <div className="tabs-container">
-        <button
-          className={`tab ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => handleTabChange('general')}
-        >
-          <Settings size={18} />
-          {t('tabs.general', { ns: 'options' })}
-        </button>
-        <button
-          className={`tab ${activeTab === 'apiKeys' ? 'active' : ''}`}
-          onClick={() => handleTabChange('apiKeys')}
-        >
-          <Key size={18} />
-          {t('tabs.apiKeys', { ns: 'options' })}
-        </button>
-      </div>
-
-      <main className="options-main">
+      <FolderTabs
+        className="options-main"
+        items={[
+          { id: 'general', label: t('tabs.general', { ns: 'options' }), icon: <Settings /> },
+          { id: 'apiKeys', label: t('tabs.apiKeys', { ns: 'options' }), icon: <Key /> },
+        ]}
+        active={activeTab}
+        onChange={(id) => handleTabChange(id as TabType)}
+      >
         {/* General Settings Tab */}
         {activeTab === 'general' && (
           <div className="settings-section">
@@ -924,11 +951,43 @@ const OptionsPage: React.FC = () => {
                 </button>
               </div>
 
+              <div className="api-keys-toolbar">
+                <div className="filter-chips" role="group" aria-label={t('apiKeys.sectionTitle', { ns: 'options' })}>
+                  {(['all', 'configured', 'missing'] as const).map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      className={`filter-chip ${keyFilter === filter ? 'active' : ''}`}
+                      aria-pressed={keyFilter === filter}
+                      onClick={() => setKeyFilter(filter)}
+                    >
+                      {t(`apiKeys.filter.${filter}`, { ns: 'options' })}
+                      <span className="filter-count">{filterCounts[filter]}</span>
+                    </button>
+                  ))}
+                </div>
+                <label className="key-search">
+                  <Search size={15} aria-hidden="true" />
+                  <input
+                    type="search"
+                    value={keyQuery}
+                    onChange={(event) => setKeyQuery(event.target.value)}
+                    placeholder={t('apiKeys.searchPlaceholder', { ns: 'options' })}
+                    aria-label={t('apiKeys.searchPlaceholder', { ns: 'options' })}
+                  />
+                </label>
+              </div>
+
+              {visibleApiConfigs.length === 0 && (
+                <p className="no-results">{t('apiKeys.noResults', { ns: 'options' })}</p>
+              )}
+
               <div className="api-keys-list">
-                {sortedApiConfigs.map((config) => {
+                {visibleApiConfigs.map((config) => {
                   const providerKey = config.provider.toLowerCase();
                   const state = apiKeyStates[config.provider];
                   const isLocked = config.requiresApiKey === false;
+                  const configured = isConfigured(config);
 
                   return (
                     <div
@@ -938,23 +997,35 @@ const OptionsPage: React.FC = () => {
                     >
                       <div className="api-key-header">
                         <div className="api-key-title-row">
-                          <div>
-                            <h3>{t(`providers.${providerKey}.label`, { ns: 'options' })}</h3>
-                            <p className="api-key-description">
-                              {t(`providers.${providerKey}.description`, { ns: 'options' })}
-                            </p>
+                          <div className="api-key-identity">
+                            <span className="provider-logo-tile" aria-hidden="true">
+                              <img src={PROVIDER_LOGOS[config.provider]} alt="" loading="lazy" />
+                            </span>
+                            <div>
+                              <h3>{t(`providers.${providerKey}.label`, { ns: 'options' })}</h3>
+                              <p className="api-key-description">
+                                {t(`providers.${providerKey}.description`, { ns: 'options' })}
+                              </p>
+                            </div>
                           </div>
-                          {!isLocked && (
-                            <button
-                              type="button"
-                              onClick={() => toggleInfo(config.provider)}
-                              className="info-btn"
-                              aria-label="API information"
-                              title="API limits and features"
-                            >
-                              <Info size={18} />
-                            </button>
-                          )}
+                          <div className="api-key-meta">
+                            <span className={`key-status ${configured ? 'configured' : 'missing'}`}>
+                              {configured
+                                ? t('apiKeys.status.configured', { ns: 'options' })
+                                : t('apiKeys.status.missing', { ns: 'options' })}
+                            </span>
+                            {!isLocked && (
+                              <button
+                                type="button"
+                                onClick={() => toggleInfo(config.provider)}
+                                className="info-btn"
+                                aria-label="API information"
+                                title="API limits and features"
+                              >
+                                <Info size={18} />
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -1149,7 +1220,7 @@ const OptionsPage: React.FC = () => {
             )}
           </>
         )}
-      </main>
+      </FolderTabs>
 
       <footer className="options-footer">
         <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>

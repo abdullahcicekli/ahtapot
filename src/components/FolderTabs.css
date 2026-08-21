@@ -1,0 +1,87 @@
+.folder-tabs {
+  position: relative;
+}
+
+.folder-tabs-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.folder-tabs-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.folder-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  min-width: 0;
+  padding: 0 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.folder-tab:hover:not(.selected):not(.selected-fallback) {
+  border-color: var(--border-hi);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.folder-tab.selected {
+  border-color: transparent;
+  color: var(--text);
+}
+
+.folder-tab.selected-fallback {
+  border-color: var(--border-hi);
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
+.folder-tab-icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.folder-tab-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.folder-tab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.folder-tabs-panel {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  padding: 28px;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.folder-tabs-panel.fallback {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}

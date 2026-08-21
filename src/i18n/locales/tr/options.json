@@ -72,7 +72,18 @@
     "validating": "Doğrulanıyor...",
     "valid": "Geçerli",
     "invalid": "Geçersiz",
-    "validationError": "Doğrulama başarısız"
+    "validationError": "Doğrulama başarısız",
+    "searchPlaceholder": "Sağlayıcı ara…",
+    "noResults": "Aramanıza uyan sağlayıcı yok.",
+    "filter": {
+      "all": "Tümü",
+      "configured": "Yapılandırılmış",
+      "missing": "Anahtar eksik"
+    },
+    "status": {
+      "configured": "Yapılandırıldı",
+      "missing": "Anahtar yok"
+    }
   },
   "providers": {
     "virustotal": {
