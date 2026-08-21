@@ -15,13 +15,12 @@
 
   .mock { width: 520px; flex-shrink: 0; padding: 20px; position: relative; }
 
+  /* Eski hero'daki gibi: kol sağdan bütün halde girer */
   .tentacle {
     position: absolute;
-    left: -128px;
-    bottom: -218px;
-    width: 400px;
-    transform: rotate(-8deg);
-    opacity: 0.9;
+    left: 800px;
+    top: -200px;
+    width: 760px;
     pointer-events: none;
   }
   .row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
@@ -57,28 +56,6 @@
       </div>
     </div>
 
-    <div class="mock panel">
-      <div class="row card">
-        <img src="../../public/provider-icons/virustotal_logo.png" alt="">
-        <span><b>VirusTotal</b> <i>12 / 95 engines</i></span>
-        <span class="pill malicious">Malicious</span>
-      </div>
-      <div class="row card">
-        <img src="../../public/provider-icons/siberguvenlik-logo.png" alt="">
-        <span><b>Türkiye SGB</b> <i>criticality 8 / 10</i></span>
-        <span class="pill malicious">Listed</span>
-      </div>
-      <div class="row card">
-        <img src="../../public/provider-icons/abuseipdb-logo.png" alt="">
-        <span><b>AbuseIPDB</b> <i>confidence 97%</i></span>
-        <span class="pill warn">Reported</span>
-      </div>
-      <div class="row card">
-        <img src="../../public/provider-icons/greynoise-logo.png" alt="">
-        <span><b>GreyNoise</b> <i>querying…</i></span>
-        <span class="ring"></span>
-      </div>
-    </div>
   </div>
 </body>
 </html>
