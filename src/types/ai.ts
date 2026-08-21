@@ -22,12 +22,19 @@ export enum AIAnalysisMode {
 }
 
 /**
+ * Model tiers: every provider ships exactly three, low → mid → high.
+ */
+export type AIModelTier = 'low' | 'mid' | 'high';
+
+/**
  * Model Configuration
  */
 export interface AIModelConfig {
   id: string;
   name: string;
   displayName: string;
+  tier: AIModelTier;
+  pricing: string;
   recommended?: boolean;
 }
 
@@ -91,69 +98,62 @@ export interface AIKeyData {
 export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
   [AIProvider.CLAUDE]: {
     provider: AIProvider.CLAUDE,
-    modelName: 'claude-sonnet-4-20250514',
-    displayName: 'Claude Sonnet 4',
-    shortName: 'Claude',
+    modelName: 'claude-opus-5',
+    displayName: 'Anthropic',
+    shortName: 'Anthropic',
     logo: '/provider-icons/claude-logo.png',
     apiKeyUrl: 'https://console.anthropic.com/settings/keys',
     signupUrl: 'https://console.anthropic.com/',
     pricingUrl: 'https://www.anthropic.com/pricing',
     pricingInfo: {
-      input: '$3 / MTok',
-      output: '$15 / MTok',
+      input: '$1–10 / MTok',
+      output: '$5–50 / MTok',
       note: 'Pay as you go - No free tier for API',
     },
     models: [
-      { id: 'claude-sonnet-4-20250514', name: 'sonnet-4', displayName: 'Claude Sonnet 4' },
-      { id: 'claude-3-5-sonnet-20241022', name: 'sonnet-3.5', displayName: 'Claude 3.5 Sonnet', recommended: true },
-      { id: 'claude-3-5-haiku-20241022', name: 'haiku-3.5', displayName: 'Claude 3.5 Haiku' },
-      { id: 'claude-3-opus-20240229', name: 'opus-3', displayName: 'Claude 3 Opus' },
+      { id: 'claude-haiku-4-5', name: 'haiku-4.5', displayName: 'Claude Haiku 4.5', tier: 'low', pricing: '$1 / $5 MTok' },
+      { id: 'claude-opus-5', name: 'opus-5', displayName: 'Claude Opus 5', tier: 'mid', pricing: '$5 / $25 MTok', recommended: true },
+      { id: 'claude-fable-5', name: 'fable-5', displayName: 'Claude Fable 5', tier: 'high', pricing: '$10 / $50 MTok' },
     ],
   },
   [AIProvider.GEMINI]: {
     provider: AIProvider.GEMINI,
-    modelName: 'gemini-2.0-flash',
-    displayName: 'Gemini 2.0 Flash',
-    shortName: 'Gemini',
+    modelName: 'gemini-3.7-flash',
+    displayName: 'Google',
+    shortName: 'Google',
     logo: '/provider-icons/gemini-logo.png',
     apiKeyUrl: 'https://aistudio.google.com/apikey',
     signupUrl: 'https://aistudio.google.com/',
-    pricingUrl: 'https://ai.google.dev/pricing',
+    pricingUrl: 'https://ai.google.dev/gemini-api/docs/pricing',
     pricingInfo: {
-      input: '$0.10 / MTok',
-      output: '$0.40 / MTok',
-      note: 'Free tier: 15 RPM, 1M TPM, 1500 RPD',
+      input: '$0.30–2 / MTok',
+      output: '$2.50–12 / MTok',
+      note: 'Free tier available in AI Studio',
     },
     models: [
-      { id: 'gemini-2.5-flash', name: 'gemini-2.5-flash', displayName: 'Gemini 2.5 Flash', recommended: true },
-      { id: 'gemini-2.5-pro', name: 'gemini-2.5-pro', displayName: 'Gemini 2.5 Pro' },
-      { id: 'gemini-2.0-flash', name: 'gemini-2.0-flash', displayName: 'Gemini 2.0 Flash' },
-      { id: 'gemini-2.0-flash-lite', name: 'gemini-2.0-flash-lite', displayName: 'Gemini 2.0 Flash Lite' },
-      { id: 'gemini-1.5-pro', name: 'gemini-1.5-pro', displayName: 'Gemini 1.5 Pro' },
-      { id: 'gemini-1.5-flash', name: 'gemini-1.5-flash', displayName: 'Gemini 1.5 Flash' },
+      { id: 'gemini-3.5-flash-lite', name: 'gemini-3.5-flash-lite', displayName: 'Gemini 3.5 Flash-Lite', tier: 'low', pricing: '$0.30 / $2.50 MTok' },
+      { id: 'gemini-3.7-flash', name: 'gemini-3.7-flash', displayName: 'Gemini 3.7 Flash', tier: 'mid', pricing: '$0.75 / $3.75 MTok', recommended: true },
+      { id: 'gemini-3.1-pro-preview', name: 'gemini-3.1-pro', displayName: 'Gemini 3.1 Pro', tier: 'high', pricing: '$2 / $12 MTok' },
     ],
   },
   [AIProvider.OPENAI]: {
     provider: AIProvider.OPENAI,
-    modelName: 'gpt-4o-mini',
-    displayName: 'GPT-4o Mini',
+    modelName: 'gpt-5.6-terra',
+    displayName: 'OpenAI',
     shortName: 'OpenAI',
     logo: '/provider-icons/openai-logo.svg',
     apiKeyUrl: 'https://platform.openai.com/api-keys',
     signupUrl: 'https://platform.openai.com/signup',
     pricingUrl: 'https://openai.com/api/pricing/',
     pricingInfo: {
-      input: '$0.15 / MTok',
-      output: '$0.60 / MTok',
+      input: '$0.20–5 / MTok',
+      output: '$1.20–30 / MTok',
       note: 'Pay as you go - Credit purchase required',
     },
     models: [
-      { id: 'gpt-4o', name: 'gpt-4o', displayName: 'GPT-4o' },
-      { id: 'gpt-4o-mini', name: 'gpt-4o-mini', displayName: 'GPT-4o Mini', recommended: true },
-      { id: 'gpt-4-turbo', name: 'gpt-4-turbo', displayName: 'GPT-4 Turbo' },
-      { id: 'o1', name: 'o1', displayName: 'o1 (Reasoning)' },
-      { id: 'o1-mini', name: 'o1-mini', displayName: 'o1 Mini' },
-      { id: 'o3-mini', name: 'o3-mini', displayName: 'o3 Mini' },
+      { id: 'gpt-5.6-luna', name: 'gpt-5.6-luna', displayName: 'GPT-5.6 Luna', tier: 'low', pricing: '$0.20 / $1.20 MTok' },
+      { id: 'gpt-5.6-terra', name: 'gpt-5.6-terra', displayName: 'GPT-5.6 Terra', tier: 'mid', pricing: '$2 / $12 MTok', recommended: true },
+      { id: 'gpt-5.6-sol', name: 'gpt-5.6-sol', displayName: 'GPT-5.6 Sol', tier: 'high', pricing: '$5 / $30 MTok' },
     ],
   },
 };

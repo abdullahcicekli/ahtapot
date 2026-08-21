@@ -1,22 +1,32 @@
 /**
  * AI Provider Settings Component
- * Handles API key configuration for AI providers
+ * Key flow per provider: enter key → Test (live request) → Save appears on a
+ * passing test → once saved, the model tier select unlocks.
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Eye, EyeOff, Info, ExternalLink, Save, CheckCircle, Loader, AlertCircle, Bot, DollarSign } from 'lucide-react';
-import { AIProvider, AI_PROVIDER_CONFIGS } from '@/types/ai';
+import { Eye, EyeOff, Info, ExternalLink, Save, CheckCircle, Loader, AlertCircle, Bot, DollarSign, FlaskConical } from 'lucide-react';
+import { AIProvider, AI_PROVIDER_CONFIGS, AIModelTier } from '@/types/ai';
 import { getAIKeys, saveAIKey, validateAIKeyFormat } from '@/utils/aiKeyStorage';
+import { testAIKey } from '@/utils/aiKeyTest';
+import { getModelForProvider, saveModelForProvider } from '@/utils/aiPreferences';
+import { Select } from '@/components/Select';
 import './AIProviderSettings.css';
 
 interface AIKeyState {
+  savedKey: string;
   value: string;
-  hasChanges: boolean;
+  isTesting: boolean;
+  testPassed: boolean;
+  testError?: string;
   isSaving: boolean;
   saveSuccess: boolean;
   validationError?: string;
+  model: string;
 }
+
+const TIER_ORDER: AIModelTier[] = ['low', 'mid', 'high'];
 
 export const AIProviderSettings: React.FC = () => {
   const { t } = useTranslation(['options', 'common']);
@@ -25,21 +35,24 @@ export const AIProviderSettings: React.FC = () => {
   const [expandedInfo, setExpandedInfo] = useState<Set<AIProvider>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load AI API keys
   useEffect(() => {
     async function loadKeys() {
       try {
         const keys = await getAIKeys();
-        const initialStates: Record<AIProvider, AIKeyState> = {} as Record<AIProvider, AIKeyState>;
+        const initialStates = {} as Record<AIProvider, AIKeyState>;
 
-        Object.values(AIProvider).forEach((provider) => {
+        for (const provider of Object.values(AIProvider)) {
+          const savedKey = keys[provider]?.key || '';
           initialStates[provider] = {
-            value: keys[provider]?.key || '',
-            hasChanges: false,
+            savedKey,
+            value: savedKey,
+            isTesting: false,
+            testPassed: false,
             isSaving: false,
             saveSuccess: false,
+            model: await getModelForProvider(provider),
           };
-        });
+        }
 
         setAiKeyStates(initialStates);
       } catch (error) {
@@ -52,97 +65,86 @@ export const AIProviderSettings: React.FC = () => {
     loadKeys();
   }, []);
 
-  const handleKeyChange = useCallback((provider: AIProvider, value: string) => {
-    const sanitizedValue = value.trim();
-
-    if (sanitizedValue.length > 300) {
-      return;
-    }
-
-    // Validate format
-    const validation = validateAIKeyFormat(provider, sanitizedValue);
-
+  const patchState = useCallback((provider: AIProvider, patch: Partial<AIKeyState>) => {
     setAiKeyStates((prev) => ({
       ...prev,
-      [provider]: {
-        ...prev[provider],
-        value: sanitizedValue,
-        hasChanges: sanitizedValue !== (prev[provider]?.value || ''),
-        saveSuccess: false,
-        validationError: sanitizedValue.length > 0 && !validation.valid ? validation.error : undefined,
-      },
+      [provider]: { ...prev[provider], ...patch },
     }));
   }, []);
 
-  const handleSaveKey = useCallback(async (provider: AIProvider) => {
-    const state = aiKeyStates[provider];
-    if (!state || !state.value) return;
+  const handleKeyChange = useCallback(
+    (provider: AIProvider, value: string) => {
+      const sanitizedValue = value.trim();
+      if (sanitizedValue.length > 300) return;
 
-    // Validate before saving
-    const validation = validateAIKeyFormat(provider, state.value);
-    if (!validation.valid) {
-      setAiKeyStates((prev) => ({
-        ...prev,
-        [provider]: {
-          ...prev[provider],
-          validationError: validation.error,
-        },
-      }));
-      return;
-    }
-
-    setAiKeyStates((prev) => ({
-      ...prev,
-      [provider]: {
-        ...prev[provider],
-        isSaving: true,
+      const validation = validateAIKeyFormat(provider, sanitizedValue);
+      patchState(provider, {
+        value: sanitizedValue,
+        // any edit invalidates a previous test result
+        testPassed: false,
+        testError: undefined,
         saveSuccess: false,
-      },
-    }));
+        validationError:
+          sanitizedValue.length > 0 && !validation.valid ? validation.error : undefined,
+      });
+    },
+    [patchState],
+  );
 
-    try {
-      await saveAIKey(provider, state.value);
+  const handleTestKey = useCallback(
+    async (provider: AIProvider) => {
+      const state = aiKeyStates[provider];
+      if (!state?.value || state.validationError) return;
 
-      setAiKeyStates((prev) => ({
-        ...prev,
-        [provider]: {
-          ...prev[provider],
+      patchState(provider, { isTesting: true, testError: undefined });
+      const result = await testAIKey(provider, state.value);
+      patchState(provider, {
+        isTesting: false,
+        testPassed: result.ok,
+        testError: result.ok ? undefined : result.error,
+      });
+    },
+    [aiKeyStates, patchState],
+  );
+
+  const handleSaveKey = useCallback(
+    async (provider: AIProvider) => {
+      const state = aiKeyStates[provider];
+      if (!state?.value || !state.testPassed) return;
+
+      patchState(provider, { isSaving: true, saveSuccess: false });
+      try {
+        await saveAIKey(provider, state.value);
+        patchState(provider, {
           isSaving: false,
           saveSuccess: true,
-          hasChanges: false,
-        },
-      }));
+          savedKey: state.value,
+        });
+        setTimeout(() => patchState(provider, { saveSuccess: false }), 3000);
+      } catch (error) {
+        console.error('Error saving AI API key:', error);
+        patchState(provider, { isSaving: false });
+      }
+    },
+    [aiKeyStates, patchState],
+  );
 
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setAiKeyStates((prev) => ({
-          ...prev,
-          [provider]: {
-            ...prev[provider],
-            saveSuccess: false,
-          },
-        }));
-      }, 3000);
-    } catch (error) {
-      console.error('Error saving AI API key:', error);
-      setAiKeyStates((prev) => ({
-        ...prev,
-        [provider]: {
-          ...prev[provider],
-          isSaving: false,
-        },
-      }));
-    }
-  }, [aiKeyStates]);
+  const handleModelChange = useCallback(
+    async (provider: AIProvider, model: string) => {
+      patchState(provider, { model });
+      try {
+        await saveModelForProvider(provider, model);
+      } catch (error) {
+        console.error('Error saving model preference:', error);
+      }
+    },
+    [patchState],
+  );
 
   const toggleVisibility = useCallback((provider: AIProvider) => {
     setVisibleKeys((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(provider)) {
-        newSet.delete(provider);
-      } else {
-        newSet.add(provider);
-      }
+      newSet.has(provider) ? newSet.delete(provider) : newSet.add(provider);
       return newSet;
     });
   }, []);
@@ -150,11 +152,7 @@ export const AIProviderSettings: React.FC = () => {
   const toggleInfo = useCallback((provider: AIProvider) => {
     setExpandedInfo((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(provider)) {
-        newSet.delete(provider);
-      } else {
-        newSet.add(provider);
-      }
+      newSet.has(provider) ? newSet.delete(provider) : newSet.add(provider);
       return newSet;
     });
   }, []);
@@ -185,57 +183,69 @@ export const AIProviderSettings: React.FC = () => {
           const config = AI_PROVIDER_CONFIGS[provider];
           const state = aiKeyStates[provider];
           const providerKey = provider.toLowerCase();
+          const isConfigured = Boolean(state?.savedKey);
+          const isDirty = Boolean(state && state.value && state.value !== state.savedKey);
+          const canTest = isDirty && !state?.validationError && !state?.isTesting;
+          const canSave = isDirty && Boolean(state?.testPassed) && !state?.isSaving;
+
+          const sortedModels = [...config.models].sort(
+            (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier),
+          );
 
           return (
             <div key={provider} className="ai-provider-card" data-provider={provider}>
               <div className="ai-provider-header">
                 <div className="ai-provider-title-row">
-                  <div className="ai-provider-info">
-                    <h3 className="ai-provider-name">{config.displayName}</h3>
-                    <p className="ai-provider-description">
-                      {t(`ai.providers.${providerKey}.description`, { ns: 'options' })}
-                    </p>
+                  <div className="ai-provider-identity">
+                    <span className="ai-provider-logo-tile" aria-hidden="true">
+                      <img src={config.logo} alt="" loading="lazy" />
+                    </span>
+                    <div className="ai-provider-info">
+                      <h3 className="ai-provider-name">{config.displayName}</h3>
+                      <p className="ai-provider-description">
+                        {t(`ai.providers.${providerKey}.description`, { ns: 'options' })}
+                      </p>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => toggleInfo(provider)}
-                    className={`info-btn ${expandedInfo.has(provider) ? 'active' : ''}`}
-                    aria-label="API information"
-                    title="API info and pricing"
-                  >
-                    <Info size={18} />
-                  </button>
+                  <div className="ai-provider-meta">
+                    <span className={`key-status ${isConfigured ? 'configured' : 'missing'}`}>
+                      {isConfigured
+                        ? t('apiKeys.status.configured', { ns: 'options' })
+                        : t('apiKeys.status.missing', { ns: 'options' })}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => toggleInfo(provider)}
+                      className={`info-btn ${expandedInfo.has(provider) ? 'active' : ''}`}
+                      aria-label="API information"
+                      title="API info and pricing"
+                    >
+                      <Info size={18} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
               {expandedInfo.has(provider) && (
                 <div className="ai-info-box">
-                  {/* Models & Pricing */}
                   <div className="ai-info-section ai-models-section">
                     <h4>
                       <DollarSign size={16} />
                       {t('ai.models.title', { ns: 'options' })}
                     </h4>
                     <div className="ai-models-list">
-                      {config.models.map((model) => (
+                      {sortedModels.map((model) => (
                         <div key={model.id} className="ai-model-item">
-                          <span className="ai-model-display-name">{model.displayName}</span>
-                          <code className="ai-model-id">{model.id}</code>
+                          <span className="ai-model-display-name">
+                            {model.displayName}
+                            <span className="ai-model-tier">
+                              {t(`ai.tier.${model.tier}`, { ns: 'options' })}
+                            </span>
+                          </span>
+                          <span className="ai-model-pricing">{model.pricing}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="ai-pricing-summary">
-                      <span className="ai-pricing-label">{t('ai.pricing.rate', { ns: 'options' })}</span>
-                      <span className="ai-pricing-value">
-                        {config.pricingInfo.input} → {config.pricingInfo.output}
-                      </span>
-                    </div>
-                    {config.pricingInfo.note && (
-                      <p className="ai-pricing-note">
-                        <AlertCircle size={14} />
-                        {config.pricingInfo.note}
-                      </p>
-                    )}
                     <a
                       href={config.pricingUrl}
                       target="_blank"
@@ -247,7 +257,6 @@ export const AIProviderSettings: React.FC = () => {
                     </a>
                   </div>
 
-                  {/* How to get API key */}
                   <div className="ai-info-section">
                     <h4>{t('ai.howTo.title', { ns: 'options' })}</h4>
                     <ol className="ai-steps-list">
@@ -296,25 +305,58 @@ export const AIProviderSettings: React.FC = () => {
                 </p>
               )}
 
+              {state?.testError && (
+                <p className="ai-validation-error">
+                  <AlertCircle size={14} />
+                  {state.testError}
+                </p>
+              )}
+
               <div className="ai-key-actions">
-                {state?.hasChanges && (
+                {isDirty && !state?.testPassed && (
                   <button
-                    onClick={() => handleSaveKey(provider)}
-                    className="save-ai-key-btn"
-                    disabled={state?.isSaving || !!state?.validationError}
+                    onClick={() => handleTestKey(provider)}
+                    className="test-ai-key-btn"
+                    disabled={!canTest}
                   >
-                    {state?.isSaving ? (
+                    {state?.isTesting ? (
                       <>
                         <Loader size={16} className="spinning" />
-                        {t('actions.saveIndividual', { ns: 'options' })}
+                        {t('ai.actions.testing', { ns: 'options' })}
                       </>
                     ) : (
                       <>
-                        <Save size={16} />
-                        {t('actions.saveIndividual', { ns: 'options' })}
+                        <FlaskConical size={16} />
+                        {t('ai.actions.test', { ns: 'options' })}
                       </>
                     )}
                   </button>
+                )}
+
+                {isDirty && state?.testPassed && (
+                  <>
+                    <span className="test-passed-message">
+                      <CheckCircle size={16} />
+                      {t('ai.actions.testPassed', { ns: 'options' })}
+                    </span>
+                    <button
+                      onClick={() => handleSaveKey(provider)}
+                      className="save-ai-key-btn"
+                      disabled={!canSave}
+                    >
+                      {state?.isSaving ? (
+                        <>
+                          <Loader size={16} className="spinning" />
+                          {t('actions.saveIndividual', { ns: 'options' })}
+                        </>
+                      ) : (
+                        <>
+                          <Save size={16} />
+                          {t('actions.saveIndividual', { ns: 'options' })}
+                        </>
+                      )}
+                    </button>
+                  </>
                 )}
 
                 {state?.saveSuccess && (
@@ -324,6 +366,24 @@ export const AIProviderSettings: React.FC = () => {
                   </span>
                 )}
               </div>
+
+              <div className={`ai-model-picker ${isConfigured ? '' : 'locked'}`}>
+                <span className="ai-model-picker-label">{t('ai.model.label', { ns: 'options' })}</span>
+                {isConfigured ? (
+                  <Select
+                    value={state.model}
+                    options={sortedModels.map((model) => ({
+                      value: model.id,
+                      label: `${model.displayName} — ${t(`ai.tier.${model.tier}`, { ns: 'options' })}`,
+                    }))}
+                    onChange={(model) => handleModelChange(provider, model)}
+                    aria-label={`${config.displayName} model`}
+                    className="ai-model-select"
+                  />
+                ) : (
+                  <p className="ai-model-picker-hint">{t('ai.model.locked', { ns: 'options' })}</p>
+                )}
+              </div>
             </div>
           );
         })}
@@ -331,4 +391,3 @@ export const AIProviderSettings: React.FC = () => {
     </div>
   );
 };
-

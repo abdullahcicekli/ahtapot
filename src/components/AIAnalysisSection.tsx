@@ -4,10 +4,10 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Bot, ChevronDown, Play, Loader, Settings, X, Check, ThumbsUp } from 'lucide-react';
+import { Bot, ChevronDown, Play, Loader, Settings, X, Check } from 'lucide-react';
 import { AIProvider, AIAnalysisMode, AI_PROVIDER_CONFIGS } from '@/types/ai';
 import { getConfiguredAIProviders } from '@/utils/aiKeyStorage';
-import { getAIPreferences, saveAIPreferences, getValidModelForProvider } from '@/utils/aiPreferences';
+import { getAIPreferences, saveAIPreferences, getModelForProvider } from '@/utils/aiPreferences';
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './AIAnalysisSection.css';
 
@@ -111,17 +111,15 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
         
         setConfiguredProviders(providers);
         setSelectedMode(preferences.mode);
-        
-        // Set provider and model from preferences if available
+
+        // The model always comes from settings; the panel only picks a provider.
         if (providers.includes(preferences.provider)) {
           setSelectedProvider(preferences.provider);
-          setSelectedModel(getValidModelForProvider(preferences.provider, preferences.model));
+          setSelectedModel(await getModelForProvider(preferences.provider));
         } else if (providers.length > 0) {
-          // Fallback to first configured provider
           const defaultProvider = providers[0];
-          const defaultModel = AI_PROVIDER_CONFIGS[defaultProvider].models[0]?.id || '';
           setSelectedProvider(defaultProvider);
-          setSelectedModel(defaultModel);
+          setSelectedModel(await getModelForProvider(defaultProvider));
         }
       } catch (error) {
         console.error('Error loading AI providers:', error);
@@ -166,11 +164,12 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
     await saveAIPreferences({ provider, model, mode });
   };
 
-  const handleModelSelect = (provider: AIProvider, modelId: string) => {
+  const handleProviderSelect = async (provider: AIProvider) => {
+    const model = await getModelForProvider(provider);
     setSelectedProvider(provider);
-    setSelectedModel(modelId);
+    setSelectedModel(model);
     setShowProviderMenu(false);
-    savePreferences(provider, modelId, selectedMode);
+    savePreferences(provider, model, selectedMode);
   };
 
   const toggleProviderMenu = () => {
@@ -319,25 +318,27 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
 
             {showProviderMenu && (
               <div className="ai-provider-menu">
-                {/* All models from configured providers - flat list */}
+                {/* One entry per configured provider; the model is chosen in settings */}
                 <div className="ai-model-list-flat">
-                  {configuredProviders.flatMap((provider) => {
+                  {configuredProviders.map((provider) => {
                     const config = AI_PROVIDER_CONFIGS[provider];
-                    return config.models.map((model) => {
-                      const isSelected = selectedProvider === provider && selectedModel === model.id;
-                      return (
-                        <button
-                          key={`${provider}-${model.id}`}
-                          className={`ai-model-flat-item ${isSelected ? 'selected' : ''} ${model.recommended ? 'recommended' : ''}`}
-                          onClick={() => handleModelSelect(provider, model.id)}
-                        >
-                          <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
-                          <span className="ai-model-name">{model.displayName}</span>
-                          {model.recommended && <ThumbsUp size={12} className="ai-model-recommended" />}
-                          {isSelected && <Check size={14} className="ai-model-check" />}
-                        </button>
-                      );
-                    });
+                    const isSelected = selectedProvider === provider;
+                    return (
+                      <button
+                        key={provider}
+                        className={`ai-model-flat-item ${isSelected ? 'selected' : ''}`}
+                        onClick={() => handleProviderSelect(provider)}
+                      >
+                        <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
+                        <span className="ai-model-name">
+                          {config.displayName}
+                          {isSelected && selectedModel && (
+                            <span className="ai-model-sub">{getCurrentModelDisplay()}</span>
+                          )}
+                        </span>
+                        {isSelected && <Check size={14} className="ai-model-check" />}
+                      </button>
+                    );
                   })}
                 </div>
 
@@ -346,21 +347,20 @@ export const AIAnalysisSection: React.FC<AIAnalysisSectionProps> = ({
                   <>
                     <div className="ai-provider-divider" />
                     <div className="ai-model-list-flat disabled">
-                      {ALL_PROVIDERS.filter(p => !configuredProviders.includes(p)).flatMap((provider) => {
+                      {ALL_PROVIDERS.filter(p => !configuredProviders.includes(p)).map((provider) => {
                         const config = AI_PROVIDER_CONFIGS[provider];
-                        return config.models.map((model) => (
+                        return (
                           <button
-                            key={`${provider}-${model.id}`}
-                            className={`ai-model-flat-item disabled ${model.recommended ? 'recommended' : ''}`}
+                            key={provider}
+                            className="ai-model-flat-item disabled"
                             disabled
                             title={t('ai.noApiKey')}
                           >
                             <img src={config.logo} alt={config.shortName} className="ai-model-logo" />
-                            <span className="ai-model-name">{model.displayName}</span>
-                            {model.recommended && <ThumbsUp size={12} className="ai-model-recommended" />}
+                            <span className="ai-model-name">{config.displayName}</span>
                             <span className="ai-model-no-key">{t('ai.noKey')}</span>
                           </button>
-                        ));
+                        );
                       })}
                     </div>
                   </>

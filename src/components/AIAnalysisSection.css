@@ -761,3 +761,10 @@
     grid-row: 2;
   }
 }
+
+.ai-model-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}

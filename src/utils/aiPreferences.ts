@@ -11,11 +11,14 @@ export interface AIPreferences {
   provider: AIProvider;
   model: string;
   mode: AIAnalysisMode;
+  /* Per-provider model choice, made in settings; `model` mirrors the active
+     provider's choice for backwards compatibility. */
+  modelByProvider?: Partial<Record<AIProvider, string>>;
 }
 
 const DEFAULT_PREFERENCES: AIPreferences = {
   provider: AIProvider.GEMINI,
-  model: 'gemini-2.0-flash',
+  model: 'gemini-3.7-flash',
   mode: AIAnalysisMode.SUMMARY,
 };
 
@@ -49,11 +52,40 @@ export async function saveAIPreferences(preferences: Partial<AIPreferences>): Pr
 }
 
 /**
- * Get default model for a provider
+ * Get default model for a provider (the recommended mid tier)
  */
 export function getDefaultModelForProvider(provider: AIProvider): string {
   const config = AI_PROVIDER_CONFIGS[provider];
-  return config.models[0]?.id || config.modelName;
+  return (
+    config.models.find((m) => m.recommended)?.id ||
+    config.models[0]?.id ||
+    config.modelName
+  );
+}
+
+/**
+ * Get the model chosen in settings for a provider, falling back to the
+ * recommended default when nothing (or a stale id) is stored.
+ */
+export async function getModelForProvider(provider: AIProvider): Promise<string> {
+  const preferences = await getAIPreferences();
+  const stored = preferences.modelByProvider?.[provider];
+  if (stored && AI_PROVIDER_CONFIGS[provider].models.some((m) => m.id === stored)) {
+    return stored;
+  }
+  return getDefaultModelForProvider(provider);
+}
+
+/**
+ * Persist the model chosen in settings for a provider.
+ */
+export async function saveModelForProvider(provider: AIProvider, model: string): Promise<void> {
+  const preferences = await getAIPreferences();
+  await saveAIPreferences({
+    modelByProvider: { ...preferences.modelByProvider, [provider]: model },
+    // keep the flat field in sync when the active provider's model changes
+    ...(preferences.provider === provider ? { model } : {}),
+  });
 }
 
 /**

@@ -485,3 +485,122 @@
   border-color: var(--border-hi);
 }
 
+
+/* Provider identity: logo tile + company name + status chip */
+.ai-provider-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.ai-provider-logo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.ai-provider-logo-tile img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  /* These marks are dark; invert after grayscale so they read on the dark tile */
+  filter: grayscale(1) invert(1) brightness(1.1);
+  opacity: 0.85;
+}
+
+.ai-provider-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Test button: neutral pill; Save stays the white primary pill */
+.test-ai-key-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-hi);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.test-ai-key-btn:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+  border-color: var(--border-hi);
+}
+
+.test-ai-key-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.test-passed-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--success);
+}
+
+/* Model picker: unlocks after a key is saved */
+.ai-model-picker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.ai-model-picker-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.ai-model-picker-hint {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.ai-model-select {
+  min-width: 300px;
+}
+
+.ai-model-tier {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.ai-model-pricing {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}

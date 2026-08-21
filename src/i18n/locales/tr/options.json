@@ -277,17 +277,17 @@
     "sectionDescription": "Akıllı IOC analizi için AI sağlayıcılarını yapılandırın. AI, özetler, detaylı analizler ve öneriler sunabilir.",
     "providers": {
       "claude": {
-        "description": "Anthropic'in Claude'u - Gelişmiş muhakeme ve analiz",
+        "description": "Anthropic'in Claude modelleri",
         "placeholder": "Claude API anahtarınızı girin (sk-ant-...)",
         "step2": "Ödeme yöntemi ekleyin (API erişimi için gerekli)"
       },
       "gemini": {
-        "description": "Google'ın Gemini'si - Hızlı ve verimli analiz",
+        "description": "Google'ın Gemini modelleri",
         "placeholder": "Gemini API anahtarınızı girin",
         "step2": "Google Cloud Console'da Gemini API'yi etkinleştirin"
       },
       "openai": {
-        "description": "OpenAI'nin GPT'si - Çok yönlü dil anlama",
+        "description": "OpenAI'ın GPT modelleri",
         "placeholder": "OpenAI API anahtarınızı girin (sk-...)",
         "step2": "Ödeme yöntemi ekleyin ve kredi satın alın"
       }
@@ -307,6 +307,20 @@
     },
     "models": {
       "title": "Kullanılabilir Modeller"
+    },
+    "actions": {
+      "test": "Anahtarı test et",
+      "testing": "Test ediliyor…",
+      "testPassed": "Anahtar doğrulandı"
+    },
+    "model": {
+      "label": "Model",
+      "locked": "Model seçmek için önce doğrulanmış bir anahtar kaydedin."
+    },
+    "tier": {
+      "low": "Ekonomik",
+      "mid": "Dengeli",
+      "high": "En güçlü"
     }
   },
   "footer": {

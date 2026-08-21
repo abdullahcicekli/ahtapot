@@ -277,17 +277,17 @@
     "sectionDescription": "Configure AI providers for intelligent IOC analysis. AI can provide summaries, detailed analysis, and recommendations.",
     "providers": {
       "claude": {
-        "description": "Anthropic's Claude - Advanced reasoning and analysis",
+        "description": "Claude models by Anthropic",
         "placeholder": "Enter your Claude API key (sk-ant-...)",
         "step2": "Add payment method (required for API access)"
       },
       "gemini": {
-        "description": "Google's Gemini - Fast and efficient analysis",
+        "description": "Gemini models by Google",
         "placeholder": "Enter your Gemini API key",
         "step2": "Enable the Gemini API in your Google Cloud Console"
       },
       "openai": {
-        "description": "OpenAI's GPT - Versatile language understanding",
+        "description": "GPT models by OpenAI",
         "placeholder": "Enter your OpenAI API key (sk-...)",
         "step2": "Add payment method and purchase credits"
       }
@@ -307,6 +307,20 @@
     },
     "models": {
       "title": "Available Models"
+    },
+    "actions": {
+      "test": "Test key",
+      "testing": "Testing…",
+      "testPassed": "Key verified"
+    },
+    "model": {
+      "label": "Model",
+      "locked": "Save a verified key to choose a model."
+    },
+    "tier": {
+      "low": "Economic",
+      "mid": "Balanced",
+      "high": "Most capable"
     }
   },
   "footer": {
