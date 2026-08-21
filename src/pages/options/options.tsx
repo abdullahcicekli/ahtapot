@@ -13,6 +13,7 @@ import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
 import { FolderTabs } from '@/components/FolderTabs';
 import { Select } from '@/components/Select';
+import { InfoModal } from '@/components/InfoModal';
 import '@/i18n/config';
 import '@/components/AIProviderSettings.css';
 import './options.css';
@@ -122,7 +123,7 @@ const OptionsPage: React.FC = () => {
   });
   const [apiKeyStates, setApiKeyStates] = useState<Record<string, APIKeyState>>({});
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
-  const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
+  const [infoProvider, setInfoProvider] = useState<APIProvider | null>(null);
   const [keyQuery, setKeyQuery] = useState('');
   const [keyFilter, setKeyFilter] = useState<'all' | 'configured' | 'missing'>('all');
   const [showCacheInfo, setShowCacheInfo] = useState(false);
@@ -447,19 +448,6 @@ const OptionsPage: React.FC = () => {
   // Toggle visibility
   const toggleVisibility = useCallback((provider: string) => {
     setVisibleKeys((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(provider)) {
-        newSet.delete(provider);
-      } else {
-        newSet.add(provider);
-      }
-      return newSet;
-    });
-  }, []);
-
-  // Toggle info
-  const toggleInfo = useCallback((provider: string) => {
-    setExpandedInfo((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(provider)) {
         newSet.delete(provider);
@@ -1019,7 +1007,7 @@ const OptionsPage: React.FC = () => {
                             {!isLocked && (
                               <button
                                 type="button"
-                                onClick={() => toggleInfo(config.provider)}
+                                onClick={() => setInfoProvider(config.provider)}
                                 className="info-btn"
                                 aria-label="API information"
                                 title="API limits and features"
@@ -1038,89 +1026,6 @@ const OptionsPage: React.FC = () => {
                         </div>
                       ) : (
                         <>
-                          {expandedInfo.has(config.provider) && (
-                        <div className="api-info-box">
-                          <div className="api-info-section">
-                            <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
-                            <div className="api-limits">
-                              <div className="limit-item">
-                                <span className="limit-label">
-                                  {t('info.dailyLimit', { ns: 'options' })}
-                                </span>
-                                <span className="limit-value">
-                                  {t(`limits.${providerKey}.free`, { ns: 'options' })}
-                                </span>
-                              </div>
-                              <div className="limit-item">
-                                <span className="limit-label">
-                                  {t('info.rateLimit', { ns: 'options' })}
-                                </span>
-                                <span className="limit-value">
-                                  {t(`limits.${providerKey}.rate`, { ns: 'options' })}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="api-info-section">
-                            <h4>{t('info.featuresTitle', { ns: 'options' })}</h4>
-                            <ul className="api-features-list">
-                              {[1, 2, 3, 4].map((num) => (
-                                <li key={num}>
-                                  {t(`features.${providerKey}.feature${num}`, { ns: 'options' })}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="api-info-section">
-                            <h4>{t('info.howToTitle', { ns: 'options' })}</h4>
-                            <ol className="api-steps-list">
-                              <li>
-                                <a href={config.signupLink} target="_blank" rel="noopener noreferrer">
-                                  {t('info.steps.signup', { ns: 'options' })}
-                                  <ExternalLink size={14} className="external-icon" />
-                                </a>
-                              </li>
-                              <li>{t('info.steps.verify', { ns: 'options' })}</li>
-                              <li>
-                                <a href={config.link} target="_blank" rel="noopener noreferrer">
-                                  {t('info.steps.getKey', { ns: 'options' })}
-                                  <ExternalLink size={14} className="external-icon" />
-                                </a>
-                              </li>
-                              <li>{t('info.steps.paste', { ns: 'options' })}</li>
-                            </ol>
-                          </div>
-
-                          {/* Special note for MalwareBazaar */}
-                          {config.provider === APIProvider.MALWAREBAZAAR && (
-                            <div className="api-info-section api-warning-section">
-                              <h4>
-                                <AlertCircle size={16} />
-                                {t('info.importantNote', { ns: 'options' })}
-                              </h4>
-                              <p className="api-warning-text">
-                                {t(`notes.${providerKey}`, { ns: 'options' })}
-                              </p>
-                            </div>
-                          )}
-
-                          {/* Special note for Scamalytics */}
-                          {config.provider === APIProvider.SCAMALYTICS && (
-                            <div className="api-info-section api-warning-section">
-                              <h4>
-                                <AlertCircle size={16} />
-                                {t('info.importantNote', { ns: 'options' })}
-                              </h4>
-                              <p className="api-warning-text">
-                                {t(`notes.${providerKey}`, { ns: 'options' })}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
                           <div className="api-key-input-wrapper">
                             <input
                               type={visibleKeys.has(config.provider) ? 'text' : 'password'}
@@ -1227,6 +1132,85 @@ const OptionsPage: React.FC = () => {
       <footer className="options-footer">
         <p>{t('footer.text', { ns: 'options', version: chrome.runtime.getManifest().version })}</p>
       </footer>
+
+      {/* Provider Info Modal */}
+      {infoProvider &&
+        (() => {
+          const providerKey = infoProvider.toLowerCase();
+          const infoConfig = API_CONFIGS.find((c) => c.provider === infoProvider);
+          if (!infoConfig) return null;
+          const hasNote =
+            infoProvider === APIProvider.MALWAREBAZAAR || infoProvider === APIProvider.SCAMALYTICS;
+          return (
+            <InfoModal
+              title={t(`providers.${providerKey}.label`, { ns: 'options' })}
+              subtitle={t(`providers.${providerKey}.description`, { ns: 'options' })}
+              icon={
+                <img src={PROVIDER_LOGOS[infoProvider]} alt="" className="info-modal-logo" />
+              }
+              onClose={() => setInfoProvider(null)}
+            >
+              <div className="api-info-section">
+                <h4>{t('info.limitsTitle', { ns: 'options' })}</h4>
+                <div className="api-limits">
+                  <div className="limit-item">
+                    <span className="limit-label">{t('info.dailyLimit', { ns: 'options' })}</span>
+                    <span className="limit-value">
+                      {t(`limits.${providerKey}.free`, { ns: 'options' })}
+                    </span>
+                  </div>
+                  <div className="limit-item">
+                    <span className="limit-label">{t('info.rateLimit', { ns: 'options' })}</span>
+                    <span className="limit-value">
+                      {t(`limits.${providerKey}.rate`, { ns: 'options' })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="api-info-section">
+                <h4>{t('info.featuresTitle', { ns: 'options' })}</h4>
+                <ul className="api-features-list">
+                  {[1, 2, 3, 4].map((num) => (
+                    <li key={num}>
+                      {t(`features.${providerKey}.feature${num}`, { ns: 'options' })}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="api-info-section">
+                <h4>{t('info.howToTitle', { ns: 'options' })}</h4>
+                <ol className="api-steps-list">
+                  <li>
+                    <a href={infoConfig.signupLink} target="_blank" rel="noopener noreferrer">
+                      {t('info.steps.signup', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t('info.steps.verify', { ns: 'options' })}</li>
+                  <li>
+                    <a href={infoConfig.link} target="_blank" rel="noopener noreferrer">
+                      {t('info.steps.getKey', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t('info.steps.paste', { ns: 'options' })}</li>
+                </ol>
+              </div>
+
+              {hasNote && (
+                <div className="api-info-section api-warning-section">
+                  <h4>
+                    <AlertCircle size={16} />
+                    {t('info.importantNote', { ns: 'options' })}
+                  </h4>
+                  <p className="api-warning-text">{t(`notes.${providerKey}`, { ns: 'options' })}</p>
+                </div>
+              )}
+            </InfoModal>
+          );
+        })()}
 
       {/* Provider Order Modal */}
       {isOrderModalOpen && (

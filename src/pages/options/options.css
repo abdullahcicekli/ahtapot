@@ -219,9 +219,15 @@ body {
 }
 
 .api-keys-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .api-keys-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .api-key-card {
@@ -1531,4 +1537,32 @@ body {
   color: var(--text-tertiary);
   background: var(--bg-input);
   border: 1px solid var(--border);
+}
+
+
+/* Info modal */
+.info-modal {
+  max-width: 560px;
+}
+
+.info-modal-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+}
+
+.info-modal-body .api-info-section,
+.info-modal-body .ai-info-section {
+  margin-bottom: 20px;
+}
+
+.info-modal-body .api-info-section:last-child,
+.info-modal-body .ai-info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-modal-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.5);
 }

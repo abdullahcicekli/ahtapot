@@ -321,6 +321,9 @@
       "low": "Ekonomik",
       "mid": "Dengeli",
       "high": "En güçlü"
+    },
+    "modelNotes": {
+      "fable": "Claude Fable 5, Anthropic hesabınızda 30 günlük veri saklamayı gerektirir. Sıfır veri saklama (ZDR) hesaplarda tüm istekler hata döner — bu durumda Opus 5 veya Haiku 4.5 seçin."
     }
   },
   "footer": {

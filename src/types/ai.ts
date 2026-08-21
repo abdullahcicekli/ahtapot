@@ -36,6 +36,8 @@ export interface AIModelConfig {
   tier: AIModelTier;
   pricing: string;
   recommended?: boolean;
+  /* i18n suffix under ai.modelNotes.* shown when this model is selected */
+  noteKey?: string;
 }
 
 /**
@@ -113,7 +115,7 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
     models: [
       { id: 'claude-haiku-4-5', name: 'haiku-4.5', displayName: 'Claude Haiku 4.5', tier: 'low', pricing: '$1 / $5 MTok' },
       { id: 'claude-opus-5', name: 'opus-5', displayName: 'Claude Opus 5', tier: 'mid', pricing: '$5 / $25 MTok', recommended: true },
-      { id: 'claude-fable-5', name: 'fable-5', displayName: 'Claude Fable 5', tier: 'high', pricing: '$10 / $50 MTok' },
+      { id: 'claude-fable-5', name: 'fable-5', displayName: 'Claude Fable 5', tier: 'high', pricing: '$10 / $50 MTok', noteKey: 'fable' },
     ],
   },
   [AIProvider.GEMINI]: {

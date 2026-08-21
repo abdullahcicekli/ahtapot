@@ -12,6 +12,7 @@ import { getAIKeys, saveAIKey, validateAIKeyFormat } from '@/utils/aiKeyStorage'
 import { testAIKey } from '@/utils/aiKeyTest';
 import { getModelForProvider, saveModelForProvider } from '@/utils/aiPreferences';
 import { Select } from '@/components/Select';
+import { InfoModal } from '@/components/InfoModal';
 import './AIProviderSettings.css';
 
 interface AIKeyState {
@@ -32,7 +33,7 @@ export const AIProviderSettings: React.FC = () => {
   const { t } = useTranslation(['options', 'common']);
   const [aiKeyStates, setAiKeyStates] = useState<Record<AIProvider, AIKeyState>>({} as Record<AIProvider, AIKeyState>);
   const [visibleKeys, setVisibleKeys] = useState<Set<AIProvider>>(new Set());
-  const [expandedInfo, setExpandedInfo] = useState<Set<AIProvider>>(new Set());
+  const [infoProvider, setInfoProvider] = useState<AIProvider | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -149,14 +150,6 @@ export const AIProviderSettings: React.FC = () => {
     });
   }, []);
 
-  const toggleInfo = useCallback((provider: AIProvider) => {
-    setExpandedInfo((prev) => {
-      const newSet = new Set(prev);
-      newSet.has(provider) ? newSet.delete(provider) : newSet.add(provider);
-      return newSet;
-    });
-  }, []);
-
   if (isLoading) {
     return (
       <div className="ai-settings-loading">
@@ -191,6 +184,7 @@ export const AIProviderSettings: React.FC = () => {
           const sortedModels = [...config.models].sort(
             (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier),
           );
+          const selectedModelNote = sortedModels.find((m) => m.id === state?.model)?.noteKey;
 
           return (
             <div key={provider} className="ai-provider-card" data-provider={provider}>
@@ -215,8 +209,8 @@ export const AIProviderSettings: React.FC = () => {
                     </span>
                     <button
                       type="button"
-                      onClick={() => toggleInfo(provider)}
-                      className={`info-btn ${expandedInfo.has(provider) ? 'active' : ''}`}
+                      onClick={() => setInfoProvider(provider)}
+                      className="info-btn"
                       aria-label="API information"
                       title="API info and pricing"
                     >
@@ -225,59 +219,6 @@ export const AIProviderSettings: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              {expandedInfo.has(provider) && (
-                <div className="ai-info-box">
-                  <div className="ai-info-section ai-models-section">
-                    <h4>
-                      <DollarSign size={16} />
-                      {t('ai.models.title', { ns: 'options' })}
-                    </h4>
-                    <div className="ai-models-list">
-                      {sortedModels.map((model) => (
-                        <div key={model.id} className="ai-model-item">
-                          <span className="ai-model-display-name">
-                            {model.displayName}
-                            <span className="ai-model-tier">
-                              {t(`ai.tier.${model.tier}`, { ns: 'options' })}
-                            </span>
-                          </span>
-                          <span className="ai-model-pricing">{model.pricing}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <a
-                      href={config.pricingUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ai-pricing-link"
-                    >
-                      {t('ai.pricing.viewMore', { ns: 'options' })}
-                      <ExternalLink size={12} />
-                    </a>
-                  </div>
-
-                  <div className="ai-info-section">
-                    <h4>{t('ai.howTo.title', { ns: 'options' })}</h4>
-                    <ol className="ai-steps-list">
-                      <li>
-                        <a href={config.signupUrl} target="_blank" rel="noopener noreferrer">
-                          {t('ai.howTo.signup', { ns: 'options' })}
-                          <ExternalLink size={14} className="external-icon" />
-                        </a>
-                      </li>
-                      <li>{t(`ai.providers.${providerKey}.step2`, { ns: 'options' })}</li>
-                      <li>
-                        <a href={config.apiKeyUrl} target="_blank" rel="noopener noreferrer">
-                          {t('ai.howTo.getKey', { ns: 'options' })}
-                          <ExternalLink size={14} className="external-icon" />
-                        </a>
-                      </li>
-                      <li>{t('ai.howTo.paste', { ns: 'options' })}</li>
-                    </ol>
-                  </div>
-                </div>
-              )}
 
               <div className="ai-key-input-wrapper">
                 <input
@@ -384,10 +325,83 @@ export const AIProviderSettings: React.FC = () => {
                   <p className="ai-model-picker-hint">{t('ai.model.locked', { ns: 'options' })}</p>
                 )}
               </div>
+
+              {isConfigured && selectedModelNote && (
+                <p className="ai-model-note">
+                  <AlertCircle size={14} />
+                  {t(`ai.modelNotes.${selectedModelNote}`, { ns: 'options' })}
+                </p>
+              )}
             </div>
           );
         })}
       </div>
+
+      {infoProvider &&
+        (() => {
+          const config = AI_PROVIDER_CONFIGS[infoProvider];
+          const providerKey = infoProvider.toLowerCase();
+          const sortedModels = [...config.models].sort(
+            (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier),
+          );
+          return (
+            <InfoModal
+              title={config.displayName}
+              subtitle={t(`ai.providers.${providerKey}.description`, { ns: 'options' })}
+              icon={<Bot size={24} />}
+              onClose={() => setInfoProvider(null)}
+            >
+              <div className="ai-info-section ai-models-section">
+                <h4>
+                  <DollarSign size={16} />
+                  {t('ai.models.title', { ns: 'options' })}
+                </h4>
+                <div className="ai-models-list">
+                  {sortedModels.map((model) => (
+                    <div key={model.id} className="ai-model-item">
+                      <span className="ai-model-display-name">
+                        {model.displayName}
+                        <span className="ai-model-tier">
+                          {t(`ai.tier.${model.tier}`, { ns: 'options' })}
+                        </span>
+                      </span>
+                      <span className="ai-model-pricing">{model.pricing}</span>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href={config.pricingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ai-pricing-link"
+                >
+                  {t('ai.pricing.viewMore', { ns: 'options' })}
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+
+              <div className="ai-info-section">
+                <h4>{t('ai.howTo.title', { ns: 'options' })}</h4>
+                <ol className="ai-steps-list">
+                  <li>
+                    <a href={config.signupUrl} target="_blank" rel="noopener noreferrer">
+                      {t('ai.howTo.signup', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t(`ai.providers.${providerKey}.step2`, { ns: 'options' })}</li>
+                  <li>
+                    <a href={config.apiKeyUrl} target="_blank" rel="noopener noreferrer">
+                      {t('ai.howTo.getKey', { ns: 'options' })}
+                      <ExternalLink size={14} className="external-icon" />
+                    </a>
+                  </li>
+                  <li>{t('ai.howTo.paste', { ns: 'options' })}</li>
+                </ol>
+              </div>
+            </InfoModal>
+          );
+        })()}
     </div>
   );
 };

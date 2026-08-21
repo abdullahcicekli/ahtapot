@@ -321,6 +321,9 @@
       "low": "Economic",
       "mid": "Balanced",
       "high": "Most capable"
+    },
+    "modelNotes": {
+      "fable": "Claude Fable 5 requires 30-day data retention on your Anthropic account. Zero-data-retention (ZDR) organizations get an error on every request — pick Opus 5 or Haiku 4.5 instead."
     }
   },
   "footer": {
