@@ -382,6 +382,14 @@
   gap: 12px;
 }
 
+.ai-key-actions:not(:empty) {
+  margin-top: 14px;
+}
+
+.ai-validation-error {
+  margin-top: 10px;
+}
+
 .save-ai-key-btn {
   display: flex;
   align-items: center;
