@@ -13,7 +13,17 @@
   .sub { font-size: 19px; max-width: 520px; }
   .pills { display: flex; gap: 8px; margin-top: 26px; }
 
-  .mock { width: 520px; flex-shrink: 0; padding: 20px; }
+  .mock { width: 520px; flex-shrink: 0; padding: 20px; position: relative; }
+
+  .tentacle {
+    position: absolute;
+    left: -128px;
+    bottom: -218px;
+    width: 400px;
+    transform: rotate(-8deg);
+    opacity: 0.9;
+    pointer-events: none;
+  }
   .row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
   .row + .row { margin-top: 10px; }
   .row img { width: 24px; height: 24px; object-fit: contain; }
@@ -32,6 +42,7 @@
 <body>
   <div class="backdrop"></div>
   <div class="grid-lines"></div>
+  <img class="tentacle" src="assets/tentacle.png" alt="">
   <div class="stage">
     <div class="copy">
       <div class="brand">
