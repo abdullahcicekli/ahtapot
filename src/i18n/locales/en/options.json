@@ -19,15 +19,23 @@
       "title": "IOC Highlighting",
       "description": "Find indicators on the page without selecting text",
       "enabled": "Highlight IOCs on pages",
-      "enabledDescription": "Scans the page you are on and marks every detected indicator. Hover a marked indicator to analyze just that one.",
-      "note": "Works on the page you are viewing; nothing is sent anywhere until you click Analyze. Off by default because it modifies the page."
+      "infoTitle": "About IOC highlighting",
+      "info": {
+        "whatTitle": "What It Does",
+        "whatDescription": "Normally you have to select text before Ahtapot shows anything. With highlighting on, it scans the page you are reading and marks every indicator it finds, so you can see at a glance what is worth a lookup.",
+        "howTitle": "How to Use It",
+        "how1": "✨ Open any page — detected indicators are marked inline",
+        "how2": "🖱️ Hover a marked indicator to analyze only that one",
+        "how3": "🕵️ Defanged forms like evil[.]com and hxxps:// are marked as written and queried clean",
+        "privacyTitle": "Privacy & Performance",
+        "privacyDescription": "Scanning happens entirely in your browser and nothing is sent anywhere until you click Analyze. Work is spread across idle time and capped at 500 marks per page; scripts, form fields and editable areas are skipped. It is off by default because it modifies the page you are reading."
+      }
     },
     "cache": {
       "title": "Cache Settings",
       "description": "Configure cache behavior for IOC analysis results",
       "infoTitle": "Information about cache",
       "enabled": "Enable cache",
-      "enabledDescription": "Store analysis results to avoid repeated API calls",
       "retentionDays": "Retention period (days)",
       "retentionDescription": "How long to keep cached results",
       "statistics": "Cache statistics",

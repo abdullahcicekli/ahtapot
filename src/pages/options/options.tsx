@@ -141,7 +141,7 @@ const OptionsPage: React.FC = () => {
   const [confirmAction, setConfirmAction] = useState<'clearCache' | 'resetOrder' | null>(null);
   const [keyQuery, setKeyQuery] = useState('');
   const [keyFilter, setKeyFilter] = useState<'all' | 'configured' | 'missing'>('all');
-  const [showCacheInfo, setShowCacheInfo] = useState(false);
+  const [settingInfo, setSettingInfo] = useState<'highlight' | 'cache' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Cache settings state
@@ -828,6 +828,15 @@ const OptionsPage: React.FC = () => {
                     {t('general.highlight.description', { ns: 'options' })}
                   </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setSettingInfo('highlight')}
+                  className="info-btn"
+                  aria-label={t('general.highlight.infoTitle', { ns: 'options' })}
+                  title={t('general.highlight.infoTitle', { ns: 'options' })}
+                >
+                  <Info size={18} />
+                </button>
               </div>
 
               <div className="cache-settings">
@@ -843,12 +852,6 @@ const OptionsPage: React.FC = () => {
                     <span className="setting-switch" aria-hidden="true" />
                     <span>{t('general.highlight.enabled', { ns: 'options' })}</span>
                   </label>
-                  <p className="cache-description">
-                    {t('general.highlight.enabledDescription', { ns: 'options' })}
-                  </p>
-                  <p className="cache-description">
-                    {t('general.highlight.note', { ns: 'options' })}
-                  </p>
                 </div>
               </div>
             </div>
@@ -865,36 +868,14 @@ const OptionsPage: React.FC = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setShowCacheInfo(!showCacheInfo)}
-                  className={`info-btn ${showCacheInfo ? 'active' : ''}`}
-                  aria-label="Cache information"
+                  onClick={() => setSettingInfo('cache')}
+                  className="info-btn"
+                  aria-label={t('general.cache.infoTitle', { ns: 'options' })}
                   title={t('general.cache.infoTitle', { ns: 'options' })}
                 >
                   <Info size={18} />
                 </button>
               </div>
-
-              {showCacheInfo && (
-                <div className="cache-info-box">
-                  <div className="cache-info-section">
-                    <h4>{t('general.cache.info.whyTitle', { ns: 'options' })}</h4>
-                    <p>{t('general.cache.info.whyDescription', { ns: 'options' })}</p>
-                  </div>
-                  <div className="cache-info-section">
-                    <h4>{t('general.cache.info.benefitsTitle', { ns: 'options' })}</h4>
-                    <ul className="cache-info-list">
-                      <li>{t('general.cache.info.benefit1', { ns: 'options' })}</li>
-                      <li>{t('general.cache.info.benefit2', { ns: 'options' })}</li>
-                      <li>{t('general.cache.info.benefit3', { ns: 'options' })}</li>
-                      <li>{t('general.cache.info.benefit4', { ns: 'options' })}</li>
-                    </ul>
-                  </div>
-                  <div className="cache-info-section">
-                    <h4>{t('general.cache.info.howTitle', { ns: 'options' })}</h4>
-                    <p>{t('general.cache.info.howDescription', { ns: 'options' })}</p>
-                  </div>
-                </div>
-              )}
 
               <div className="cache-settings">
                 {/* Enable/Disable Cache */}
@@ -910,9 +891,6 @@ const OptionsPage: React.FC = () => {
                     <span className="setting-switch" aria-hidden="true" />
                     <span>{t('general.cache.enabled', { ns: 'options' })}</span>
                   </label>
-                  <p className="cache-description">
-                    {t('general.cache.enabledDescription', { ns: 'options' })}
-                  </p>
                 </div>
 
                 {/* Retention Days */}
@@ -1242,6 +1220,61 @@ const OptionsPage: React.FC = () => {
       )}
 
       {/* Provider Info Modal */}
+      {/* Ayar bilgi modalleri — kart gövdelerinde açıklama taşımak yerine
+          başlığın yanındaki (i) ile açılır, provider modalleriyle aynı kabuk. */}
+      {settingInfo === 'highlight' && (
+        <InfoModal
+          title={t('general.highlight.title', { ns: 'options' })}
+          subtitle={t('general.highlight.description', { ns: 'options' })}
+          icon={<Highlighter size={22} />}
+          onClose={() => setSettingInfo(null)}
+        >
+          <div className="api-info-section">
+            <h4>{t('general.highlight.info.whatTitle', { ns: 'options' })}</h4>
+            <p>{t('general.highlight.info.whatDescription', { ns: 'options' })}</p>
+          </div>
+          <div className="api-info-section">
+            <h4>{t('general.highlight.info.howTitle', { ns: 'options' })}</h4>
+            <ul className="setting-info-list">
+              <li>{t('general.highlight.info.how1', { ns: 'options' })}</li>
+              <li>{t('general.highlight.info.how2', { ns: 'options' })}</li>
+              <li>{t('general.highlight.info.how3', { ns: 'options' })}</li>
+            </ul>
+          </div>
+          <div className="api-info-section">
+            <h4>{t('general.highlight.info.privacyTitle', { ns: 'options' })}</h4>
+            <p>{t('general.highlight.info.privacyDescription', { ns: 'options' })}</p>
+          </div>
+        </InfoModal>
+      )}
+
+      {settingInfo === 'cache' && (
+        <InfoModal
+          title={t('general.cache.title', { ns: 'options' })}
+          subtitle={t('general.cache.description', { ns: 'options' })}
+          icon={<Database size={22} />}
+          onClose={() => setSettingInfo(null)}
+        >
+          <div className="api-info-section">
+            <h4>{t('general.cache.info.whyTitle', { ns: 'options' })}</h4>
+            <p>{t('general.cache.info.whyDescription', { ns: 'options' })}</p>
+          </div>
+          <div className="api-info-section">
+            <h4>{t('general.cache.info.benefitsTitle', { ns: 'options' })}</h4>
+            <ul className="setting-info-list">
+              <li>{t('general.cache.info.benefit1', { ns: 'options' })}</li>
+              <li>{t('general.cache.info.benefit2', { ns: 'options' })}</li>
+              <li>{t('general.cache.info.benefit3', { ns: 'options' })}</li>
+              <li>{t('general.cache.info.benefit4', { ns: 'options' })}</li>
+            </ul>
+          </div>
+          <div className="api-info-section">
+            <h4>{t('general.cache.info.howTitle', { ns: 'options' })}</h4>
+            <p>{t('general.cache.info.howDescription', { ns: 'options' })}</p>
+          </div>
+        </InfoModal>
+      )}
+
       {infoProvider &&
         (() => {
           const providerKey = infoProvider.toLowerCase();
