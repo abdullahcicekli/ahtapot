@@ -402,6 +402,8 @@ npm run build
 | `src/background/service-worker.ts` | Background orchestration, API calls |
 | `src/content/content-script.tsx` | Page interaction, IOC detection trigger |
 | `src/utils/ioc-detector.ts` | IOC pattern matching and detection |
+| `src/content/ioc-highlighter.ts` | Page-wide IOC scanning and inline highlighting |
+| `src/utils/highlightSettings.ts` | Highlighting on/off setting (chrome.storage) |
 | `src/services/ServiceRegistry.ts` | Provider service management |
 | `src/services/api-service.ts` | API orchestration layer |
 | `src/utils/apiKeyStorage.ts` | Secure API key storage |
@@ -757,6 +759,7 @@ Keep these areas maintainable:
 
 ## Version History Summary
 
+- **v3.2.0** (2026-09-11): Optional page-wide IOC highlighting with per-IOC hover analysis; removed Outpost banner
 - **v2.4.0** (2025-11-13): Added URLhaus, X-Force, Pulsedive, Scamalytics
 - **v2.3.2** (2025-10-25): Enhanced UX with loading animations
 - **v2.3.1** (2025-10-25): Added Chrome Web Store rating button

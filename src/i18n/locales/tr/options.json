@@ -15,6 +15,13 @@
       "description": "Tercih ettiğiniz dili seçin",
       "select": "Dil seçin"
     },
+    "highlight": {
+      "title": "IOC İşaretleme",
+      "description": "Metin seçmeden sayfadaki göstergeleri bul",
+      "enabled": "Sayfalarda IOC'leri işaretle",
+      "enabledDescription": "Bulunduğun sayfayı tarar ve tespit edilen her göstergeyi işaretler. İşaretli bir göstergenin üzerine geldiğinde yalnızca onu analiz edebilirsin.",
+      "note": "Yalnızca görüntülediğin sayfada çalışır; Analiz Et'e basmadan hiçbir yere veri gitmez. Sayfayı değiştirdiği için varsayılan olarak kapalıdır."
+    },
     "cache": {
       "title": "Önbellek Ayarları",
       "description": "IOC analiz sonuçları için önbellek davranışını yapılandırın",

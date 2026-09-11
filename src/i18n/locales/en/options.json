@@ -15,6 +15,13 @@
       "description": "Select your preferred language",
       "select": "Select language"
     },
+    "highlight": {
+      "title": "IOC Highlighting",
+      "description": "Find indicators on the page without selecting text",
+      "enabled": "Highlight IOCs on pages",
+      "enabledDescription": "Scans the page you are on and marks every detected indicator. Hover a marked indicator to analyze just that one.",
+      "note": "Works on the page you are viewing; nothing is sent anywhere until you click Analyze. Off by default because it modifies the page."
+    },
     "cache": {
       "title": "Cache Settings",
       "description": "Configure cache behavior for IOC analysis results",

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-09-11
+
+### Added
+- **IOC highlighting on pages** - Optional page scan that marks every detected indicator inline. Hovering a marked indicator offers analysis for that single IOC, instead of requiring a text selection. Handles defanged forms (`evil[.]com`, `hxxps://`) by marking the text as written while querying the clean value. Scans dynamically loaded content, caps at 500 marks per page, and skips scripts, form fields and editable regions.
+- **IOC highlighting toggle** in Settings → General. Off by default; turning it on or off applies to already-open tabs without a reload.
+
+### Fixed
+- **Indicators at the end of a sentence were never detected.** `C2 is 8.8.8.8.`, `Visit evil.com.` and `Mail bad@evil.com.` returned nothing because the trailing period was not treated as a boundary. Longer sequences such as `1.2.3.4.5` are still correctly rejected. Affects both the selection flow and the new highlighting.
+
+### Removed
+- **Outpost sponsor banner** from the top of the side panel.
+
 ## [3.0.1] - 2026-05-06
 
 ### Added

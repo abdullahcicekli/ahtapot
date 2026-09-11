@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
-import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move, Search } from 'lucide-react';
+import { Save, CheckCircle, AlertCircle, Eye, EyeOff, Info, ExternalLink, Settings, Key, Globe, Database, Trash2, Loader, GripVertical, RotateCcw, X, ArrowUpDown, ChevronUp, ChevronDown, Sparkles, Move, Search, Highlighter } from 'lucide-react';
 import { APIProvider } from '@/types/ioc';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n/config';
 import { APIKeyValidator } from '@/utils/apiValidator';
 import { CacheManager, CacheSettings } from '@/utils/cacheManager';
 import { getAPIKeys, saveAPIKey } from '@/utils/apiKeyStorage';
 import { getProviderOrder, saveProviderOrder, resetProviderOrder } from '@/utils/providerOrderStorage';
+import {
+  DEFAULT_HIGHLIGHT_SETTINGS,
+  HighlightSettings,
+  getHighlightSettings,
+  saveHighlightSettings,
+} from '@/utils/highlightSettings';
 import { PROVIDER_TO_SERVICE_NAME } from '@/utils/providerMappings';
 import { isProviderEnabled } from '@/config/providerDisplay';
 import { AIProviderSettings } from '@/components/AIProviderSettings';
@@ -151,6 +157,11 @@ const OptionsPage: React.FC = () => {
   });
   const [isClearingCache, setIsClearingCache] = useState(false);
 
+  // IOC highlight settings state
+  const [highlightSettings, setHighlightSettings] = useState<HighlightSettings>(
+    DEFAULT_HIGHLIGHT_SETTINGS
+  );
+
   // Provider order modal state
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [providerOrder, setProviderOrder] = useState<APIProvider[]>([]);
@@ -175,6 +186,7 @@ const OptionsPage: React.FC = () => {
   useEffect(() => {
     loadSettings();
     loadCacheSettings();
+    loadHighlightSettings();
     loadProviderOrder();
 
     // Check for URL parameters
@@ -285,6 +297,14 @@ const OptionsPage: React.FC = () => {
     } catch (err) {
       setError(t('actions.errorLoading', { ns: 'options' }));
       console.error('Error loading settings:', err);
+    }
+  }
+
+  async function loadHighlightSettings() {
+    try {
+      setHighlightSettings(await getHighlightSettings());
+    } catch (err) {
+      console.error('Error loading highlight settings:', err);
     }
   }
 
@@ -482,6 +502,21 @@ const OptionsPage: React.FC = () => {
       console.error('Error updating cache settings:', err);
     }
   }, [cacheSettings, t]);
+
+  // Handle IOC highlight toggle — acik sekmeler storage.onChanged ile kendini gunceller
+  const handleHighlightToggle = useCallback(async (enabled: boolean) => {
+    const previous = highlightSettings;
+    const newSettings: HighlightSettings = { ...previous, enabled };
+
+    setHighlightSettings(newSettings);
+    try {
+      await saveHighlightSettings(newSettings);
+    } catch (err) {
+      setHighlightSettings(previous);
+      setError(t('actions.saveError', { ns: 'options' }));
+      console.error('Error saving highlight settings:', err);
+    }
+  }, [highlightSettings, t]);
 
   // Clear cache
   const handleClearCache = useCallback(async () => {
@@ -780,6 +815,38 @@ const OptionsPage: React.FC = () => {
                   onChange={(code) => handleLanguageChange(code as SupportedLanguage)}
                   aria-label={t('general.language.select', { ns: 'options' })}
                 />
+              </div>
+            </div>
+
+            {/* IOC Highlighting */}
+            <div className="setting-card">
+              <div className="setting-header">
+                <Highlighter size={20} />
+                <div>
+                  <h3>{t('general.highlight.title', { ns: 'options' })}</h3>
+                  <p className="setting-description">
+                    {t('general.highlight.description', { ns: 'options' })}
+                  </p>
+                </div>
+              </div>
+
+              <div className="cache-settings">
+                <div className="cache-setting-row">
+                  <label className="cache-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={highlightSettings.enabled}
+                      onChange={(e) => handleHighlightToggle(e.target.checked)}
+                    />
+                    <span>{t('general.highlight.enabled', { ns: 'options' })}</span>
+                  </label>
+                  <p className="cache-description">
+                    {t('general.highlight.enabledDescription', { ns: 'options' })}
+                  </p>
+                  <p className="cache-description">
+                    {t('general.highlight.note', { ns: 'options' })}
+                  </p>
+                </div>
               </div>
             </div>
 
