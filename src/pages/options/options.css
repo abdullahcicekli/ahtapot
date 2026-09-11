@@ -10,6 +10,7 @@
 body {
   font-family: var(--font-sans);
   background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
   padding: 20px;
   padding-bottom: 100px;
@@ -367,6 +368,12 @@ body {
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 8px;
+}
+
+.api-info-section p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
 }
 
 .api-limits {
