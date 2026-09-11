@@ -694,7 +694,9 @@ body {
   margin-bottom: 20px;
 }
 
-.cache-checkbox-label {
+/* Ac/kapa ayarlari — native checkbox erisilebilirlik icin yerinde durur
+   (klavye, role="switch"), gorsel olarak ray + topuz ile degistirilir. */
+.setting-switch-label {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -705,11 +707,59 @@ body {
   margin-bottom: 8px;
 }
 
-.cache-checkbox-label input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: var(--accent);
+.setting-switch-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.setting-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--border-hi);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.setting-switch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.setting-switch-input:checked + .setting-switch {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.setting-switch-input:checked + .setting-switch::after {
+  transform: translateX(18px);
+  background: var(--accent-ink);
+}
+
+.setting-switch-input:focus-visible + .setting-switch {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setting-switch,
+  .setting-switch::after {
+    transition: none;
+  }
 }
 
 .cache-label {

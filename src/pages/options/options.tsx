@@ -832,12 +832,15 @@ const OptionsPage: React.FC = () => {
 
               <div className="cache-settings">
                 <div className="cache-setting-row">
-                  <label className="cache-checkbox-label">
+                  <label className="setting-switch-label">
                     <input
                       type="checkbox"
+                      role="switch"
+                      className="setting-switch-input"
                       checked={highlightSettings.enabled}
                       onChange={(e) => handleHighlightToggle(e.target.checked)}
                     />
+                    <span className="setting-switch" aria-hidden="true" />
                     <span>{t('general.highlight.enabled', { ns: 'options' })}</span>
                   </label>
                   <p className="cache-description">
@@ -896,12 +899,15 @@ const OptionsPage: React.FC = () => {
               <div className="cache-settings">
                 {/* Enable/Disable Cache */}
                 <div className="cache-setting-row">
-                  <label className="cache-checkbox-label">
+                  <label className="setting-switch-label">
                     <input
                       type="checkbox"
+                      role="switch"
+                      className="setting-switch-input"
                       checked={cacheSettings.enabled}
                       onChange={(e) => handleCacheSettingsChange({ enabled: e.target.checked })}
                     />
+                    <span className="setting-switch" aria-hidden="true" />
                     <span>{t('general.cache.enabled', { ns: 'options' })}</span>
                   </label>
                   <p className="cache-description">
