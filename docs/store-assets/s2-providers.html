@@ -5,30 +5,29 @@
 <link rel="stylesheet" href="shared.css">
 <style>
   body { width: 1280px; height: 800px; }
-  .stage { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 90px; }
+  .stage { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 60px; }
 
-  .chip { margin-bottom: 18px; }
-  .h1 { font-size: 52px; margin-bottom: 16px; }
-  .sub { font-size: 18px; max-width: 640px; margin: 0 auto 46px; }
+  .chip { margin-bottom: 22px; }
+  .h1 { font-size: 72px; margin-bottom: 20px; }
+  .sub { font-size: 30px; margin-bottom: 54px; }
 
-  .wall { display: grid; grid-template-columns: repeat(6, 168px); gap: 12px; }
+  .wall { display: grid; grid-template-columns: repeat(4, 288px); gap: 16px; }
   .tile {
-    height: 96px;
+    height: 124px;
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px;
+    border-radius: 18px;
+    display: flex; align-items: center; gap: 18px;
+    padding: 0 24px;
   }
-  .tile img { height: 26px; max-width: 120px; object-fit: contain; }
-  .tile i { font-style: normal; font-size: 12px; font-weight: 520; color: var(--text-2); letter-spacing: -0.005em; }
-  .tile.keyless { border-color: rgba(199, 245, 77, 0.22); }
-  .tile.keyless em { font-style: normal; font-family: 'Commit Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-  .tile.more { border-style: dashed; border-color: var(--border-hi); }
-  .tile.more b { font-size: 20px; font-weight: 600; color: var(--text-2); }
-  .tile.more i { font-size: 11px; color: var(--text-3); }
-
-  .foot { margin-top: 44px; display: flex; gap: 28px; }
-  .foot .chip::before { background: var(--success); }
+  .tile img { width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; }
+  .tile span { text-align: left; }
+  .tile i { display: block; font-style: normal; font-size: 22px; font-weight: 560; letter-spacing: -0.018em; white-space: nowrap; }
+  .tile.wordmark { justify-content: center; }
+  .tile.wordmark img { width: auto; height: 36px; max-width: 210px; }
+  .tile.more { border-style: dashed; border-color: var(--border-hi); justify-content: center; }
+  .tile.more b { font-size: 30px; font-weight: 620; letter-spacing: -0.02em; }
+  .tile.more b em { font-style: normal; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -37,27 +36,21 @@
   <div class="stage">
     <div class="chip">Coverage</div>
     <div class="h1">11 intelligence sources.<br>One click.</div>
-    <p class="sub">Every indicator is checked in parallel across the services analysts already trust — results stream in as each source answers.</p>
+    <p class="sub">Checked in parallel. Results stream in as each source answers.</p>
 
     <div class="wall">
-      <div class="tile"><img src="../../public/provider-icons/virustotal_logo.png" alt=""><i>VirusTotal</i></div>
-      <div class="tile keyless"><img src="../../public/provider-icons/siberguvenlik-logo.png" alt=""><i>Türkiye SGB</i><em>No key needed</em></div>
-      <div class="tile"><img src="../../public/provider-icons/alienVaultOtx-logo.png" alt=""><i>AlienVault OTX</i></div>
-      <div class="tile"><img src="../../public/provider-icons/abuseipdb-logo.png" alt=""><i>AbuseIPDB</i></div>
-      <div class="tile"><img src="../../public/provider-icons/malwarebazaar-logo.png" alt=""><i>MalwareBazaar</i></div>
-      <div class="tile keyless"><img src="../../public/provider-icons/arin-logo.png" alt="" style="filter: invert(1) hue-rotate(180deg) brightness(1.35)"><i>ARIN</i><em>No key needed</em></div>
-      <div class="tile"><img src="../../public/provider-icons/shodan-logo.png" alt=""><i>Shodan</i></div>
-      <div class="tile"><img src="../../public/provider-icons/greynoise-logo.png" alt=""><i>GreyNoise</i></div>
-      <div class="tile"><img src="../../public/provider-icons/urlhaus-logo.png" alt=""><i>URLhaus</i></div>
-      <div class="tile"><img src="../../public/provider-icons/pulsedive-logo.png" alt=""><i>Pulsedive</i></div>
-      <div class="tile"><img src="../../public/provider-icons/scamalytics-logo.png" alt=""><i>Scamalytics</i></div>
-      <div class="tile more"><b>+ AI</b><i>Claude · GPT · Gemini</i></div>
-    </div>
-
-    <div class="foot">
-      <span class="chip">Parallel queries</span>
-      <span class="chip">Streaming results</span>
-      <span class="chip">Smart caching</span>
+      <div class="tile"><img src="../../public/provider-icons/virustotal_logo.png" alt=""><span><i>VirusTotal</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/siberguvenlik-logo.png" alt=""><span><i>Türkiye SGB</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/alienVaultOtx-logo.png" alt=""><span><i>AlienVault OTX</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/abuseipdb-logo.png" alt=""><span><i>AbuseIPDB</i></span></div>
+      <div class="tile wordmark"><img src="../../public/provider-icons/malwarebazaar-logo.png" alt="MalwareBazaar"></div>
+      <div class="tile"><img src="../../public/provider-icons/arin-logo.png" alt="" style="filter: invert(1) hue-rotate(180deg) brightness(1.35)"><span><i>ARIN</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/shodan-logo.png" alt=""><span><i>Shodan</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/greynoise-logo.png" alt=""><span><i>GreyNoise</i></span></div>
+      <div class="tile wordmark"><img src="../../public/provider-icons/urlhaus-logo.png" alt="URLhaus"></div>
+      <div class="tile"><img src="../../public/provider-icons/pulsedive-logo.png" alt=""><span><i>Pulsedive</i></span></div>
+      <div class="tile"><img src="../../public/provider-icons/scamalytics-logo.png" alt=""><span><i>Scamalytics</i></span></div>
+      <div class="tile more"><b>+ <em>AI</em> verdicts</b></div>
     </div>
   </div>
 </body>

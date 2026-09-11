@@ -5,21 +5,21 @@
 <link rel="stylesheet" href="shared.css">
 <style>
   body { width: 1280px; height: 800px; }
-  .stage { display: flex; flex-direction: column; justify-content: center; padding: 0 84px; }
+  .stage { display: flex; flex-direction: column; justify-content: center; padding: 0 80px; }
 
-  .brand { display: flex; margin-bottom: 52px; }
+  .brand { display: flex; margin-bottom: 58px; }
 
-  .chip { margin-bottom: 20px; }
-  .h1 { font-size: 68px; margin-bottom: 22px; }
-  .sub { font-size: 20px; max-width: 470px; }
-  .pills { display: flex; gap: 8px; margin-top: 34px; }
+  .chip { margin-bottom: 26px; }
+  .h1 { font-size: 96px; margin-bottom: 28px; }
+  .sub { font-size: 34px; max-width: 620px; }
+  .pills { display: flex; gap: 12px; margin-top: 44px; }
 
-  /* Eski hero'daki gibi: kol sağdan bütün halde girer, kanca aşağı sarkar */
+  /* Kol sağdan bütün halde girer, kanca aşağı sarkar */
   .tentacle {
     position: absolute;
-    left: 640px;
-    top: -285px;
-    width: 980px;
+    left: 690px;
+    top: -270px;
+    width: 960px;
     pointer-events: none;
   }
 </style>
@@ -30,14 +30,14 @@
   <img class="tentacle" src="assets/tentacle.png" alt="">
   <div class="stage">
     <div class="brand">
-      <img src="../../public/icons/mark.svg" width="46" height="46" alt="">
+      <img src="../../public/icons/mark.svg" width="64" height="64" alt="">
       <span class="brand-name">Ahtapot</span>
     </div>
     <div class="chip">IOC Analysis</div>
     <div class="h1">Threat intel<br>on any page.</div>
-    <p class="sub">Select an IP, domain, URL or hash anywhere on the web and get verdicts from 11 intelligence sources — without leaving the tab.</p>
+    <p class="sub">Select an IP, domain, URL or hash — get verdicts without leaving the tab.</p>
     <div class="pills">
-      <span class="pill lime">11 providers</span>
+      <span class="pill lime">11 sources</span>
       <span class="pill clean">Free &amp; open source</span>
       <span class="pill warn">AI verdicts</span>
     </div>
