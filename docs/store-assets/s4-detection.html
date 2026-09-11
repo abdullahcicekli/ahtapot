@@ -5,71 +5,71 @@
 <link rel="stylesheet" href="shared.css">
 <style>
   body { width: 1280px; height: 800px; }
-  .stage { display: flex; align-items: center; gap: 70px; padding: 0 72px; }
+  .stage { display: flex; align-items: center; gap: 52px; padding: 0 64px; }
 
-  .copy { width: 450px; flex-shrink: 0; }
-  .copy .chip { margin-bottom: 18px; }
-  .copy .h1 { font-size: 50px; margin-bottom: 18px; }
-  .copy .sub { font-size: 18px; margin-bottom: 34px; }
-  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .copy { width: 520px; flex-shrink: 0; }
+  .copy .chip { margin-bottom: 22px; }
+  .copy .h1 { font-size: 66px; margin-bottom: 22px; }
+  .copy .sub { font-size: 30px; margin-bottom: 38px; }
+  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .type {
-    display: flex; align-items: center; gap: 9px;
-    padding: 11px 14px;
+    display: flex; align-items: center; gap: 12px;
+    padding: 15px 18px;
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 13px;
     font-family: 'Commit Mono', monospace;
-    font-size: 12px;
+    font-size: 20px;
     color: var(--text-2);
   }
-  .type::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .type::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
   /* Soyut doküman: gerçek değer yok, iskelet satırlar + seçim + buton */
   .doc {
     flex: 1;
-    padding: 40px 40px 96px;
+    padding: 44px 44px 108px;
     position: relative;
   }
-  .doc-head { display: flex; gap: 7px; margin-bottom: 26px; }
-  .doc-head i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.12); }
+  .doc-head { display: flex; gap: 10px; margin-bottom: 34px; }
+  .doc-head i { width: 13px; height: 13px; border-radius: 50%; background: rgba(255,255,255,.14); }
 
-  .lines { display: flex; flex-direction: column; gap: 16px; }
-  .row { display: flex; gap: 12px; }
-  .bar { height: 14px; border-radius: 7px; background: rgba(255,255,255,.10); }
+  .lines { display: flex; flex-direction: column; gap: 20px; }
+  .row { display: flex; gap: 14px; }
+  .bar { height: 20px; border-radius: 10px; background: rgba(255,255,255,.11); }
   .bar.dim { background: rgba(255,255,255,.06); }
 
   /* Seçili satırlar: lime seçim dolgusu */
   .bar.sel {
-    background: rgba(199, 245, 77, 0.22);
-    outline: 1px solid rgba(199, 245, 77, 0.28);
+    background: rgba(199, 245, 77, 0.26);
+    outline: 1px solid rgba(199, 245, 77, 0.34);
   }
 
   .fab {
     position: absolute;
-    right: 96px;
-    bottom: 30px;
+    right: 60px;
+    bottom: 34px;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 11px 16px 11px 12px;
+    gap: 12px;
+    padding: 14px 22px 14px 16px;
     background: #1A1A1F;
-    border: 1px solid rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.16);
     border-radius: 999px;
-    box-shadow: 0 14px 34px rgba(0,0,0,.5);
+    box-shadow: 0 18px 40px rgba(0,0,0,.55);
   }
-  .fab img { width: 22px; height: 22px; }
-  .fab b { font-size: 13.5px; font-weight: 600; color: #fff; }
+  .fab img { width: 32px; height: 32px; }
+  .fab b { font-size: 24px; font-weight: 620; color: #fff; letter-spacing: -0.015em; }
   .fab i {
     font-style: normal;
-    min-width: 20px; height: 20px;
-    padding: 0 6px;
-    border-radius: 10px;
-    background: rgba(199, 245, 77, .16);
+    min-width: 30px; height: 30px;
+    padding: 0 9px;
+    border-radius: 15px;
+    background: rgba(199, 245, 77, .18);
     color: var(--accent);
-    font-size: 11px; font-weight: 640;
+    font-size: 18px; font-weight: 660;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  .cursor { position: absolute; right: 84px; bottom: 20px; }
+  .cursor { position: absolute; right: 44px; bottom: 18px; }
 </style>
 </head>
 <body>
@@ -79,14 +79,14 @@
     <div class="copy">
       <div class="chip">Detection</div>
       <div class="h1">Select anything.<br>We find the IOCs.</div>
-      <p class="sub">Highlight any part of a page — Ahtapot picks out the indicators, even defanged ones like <span class="mono" style="color:var(--text)">hxxps://</span> and <span class="mono" style="color:var(--text)">[.]</span>, and offers to analyze them.</p>
+      <p class="sub">Defanged too: <span class="mono" style="color:var(--accent)">hxxps://</span> and <span class="mono" style="color:var(--accent)">[.]</span></p>
       <div class="types">
         <span class="type">IPv4 / IPv6</span>
         <span class="type">Domain / URL</span>
-        <span class="type">MD5 / SHA1 / SHA256</span>
+        <span class="type">MD5 / SHA256</span>
         <span class="type">CVE ID</span>
         <span class="type">Email</span>
-        <span class="type">BTC / ETH wallet</span>
+        <span class="type">BTC / ETH</span>
       </div>
     </div>
 
@@ -100,7 +100,6 @@
         <div class="row"><span class="bar" style="width:24%"></span><span class="bar sel" style="width:38%"></span><span class="bar sel" style="width:20%"></span></div>
         <div class="row"><span class="bar sel" style="width:52%"></span><span class="bar dim" style="width:22%"></span></div>
         <div class="row"><span class="bar dim" style="width:40%"></span><span class="bar" style="width:26%"></span></div>
-        <div class="row"><span class="bar" style="width:70%"></span></div>
       </div>
 
       <div class="fab">
@@ -108,7 +107,7 @@
         <b>Analyze</b>
         <i>3</i>
       </div>
-      <svg class="cursor" width="22" height="22" viewBox="0 0 24 24" fill="#F2F2F3" stroke="#0B0B0D" stroke-width="1.6"><path d="M5 3l14 9-6.5 1.5L9 20z"/></svg>
+      <svg class="cursor" width="30" height="30" viewBox="0 0 24 24" fill="#F2F2F3" stroke="#0B0B0D" stroke-width="1.6"><path d="M5 3l14 9-6.5 1.5L9 20z"/></svg>
     </div>
   </div>
 </body>

@@ -13,7 +13,7 @@
 [![Website](https://img.shields.io/badge/Website-ahtapot.me-purple?style=flat-square&logo=google-chrome)](https://ahtapot.me)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue?style=flat-square&logo=google-chrome)](https://chromewebstore.google.com/detail/ahtapot-ioc-analysis-tool/gmekhigahdiddngdhfdkeefcomcankpg)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.0.1-brightgreen?style=flat-square)](package.json)
+[![Version](https://img.shields.io/badge/version-3.2.0-brightgreen?style=flat-square)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
 [Website](https://ahtapot.me) | [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Privacy](#privacy) | [Development](#development) | [API Keys](#api-keys) | [Versioning](#versioning)
@@ -89,6 +89,15 @@ Automatically detects and analyzes various types of security indicators:
 2. Floating button appears instantly
 3. One-click analysis
 4. Results in beautiful side panel
+
+### IOC Highlighting (optional)
+Turn it on in **Settings → General** and Ahtapot scans the page you are on,
+marking every indicator it finds. Hover a marked indicator to analyze just that
+one — no text selection needed. Defanged indicators (`evil[.]com`, `hxxps://`)
+are marked exactly as written but queried with their clean value.
+
+Off by default, since it modifies the page you are reading. Nothing leaves your
+browser until you click **Analyze**.
 
 ### Multiple Threat Intelligence Sources
 
@@ -207,6 +216,7 @@ We take your privacy seriously. Here's what you need to know:
 - Click the Ahtapot extension icon → Settings
 - **General Settings Tab:**
   - Choose your language (English/Türkçe)
+  - Turn on IOC highlighting if you want indicators marked on every page (optional)
   - Configure cache retention period (optional)
 - **API Keys Tab:**
   - Add your API keys for enhanced analysis
@@ -230,7 +240,14 @@ Choose your preferred method:
 3. Results appear in side panel
 ```
 
-**Method C: Manual Entry**
+**Method C: Page Highlighting** (if enabled)
+```
+1. Open any page — detected IOCs are marked inline
+2. Hover a marked indicator
+3. Click "Analyze" to analyze only that indicator
+```
+
+**Method D: Manual Entry**
 ```
 1. Click extension icon → Open side panel
 2. Paste IOCs into text area

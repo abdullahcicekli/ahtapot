@@ -5,13 +5,16 @@ import { IOCType, DetectedIOC } from '@/types/ioc';
  */
 const IOC_PATTERNS: Record<IOCType, RegExp> = {
   // IPv4 adresi (0-255 arası değerler) - newline ve whitespace ile başlayabilir
-  [IOCType.IPV4]: /(?:^|[\s,;|]|[^0-9.])(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=[\s,;|]|[^0-9.]|$)/gm,
+  // Sondaki `\.(?!\d)`: cümleyi bitiren nokta sınır sayılır ("C2 is 8.8.8.8."),
+  // ama 1.2.3.4.5 gibi daha uzun bir diziyi kırpmaya izin verilmez.
+  [IOCType.IPV4]: /(?:^|[\s,;|]|[^0-9.])(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?=[\s,;|]|[^0-9.]|\.(?!\d)|$)/gm,
 
   // IPv6 adresi (tam ve kısaltılmış notasyon) - multiline
   [IOCType.IPV6]: /(?:^|[\s,;|]|[^:0-9a-fA-F])(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?::[0-9a-fA-F]{1,4}){1,6}|::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|::(?:[0-9a-fA-F]{1,4}:){0,5}:[0-9a-fA-F]{1,4})(?=[\s,;|]|[^:0-9a-fA-F]|$)/gm,
 
   // Domain (geçerli TLD'ler ile) - newline ve whitespace ile başlayabilir
-  [IOCType.DOMAIN]: /(?:^|[\s,;|]|[^a-zA-Z0-9.-])(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|$)/gm,
+  // Cümle sonu noktası sınırdır: "...visit evil.com." → evil.com
+  [IOCType.DOMAIN]: /(?:^|[\s,;|]|[^a-zA-Z0-9.-])(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|\.(?![a-zA-Z0-9])|$)/gm,
 
   // URL (http/https) - daha basit pattern
   [IOCType.URL]: /https?:\/\/[^\s<>"]+/g,
@@ -26,7 +29,7 @@ const IOC_PATTERNS: Record<IOCType, RegExp> = {
   [IOCType.SHA256]: /(?:^|[\s,;|]|[^a-fA-F0-9])[a-fA-F0-9]{64}(?=[\s,;|]|[^a-fA-F0-9]|$)/gm,
 
   // Email adresi (RFC 5322 basitleştirilmiş) - multiline
-  [IOCType.EMAIL]: /(?:^|[\s,;|]|[^a-zA-Z0-9._%+-])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|$)/gm,
+  [IOCType.EMAIL]: /(?:^|[\s,;|]|[^a-zA-Z0-9._%+-])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?=[\s,;|]|[^a-zA-Z0-9.-]|\.(?![a-zA-Z0-9])|$)/gm,
 
   // CVE numarası (CVE-YYYY-NNNNN formatı)
   [IOCType.CVE]: /CVE-\d{4}-\d{4,7}/gi,
@@ -39,41 +42,123 @@ const IOC_PATTERNS: Record<IOCType, RegExp> = {
 };
 
 /**
- * Defang edilmiş IOC gösterimlerini gerçek karakterlerine çevirir (refang).
- * Tehdit raporlarında IOC'ler tıklanmasın diye bozulur: secure[.]example[.]com,
- * hxxps://..., user[at]domain gibi. Tespit ve sorgulama temiz değerle yapılır.
+ * Refang kuralları. Sıra önemli: ayraçlı gösterimler önce açılır ki
+ * hxxps[:]// → hxxps:// → https:// zinciri tamamlansın.
  */
-export function refangText(text: string): string {
-  return (
-    text
-      // [.] (.) {.} ve [dot] (dot) {dot} → .  (ayraç içi boşluklara tolerans)
-      .replace(/[[({]\s*(?:\.|dot)\s*[\])}]/gi, '.')
-      // [@] (@) {@} ve [at] (at yalnızca ayraçlı) → @
-      .replace(/[[({]\s*(?:@|at)\s*[\])}]/gi, '@')
-      // [:] ve [://] → : ve ://  (hxxp'den önce: hxxps[:]// → hxxps://)
-      .replace(/\[:\/\/\]/g, '://')
-      .replace(/\[:\]/g, ':')
-      // hxxp / hXXp / hxxps → http(s), fxp → ftp
-      .replace(/\bhxx(ps?):\/\//gi, 'htt$1://')
-      .replace(/\bfxp:\/\//gi, 'ftp://')
-  );
+const REFANG_RULES: Array<{ pattern: RegExp; replace: (match: RegExpMatchArray) => string }> = [
+  // [.] (.) {.} ve [dot] (dot) {dot} → .  (ayraç içi boşluklara tolerans)
+  { pattern: /[[({]\s*(?:\.|dot)\s*[\])}]/gi, replace: () => '.' },
+  // [@] (@) {@} ve [at] (at yalnızca ayraçlı) → @
+  { pattern: /[[({]\s*(?:@|at)\s*[\])}]/gi, replace: () => '@' },
+  // [://] ve [:] → :// ve :
+  { pattern: /\[:\/\/\]/g, replace: () => '://' },
+  { pattern: /\[:\]/g, replace: () => ':' },
+  // hxxp / hXXp / hxxps → http(s), fxp → ftp
+  { pattern: /\bhxx(ps?):\/\//gi, replace: (m) => `htt${m[1]}://` },
+  { pattern: /\bfxp:\/\//gi, replace: () => 'ftp://' },
+];
+
+/**
+ * Refang edilmiş metin + kaynak metne indeks haritası.
+ * `map[i]`, refang edilmiş metindeki i. karakterin ham metindeki karşılığıdır;
+ * `map` dizisi metin uzunluğundan bir fazladır (bitiş konumu için).
+ */
+export interface RefangedText {
+  text: string;
+  map: number[];
+}
+
+function applyRefangRule(
+  input: RefangedText,
+  pattern: RegExp,
+  replace: (match: RegExpMatchArray) => string
+): RefangedText {
+  const chars: string[] = [];
+  const map: number[] = [];
+  let cursor = 0;
+
+  for (const match of input.text.matchAll(pattern)) {
+    const start = match.index!;
+    const end = start + match[0].length;
+
+    for (let i = cursor; i < start; i++) {
+      chars.push(input.text[i]);
+      map.push(input.map[i]);
+    }
+
+    const replacement = replace(match);
+    const sameLength = replacement.length === match[0].length;
+    for (let i = 0; i < replacement.length; i++) {
+      chars.push(replacement[i]);
+      // Eşit uzunluktaysa karakter karakter eşle (hxxps:// → https://),
+      // kısaldıysa tüm sonuç eşleşmenin başlangıcına bağlanır.
+      map.push(sameLength ? input.map[start + i] : input.map[start]);
+    }
+
+    cursor = end;
+  }
+
+  for (let i = cursor; i < input.text.length; i++) {
+    chars.push(input.text[i]);
+    map.push(input.map[i]);
+  }
+  map.push(input.map[input.text.length]);
+
+  return { text: chars.join(''), map };
 }
 
 /**
- * Verilen metinde IOC'leri tespit eder
- * OPTIMIZED: O(n) complexity with position-based and value-based deduplication
- * Metin önce refang edilir; dönen value'lar sorgulanabilir temiz değerlerdir
- * (position alanları refang edilmiş metne göredir, yalnızca iç dedup'ta kullanılır).
- * @param text Taranacak metin
- * @returns Tespit edilen IOC'lerin listesi (unique values only)
+ * Defang edilmiş IOC gösterimlerini gerçek karakterlerine çevirir (refang) ve
+ * ham metne geri dönebilmek için indeks haritasını da üretir.
+ * Tehdit raporlarında IOC'ler tıklanmasın diye bozulur: secure[.]example[.]com,
+ * hxxps://..., user[at]domain gibi. Tespit ve sorgulama temiz değerle yapılır.
  */
-export function detectIOCs(rawText: string): DetectedIOC[] {
-  const text = refangText(rawText);
-  const detected: DetectedIOC[] = [];
+export function refangWithMap(rawText: string): RefangedText {
+  let current: RefangedText = {
+    text: rawText,
+    map: Array.from({ length: rawText.length + 1 }, (_, i) => i),
+  };
+
+  for (const rule of REFANG_RULES) {
+    current = applyRefangRule(current, rule.pattern, rule.replace);
+  }
+
+  return current;
+}
+
+/**
+ * Defang edilmiş IOC gösterimlerini gerçek karakterlerine çevirir (refang).
+ */
+export function refangText(text: string): string {
+  return refangWithMap(text).text;
+}
+
+/**
+ * Highlight modunda dönen IOC: ham (refang edilmemiş) metindeki konumu ve
+ * sayfada görünen ham gösterimi de taşır.
+ */
+export interface DetectedIOCWithSource extends DetectedIOC {
+  /** Ham metindeki konum — DOM'da işaretlemek için */
+  source: { start: number; end: number };
+  /** Sayfada göründüğü hali (defang edilmiş olabilir) */
+  raw: string;
+}
+
+interface DetectOptions {
+  /**
+   * Aynı değerin ikinci ve sonraki geçişlerini ele. Analiz akışında istenir
+   * (aynı IOC'yi iki kez sorgulama), highlight'ta istenmez (her geçiş boyanmalı).
+   */
+  dedupeValues: boolean;
+}
+
+function detectIOCsCore(rawText: string, options: DetectOptions): DetectedIOCWithSource[] {
+  const { text, map } = refangWithMap(rawText);
+  const detected: DetectedIOCWithSource[] = [];
 
   // Position range tracking for O(1) duplicate detection
   const occupiedRanges: Array<{ start: number; end: number }> = [];
-  
+
   // Value-based deduplication: track unique IOC values (type:value as key)
   const seenValues = new Set<string>();
 
@@ -122,14 +207,16 @@ export function detectIOCs(rawText: string): DetectedIOC[] {
         value = value.substring(0, value.length - trailingMatch[0].length);
       }
 
+      if (!value) continue;
+
       // Normalize value for comparison (lowercase for domains/emails)
-      const normalizedValue = (type === IOCType.DOMAIN || type === IOCType.EMAIL || type === IOCType.URL) 
-        ? value.toLowerCase() 
+      const normalizedValue = (type === IOCType.DOMAIN || type === IOCType.EMAIL || type === IOCType.URL)
+        ? value.toLowerCase()
         : value;
-      
+
       // Check for duplicate value (same IOC entered multiple times)
       const valueKey = `${type}:${normalizedValue}`;
-      if (seenValues.has(valueKey)) {
+      if (options.dedupeValues && seenValues.has(valueKey)) {
         continue;
       }
 
@@ -154,10 +241,17 @@ export function detectIOCs(rawText: string): DetectedIOC[] {
       }
 
       if (isValidIOC(type, value)) {
+        const source = {
+          start: map[position.start],
+          end: map[position.end],
+        };
+
         detected.push({
-          type: type,
+          type,
           value,
           position,
+          source,
+          raw: rawText.slice(source.start, source.end),
         });
 
         // Mark this value as seen
@@ -170,6 +264,34 @@ export function detectIOCs(rawText: string): DetectedIOC[] {
   });
 
   return detected;
+}
+
+/**
+ * Verilen metinde IOC'leri tespit eder
+ * OPTIMIZED: O(n) complexity with position-based and value-based deduplication
+ * Metin önce refang edilir; dönen value'lar sorgulanabilir temiz değerlerdir
+ * (position alanları refang edilmiş metne göredir, yalnızca iç dedup'ta kullanılır).
+ * @param rawText Taranacak metin
+ * @returns Tespit edilen IOC'lerin listesi (unique values only)
+ */
+export function detectIOCs(rawText: string): DetectedIOC[] {
+  return detectIOCsCore(rawText, { dedupeValues: true }).map(({ type, value, position }) => ({
+    type,
+    value,
+    position,
+  }));
+}
+
+/**
+ * Sayfa üzerinde işaretleme (highlight) için IOC tespiti.
+ * detectIOCs'tan iki farkı var: aynı değerin her geçişi ayrı ayrı döner ve
+ * her sonuç ham metindeki konumunu taşır — DOM'da doğru yeri boyayabilmek için.
+ * @param rawText Tek bir text node'un ham içeriği
+ */
+export function detectIOCsForHighlight(rawText: string): DetectedIOCWithSource[] {
+  return detectIOCsCore(rawText, { dedupeValues: false }).sort(
+    (a, b) => a.source.start - b.source.start
+  );
 }
 
 /**

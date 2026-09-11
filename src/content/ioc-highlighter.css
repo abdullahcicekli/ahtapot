@@ -1,0 +1,26 @@
+/**
+ * IOC işaretleri — sayfanın kendi DOM'una girdikleri için Shadow DOM koruması
+ * yok. Sayfanın agresif stilleri ezmesin diye görsel özellikler !important ile
+ * sabitlenir; metin akışını bozacak hiçbir şey (display, font, boyut) set
+ * edilmez ki paragraf içinde satır kırılımı doğal kalsın.
+ */
+
+.ahtapot-ioc-mark {
+  background-color: rgba(199, 245, 77, 0.16) !important;
+  border-bottom: 1px dashed rgba(199, 245, 77, 0.55) !important;
+  border-radius: 3px !important;
+  padding: 0 1px !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.ahtapot-ioc-mark:hover {
+  background-color: rgba(199, 245, 77, 0.34) !important;
+  border-bottom-color: rgba(199, 245, 77, 0.95) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ahtapot-ioc-mark {
+    transition: none !important;
+  }
+}

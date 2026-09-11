@@ -15,12 +15,27 @@
       "description": "Tercih ettiğiniz dili seçin",
       "select": "Dil seçin"
     },
+    "highlight": {
+      "title": "IOC İşaretleme",
+      "description": "Metin seçmeden sayfadaki göstergeleri bul",
+      "enabled": "Sayfalarda IOC'leri işaretle",
+      "infoTitle": "IOC işaretleme hakkında",
+      "info": {
+        "whatTitle": "Ne İşe Yarar?",
+        "whatDescription": "Normalde Ahtapot bir şey göstermesi için metin seçmen gerekir. İşaretleme açıkken okuduğun sayfayı tarar ve bulduğu her göstergeyi işaretler; böylece neyin sorgulanmaya değer olduğunu bir bakışta görürsün.",
+        "howTitle": "Nasıl Kullanılır?",
+        "how1": "Herhangi bir sayfayı aç — tespit edilen göstergeler metnin içinde işaretlenir",
+        "how2": "İşaretli bir göstergenin üzerine gel, yalnızca onu analiz et",
+        "how3": "evil[.]com ve hxxps:// gibi defang'lı biçimler yazıldığı gibi işaretlenir, sorgu temiz değerle gider",
+        "privacyTitle": "Gizlilik ve Performans",
+        "privacyDescription": "Tarama tamamen tarayıcında yapılır; Analiz Et'e basmadan hiçbir yere veri gitmez. İş boşta kalan zamana yayılır ve sayfa başına 500 işaretle sınırlıdır; script'ler, form alanları ve düzenlenebilir bölgeler atlanır. Okuduğun sayfayı değiştirdiği için varsayılan olarak kapalıdır."
+      }
+    },
     "cache": {
       "title": "Önbellek Ayarları",
       "description": "IOC analiz sonuçları için önbellek davranışını yapılandırın",
       "infoTitle": "Önbellek hakkında bilgi",
       "enabled": "Önbelleği etkinleştir",
-      "enabledDescription": "Tekrarlayan API çağrılarını önlemek için analiz sonuçlarını saklayın",
       "retentionDays": "Saklama süresi (gün)",
       "retentionDescription": "Önbelleğe alınan sonuçların ne kadar süre saklanacağı",
       "statistics": "Önbellek istatistikleri",
@@ -36,10 +51,10 @@
         "whyTitle": "Önbellek Neden Var?",
         "whyDescription": "Önbellek sistemi, daha önce analiz ettiğiniz IOC'lerin sonuçlarını cihazınızda saklar. Bu sayede aynı IOC'yi tekrar sorguladığınızda API çağrısı yapmadan anında sonuç alırsınız.",
         "benefitsTitle": "Faydaları",
-        "benefit1": "⚡ Hızlı Sonuçlar: Tekrar edilen sorgular anlık yanıt verir",
-        "benefit2": "📊 API Kotası Koruması: Günlük/aylık API limitinizi korur",
-        "benefit3": "🔒 Gizlilik: Veriler sadece cihazınızda saklanır",
-        "benefit4": "💾 Çevrimdışı Erişim: İnternet olmadan önceki sonuçlara ulaşın",
+        "benefit1": "Hızlı sonuçlar: tekrar edilen sorgular anlık yanıt verir",
+        "benefit2": "API kotası koruması: günlük/aylık API limitinizi korur",
+        "benefit3": "Gizlilik: veriler sadece cihazınızda saklanır",
+        "benefit4": "Çevrimdışı erişim: internet olmadan önceki sonuçlara ulaşın",
         "howTitle": "Nasıl Çalışır?",
         "howDescription": "Her başarılı analiz sonucu otomatik olarak önbelleğe alınır. Belirlediğiniz süre sonunda eski kayıtlar otomatik silinir. İstediğiniz zaman tüm önbelleği manuel olarak temizleyebilirsiniz."
       }
@@ -143,7 +158,7 @@
     }
   },
   "lockedProvider": {
-    "message": "✓ Bu sağlayıcı her zaman kullanılabilirdir ve API anahtarı gerektirmez"
+    "message": "Bu sağlayıcı her zaman kullanılabilirdir ve API anahtarı gerektirmez"
   },
   "info": {
     "limitsTitle": "Ücretsiz Plan Limitleri",
