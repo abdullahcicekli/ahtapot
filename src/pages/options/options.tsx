@@ -823,36 +823,33 @@ const OptionsPage: React.FC = () => {
               <div className="setting-header">
                 <Highlighter size={20} />
                 <div>
-                  <h3>{t('general.highlight.title', { ns: 'options' })}</h3>
+                  <h3 className="setting-title">
+                    {t('general.highlight.title', { ns: 'options' })}
+                    <button
+                      type="button"
+                      onClick={() => setSettingInfo('highlight')}
+                      className="info-btn info-btn-inline"
+                      aria-label={t('general.highlight.infoTitle', { ns: 'options' })}
+                      title={t('general.highlight.infoTitle', { ns: 'options' })}
+                    >
+                      <Info size={16} />
+                    </button>
+                  </h3>
                   <p className="setting-description">
                     {t('general.highlight.description', { ns: 'options' })}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSettingInfo('highlight')}
-                  className="info-btn"
-                  aria-label={t('general.highlight.infoTitle', { ns: 'options' })}
-                  title={t('general.highlight.infoTitle', { ns: 'options' })}
-                >
-                  <Info size={18} />
-                </button>
-              </div>
-
-              <div className="cache-settings">
-                <div className="cache-setting-row">
-                  <label className="setting-switch-label">
-                    <input
-                      type="checkbox"
-                      role="switch"
-                      className="setting-switch-input"
-                      checked={highlightSettings.enabled}
-                      onChange={(e) => handleHighlightToggle(e.target.checked)}
-                    />
-                    <span className="setting-switch" aria-hidden="true" />
-                    <span>{t('general.highlight.enabled', { ns: 'options' })}</span>
-                  </label>
-                </div>
+                <label className="setting-switch-label setting-header-switch">
+                  <input
+                    type="checkbox"
+                    role="switch"
+                    className="setting-switch-input"
+                    checked={highlightSettings.enabled}
+                    onChange={(e) => handleHighlightToggle(e.target.checked)}
+                    aria-label={t('general.highlight.enabled', { ns: 'options' })}
+                  />
+                  <span className="setting-switch" aria-hidden="true" />
+                </label>
               </div>
             </div>
 
@@ -861,38 +858,36 @@ const OptionsPage: React.FC = () => {
               <div className="setting-header">
                 <Database size={20} />
                 <div>
-                  <h3>{t('general.cache.title', { ns: 'options' })}</h3>
+                  <h3 className="setting-title">
+                    {t('general.cache.title', { ns: 'options' })}
+                    <button
+                      type="button"
+                      onClick={() => setSettingInfo('cache')}
+                      className="info-btn info-btn-inline"
+                      aria-label={t('general.cache.infoTitle', { ns: 'options' })}
+                      title={t('general.cache.infoTitle', { ns: 'options' })}
+                    >
+                      <Info size={16} />
+                    </button>
+                  </h3>
                   <p className="setting-description">
                     {t('general.cache.description', { ns: 'options' })}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSettingInfo('cache')}
-                  className="info-btn"
-                  aria-label={t('general.cache.infoTitle', { ns: 'options' })}
-                  title={t('general.cache.infoTitle', { ns: 'options' })}
-                >
-                  <Info size={18} />
-                </button>
+                <label className="setting-switch-label setting-header-switch">
+                  <input
+                    type="checkbox"
+                    role="switch"
+                    className="setting-switch-input"
+                    checked={cacheSettings.enabled}
+                    onChange={(e) => handleCacheSettingsChange({ enabled: e.target.checked })}
+                    aria-label={t('general.cache.enabled', { ns: 'options' })}
+                  />
+                  <span className="setting-switch" aria-hidden="true" />
+                </label>
               </div>
 
               <div className="cache-settings">
-                {/* Enable/Disable Cache */}
-                <div className="cache-setting-row">
-                  <label className="setting-switch-label">
-                    <input
-                      type="checkbox"
-                      role="switch"
-                      className="setting-switch-input"
-                      checked={cacheSettings.enabled}
-                      onChange={(e) => handleCacheSettingsChange({ enabled: e.target.checked })}
-                    />
-                    <span className="setting-switch" aria-hidden="true" />
-                    <span>{t('general.cache.enabled', { ns: 'options' })}</span>
-                  </label>
-                </div>
-
                 {/* Retention Days */}
                 <div className="cache-setting-row">
                   <label className="cache-label">

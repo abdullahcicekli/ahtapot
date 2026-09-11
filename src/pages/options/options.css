@@ -124,6 +124,21 @@ body {
   margin-bottom: 6px;
 }
 
+/* Başlık + yanındaki (i) */
+.setting-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Kartın açma/kapama anahtarı başlık hizasında, sağ üstte durur. */
+.setting-header > .setting-switch-label {
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-bottom: 0;
+  margin-top: 2px;
+}
+
 .setting-description {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
@@ -301,6 +316,21 @@ body {
 .info-btn.active {
   background: var(--bg-input);
   border-color: var(--border-hi);
+}
+
+/* Başlık içindeki (i) — kutu çerçevesi başlığı ağırlaştırıyor, sade ikon. */
+.info-btn-inline {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-secondary);
+  opacity: 0.65;
+}
+
+.info-btn-inline:hover {
+  background: none;
+  opacity: 1;
+  color: #ffffff;
 }
 
 /* API Info Box */
