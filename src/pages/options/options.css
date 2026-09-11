@@ -830,8 +830,8 @@ body {
   line-height: 1.5;
 }
 
-/* Ayar bilgi modallerindeki maddeler — provider modalindeki .api-features-list
-   her maddeye ✓ basar; buradaki metinler kendi simgesini taşıdığı için sade. */
+/* Ayar bilgi modallerindeki maddeler. İşaretçi karakter değil, çizilen bir
+   nokta — metnin içinde simge taşımıyoruz. */
 .setting-info-list {
   list-style: none;
   padding: 0;
@@ -839,10 +839,22 @@ body {
 }
 
 .setting-info-list li {
+  position: relative;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.8);
-  padding: 6px 0;
+  padding: 6px 0 6px 18px;
   line-height: 1.5;
+}
+
+.setting-info-list li::before {
+  content: '';
+  position: absolute;
+  top: 13px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .cache-stats {

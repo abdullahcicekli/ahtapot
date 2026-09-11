@@ -163,17 +163,14 @@ export const AI_PROVIDER_CONFIGS: Record<AIProvider, AIProviderConfig> = {
 /**
  * Analysis Mode Display Configuration
  */
-export const AI_ANALYSIS_MODE_CONFIG: Record<AIAnalysisMode, { icon: string; color: string }> = {
+export const AI_ANALYSIS_MODE_CONFIG: Record<AIAnalysisMode, { color: string }> = {
   [AIAnalysisMode.SUMMARY]: {
-    icon: '📋',
     color: '#4ADE80', // success green
   },
   [AIAnalysisMode.ANALYSIS]: {
-    icon: '🔍',
     color: '#38BDF8', // info blue
   },
   [AIAnalysisMode.DETAILED]: {
-    icon: '📊',
     color: '#A78BFA', // purple
   },
 };

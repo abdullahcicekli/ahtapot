@@ -4,8 +4,15 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronUp, Sparkles, Clock, Copy, Check, AlertCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Sparkles, Clock, Copy, Check, AlertCircle, ClipboardList, Search, BarChart3 } from 'lucide-react';
 import { AIAnalysisResult, AIAnalysisMode, AI_PROVIDER_CONFIGS, AI_ANALYSIS_MODE_CONFIG } from '@/types/ai';
+
+/** Mod rozetinin simgesi — renk ai.ts'te, ikon burada: types katmanı JSX taşımaz. */
+const MODE_ICONS: Record<AIAnalysisMode, typeof Search> = {
+  [AIAnalysisMode.SUMMARY]: ClipboardList,
+  [AIAnalysisMode.ANALYSIS]: Search,
+  [AIAnalysisMode.DETAILED]: BarChart3,
+};
 import { useTranslation } from '@/i18n/hooks/useTranslation';
 import './AIResultCard.css';
 
@@ -138,7 +145,11 @@ export const AIResultCard: React.FC<AIResultCardProps> = ({ result, defaultExpan
           <Sparkles size={18} className="ai-result-icon" />
           <span className="ai-result-provider">{providerConfig.displayName}</span>
           <span className="ai-result-mode-badge" style={{ backgroundColor: `${modeConfig.color}20`, color: modeConfig.color }}>
-            {modeConfig.icon} {getModeLabel(result.mode)}
+            {(() => {
+              const ModeIcon = MODE_ICONS[result.mode];
+              return <ModeIcon size={12} />;
+            })()}
+            {getModeLabel(result.mode)}
           </span>
         </div>
         <div className="ai-result-header-right">

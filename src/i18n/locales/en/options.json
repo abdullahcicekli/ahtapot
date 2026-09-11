@@ -24,9 +24,9 @@
         "whatTitle": "What It Does",
         "whatDescription": "Normally you have to select text before Ahtapot shows anything. With highlighting on, it scans the page you are reading and marks every indicator it finds, so you can see at a glance what is worth a lookup.",
         "howTitle": "How to Use It",
-        "how1": "✨ Open any page — detected indicators are marked inline",
-        "how2": "🖱️ Hover a marked indicator to analyze only that one",
-        "how3": "🕵️ Defanged forms like evil[.]com and hxxps:// are marked as written and queried clean",
+        "how1": "Open any page — detected indicators are marked inline",
+        "how2": "Hover a marked indicator to analyze only that one",
+        "how3": "Defanged forms like evil[.]com and hxxps:// are marked as written and queried clean",
         "privacyTitle": "Privacy & Performance",
         "privacyDescription": "Scanning happens entirely in your browser and nothing is sent anywhere until you click Analyze. Work is spread across idle time and capped at 500 marks per page; scripts, form fields and editable areas are skipped. It is off by default because it modifies the page you are reading."
       }
@@ -51,10 +51,10 @@
         "whyTitle": "Why Does Cache Exist?",
         "whyDescription": "The cache system stores the results of previously analyzed IOCs on your device. This way, when you query the same IOC again, you get instant results without making an API call.",
         "benefitsTitle": "Benefits",
-        "benefit1": "⚡ Fast Results: Repeated queries respond instantly",
-        "benefit2": "📊 API Quota Protection: Preserves your daily/monthly API limits",
-        "benefit3": "🔒 Privacy: Data is stored only on your device",
-        "benefit4": "💾 Offline Access: Access previous results without internet",
+        "benefit1": "Fast results: repeated queries respond instantly",
+        "benefit2": "API quota protection: preserves your daily/monthly API limits",
+        "benefit3": "Privacy: data is stored only on your device",
+        "benefit4": "Offline access: reach previous results without internet",
         "howTitle": "How Does It Work?",
         "howDescription": "Every successful analysis result is automatically cached. Old entries are automatically deleted after the period you specify. You can manually clear all cache at any time."
       }
@@ -158,7 +158,7 @@
     }
   },
   "lockedProvider": {
-    "message": "✓ This provider is always available and doesn't require an API key"
+    "message": "This provider is always available and doesn't require an API key"
   },
   "info": {
     "limitsTitle": "Free Plan Limits",
