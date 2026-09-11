@@ -363,17 +363,21 @@ body {
   margin-bottom: 0;
 }
 
+/* Bölüm başlığı ile gövde arasındaki fark yalnızca 1px ve hafif bir opaklıktı;
+   ikisi de beyaz okunuyordu. Başlık tam beyaz ve belirgin şekilde büyük,
+   gövde ise net biçimde kısılmış — kademe tek bakışta anlaşılsın. */
 .api-info-section h4 {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 640;
+  letter-spacing: -0.01em;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .api-info-section p {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.65;
 }
 
 .api-limits {
@@ -409,7 +413,7 @@ body {
 .api-features-list li {
   padding: 6px 12px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.58);
   position: relative;
   padding-left: 24px;
 }
@@ -848,7 +852,7 @@ body {
 .setting-info-list li {
   position: relative;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.58);
   padding: 6px 0 6px 18px;
   line-height: 1.5;
 }
@@ -1624,7 +1628,7 @@ body {
 
 .info-modal-body .api-info-section,
 .info-modal-body .ai-info-section {
-  margin-bottom: 20px;
+  margin-bottom: 26px;
 }
 
 .info-modal-body .api-info-section:last-child,
